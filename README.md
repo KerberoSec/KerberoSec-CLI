@@ -4,62 +4,554 @@
 
 Architected, developed, and maintained by **Arun Kumar**
 
-| [LinkedIn](https://www.linkedin.com/in/arunkumar31072006/) | [GitHub](https://github.com/KerberoSec) | [X (Twitter)](https://x.com/ArunKumar310706) | [Instagram](https://www.instagram.com/so_far_from_your_heart/) |
-| :--- | :--- | :--- | :--- |
+---
+
+## About KerberoSec CLI
+
+KerberoSec CLI is a terminal-native autonomous coding assistant engineered from the ground up for software developers, security engineers, and DevOps practitioners. Rather than acting as a standard conversational chatbot, KerberoSec CLI operates as a full-fledged autonomous agentic runtime inside your terminal. It directly interfaces with your local file system, terminal shell, Git version control, and Model Context Protocol (MCP) servers to understand entire codebases, architect solutions, execute multi-file refactors, and verify code changes with live test runs.
+
+KerberoSec CLI is built with high performance in mind:
+- **Native Bun Runtime**: Delivers cold-start execution times of under 42ms and a minimal idle memory footprint of approximately 36 MB RAM.
+- **OpenTUI Reactive Architecture**: Uses React 19 and virtual DOM diffing in terminal ANSI space for flicker-free interactive terminal rendering.
+- **Air-Gapped Privacy First**: Full local offline model execution with automatic Ollama background daemon management, ensuring sensitive source code never leaves your workstation.
+- **Plan and Act Duality**: An ergonomic dual-mode execution loop allowing developers to toggle between safe architecture planning and autonomous code generation with a single keystroke.
+
+---
+
+## Primary Recommendation: Local Offline Models for Maximum Data Security
+
+KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** as the primary runtime engine for all software development and security auditing workflows.
+
+### Why Local Offline Inference is Recommended:
+1. **Zero Data Egress and Total IP Privacy**:
+   - Proprietary source code, database credentials, system architecture plans, and customer data never leave your local machine or private network.
+   - Eliminates third-party training risks where external LLM providers could train future public models on your proprietary intellectual property.
+2. **Regulatory Compliance (SOC2, HIPAA, GDPR, ISO 27001)**:
+   - Meets strict enterprise compliance standards by keeping all code analysis strictly within air-gapped workstations or private on-premise infrastructure.
+3. **Zero API Subscription Costs and Zero Rate Limits**:
+   - Run unlimited autonomous reasoning turns, full-repository scans, and continuous test loops without incurring per-token cloud billing or hitting API throttles.
+4. **Air-Gapped and Remote Work Capability**:
+   - Code without an internet connection on flights, remote job sites, or secure isolated networks.
 
 ---
 
 ## Table of Contents
-1. [Overview and Core Vision](#overview-and-core-vision)
-2. [Key Architectural Highlights](#key-architectural-highlights)
-3. [Performance and Resource Footprint](#performance-and-resource-footprint)
-4. [Security and Privacy Guarantees](#security-and-privacy-guarantees)
-5. [Supported Languages and Tech Stacks](#supported-languages-and-tech-stacks)
-6. [Complete Installation and Setup Guide](#complete-installation-and-setup-guide)
+1. [About KerberoSec CLI](#about-kerberosec-cli)
+2. [Primary Recommendation: Local Offline Models for Maximum Data Security](#primary-recommendation-local-offline-models-for-maximum-data-security)
+3. [Hardware Guide: Best Local Ollama Models per GPU and VRAM](#hardware-guide-best-local-ollama-models-per-gpu-and-vram)
+4. [Key Architectural Highlights](#key-architectural-highlights)
+5. [Performance and Resource Footprint](#performance-and-resource-footprint)
+6. [Security and Privacy Guarantees](#security-and-privacy-guarantees)
+7. [Supported Languages and Tech Stacks](#supported-languages-and-tech-stacks)
+8. [Complete Installation and Setup Guide](#complete-installation-and-setup-guide)
    - [Method 1: Automated 1-Step Setup (Recommended)](#method-1-automated-1-step-setup-recommended)
    - [Method 2: Manual Step-by-Step Installation](#method-2-manual-step-by-step-installation)
    - [Method 3: Docker and Docker Compose Container Run](#method-3-docker-and-docker-compose-container-run)
-7. [Deep-Dive Architecture and System Diagrams](#deep-dive-architecture-and-system-diagrams)
-   - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
-   - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
-   - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
-   - [Diagram 4: Interactive Turn Lifecycle and Prompt Queue](#diagram-4-interactive-turn-lifecycle-and-prompt-queue)
-   - [Diagram 5: ReAct Decision Loop and Self-Correction Engine](#diagram-5-react-decision-loop-and-self-correction-engine)
-   - [Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture](#diagram-6-checkpoint-engine-and-shadow-snapshot-architecture)
-   - [Diagram 7: Chunk Diff Matching and Conflict Resolution Algorithm](#diagram-7-chunk-diff-matching-and-conflict-resolution-algorithm)
-   - [Diagram 8: Multi-Provider LLM Protocol Translation Layer](#diagram-8-multi-provider-llm-protocol-translation-layer)
-   - [Diagram 9: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-9-local-offline-ollama-auto-daemon-lifecycle)
-   - [Diagram 10: Model Context Protocol (MCP) Host and Tool Registry](#diagram-10-model-context-protocol-mcp-host-and-tool-registry)
-   - [Diagram 11: Concurrent Subagent Delegation Pipeline](#diagram-11-concurrent-subagent-delegation-pipeline)
-   - [Diagram 12: Context Mentions and File Pinning Engine](#diagram-12-context-mentions-and-file-pinning-engine)
-   - [Diagram 13: Fuzzy Command Palette and Action Dispatcher](#diagram-13-fuzzy-command-palette-and-action-dispatcher)
-   - [Diagram 14: Subprocess Shell Runner and PTY Output Capture](#diagram-14-subprocess-shell-runner-and-pty-output-capture)
-   - [Diagram 15: Session Forking and Branching Timeline Engine](#diagram-15-session-forking-and-branching-timeline-engine)
-   - [Diagram 16: Git Worktree Sandbox and Workspace Isolation](#diagram-16-git-worktree-sandbox-and-workspace-isolation)
-   - [Diagram 17: Autonomous Routine Scheduling and Cron Engine](#diagram-17-autonomous-routine-scheduling-and-cron-engine)
-   - [Diagram 18: Multi-Modal Clipboard Image Processing Pipeline](#diagram-18-multi-modal-clipboard-image-processing-pipeline)
-   - [Diagram 19: Mistake Detection and Self-Healing Guardrails](#diagram-19-mistake-detection-and-self-healing-guardrails)
-   - [Diagram 20: Real-Time Token Analytics and Cost Engine](#diagram-20-real-time-token-analytics-and-cost-engine)
-   - [Diagram 21: Authentication State Machine and Logout Flow](#diagram-21-authentication-state-machine-and-logout-flow)
-   - [Diagram 22: Dynamic Theme Engine and ANSI Color Resolution](#diagram-22-dynamic-theme-engine-and-ansi-color-resolution)
-   - [Diagram 23: Docker Container Isolation and Host-to-Bridge Architecture](#diagram-23-docker-container-isolation-and-host-to-bridge-architecture)
-8. [Step-by-Step Execution Journey](#step-by-step-execution-journey)
-9. [Environment Variables and Configuration](#environment-variables-and-configuration)
-10. [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
-11. [Troubleshooting and Common Solutions](#troubleshooting-and-common-solutions)
-12. [Commands and Keyboard Shortcuts Reference](#commands-and-keyboard-shortcuts-reference)
-13. [Author and License](#author-and-license)
+9. [Comprehensive Slash Commands Reference](#comprehensive-slash-commands-reference)
+10. [Keyboard Shortcuts Reference](#keyboard-shortcuts-reference)
+11. [Model Context Protocol (MCP) Deep Dive and Configuration Guide](#model-context-protocol-mcp-deep-dive-and-configuration-guide)
+    - [What is MCP and How It Works in KerberoSec](#what-is-mcp-and-how-it-works-in-kerberosec)
+    - [Configuration Files and Precedence Rules](#configuration-files-and-precedence-rules)
+    - [Managing MCP via the `/mcp` Interactive Dialog](#managing-mcp-via-the-mcp-interactive-dialog)
+    - [Production-Ready MCP Server Recipes](#production-ready-mcp-server-recipes)
+    - [Creating a Custom In-House MCP Server](#creating-a-custom-in-house-mcp-server)
+    - [MCP Troubleshooting and Debugging](#mcp-troubleshooting-and-debugging)
+12. [Real-World Interactive Use Case Walkthroughs](#real-world-interactive-use-case-walkthroughs)
+    - [Walkthrough 1: Automated Legacy Code Migration](#walkthrough-1-automated-legacy-code-migration)
+    - [Walkthrough 2: Autonomous Unit Test Suite Generation](#walkthrough-2-autonomous-unit-test-suite-generation)
+    - [Walkthrough 3: Automated Security and Vulnerability Sweep](#walkthrough-3-automated-security-and-vulnerability-sweep)
+    - [Walkthrough 4: Live Bug Debugging with Diagnostic Subagents](#walkthrough-4-live-bug-debugging-with-diagnostic-subagents)
+13. [Context Window Management and Token Optimization](#context-window-management-and-token-optimization)
+14. [Multi-Modal Vision and UI Screenshot Debugging](#multi-modal-vision-and-ui-screenshot-debugging)
+15. [Custom Repository Rules Engine (`.kerberosecrules`)](#custom-repository-rules-engine-kerberosecrules)
+16. [Custom Skills and Workflow Automation (`.kerberosec/skills/`)](#custom-skills-and-workflow-automation-kerberosecskills)
+17. [Enterprise and Team Deployment Architecture](#enterprise-and-team-deployment-architecture)
+18. [Headless CI/CD Mode and Automation Scripts](#headless-cicd-mode-and-automation-scripts)
+19. [Deep-Dive Architecture and System Diagrams](#deep-dive-architecture-and-system-diagrams)
+    - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
+    - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
+    - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
+    - [Diagram 4: Interactive Turn Lifecycle and Prompt Queue](#diagram-4-interactive-turn-lifecycle-and-prompt-queue)
+    - [Diagram 5: ReAct Decision Loop and Self-Correction Engine](#diagram-5-react-decision-loop-and-self-correction-engine)
+    - [Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture](#diagram-6-checkpoint-engine-and-shadow-snapshot-architecture)
+    - [Diagram 7: Chunk Diff Matching and Conflict Resolution Algorithm](#diagram-7-chunk-diff-matching-and-conflict-resolution-algorithm)
+    - [Diagram 8: Multi-Provider LLM Protocol Translation Layer](#diagram-8-multi-provider-llm-protocol-translation-layer)
+    - [Diagram 9: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-9-local-offline-ollama-auto-daemon-lifecycle)
+    - [Diagram 10: Model Context Protocol (MCP) Host and Tool Registry](#diagram-10-model-context-protocol-mcp-host-and-tool-registry)
+    - [Diagram 11: Concurrent Subagent Delegation Pipeline](#diagram-11-concurrent-subagent-delegation-pipeline)
+    - [Diagram 12: Context Mentions and File Pinning Engine](#diagram-12-context-mentions-and-file-pinning-engine)
+    - [Diagram 13: Fuzzy Command Palette and Action Dispatcher](#diagram-13-fuzzy-command-palette-and-action-dispatcher)
+    - [Diagram 14: Subprocess Shell Runner and PTY Output Capture](#diagram-14-subprocess-shell-runner-and-pty-output-capture)
+    - [Diagram 15: Session Forking and Branching Timeline Engine](#diagram-15-session-forking-and-branching-timeline-engine)
+    - [Diagram 16: Git Worktree Sandbox and Workspace Isolation](#diagram-16-git-worktree-sandbox-and-workspace-isolation)
+    - [Diagram 17: Autonomous Routine Scheduling and Cron Engine](#diagram-17-autonomous-routine-scheduling-and-cron-engine)
+    - [Diagram 18: Multi-Modal Clipboard Image Processing Pipeline](#diagram-18-multi-modal-clipboard-image-processing-pipeline)
+    - [Diagram 19: Mistake Detection and Self-Healing Guardrails](#diagram-19-mistake-detection-and-self-healing-guardrails)
+    - [Diagram 20: Real-Time Token Analytics and Cost Engine](#diagram-20-real-time-token-analytics-and-cost-engine)
+    - [Diagram 21: Authentication State Machine and Logout Flow](#diagram-21-authentication-state-machine-and-logout-flow)
+    - [Diagram 22: Dynamic Theme Engine and ANSI Color Resolution](#diagram-22-dynamic-theme-engine-and-ansi-color-resolution)
+    - [Diagram 23: Docker Container Isolation and Host-to-Bridge Architecture](#diagram-23-docker-container-isolation-and-host-to-bridge-architecture)
+20. [Step-by-Step Execution Journey](#step-by-step-execution-journey)
+21. [Environment Variables and Configuration](#environment-variables-and-configuration)
+22. [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+23. [Troubleshooting and Common Solutions](#troubleshooting-and-common-solutions)
+24. [Author and License](#author-and-license)
 
 ---
 
-## Overview and Core Vision
+## Hardware Guide: Best Local Ollama Models per GPU and VRAM
 
-KerberoSec CLI is an open-source, autonomous AI coding companion built specifically for the terminal. It delivers an end-to-end software development assistant capable of understanding complex monorepo codebases, designing multi-tier software architectures, applying granular file diffs, running shell commands, executing test suites, and orchestrating distributed Model Context Protocol (MCP) servers.
+KerberoSec CLI is optimized to run on all hardware configurations ranging from thin-and-light laptop CPUs to dedicated multi-GPU workstations. The table below outlines the optimal local Ollama coding models for your specific graphics hardware:
 
-Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is engineered as an agentic runtime environment:
-- It runs an autonomous ReAct (Reason + Act) loop that plans actions, observes outputs, catches runtime errors, and self-corrects.
-- It provides a zero-flicker reactive terminal user interface powered by OpenTUI and React 19.
-- It provides first-class support for offline local inference (Ollama) with automated background daemon management, allowing developers to code securely on air-gapped machines without sending source code to third-party cloud servers.
+| Hardware Tier & VRAM | Target GPUs & Laptop Models | Recommended Ollama Model | Download Command | Performance & Use Case |
+| :--- | :--- | :--- | :--- | :--- |
+| **CPU Only (4GB - 8GB RAM)** | Intel Core i3/i5/i7, AMD Ryzen 3/5/7, Apple M1/M2 (8GB RAM), Dell XPS, ThinkPad | `qwen2.5-coder:1.5b`<br>`qwen2.5-coder:0.5b` | `ollama pull qwen2.5-coder:1.5b` | Fast token generation on CPU (~25-45 t/s), extremely low RAM usage (~1.2GB). Ideal for laptops without discrete GPUs. |
+| **4GB VRAM** | NVIDIA RTX 3050 (4GB), GTX 1650, GTX 1650 Ti, AMD Radeon RX 6500M / RX 5500M | `qwen2.5-coder:1.5b`<br>`deepseek-coder:1.3b` | `ollama pull qwen2.5-coder:1.5b` | Fits 100% inside 4GB GPU VRAM. Sub-second response times, 50-80 tokens/sec. Excellent for single-file edits and scripts. |
+| **6GB VRAM** | NVIDIA RTX 3060 Laptop (6GB), RTX 3050 (6GB), RTX 2060, AMD Radeon RX 6600M (6GB) | `qwen2.5-coder:7b` (Q4_K_M)<br>`starcoder2:7b` | `ollama pull qwen2.5-coder:7b` | **Best value tier**. Runs complete 7B parameter reasoning directly in VRAM (~4.4GB VRAM footprint). High coding accuracy and fast execution (~35-50 t/s). |
+| **8GB VRAM** | NVIDIA RTX 4060 (8GB), RTX 3070 (8GB), RTX 4070 Laptop (8GB), AMD Radeon RX 7600 / RX 6600 (8GB), Apple M2/M3 (16GB-18GB) | `qwen2.5-coder:7b`<br>`deepseek-coder:6.7b`<br>`codellama:7b-instruct` | `ollama pull qwen2.5-coder:7b` | Full 8K-16K context window acceleration without CPU spillover. Blazing fast code generation (45-65 t/s). Handles multi-file refactoring with ease. |
+| **12GB - 16GB VRAM** | NVIDIA RTX 3060 (12GB Desktop), RTX 4070 Ti, RTX 4080 (16GB), AMD Radeon RX 6700 XT / 7800 XT (16GB), Apple M2/M3/M4 Pro (18GB-36GB) | `qwen2.5-coder:14b`<br>`codestral:22b` (Q4_K_M)<br>`deepseek-coder-v2:16b` | `ollama pull qwen2.5-coder:14b` | Advanced multi-file reasoning, complex algorithmic problem solving, and architecture design (~30-55 t/s). |
+| **24GB+ VRAM** | NVIDIA RTX 3090 (24GB), RTX 4090 (24GB), AMD Radeon RX 7900 XTX (24GB), Apple M2/M3/M4 Max (64GB-128GB Unified Memory) | `qwen2.5-coder:32b`<br>`codestral:22b` (FP16)<br>`deepseek-coder-v2:236b` (Q4) | `ollama pull qwen2.5-coder:32b` | Flagship open-weights coding capability matching GPT-4o intelligence level, running 100% locally and completely offline. |
+
+---
+
+## Comprehensive Slash Commands Reference
+
+KerberoSec CLI provides a complete suite of built-in slash commands that can be triggered directly in the chat input or through the autocomplete menu:
+
+| Slash Command | Category | Description | Instructions and Behavior |
+| :--- | :--- | :--- | :--- |
+| **`/settings`** | Configuration | Modify agent configuration and options | Opens the interactive settings modal to configure model parameters, reasoning effort, auto-approval thresholds, and tool permissions. |
+| **`/config`** | Configuration | Alias for agent configuration | Shorthand alias that launches the `/settings` dialog directly. |
+| **`/model`** | Model Management | Switch model or AI provider | Opens the visual model selector dialog to switch between local Ollama models (`qwen2.5-coder`) and cloud providers (Anthropic Claude, OpenAI GPT-4o, Google Gemini, Groq). |
+| **`/theme`** | Interface | Change terminal color theme | Launches the theme picker to instantly switch between Dark, Light, Midnight, Hologram, and Classic ANSI color palettes with live preview. |
+| **`/account`** | Authentication | View KerberoSec account details | Displays active provider credentials, authenticated profile details, and session token consumption. |
+| **`/logout`** | Authentication | Sign out and return to onboarding | Purges current session credentials from memory and transitions the TUI cleanly back to the full-screen onboarding login view. |
+| **`/mcp`** | Extensibility | Manage Model Context Protocol servers | Opens the MCP management dialog to inspect active MCP servers, view connected tools, test latency, and reload `.kerberosec/mcp_settings.json`. |
+| **`/plugins`** | Extensibility | Manage plugins and extensions | Lists installed plugins, enables or disables workspace extensions, and reloads plugin tools dynamically. |
+| **`/compact`** | Memory | Manually compact conversation context | Triggers the Compaction Coordinator to summarize older conversational turns into a succinct checkpoint, freeing up context headroom. |
+| **`/skills`** | Workflows | Browse and invoke custom skills | Opens the skills browser to view custom prompt workflows, automation routines, and repo-specific playbooks stored in `.kerberosec/skills/`. |
+| **`/fork`** | Session | Create a named session branch | Creates an isolated branch of the current conversation history at the active turn, allowing alternative implementation experiments without losing prior state. |
+| **`/undo`** | Rollback | Restore files to previous checkpoint | Restores workspace files to the exact in-memory shadow snapshot taken before the last file modification turn. |
+| **`/clear`** | Session | Start a clean new session | Clears the active chat buffer and initializes a fresh conversation state while preserving workspace index caches. |
+| **`/history`** | History | View session history and transcripts | Opens the session history browser to search, inspect, or resume previous coding conversations. |
+| **`/help`** | Documentation | Display interactive help dialog | Renders a full help modal with keybindings, slash commands reference, and usage tips. |
+| **`/quit`** | Lifecycle | Exit KerberoSec CLI | Terminates active background workers and cleanly exits the CLI back to your terminal prompt. |
+
+---
+
+## Keyboard Shortcuts Reference
+
+| Shortcut | Action | Scope and Behavior |
+| :--- | :--- | :--- |
+| **<kbd>Tab</kbd>** | Toggle Plan vs Act Mode | Seamlessly toggles the agent between **Plan Mode** (read-only architectural planning) and **Act Mode** (autonomous write and execution). |
+| **<kbd>Shift</kbd>+<kbd>Tab</kbd>** | Toggle Auto-Approve Policy | Switches between manual human-in-the-loop approval and automatic tool execution for fast, uninterrupted workflows. |
+| **<kbd>Ctrl</kbd>+<kbd>P</kbd>** | Open Command Palette | Launches the fuzzy-searchable Command Palette modal to quickly search actions, switch models, or configure settings. |
+| **<kbd>Ctrl</kbd>+<kbd>C</kbd> (1x)** | Copy Text / Preserve Input | Preserves terminal clipboard copying without halting active model thinking streams or clearing typed text. Shows notification: *Press Ctrl+C again to exit*. |
+| **<kbd>Ctrl</kbd>+<kbd>C</kbd> (2x)** | Double-Tap Clean Exit | Pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> twice within 2000ms triggers immediate clean exit from the CLI. |
+| **<kbd>Esc</kbd>** | Cancel / Abort Turn | Aborts active LLM stream generation, cancels long-running background tool processes, or closes open modals. |
+| **<kbd>Up</kbd> / <kbd>Down</kbd>** | Input History Navigation | Cycles through previously submitted prompt history in the input textarea. |
+| **<kbd>Ctrl</kbd>+<kbd>V</kbd>** | Multi-Modal Image Paste | Pastes image from system clipboard directly into the prompt context buffer for vision-capable models. |
+
+---
+
+## Model Context Protocol (MCP) Deep Dive and Configuration Guide
+
+### What is MCP and How It Works in KerberoSec
+
+The **Model Context Protocol (MCP)** is an open industry standard that enables AI models to discover, inspect, and invoke external tools and data sources securely.
+
+In KerberoSec CLI, MCP support is built directly into the agent execution runtime (`@kerberosec/core` and `McpHub` in `apps/cli`):
+1. **Dynamic Tool Discovery**: When KerberoSec CLI launches or when `/mcp` is reloaded, the client connects to all configured MCP servers, queries their `ListTools` endpoint, and validates the input JSON schemas for each tool.
+2. **Unified Agent Registry**: Discovered MCP tools are registered alongside native file and terminal tools in the core tool registry.
+3. **Autonomous Execution with Approval**: When the model decides to invoke an MCP tool (e.g. `sqlite_query` or `github_create_pull_request`), KerberoSec serializes the call into a JSON-RPC 2.0 payload, prompts the user for approval (if auto-approve is off), dispatches the request over the active transport, and feeds the output observation back to the model.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Developer
+    participant CLI as KerberoSec CLI (McpHub)
+    participant Server as External MCP Server (STDIO / SSE)
+    participant Target as External Resource (DB / GitHub / Cloud)
+
+    CLI->>Server: Initialize Connection (JSON-RPC 2.0 handshake)
+    Server-->>CLI: Capabilities and Server Info
+    CLI->>Server: tools/list Request
+    Server-->>CLI: Return Tool Schemas (tools, arguments, descriptions)
+    Note over CLI: Register Tools in Agent Execution Engine
+
+    User->>CLI: "Query active users from database"
+    CLI->>Server: tools/call { name: "sqlite_query", args: { sql: "SELECT * FROM users" } }
+    Server->>Target: Execute SQL against Database
+    Target-->>Server: Raw Query Results
+    Server-->>CLI: tools/call Result (JSON payload)
+    CLI-->>User: Format and Display SQL Output in Terminal
+```
+
+---
+
+### Configuration Files and Precedence Rules
+
+KerberoSec CLI supports two configuration levels for MCP servers:
+
+1. **Workspace Level Configuration (Recommended)**:
+   - **Path**: `.kerberosec/mcp_settings.json` (located in your repository root).
+   - **Scope**: Project-specific tools (e.g. local project database, project Docker containers, specialized test runners).
+   - **Version Control**: Can be committed to Git so the entire engineering team shares the same MCP tool configuration.
+2. **Global User Level Configuration**:
+   - **Path**: `~/.kerberosec/mcp_settings.json` (located in your home directory).
+   - **Scope**: Developer-wide tools available across all projects (e.g. GitHub personal access tokens, Brave web search, Notion notes).
+3. **Precedence**: Workspace configurations extend and override global configurations if a server name collision occurs.
+
+---
+
+### Managing MCP via the `/mcp` Interactive Dialog
+
+Inside the KerberoSec CLI terminal interface:
+1. Type `/mcp` and press <kbd>Enter</kbd> (or select `/mcp` from the Command Palette with <kbd>Ctrl</kbd>+<kbd>P</kbd>).
+2. The interactive MCP modal displays:
+   - All active MCP servers and their transport status (`Running`, `Connecting`, `Failed`).
+   - The total number of registered tools per server.
+   - Individual tool schemas, arguments, and required parameters.
+   - A **Reload Connections** button to re-read `.kerberosec/mcp_settings.json` on the fly without restarting your session.
+
+---
+
+### Production-Ready MCP Server Recipes
+
+Below are complete, copy-pasteable configurations for the most popular MCP servers. Save these in `.kerberosec/mcp_settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "sqlite": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-sqlite",
+        "--db-path",
+        "./data/database.sqlite"
+      ]
+    },
+    "postgres": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-postgres",
+        "postgresql://postgres:password@localhost:5432/my_database"
+      ]
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "ghp_yourPersonalAccessTokenHere"
+      }
+    },
+    "brave-search": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-brave-search"
+      ],
+      "env": {
+        "BRAVE_API_KEY": "BSA_yourBraveSearchApiKeyHere"
+      }
+    },
+    "fetch": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-fetch"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/path/to/allowed/directory"
+      ]
+    },
+    "docker": {
+      "command": "uvx",
+      "args": [
+        "mcp-server-docker"
+      ]
+    },
+    "remote-cloud-service": {
+      "url": "https://mcp.mycompany.internal/sse",
+      "headers": {
+        "Authorization": "Bearer my_secure_token"
+      }
+    }
+  }
+}
+```
+
+---
+
+### Creating a Custom In-House MCP Server
+
+You can write your own custom MCP server in less than 20 lines of code using Python or Node.js.
+
+#### Custom Python MCP Server Example (`scripts/custom_mcp.py`):
+
+```python
+from mcp.server.fastmcp import FastMCP
+
+mcp = FastMCP("CompanyInternalTools")
+
+@mcp.tool()
+def query_internal_metrics(service_name: str) -> str:
+    # Fetches real-time server health and CPU load for an internal service
+    return f"Service {service_name}: Health=OK, CPU=18%, Memory=42%"
+
+@mcp.tool()
+def deploy_staging_build(branch: str) -> str:
+    # Triggers an automated staging build for the specified git branch
+    return f"Deployment pipeline triggered for branch '{branch}'. Build ID: #4829"
+
+if __name__ == "__main__":
+    mcp.run(transport="stdio")
+```
+
+#### Registering Your Custom Server in `.kerberosec/mcp_settings.json`:
+
+```json
+{
+  "mcpServers": {
+    "company-tools": {
+      "command": "python3",
+      "args": ["./scripts/custom_mcp.py"]
+    }
+  }
+}
+```
+
+---
+
+### MCP Troubleshooting and Debugging
+
+1. **`command not found: uvx`**:
+   - Install `uv` (the fast Python package manager):
+     ```bash
+     curl -fsSL https://astral.sh/uv/install.sh | bash
+     ```
+2. **`command not found: npx`**:
+   - Ensure Node.js is installed (`sudo apt install nodejs npm` or `brew install node`).
+3. **Environment variables not passed to MCP server**:
+   - Explicitly define required API tokens inside the `"env": { ... }` block in `mcp_settings.json`.
+4. **Server hangs on startup**:
+   - Test running the command manually in your terminal (e.g. `uvx mcp-server-sqlite --db-path ./data.db`) to check for runtime errors or missing packages.
+
+---
+
+## Real-World Interactive Use Case Walkthroughs
+
+### Walkthrough 1: Automated Legacy Code Migration
+
+Modernize an entire legacy CommonJS codebase to TypeScript ESM with strict type checking in a single command:
+
+```bash
+kerberosec "migrate all CommonJS files in src/ to TypeScript ESM, update package.json type to module, and verify compilation"
+```
+
+1. The agent scans the workspace using `find_by_name` and `grep_search` to map all `require()` and `module.exports` occurrences.
+2. It generates unified diffs converting statements to `import` and `export` syntaxes.
+3. It updates `package.json` with `"type": "module"`.
+4. It executes `bun build` and `tsc --noEmit` using `run_command` to verify zero type errors.
+
+---
+
+### Walkthrough 2: Autonomous Unit Test Suite Generation
+
+Generate complete, resilient unit tests for complex business logic:
+
+```bash
+kerberosec "generate comprehensive unit tests for src/services/auth.ts covering edge cases, expired tokens, and invalid signatures"
+```
+
+1. The agent reads `src/services/auth.ts` and parses function signatures and error branches.
+2. It creates a new test file `src/services/auth.test.ts` with mocked JWT signatures and cryptographic fixtures.
+3. It runs `bun test src/services/auth.test.ts` via the subprocess runner.
+4. If an assertion fails, the self-correction engine analyzes the failure stack trace, refines the mock, and re-executes tests until all assertions pass.
+
+---
+
+### Walkthrough 3: Automated Security and Vulnerability Sweep
+
+Perform an autonomous security audit on database access layers and authentication routines:
+
+```bash
+kerberosec "audit all database queries in src/db/ for SQL injection vulnerabilities and refactor to parameterized queries"
+```
+
+1. The agent runs ripgrep to identify raw string interpolations in SQL queries (e.g. `SELECT * FROM users WHERE id = '${userId}'`).
+2. It replaces vulnerable chunks with parameterized queries (e.g. `db.query('SELECT * FROM users WHERE id = $1', [userId])`).
+3. It creates shadow in-memory snapshots before modifying any file on disk.
+4. It presents unified colorized diffs for human confirmation before writing changes.
+
+---
+
+### Walkthrough 4: Live Bug Debugging with Diagnostic Subagents
+
+Debug complex intermittent bugs across multiple packages:
+
+```bash
+kerberosec "the WebSocket connection drops after 30 seconds during test runs. diagnose and fix"
+```
+
+1. The main coordinator agent spawns a diagnostic subagent to inspect WebSocket ping/pong heartbeat intervals.
+2. A second subagent reads server network logs and parses connection state transitions.
+3. The root cause is identified as an unhandled timeout event in `src/network/socket.ts`.
+4. The fix is applied, the test suite is executed, and a verified summary is rendered in the terminal.
+
+---
+
+## Context Window Management and Token Optimization
+
+KerberoSec CLI implements intelligent context window optimization to reduce token overhead, minimize latency, and prevent context exhaustion:
+
+### 1. File Pinning (`@file.ts`)
+Typing `@` in the prompt textarea opens an interactive fuzzy file scanner. Selecting a file injects only the essential AST outline and file content into the active turn buffer, avoiding unnecessary workspace bloat.
+
+### 2. Autonomous Context Compaction (`/compact`)
+When conversation history approaches 80% of the active model context headroom:
+- The Compaction Coordinator summarizes earlier turns into structured checkpoint summaries.
+- Ephemeral tool outputs and test logs are compressed into single-line status records.
+- Critical architectural decisions and unresolved goals are preserved intact.
+
+### 3. Native Prompt Caching
+When using cloud models with prompt caching support (Anthropic Claude, OpenAI GPT-4o), KerberoSec CLI structures context blocks with fixed prefix anchors, reducing token input costs by up to 90% and accelerating turn responses.
+
+---
+
+## Multi-Modal Vision and UI Screenshot Debugging
+
+KerberoSec CLI supports multi-modal vision inputs directly inside the terminal:
+
+1. **Clipboard Image Paste (<kbd>Ctrl</kbd>+<kbd>V</kbd>)**:
+   - Take a screenshot of a UI bug, design mockup, or database schema diagram.
+   - Press <kbd>Ctrl</kbd>+<kbd>V</kbd> inside the prompt input.
+   - KerberoSec CLI detects the image format (`PNG`, `JPEG`, `WebP`), reads the buffer via native clipboard utilities (`xclip`, `wl-paste`, `pbpaste`), downsamples the image if necessary, and injects the base64 data URI into the vision model payload.
+2. **Use Cases**:
+   - Converting UI mockups into Tailwind CSS and React components.
+   - Debugging broken layout alignments from browser screenshots.
+   - Analyzing architectural diagram images and translating them into code schemas.
+
+---
+
+## Custom Repository Rules Engine (`.kerberosecrules`)
+
+KerberoSec CLI automatically loads project-specific architecture rules, coding standards, and security constraints from a `.kerberosecrules` file or `.kerberosecrules/` directory located in your repository root.
+
+### Example `.kerberosecrules` Configuration
+
+```markdown
+# Repository Guidelines for KerberoSec
+
+## Coding Standards
+- Use TypeScript strict mode with explicit return types on exported functions.
+- Do not use 'any'; use 'unknown' and narrow with type guards.
+- Prefer immutability and pure functions where possible.
+
+## Testing Rules
+- Every new function in 'src/utils/' must have an accompanying '.test.ts' file.
+- Run tests using 'bun test' before concluding any turn.
+
+## Architecture Boundaries
+- The UI layer ('src/tui/') must never import directly from database packages.
+- Always use the Checkpoint Engine before modifying configuration files.
+```
+
+---
+
+## Custom Skills and Workflow Automation (`.kerberosec/skills/`)
+
+Skills extend KerberoSec CLI with domain-specific workflows, custom prompts, and structured tool procedures. Each skill is stored in `.kerberosec/skills/<skill-name>/SKILL.md` and can be invoked using `/skills` or typing `/<skill-name>`.
+
+### Example Skill: `security-audit/SKILL.md`
+
+```markdown
+---
+name: security-audit
+description: Scans the codebase for hardcoded secrets, SQL injection, and insecure dependencies
+---
+
+When invoked, perform the following security audit steps:
+1. Scan all files in 'src/' for hardcoded API keys, JWT secrets, or passwords using ripgrep.
+2. Verify all database queries use parameterized SQL inputs.
+3. Check dependencies in 'package.json' for deprecated or vulnerable packages.
+4. Generate a concise diagnostic markdown table with recommendations.
+```
+
+---
+
+## Enterprise and Team Deployment Architecture
+
+For engineering teams and organizations deploying KerberoSec CLI across multiple developers:
+
+### 1. Centralized On-Premise Ollama GPU Server
+Instead of requiring dedicated GPUs on every developer laptop, organizations can host a centralized Ollama GPU server on the local company network or private cloud VPC:
+
+```bash
+# Developer .bashrc or .zshrc
+export OLLAMA_HOST="http://ollama-gpu-cluster.internal.company.com:11434"
+```
+
+All developers on the team can run high-capacity 32B and 70B parameter coding models with hardware acceleration, while maintaining complete privacy and zero data egress.
+
+### 2. Standardized Team Rules and Skills
+Commit `.kerberosecrules` and `.kerberosec/skills/` to your Git repositories. When new developers clone the repository, their KerberoSec CLI assistant automatically adopts team coding standards, linting rules, and deployment playbooks.
+
+---
+
+## Headless CI/CD Mode and Automation Scripts
+
+KerberoSec CLI can be invoked in non-interactive / headless mode inside shell scripts, GitHub Actions, or cron jobs:
+
+### Single-Prompt Shell Execution:
+```bash
+kerberosec "analyze the diff between main and this branch and write release notes"
+```
+
+### GitHub Actions Automated PR Code Review Workflow:
+```yaml
+name: Automated AI Code Review
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  review:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install KerberoSec CLI
+        run: |
+          git clone https://github.com/KerberoSec/KerberoSec-CLI.git /tmp/kerberosec
+          cd /tmp/kerberosec && bun install && bun run build:sdk && bun -F @kerberosec/cli build
+          mkdir -p ~/.local/bin
+          echo -e '#!/bin/bash
+exec bun run /tmp/kerberosec/apps/cli/src/index.ts "$@"' > ~/.local/bin/kerberosec
+          chmod +x ~/.local/bin/kerberosec
+
+      - name: Run Headless Code Review
+        env:
+          PATH: /home/runner/.local/bin:/home/runner/.bun/bin:${{ env.PATH }}
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+        run: |
+          kerberosec "review all changed files in this PR for logic bugs, performance regressions, and security flaws"
+```
 
 ---
 
@@ -82,11 +574,6 @@ Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is 
   - Schedule recurring background tasks such as daily test runs, vulnerability sweeps, and dependency reviews.
 - Account Management and Clean `/logout`:
   - Reset auth tokens, switch accounts, and return instantly to the onboarding login screen with `/logout`.
-- Ergonomic Terminal Keyboard Navigation:
-  - Single <kbd>Ctrl</kbd>+<kbd>C</kbd>: Preserved for copying text; never cancels running thinking streams.
-  - Double <kbd>Ctrl</kbd>+<kbd>C</kbd> (within 2s): Exits the CLI cleanly.
-  - <kbd>Esc</kbd>: Cancels active reasoning or tool execution.
-  - <kbd>Ctrl</kbd>+<kbd>P</kbd>: Opens the fuzzy Command Palette.
 - Extensible Model Context Protocol (MCP):
   - Connect external MCP servers over stdio or HTTP SSE to equip the agent with custom database tools, deployment scripts, and external APIs.
 - Automated 1-Step Setup (`setup.sh`):
@@ -833,29 +1320,6 @@ Use the `/mcp` slash command in chat or create a `.kerberosec/mcp_settings.json`
 ### Docker container unable to reach host Ollama
 - Cause: Docker bridge networking may need host gateway routing on Linux.
 - Fix: Use `docker compose run --rm kerberosec`, which pre-configures `host.docker.internal:host-gateway` automatically.
-
----
-
-## Commands and Keyboard Shortcuts Reference
-
-### Slash Commands
-| Command | Description |
-| :--- | :--- |
-| **`/logout`** | Sign out of the active account and return to login onboarding |
-| **`/model`** | Open the model selector to switch between local Ollama and cloud providers |
-| **`/mcp`** | Manage Model Context Protocol (MCP) servers and tools |
-| **`/clear`** | Reset conversation history and start a fresh session |
-| **`/help`** | Open the interactive help and documentation dialog |
-
-### Keyboard Shortcuts
-| Shortcut | Action |
-| :--- | :--- |
-| **<kbd>Tab</kbd>** | Toggle between **Plan** and **Act** modes |
-| **<kbd>Ctrl</kbd>+<kbd>P</kbd>** | Open the Command Palette |
-| **<kbd>Ctrl</kbd>+<kbd>C</kbd> (1x)** | Copy selected text / active input (never halts thinking) |
-| **<kbd>Ctrl</kbd>+<kbd>C</kbd> (2x)** | Cleanly exit KerberoSec CLI |
-| **<kbd>Esc</kbd>** | Cancel ongoing thinking or prompt execution |
-| **<kbd>Shift</kbd>+<kbd>Tab</kbd>** | Toggle auto-approval mode for tool executions |
 
 ---
 

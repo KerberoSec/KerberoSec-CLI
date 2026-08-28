@@ -60,6 +60,7 @@ KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** a
 17. [Enterprise and Team Deployment Architecture](#enterprise-and-team-deployment-architecture)
 18. [Headless CI/CD Mode and Automation Scripts](#headless-cicd-mode-and-automation-scripts)
 19. [Deep-Dive Architecture and System Diagrams](#deep-dive-architecture-and-system-diagrams)
+    - [Diagram 0: Complete Master System Architecture and Unified End-to-End Topology](#diagram-0-complete-master-system-architecture-and-unified-end-to-end-topology)
     - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
     - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
     - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
@@ -742,6 +743,93 @@ docker run -it --rm   -v $(pwd):/workspace   -e OLLAMA_HOST=http://host.docker.i
 ---
 
 ## Deep-Dive Architecture and System Diagrams
+
+### Diagram 0: Complete Master System Architecture and Unified End-to-End Topology
+
+The following comprehensive architecture diagram illustrates the entire end-to-end topology of KerberoSec CLI, mapping how user input moves across the reactive UI layer, the agentic runtime coordinator, the multi-provider LLM router, the tool execution subsystem, the MCP client hub, and persistent disk checkpoints:
+
+```mermaid
+graph TD
+    subgraph UI_Layer ["1. Terminal Reactive UI Layer (apps/cli - OpenTUI + React 19)"]
+        RawTerm["Terminal ANSI Stream / PTY"] --> RootKeyboard["useRootKeyboard Hook<br>(Ctrl+C Timer, Tab Mode, Esc Abort, Ctrl+P)"]
+        RootKeyboard --> UIState["UI State & Session Context Provider"]
+        UIState --> ChatViewComp["ChatView & Virtual Message List"]
+        UIState --> InputArea["InputBar & Autocomplete Engine (/slash & @mentions)"]
+        UIState --> PaletteModal["Fuzzy Command Palette Modal (Ctrl+P)"]
+        UIState --> StatusBarComp["Real-Time Status Bar (Model, Cost, Tokens, Mode)"]
+    end
+
+    subgraph Runtime_Layer ["2. Session Runtime & Turn Coordinator (@kerberosec/core)"]
+        InputArea -->|Submit Prompt| TurnQueue["Interactive Turn Buffer & Prompt Queue"]
+        TurnQueue --> Hydrator["Context Hydration Engine<br>(System Rules, @Pinned AST, Memory)"]
+        Hydrator --> HeadroomCheck{"Token Headroom Check (>80% Limit?)"}
+        HeadroomCheck -- "Yes" --> Compactor["Compaction Coordinator<br>(Summarize Earlier Turns)"]
+        HeadroomCheck -- "No" --> AgentPlanner["ReAct Multi-Step Decision Planner"]
+        Compactor --> AgentPlanner
+        ShadowSnap["In-Memory Shadow Snapshot Buffer"] <--> AgentPlanner
+    end
+
+    subgraph LLM_Layer ["3. Universal LLM Protocol Routing Layer (@kerberosec/llms)"]
+        AgentPlanner --> UniversalRouter{"Universal Model Router"}
+        UniversalRouter -- "Local (Ollama)" --> OllamaDaemonMgr["Ollama Auto-Daemon Engine<br>(Health Check port 11434 & Auto-Serve)"]
+        OllamaDaemonMgr --> LocalOllama["Local GPU/CPU Inference<br>(qwen2.5-coder, deepseek-coder)"]
+        UniversalRouter -- "Cloud (Anthropic)" --> AnthropicAdapter["Anthropic Messages API<br>(Claude 3.7 Sonnet / Opus)"]
+        UniversalRouter -- "Cloud (OpenAI)" --> OpenAIAdapter["OpenAI Chat Completions API<br>(GPT-4o)"]
+        UniversalRouter -- "Cloud (Google)" --> GeminiAdapter["Google Gemini Content API<br>(Gemini 2.0 Flash / Pro)"]
+        UniversalRouter -- "Cloud (Groq)" --> GroqAdapter["Groq Ultra-Fast API<br>(Llama 3.3 70B)"]
+
+        LocalOllama --> StreamParser["Unified Token Stream Parser & Typewriter"]
+        AnthropicAdapter --> StreamParser
+        OpenAIAdapter --> StreamParser
+        GeminiAdapter --> StreamParser
+        GroqAdapter --> StreamParser
+        StreamParser -->|Live Reasoning Chunks| ChatViewComp
+    end
+
+    subgraph Agent_Core ["4. Core Agent Engine & Tool Execution Subsystem"]
+        StreamParser -->|Tool Call Request| SecurityGate{"Security Permission Gate<br>(Auto-Approve vs User Confirm)"}
+        SecurityGate -- "User Confirm" --> DiffModal["Render Unified ANSI Color Diff"]
+        DiffModal -->|User Approved| ToolDispatcher["Central Tool Registry & Dispatcher"]
+        SecurityGate -- "Auto-Approved / Read Tool" --> ToolDispatcher
+
+        ToolDispatcher --> FileTools["File Engine<br>(read_file, write_to_file, replace_file_content)"]
+        ToolDispatcher --> SearchTools["Codebase AST Search<br>(grep_search, find_by_name)"]
+        ToolDispatcher --> ShellRunner["Shell Process Runner<br>(Subprocess PTY execution)"]
+        ToolDispatcher --> WorktreeMgr["Git Worktree Sandbox Manager"]
+        ToolDispatcher --> SubagentHub["Subagent Delegation Hub (@kerberosec/agents)"]
+        ToolDispatcher --> McpHubCore["Model Context Protocol (MCP) Client Hub"]
+    end
+
+    subgraph External_Integrations ["5. Subagents, MCP Servers & External Services"]
+        SubagentHub --> ResearchSubagent["Research Subagent<br>(Read-Only Exploration)"]
+        SubagentHub --> DebugSubagent["Diagnostic Subagent<br>(Test Harness & Error Parsing)"]
+        
+        McpHubCore -->|STDIO / JSON-RPC 2.0| SQLiteMCP["SQLite MCP Server"]
+        McpHubCore -->|STDIO / JSON-RPC 2.0| PostgresMCP["PostgreSQL MCP Server"]
+        McpHubCore -->|STDIO / JSON-RPC 2.0| GitHubMCP["GitHub MCP Server"]
+        McpHubCore -->|STDIO / JSON-RPC 2.0| BraveMCP["Brave Web Search MCP Server"]
+        McpHubCore -->|HTTP SSE Transport| CloudMCP["Enterprise Remote Cloud MCP"]
+    end
+
+    subgraph Workspace_Storage ["6. Workspace, Configs & Persistent Storage"]
+        FileTools <--> LocalDisk["Workspace Source Files on Local Disk"]
+        ShellRunner <--> HostOS["Host Operating System Shell (Bash/Zsh)"]
+        WorktreeMgr <--> GitRepo["Git Repository Version Control"]
+        Hydrator <--> RulesConfig[".kerberosecrules (Architecture Standards)"]
+        Hydrator <--> SkillsConfig[".kerberosec/skills/ (Custom Automation Workflows)"]
+        McpHubCore <--> MCPConfig[".kerberosec/mcp_settings.json (MCP Server Definitions)"]
+    end
+
+    FileTools -->|Capture Tool Result| CircuitBreaker{"Mistake Detector & Loop Breaker"}
+    SearchTools -->|Capture Tool Result| CircuitBreaker
+    ShellRunner -->|Capture Exit Code & Logs| CircuitBreaker
+    CircuitBreaker -- "Error Detected" --> SelfCorrection["Inject Error Stack for Self-Healing Turn"]
+    SelfCorrection --> AgentPlanner
+    CircuitBreaker -- "Success / Finished" --> TurnDone["Mark Turn Complete & Update UI"]
+    TurnDone --> UIState
+```
+
+---
 
 ### Diagram 1: Monorepo Package Topology and Boundaries
 

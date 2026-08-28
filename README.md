@@ -95,34 +95,53 @@ KerberoSec-CLI/
 
 ### Architecture Data Flow
 
-```text
-┌────────────────────────────────────────────────────────┐
-│                   User Terminal                        │
-└──────────────────────────┬─────────────────────────────┘
-                           │ User Prompt / Commands
-                           ▼
-┌────────────────────────────────────────────────────────┐
-│                   apps/cli (TUI)                       │
-│  - OpenTUI React Renderer                              │
-│  - useRootKeyboard (Double Ctrl+C, Tab, /logout)       │
-│  - Command Palette (Ctrl+P) & Slash Command Dispatcher │
-└──────────────────────────┬─────────────────────────────┘
-                           │ Session Execution Loop
-                           ▼
-┌────────────────────────────────────────────────────────┐
-│                  @kerberosec/core                      │
-│  - Tool Registry (Read, Write, Edit, Bash, Grep)       │
-│  - Checkpoint Engine & Rollback Management             │
-│  - Ollama Auto-Daemon Manager                          │
-└──────────────┬──────────────────────────┬──────────────┘
-               │                          │
-               ▼                          ▼
-┌──────────────────────────────┐ ┌──────────────────────┐
-│       @kerberosec/llms       │ │  MCP Client Manager  │
-│  - Ollama (Local Engine)     │ │  - External Tools    │
-│  - OpenAI / Anthropic        │ │  - Custom Servers    │
-│  - Google Gemini / Groq      │ └──────────────────────┘
-└──────────────────────────────┘
+```mermaid
+graph TD
+    subgraph ClientLayer ["Terminal and UI Layer (apps/cli)"]
+        A["Terminal Window"] --> B["OpenTUI and React Engine"]
+        B --> C["Keyboard Controls (Double Ctrl+C, Tab, Esc)"]
+        B --> D["Slash Commands (/logout, /model, /mcp)"]
+        B --> E["Active Views (Chat, Onboarding, Config)"]
+    end
+
+    subgraph RuntimeLayer ["Session Runtime (apps/cli/src/runtime)"]
+        F["Interactive Session Runtime"]
+        C --> F
+        D --> F
+        F --> G["Turn State Tracker"]
+        F --> H["Streaming Output Formatter"]
+        H --> E
+    end
+
+    subgraph CoreLayer ["Core Agent Engine (@kerberosec/core)"]
+        J["Agent Execution Engine"]
+        F --> J
+        J --> K["Tool Policy and Approvals Gate"]
+        J --> L["Checkpoint and State Manager"]
+    end
+
+    subgraph LLMLayer ["Model Router (@kerberosec/llms)"]
+        N["Multi Provider Model Router"]
+        J --> N
+        N --> O["Local Offline Ollama Engine"]
+        N --> P["Cloud Providers (Claude, OpenAI, Gemini)"]
+    end
+
+    subgraph ExecutionLayer ["Tool Execution Engine"]
+        Q["Workspace File System Tools"]
+        R["Shell Terminal Commands"]
+        S["External MCP Servers"]
+        K --> Q
+        K --> R
+        K --> S
+    end
+
+    O --> J
+    P --> J
+    Q --> J
+    R --> J
+    S --> J
+    J --> F
 ```
 
 ---

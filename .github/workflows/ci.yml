@@ -21,6 +21,11 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v4
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
@@ -31,6 +36,9 @@ jobs:
 
       - name: Lint & Format Check
         run: bun biome check --diagnostic-level=error apps/cli/src/
+
+      - name: Build SDK
+        run: bun run build:sdk
 
       - name: Build CLI Bundle
         run: bun -F @kerberosec/cli build

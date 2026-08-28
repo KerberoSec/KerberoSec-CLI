@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/icon.png" width="120" alt="KerberoSec Logo" />
+  <img src="assets/icons/icon.png" width="130" alt="KerberoSec Logo" />
 </p>
 
 <h1 align="center">KerberoSec CLI</h1>
@@ -36,18 +36,23 @@
 ## 🌟 Table of Contents
 1. [Overview and Vision](#-overview-and-vision)
 2. [Key Highlights](#-key-highlights)
-3. [Deep-Dive Architecture and System Diagrams](#-deep-dive-architecture-and-system-diagrams)
+3. [Comprehensive Architecture and System Diagrams](#-comprehensive-architecture-and-system-diagrams)
    - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
    - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
    - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
    - [Diagram 4: Interactive Turn Lifecycle and Prompt Queue](#diagram-4-interactive-turn-lifecycle-and-prompt-queue)
    - [Diagram 5: ReAct Decision Loop and Self-Correction Engine](#diagram-5-react-decision-loop-and-self-correction-engine)
    - [Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture](#diagram-6-checkpoint-engine-and-shadow-snapshot-architecture)
-   - [Diagram 7: Multi-Provider LLM Protocol Translation Layer](#diagram-7-multi-provider-llm-protocol-translation-layer)
-   - [Diagram 8: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-8-local-offline-ollama-auto-daemon-lifecycle)
-   - [Diagram 9: Model Context Protocol (MCP) Host and Tool Registry](#diagram-9-model-context-protocol-mcp-host-and-tool-registry)
-   - [Diagram 10: Concurrent Subagent Delegation Pipeline](#diagram-10-concurrent-subagent-delegation-pipeline)
-   - [Diagram 11: Authentication State Machine and Logout Flow](#diagram-11-authentication-state-machine-and-logout-flow)
+   - [Diagram 7: Chunk Diff Matching and Conflict Resolution Algorithm](#diagram-7-chunk-diff-matching-and-conflict-resolution-algorithm)
+   - [Diagram 8: Multi-Provider LLM Protocol Translation Layer](#diagram-8-multi-provider-llm-protocol-translation-layer)
+   - [Diagram 9: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-9-local-offline-ollama-auto-daemon-lifecycle)
+   - [Diagram 10: Model Context Protocol (MCP) Host and Tool Registry](#diagram-10-model-context-protocol-mcp-host-and-tool-registry)
+   - [Diagram 11: Concurrent Subagent Delegation Pipeline](#diagram-11-concurrent-subagent-delegation-pipeline)
+   - [Diagram 12: Context Mentions and File Pinning Engine](#diagram-12-context-mentions-and-file-pinning-engine)
+   - [Diagram 13: Fuzzy Command Palette and Action Dispatcher](#diagram-13-fuzzy-command-palette-and-action-dispatcher)
+   - [Diagram 14: Subprocess Shell Runner and PTY Output Capture](#diagram-14-subprocess-shell-runner-and-pty-output-capture)
+   - [Diagram 15: Authentication State Machine and Logout Flow](#diagram-15-authentication-state-machine-and-logout-flow)
+   - [Diagram 16: Dynamic Theme Engine and ANSI Color Resolution](#diagram-16-dynamic-theme-engine-and-ansi-color-resolution)
 4. [Step-by-Step Execution Journey](#-step-by-step-execution-journey)
 5. [Installation and Automated 1-Step Setup](#-installation-and-automated-1-step-setup)
 6. [Commands and Keyboard Shortcuts Reference](#-commands-and-keyboard-shortcuts-reference)
@@ -91,7 +96,7 @@ Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is 
 
 ---
 
-## 🏛️ Deep-Dive Architecture and System Diagrams
+## 🏛️ Comprehensive Architecture and System Diagrams
 
 ### Diagram 1: Monorepo Package Topology and Boundaries
 
@@ -242,7 +247,30 @@ graph TD
 
 ---
 
-### Diagram 7: Multi-Provider LLM Protocol Translation Layer
+### Diagram 7: Chunk Diff Matching and Conflict Resolution Algorithm
+
+```mermaid
+flowchart TD
+    EditRequest["replace_file_content(targetContent, replacementContent)"] --> ReadFile["Read Target File from Disk"]
+    ReadFile --> ExactSearch{"Target String Matches Exactly in Range?"}
+    
+    ExactSearch -- "Yes (1 Match Found)" --> Splicer["Replace Target Chunk with Replacement Chunk"]
+    ExactSearch -- "Multiple Matches" --> RangeFilter["Filter Matches using [startLine, endLine]"]
+    RangeFilter --> SingleCandidate{"Single Match in Line Range?"}
+    SingleCandidate -- "Yes" --> Splicer
+    SingleCandidate -- "No" --> MatchError["Emit Error: Ambiguous match found"]
+
+    ExactSearch -- "No Match" --> WhitespaceNorm{"Match Found after Whitespace Trimming?"}
+    WhitespaceNorm -- "Yes" --> Splicer
+    WhitespaceNorm -- "No" --> TargetNotFound["Emit Error: Target chunk not found in file"]
+
+    Splicer --> FormatCheck["Verify File Indentation and Line Endings"]
+    FormatCheck --> AtomicWrite["Atomic Write Buffer to Disk"]
+```
+
+---
+
+### Diagram 8: Multi-Provider LLM Protocol Translation Layer
 
 ```mermaid
 graph TD
@@ -270,7 +298,7 @@ graph TD
 
 ---
 
-### Diagram 8: Local Offline Ollama Auto-Daemon Lifecycle
+### Diagram 9: Local Offline Ollama Auto-Daemon Lifecycle
 
 ```mermaid
 flowchart TD
@@ -289,7 +317,7 @@ flowchart TD
 
 ---
 
-### Diagram 9: Model Context Protocol (MCP) Host and Tool Registry
+### Diagram 10: Model Context Protocol (MCP) Host and Tool Registry
 
 ```mermaid
 graph TD
@@ -319,7 +347,7 @@ graph TD
 
 ---
 
-### Diagram 10: Concurrent Subagent Delegation Pipeline
+### Diagram 11: Concurrent Subagent Delegation Pipeline
 
 ```mermaid
 sequenceDiagram
@@ -343,7 +371,68 @@ sequenceDiagram
 
 ---
 
-### Diagram 11: Authentication State Machine and Logout Flow
+### Diagram 12: Context Mentions and File Pinning Engine
+
+```mermaid
+flowchart LR
+    UserTypes["User Types '@' in Input Textarea"] --> Scanner["Autocomplete Context Scanner"]
+    Scanner --> MatchFiles["Scan Workspace File Tree via Fast-Glob"]
+    MatchFiles --> Ranker["Fuzzy Rank & Filter by Search Prefix"]
+    Ranker --> DropdownUI["Render Mentions Dropdown Modal"]
+    
+    DropdownUI --> SelectFile["User Selects File (e.g. @src/index.ts)"]
+    SelectFile --> TokenCalculator["Calculate File Token Weight"]
+    TokenCalculator --> PinContext["Pin File AST and Content into Prompt Context Buffer"]
+```
+
+---
+
+### Diagram 13: Fuzzy Command Palette and Action Dispatcher
+
+```mermaid
+flowchart TD
+    Trigger["User Presses Ctrl + P"] --> OpenModal["Render Fuzzy Command Palette Modal"]
+    OpenModal --> IngestActions["Load Action Registry (Models, Modes, Tools, Auth)"]
+    IngestActions --> QueryFilter["User Enters Search Term"]
+    QueryFilter --> FuzzyMatcher["Fuzzy String Matcher & Score Evaluator"]
+    FuzzyMatcher --> Categorize["Group by Category (Actions, Models, Settings, Workspaces)"]
+    Categorize --> RenderList["Render Interactive Highlightable List"]
+    
+    RenderList --> SelectAction["User Selects Action & Hits Enter"]
+    SelectAction --> ExecuteAction{"Action Type"}
+    ExecuteAction -- "Switch Model" --> SetModel["Update Global State & Active Provider"]
+    ExecuteAction -- "Toggle Mode" --> SetMode["Switch between Plan and Act"]
+    ExecuteAction -- "Logout" --> TriggerLogout["Execute Logout & Return to Onboarding"]
+```
+
+---
+
+### Diagram 14: Subprocess Shell Runner and PTY Output Capture
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Core as Core Agent Engine
+    participant Runner as Shell Process Runner
+    participant PTY as Pseudo-Terminal (PTY) Subprocess
+    participant TUI as Terminal UI Streaming View
+
+    Core->>Runner: spawnCommand("bun test", cwd, timeoutMs)
+    Runner->>PTY: Fork Subprocess with PTY Allocation
+    
+    loop Stream Output
+        PTY-->>Runner: Emit STDOUT / STDERR ANSI Chunk
+        Runner->>TUI: Forward Real-Time Stream to Terminal
+    end
+
+    PTY-->>Runner: Process Exit (Code 0 or Error Code)
+    Runner-->>Core: Aggregate Full Output Buffer & Exit Code
+    Core->>Core: Parse Test Results & Check For Errors
+```
+
+---
+
+### Diagram 15: Authentication State Machine and Logout Flow
 
 ```mermaid
 stateDiagram-v2
@@ -359,6 +448,25 @@ stateDiagram-v2
     
     LoggingOut --> PurgeState: Cancel Active Turn & Clear Memory Tokens
     PurgeState --> Unauthenticated: Render Onboarding View Full-Screen
+```
+
+---
+
+### Diagram 16: Dynamic Theme Engine and ANSI Color Resolution
+
+```mermaid
+flowchart TD
+    TerminalEnv["Terminal Environment (TTY / TERM / COLORTERM)"] --> DetectSupport{"Detect Color Depth Support"}
+    DetectSupport -- "24-bit TrueColor" --> FullPalette["Full RGB 16.7M Color Space"]
+    DetectSupport -- "256 Color" --> ANSI256["ANSI 256 Fallback Matrix"]
+    DetectSupport -- "16 Color" --> Standard16["Basic ANSI 16 Colors"]
+
+    FullPalette --> ThemeRegistry["Theme Registry (Dark, Light, Midnight, Hologram, Classic)"]
+    ANSI256 --> ThemeRegistry
+    Standard16 --> ThemeRegistry
+
+    ThemeRegistry --> ResolveTokens["Resolve Semantic Tokens (Text, Border, DiffAdded, DiffRemoved)"]
+    ResolveTokens --> ApplyUI["Apply Theme Contract to OpenTUI Components"]
 ```
 
 ---

@@ -1,13 +1,5 @@
 # KerberoSec CLI
 
-**Next-Generation Autonomous Agentic AI Coding Assistant for your Terminal**
-
-Architected, developed, and maintained by **Arun Kumar**
-
----
-
-## About KerberoSec CLI
-
 KerberoSec CLI is a terminal-native autonomous coding assistant engineered from the ground up for software developers, security engineers, and DevOps practitioners. Rather than acting as a standard conversational chatbot, KerberoSec CLI operates as a full-fledged autonomous agentic runtime inside your terminal. It directly interfaces with your local file system, terminal shell, Git version control, and Model Context Protocol (MCP) servers to understand entire codebases, architect solutions, execute multi-file refactors, and verify code changes with live test runs.
 
 KerberoSec CLI is built with high performance in mind:

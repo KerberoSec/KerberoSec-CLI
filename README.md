@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/icon.png" width="90" alt="KerberoSec Logo" />
+  <img src="assets/icons/icon.png" width="100" alt="KerberoSec Logo" />
 </p>
 
 <h1 align="center">KerberoSec CLI</h1>
@@ -7,7 +7,7 @@
 <p align="center">
   <strong>Next-Generation Autonomous Agentic AI Coding Assistant for your Terminal</strong>
   <br>
-  Designed, developed, and maintained by <a href="https://github.com/KerberoSec"><strong>Arun Kumar</strong></a>
+  Architected, developed, and maintained by <a href="https://github.com/KerberoSec"><strong>Arun Kumar</strong></a>
 </p>
 
 <p align="center">
@@ -33,124 +33,253 @@
 
 ---
 
+## 🌟 Table of Contents
+1. [Overview](#-overview)
+2. [Key Features](#-key-features)
+3. [Complete Architecture Deep Dive](#-complete-architecture-deep-dive)
+   - [Monorepo Package Layout](#monorepo-package-layout)
+   - [Subsystem 1: Terminal Presentation and UI Engine](#subsystem-1-terminal-presentation-and-ui-engine-appsclisrctui)
+   - [Subsystem 2: Interactive Session Runtime](#subsystem-2-interactive-session-runtime-appsclisrcruntime)
+   - [Subsystem 3: Core Agent Execution Engine](#subsystem-3-core-agent-execution-engine-kerberoseccore)
+   - [Subsystem 4: Model and Provider Routing Layer](#subsystem-4-model-and-provider-routing-layer-kerberosecllms)
+   - [Subsystem 5: Tool Execution, MCP and Subagents](#subsystem-5-tool-execution-mcp-and-subagents-kerberosecagents)
+4. [Step-by-Step Execution Pipeline](#-step-by-step-execution-pipeline)
+5. [Ollama Local AI Auto-Daemon Lifecycle](#-ollama-local-ai-auto-daemon-lifecycle)
+6. [Quick Start and Automated Installation](#-quick-start-and-automated-installation)
+7. [Commands and Shortcuts Reference](#-commands-and-shortcuts-reference)
+8. [Author and License](#-author-and-license)
+
+---
+
 ## 🌟 Overview
 
-**KerberoSec CLI** is a terminal-based autonomous AI coding agent capable of inspecting codebases, planning architectures, editing files, executing terminal commands, running diagnostics, and orchestrating Model Context Protocol (MCP) servers.
+**KerberoSec CLI** is a production-grade, terminal-native autonomous AI coding assistant. It inspects entire codebases, designs technical architectures, modifies code with granular diffs, executes terminal commands, performs semantic ripgrep searches, coordinates subagents, and integrates with Model Context Protocol (MCP) servers.
 
-Built with a modern reactive Terminal User Interface (TUI) powered by **OpenTUI & React**, KerberoSec CLI combines the speed of terminal workflows with the reasoning power of local and cloud AI models.
+Built on top of a reactive virtual DOM engine (**OpenTUI & React 19**), KerberoSec CLI combines the responsiveness of modern terminal applications with deep agentic reasoning loops powered by both local offline models (Ollama) and cloud APIs.
 
 ---
 
 ## 🚀 Key Features
 
-- 🤖 **Local & Offline AI (Ollama First-Class Support)**:
-  - Full support for local models like `qwen2.5-coder:1.5b`, `qwen2.5-coder:7b`, `llama3`, and `deepseek-coder`.
-  - **Auto-Daemon Management**: Automatically checks and runs `ollama serve` in the background when an Ollama model is selected.
+- 🤖 **Offline Local AI with Automatic Daemon Management**:
+  - Full first-class support for open-weights models (`qwen2.5-coder:1.5b`, `qwen2.5-coder:7b`, `llama3`, `deepseek-coder`).
+  - **Zero-Config Daemon Startup**: Automatically checks for an active Ollama server on port `11434` and launches `ollama serve` in the background when an Ollama model is selected.
 - ☁️ **Cloud AI Providers**:
-  - Seamless integration with OpenAI (GPT-4o), Anthropic (Claude 3.7 Sonnet / Opus), Google Gemini, Groq, DeepSeek, and OpenRouter.
-- ⚡ **Dual Execution Modes (Plan vs. Act)**:
-  - **Plan Mode**: Focuses on analyzing requirements, reviewing architecture, and drafting step-by-step implementation roadmaps without modifying files.
-  - **Act Mode**: Autonomously executes changes, creates/modifies files, and runs verification commands with live diff previews.
-  - Switch instantly between modes using <kbd>Tab</kbd>.
-- 🔐 **Account & Session Management (`/logout`)**:
-  - Full session lifecycle control. Switch providers or log out cleanly with the `/logout` slash command or through the account dialog.
-- ⌨️ **Ergonomic Terminal Keyboard Controls**:
-  - **Single <kbd>Ctrl</kbd>+<kbd>C</kbd>**: Preserved for terminal copying; never interrupts running thinking processes.
-  - **Double <kbd>Ctrl</kbd>+<kbd>C</kbd>**: Exits the application cleanly.
+  - Seamless integration with Anthropic (Claude 3.7 Sonnet / Opus), OpenAI (GPT-4o), Google Gemini (2.0 Flash/Pro), Groq, DeepSeek, and OpenRouter.
+- ⚡ **Dual Plan vs. Act Execution Modes**:
+  - **Plan Mode**: Constrains the model to read-only tools to safely investigate code, evaluate trade-offs, and draft step-by-step implementation plans without touching disk files.
+  - **Act Mode**: Unlocks write tools, executes file edits, applies diffs, and runs automated verification commands.
+  - Switch between modes instantly using <kbd>Tab</kbd>.
+- 🔐 **Account Management & Clean `/logout`**:
+  - Reset cached auth tokens, switch profiles, and transition cleanly back to the onboarding login view with `/logout`.
+- ⌨️ **Ergonomic Terminal Keyboard Navigation**:
+  - **Single <kbd>Ctrl</kbd>+<kbd>C</kbd>**: Preserved for standard terminal text copying without interrupting active thinking streams.
+  - **Double <kbd>Ctrl</kbd>+<kbd>C</kbd>**: Exits the application cleanly when pressed twice within 2 seconds.
   - **<kbd>Esc</kbd>**: Cancels active reasoning or long-running turn executions.
-- 🔌 **Extensible MCP Architecture**:
-  - Connect external Model Context Protocol (MCP) servers to give the agent custom tools, database access, or cloud APIs.
+  - **<kbd>Ctrl</kbd>+<kbd>P</kbd>**: Opens the fuzzy Command Palette.
+- 🔌 **Extensible Model Context Protocol (MCP)**:
+  - Connect external MCP servers over stdio or HTTP SSE to equip the agent with custom APIs, database connections, and specialized tools.
 - 📦 **1-Step Automated Installer**:
-  - Automated `./setup.sh` installs all dependencies, configures the environment, and creates global terminal aliases.
+  - Automated `./setup.sh` installer detects the operating system, installs Bun and Ollama, compiles all monorepo packages, and configures global CLI access.
 
 ---
 
-## 🏛️ System Architecture
+## 🏛️ Complete Architecture Deep Dive
 
-KerberoSec CLI is organized as a high-performance TypeScript monorepo powered by the Bun runtime:
+KerberoSec CLI is built using a clean, layered architecture where responsibilities are separated into distinct packages across the monorepo:
+
+### Monorepo Package Layout
 
 ```text
 KerberoSec-CLI/
 ├── apps/
-│   └── cli/                      # Interactive TUI application & CLI entry points
+│   └── cli/                      # Interactive Terminal User Interface application
 │       ├── src/
 │       │   ├── commands/         # Subcommand dispatchers (config, auth, mcp, doctor)
-│       │   ├── runtime/          # Agent execution engine & interactive turn loop
-│       │   ├── tui/              # OpenTUI & React terminal views, hooks, and components
-│       │   │   ├── hooks/        # Keyboard dispatch, command palette, themes
-│       │   │   ├── views/        # Home, Chat, Config, and Onboarding screens
-│       │   │   └── components/   # Chat bubbles, diff views, status bars, inputs
-│       │   └── utils/            # Ollama manager, clipboard, token counters, process utils
-│       └── bun.mts               # Production bundler for single executable/CLI package
+│       │   ├── runtime/          # Session state machine, turn loop, compaction
+│       │   ├── tui/              # OpenTUI React components, views, hooks, themes
+│       │   │   ├── hooks/        # useRootKeyboard, useAutocomplete, useSlashCommands
+│       │   │   ├── views/        # ChatView, OnboardingView, ConfigView, HistoryView
+│       │   │   └── components/   # Chat bubbles, diff viewers, status bar, modals
+│       │   └── utils/            # Ollama manager, clipboard, token counters
+│       └── bun.mts               # Production bundler for single executable
 ├── sdk/
 │   └── packages/
-│       ├── core/                 # Tool execution engine, file system operations, checkpoints
-│       ├── llms/                 # Multi-provider LLM abstraction layer & stream transformers
-│       ├── agents/               # Subagent coordination & execution protocols
-│       ├── shared/               # Protobuf schemas, RPC contracts, and shared interfaces
-│       └── ui/                   # Theme contracts, color palettes, and UI tokens
-├── Setup.md                      # Step-by-step setup documentation for new machines
-└── setup.sh                      # 1-command automated installer script
+│       ├── core/                 # Tool registry, file system mutations, checkpoints
+│       ├── llms/                 # Provider adapters (Ollama, Claude, OpenAI, Gemini)
+│       ├── agents/               # Subagent orchestration and coordination protocols
+│       ├── shared/               # TypeScript schemas, contracts, and protocol buffers
+│       └── ui/                   # ANSI theme contracts, color tokens, and layout utils
+├── Setup.md                      # Manual setup guide for fresh machines
+└── setup.sh                      # 1-step automated system installer
 ```
 
-### Architecture Data Flow
-
 ```mermaid
-graph TD
-    subgraph ClientLayer ["Terminal and UI Layer (apps/cli)"]
-        A["Terminal Window"] --> B["OpenTUI and React Engine"]
-        B --> C["Keyboard Controls (Double Ctrl+C, Tab, Esc)"]
-        B --> D["Slash Commands (/logout, /model, /mcp)"]
-        B --> E["Active Views (Chat, Onboarding, Config)"]
+graph LR
+    subgraph Applications ["Apps"]
+        CLI["@kerberosec/cli<br>(apps/cli)"]
     end
 
-    subgraph RuntimeLayer ["Session Runtime (apps/cli/src/runtime)"]
-        F["Interactive Session Runtime"]
-        C --> F
-        D --> F
-        F --> G["Turn State Tracker"]
-        F --> H["Streaming Output Formatter"]
-        H --> E
+    subgraph SDKPackages ["SDK Packages (sdk/packages/)"]
+        Core["@kerberosec/core<br>(Agent Engine & Tools)"]
+        LLMs["@kerberosec/llms<br>(Model Provider Routing)"]
+        Agents["@kerberosec/agents<br>(Subagent Coordination)"]
+        Shared["@kerberosec/shared<br>(Contracts & Schemas)"]
+        UI["@kerberosec/ui<br>(Themes & ANSI Tokens)"]
     end
 
-    subgraph CoreLayer ["Core Agent Engine (@kerberosec/core)"]
-        J["Agent Execution Engine"]
-        F --> J
-        J --> K["Tool Policy and Approvals Gate"]
-        J --> L["Checkpoint and State Manager"]
-    end
-
-    subgraph LLMLayer ["Model Router (@kerberosec/llms)"]
-        N["Multi Provider Model Router"]
-        J --> N
-        N --> O["Local Offline Ollama Engine"]
-        N --> P["Cloud Providers (Claude, OpenAI, Gemini)"]
-    end
-
-    subgraph ExecutionLayer ["Tool Execution Engine"]
-        Q["Workspace File System Tools"]
-        R["Shell Terminal Commands"]
-        S["External MCP Servers"]
-        K --> Q
-        K --> R
-        K --> S
-    end
-
-    O --> J
-    P --> J
-    Q --> J
-    R --> J
-    S --> J
-    J --> F
+    CLI --> Core
+    CLI --> LLMs
+    CLI --> Shared
+    CLI --> UI
+    Core --> LLMs
+    Core --> Agents
+    Core --> Shared
+    Agents --> Shared
+    LLMs --> Shared
 ```
 
 ---
 
-## ⚡ Quick Start & Installation
+### Subsystem 1: Terminal Presentation and UI Engine (`apps/cli/src/tui`)
+
+The presentation layer utilizes **OpenTUI** integrated with React 19 to render interactive terminal interfaces without flickering.
+
+1. **Virtual DOM Diffing in Terminal ANSI Space**:
+   - Terminal cells are represented as an in-memory grid. On state changes, OpenTUI calculates the minimal ANSI escape sequence diffs to update changed characters, ensuring sub-millisecond refresh rates.
+2. **Keyboard Dispatch Engine ([`use-root-keyboard.ts`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/apps/cli/src/tui/hooks/use-root-keyboard.ts))**:
+   - Listens to raw key input events.
+   - Double <kbd>Ctrl</kbd>+<kbd>C</kbd> timing window: Tracks timestamps across consecutive presses to differentiate between copying text and requesting application termination.
+   - Mode switching: Routes <kbd>Tab</kbd> events to toggle execution states in the session context.
+3. **Views & Dialog Layer**:
+   - **`ChatView`**: Renders message bubbles, streaming typewriter markdown, tool call summaries, and unified diff syntax highlighters.
+   - **`OnboardingView`**: Displays responsive, full-screen login provider selection and API configuration wizards.
+   - **`ConfigView`**: Model parameter tuning (temperature, reasoning effort, context limits).
+
+---
+
+### Subsystem 2: Interactive Session Runtime (`apps/cli/src/runtime`)
+
+The session runtime manages the state machine for ongoing coding conversations:
+
+1. **Prompt Ingestion and Queue**:
+   - When users submit prompts while an agent task is active, prompts are queued into a sequential turn buffer rather than dropped.
+2. **Message Hydration and Token Budgeting**:
+   - Assembles system instructions, active workspace rules (`.kerberosecrules/`), loaded skills (`.kerberosec/`), and conversation history.
+   - **Compaction Coordinator**: Calculates remaining token headroom in the model's context window. If the limit is approached, previous turns are intelligently condensed into a summary checkpoint.
+3. **Stream Transformer**:
+   - Ingests chunked tokens from the LLM provider, separates internal thought streams (`<thinking>`) from visible responses, and detects structured tool invocations.
+
+---
+
+### Subsystem 3: Core Agent Execution Engine (`@kerberosec/core`)
+
+The brain of KerberoSec CLI that orchestrates autonomous coding tasks:
+
+1. **ReAct Reasoning and Planning Loop**:
+   - The agent operates in a continuous loop: **Reason &rarr; Plan Tool &rarr; Execute Tool &rarr; Observe Output &rarr; Decide Next Action**.
+2. **Checkpoint and Rollback Engine**:
+   - Before executing any file edits, the engine snapshots affected files. If a modification produces syntax errors or the user aborts, changes can be rolled back immediately.
+3. **Security Permission Gate**:
+   - **Safe Reads**: `read_file`, `list_dir`, `find_by_name`, `grep_search` execute without prompting.
+   - **File Writes / Edits**: `replace_file_content` and `write_to_file` produce interactive diff previews for human-in-the-loop review (unless auto-approve is toggled with <kbd>Shift</kbd>+<kbd>Tab</kbd>).
+   - **Command Execution**: `run_command` requires user approval and streams subprocess output in real time.
+
+---
+
+### Subsystem 4: Model and Provider Routing Layer (`@kerberosec/llms`)
+
+Standardizes prompt delivery and response streaming across local and cloud backends:
+
+1. **Unified Provider Abstraction**:
+   - Translates generic chat messages and tool specifications into provider-specific payloads (Ollama JSON, OpenAI format, Anthropic Messages API, Google GenAI SDK).
+2. **Offline Ollama Engine**:
+   - Direct HTTP keep-alive communication with the local Ollama API.
+   - Automatic streaming token decompression and parameter configuration (context length, temperature).
+
+---
+
+### Subsystem 5: Tool Execution, MCP and Subagents (`@kerberosec/agents`)
+
+Provides the agent with its interactive superpowers:
+
+1. **File System Operations**:
+   - Exact substring match and replacement algorithm (`replace_file_content`) to prevent accidental overwrites.
+2. **Process Management**:
+   - Runs background or foreground shell commands with pseudo-terminal (PTY) support and configurable timeouts.
+3. **Model Context Protocol (MCP) Client**:
+   - Dynamic JSON-RPC client capable of establishing stdio or SSE connections with MCP servers to discover and invoke custom tools.
+4. **Concurrent Subagents**:
+   - Spawns isolated worker agents for complex research tasks without polluting the main conversation context.
+
+---
+
+## 🔄 Step-by-Step Execution Pipeline
+
+The following diagram illustrates the complete end-to-end data flow when a user prompt is processed:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor User as Developer
+    participant TUI as Terminal UI (apps/cli)
+    participant Runtime as Session Runtime
+    participant Core as Core Engine (@kerberosec/core)
+    participant LLM as Model Provider (@kerberosec/llms)
+    participant Tools as Tool Executor
+
+    User->>TUI: Submits Prompt (e.g. "fix the bug in src/index.ts")
+    TUI->>Runtime: Enqueue Turn & Hydrate Context
+    Runtime->>Core: Build Context Window (Rules + Files + History)
+    Core->>LLM: Send Streaming Request
+    
+    loop Autonomous Execution Loop
+        LLM-->>Core: Stream Reasoning Tokens & Tool Call (e.g. read_file)
+        Core-->>TUI: Live Stream Markdown & Thinking State
+        Core->>Tools: Execute read_file("src/index.ts")
+        Tools-->>Core: Return File Contents
+        Core->>LLM: Append Observation to Context
+        LLM-->>Core: Stream Tool Call (replace_file_content)
+    end
+
+    Core->>TUI: Render Visual Diff Preview
+    alt Manual Approval Mode
+        User->>TUI: Confirms Diff Approval
+        TUI->>Core: Permission Granted
+    else Auto-Approve Enabled
+        Core->>Core: Auto-Proceed
+    end
+
+    Core->>Tools: Apply Modified Content to Disk
+    Core->>Tools: Run Verification Command (bun test)
+    Tools-->>Core: Test Passed (Exit Code 0)
+    Core-->>TUI: Render Task Complete Summary
+    TUI-->>User: Display Final Output
+```
+
+---
+
+## 🤖 Ollama Local AI Auto-Daemon Lifecycle
+
+KerberoSec CLI ensures that local models work out of the box without requiring manual server startup:
+
+```mermaid
+flowchart TD
+    Start["User Selects Ollama Model (e.g. qwen2.5-coder:1.5b)"] --> CheckPort{"Is Port 11434 Active?"}
+    CheckPort -- Yes --> CheckModel{"Is Model Installed?"}
+    CheckPort -- No --> StartDaemon["Spawn Background Process: 'ollama serve'"]
+    StartDaemon --> PollPort["Poll http://127.0.0.1:11434/api/version"]
+    PollPort --> CheckModel
+    CheckModel -- Yes --> Ready["Ready to Stream Prompts Offline"]
+    CheckModel -- No --> PullModel["Auto-Pull Model: 'ollama pull model'"]
+    PullModel --> Ready
+```
+
+---
+
+## ⚡ Quick Start and Automated Installation
 
 ### Method 1: Automated 1-Step Setup (Recommended)
-
-Clone the repository and run the automated installer:
 
 ```bash
 git clone https://github.com/KerberoSec/KerberoSec-CLI.git
@@ -160,18 +289,23 @@ chmod +x setup.sh
 ./setup.sh
 ```
 
-The installer will automatically install system packages, setup **Bun**, configure **Ollama**, install project packages, build the CLI bundle, and link `kerberosec` into your `/home/Kali/.gemini/antigravity-cli/bin:/home/Kali/.local/bin:/home/Kali/.local/bin:/home/Kali/.local/bin:/home/Kali/go/bin:/home/Kali/.local/bin:/home/Kali/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/usr/lib/wsl/lib:/mnt/c/Windows/system32:/mnt/c/Windows:/mnt/c/Windows/System32/Wbem:/mnt/c/Windows/System32/WindowsPowerShell/v1.0/:/mnt/c/Windows/System32/OpenSSH/:/mnt/c/Program Files/NVIDIA Corporation/NVIDIA App/NvDLISR:/mnt/c/Program Files (x86)/NVIDIA Corporation/PhysX/Common:/mnt/c/Program Files/nodejs/:/mnt/d/Git/cmd:/mnt/c/Users/arung/AppData/Local/agy/bin:/mnt/c/Users/arung/.local/bin:/mnt/c/Users/arung/AppData/Local/Microsoft/WindowsApps:/mnt/c/Users/arung/AppData/Local/Programs/Microsoft VS Code/bin:/mnt/c/Users/arung/AppData/Local/Programs/Ollama:/mnt/c/Users/arung/AppData/Roaming/npm:/mnt/c/Program Files/nodejs/node_modules/npm/bin`.
+The installer script automatically:
+1. Installs system packages (`git`, `curl`, `build-essential`).
+2. Installs and configures the **Bun** runtime.
+3. Installs and configures **Ollama** with recommended coding models.
+4. Installs monorepo dependencies and compiles the SDK and CLI bundle.
+5. Configures the global `kerberosec` executable in your `$PATH`.
 
 ---
 
 ### Method 2: Manual Installation
 
 ```bash
-# 1. Install Bun runtime
+# 1. Install Bun
 curl -fsSL https://bun.sh/install | bash
 source ~/.bashrc # or source ~/.zshrc
 
-# 2. Clone repository & install dependencies
+# 2. Clone repository & install packages
 git clone https://github.com/KerberoSec/KerberoSec-CLI.git
 cd KerberoSec-CLI
 bun install
@@ -180,7 +314,7 @@ bun install
 bun run build:sdk
 bun -F @kerberosec/cli build
 
-# 4. Link global wrapper
+# 4. Link global command
 mkdir -p ~/.local/bin
 cat << 'EOF' > ~/.local/bin/kerberosec
 #!/usr/bin/env bash
@@ -193,27 +327,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 ---
 
-## 🎮 Usage
-
-### 1. Interactive Terminal UI Mode
-Launch the full interactive TUI:
-```bash
-kerberosec
-```
-
-### 2. Direct Single-Prompt Execution
-Run tasks directly from your shell:
-```bash
-# Analyze a codebase
-kerberosec "give me an architectural summary of this repository"
-
-# Fix code or implement features
-kerberosec "refactor src/utils/auth.ts to use async/await"
-```
-
----
-
-## ⌨️ Slash Commands & Shortcuts
+## ⌨️ Commands and Shortcuts Reference
 
 ### Slash Commands
 | Command | Description |
@@ -236,28 +350,7 @@ kerberosec "refactor src/utils/auth.ts to use async/await"
 
 ---
 
-## 🤖 Local Models Setup (Ollama)
-
-KerberoSec CLI is optimized to run locally on consumer hardware:
-
-1. **Install Ollama**:
-   ```bash
-   curl -fsSL https://ollama.com/install.sh | sh
-   ```
-2. **Pull Coding Models**:
-   ```bash
-   # Lightweight / Laptop CPU (Fast & efficient)
-   ollama pull qwen2.5-coder:1.5b
-
-   # Medium / 8GB RAM or GPU (High accuracy)
-   ollama pull qwen2.5-coder:7b
-   ```
-
-*KerberoSec CLI will automatically handle background daemon startup and connection management.*
-
----
-
-## 👤 Author & Maintainer
+## 👤 Author and Maintainer
 
 **Arun Kumar**
 - 💼 **LinkedIn**: [arunkumar31072006](https://www.linkedin.com/in/arunkumar31072006/)

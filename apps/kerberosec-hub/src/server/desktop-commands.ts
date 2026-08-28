@@ -1,0 +1,352 @@
+import {
+	addLocalProvider,
+	ensureCustomProvidersLoaded,
+	executeKerberoSecAccountAction,
+	formatProviderOAuthApiKey,
+	getLocalProviderModels,
+	getPersistedProviderApiKey,
+	getProviderOAuthCredentialsFromSettings,
+	getValidKerberoSecCredentials,
+	type KerberoSecAccountActionRequest,
+	KerberoSecAccountService,
+	listLocalProviders,
+	loginAndSaveLocalProviderOAuthCredentials,
+	markLocalProviderEnabled,
+	normalizeOAuthProvider,
+	type ProviderCapability,
+	type ProviderClient,
+	type ProviderProtocol,
+	type ProviderSettings,
+	readGlobalSettings,
+	saveLocalProviderOAuthCredentials,
+	saveLocalProviderSettings,
+	setAutoUpdateEnabledGlobally,
+	setTelemetryOptOutGlobally,
+} from "@kerberosec/core";
+import { getKerberoSecEnvironmentConfig } from "@kerberosec/shared";
+import {
+	connectorChannelsPayload,
+	startConnectorChannel,
+	stopConnectorChannel,
+} from "./connectors";
+import { providerSettingsManager, workspaceRoot } from "./deps";
+import {
+	installMarketplaceEntryForDesktopCommand,
+	listMarketplaceInstalledEntries,
+	uninstallLocalPrimitive,
+	uninstallMarketplaceEntryForDesktopCommand,
+} from "./marketplace";
+import {
+	deleteMcpServer,
+	ensureMcpSettingsFile,
+	readMcpServersResponse,
+	setMcpServerDisabled,
+	upsertMcpServer,
+} from "./mcp";
+import { handleRoutineScheduleCommand } from "./schedules";
+import { toWebviewSessionSummary } from "./session-mapping";
+import type { HubContext } from "./state";
+import { broadcastHubState } from "./state-payloads";
+import type { JsonRecord } from "./types";
+import { listUserInstructionConfigs } from "./user-instructions";
+import { openExternalUrl, readProviderSettingsUpdate } from "./utils";
+
+const ROUTINE_SCHEDULE_COMMANDS = new Set([
+	"list_routine_schedules",
+	"create_routine_schedule",
+	"update_routine_schedule",
+	"pause_routine_schedule",
+	"resume_routine_schedule",
+	"trigger_routine_schedule",
+	"delete_routine_schedule",
+]);
+
+async function resolveHubKerberoSecAccountAuthToken(input: {
+	settings?: ProviderSettings;
+	apiBaseUrl: string;
+}): Promise<string | undefined> {
+	const credentials = input.settings
+		? getProviderOAuthCredentialsFromSettings("kerberosec", input.settings)
+		: null;
+	if (!credentials || !input.settings) {
+		return getPersistedProviderApiKey("kerberosec", input.settings);
+	}
+
+	const nextCredentials = await getValidKerberoSecCredentials(credentials, {
+		apiBaseUrl: input.apiBaseUrl,
+	});
+	if (!nextCredentials) {
+		throw new Error(
+			"KerberoSec account requires re-authentication. Run kerberosec auth kerberosec.",
+		);
+	}
+
+	if (nextCredentials !== credentials) {
+		saveLocalProviderOAuthCredentials(
+			providerSettingsManager,
+			"kerberosec",
+			input.settings,
+			nextCredentials,
+			{ setLastUsed: false },
+		);
+	}
+
+	return formatProviderOAuthApiKey("kerberosec", nextCredentials);
+}
+
+export async function handleDesktopCommand(
+	ctx: HubContext,
+	command: string,
+	args?: Record<string, unknown>,
+): Promise<unknown> {
+	if (command === "list_provider_catalog") {
+		await ensureCustomProvidersLoaded(providerSettingsManager);
+		return await listLocalProviders(providerSettingsManager, {
+			isKerberoSecPassEnabled: true,
+		});
+	}
+	if (command === "list_provider_models") {
+		const provider = String(args?.provider ?? "").trim();
+		return await getLocalProviderModels(
+			provider,
+			providerSettingsManager.getProviderConfig(provider),
+		);
+	}
+	if (command === "save_provider_settings") {
+		return saveLocalProviderSettings(providerSettingsManager, {
+			...readProviderSettingsUpdate(args),
+			providerId: String(args?.provider ?? ""),
+			enabled: typeof args?.enabled === "boolean" ? args.enabled : undefined,
+			apiKey: typeof args?.api_key === "string" ? args.api_key : undefined,
+			baseUrl: typeof args?.base_url === "string" ? args.base_url : undefined,
+		});
+	}
+	if (command === "add_provider") {
+		await ensureCustomProvidersLoaded(providerSettingsManager);
+		return await addLocalProvider(providerSettingsManager, {
+			providerId: String(args?.provider_id ?? ""),
+			name: String(args?.name ?? ""),
+			baseUrl: String(args?.base_url ?? ""),
+			apiKey: typeof args?.api_key === "string" ? args.api_key : undefined,
+			headers:
+				args?.headers && typeof args.headers === "object"
+					? (args.headers as Record<string, string>)
+					: undefined,
+			timeoutMs:
+				typeof args?.timeout_ms === "number" ? args.timeout_ms : undefined,
+			models: Array.isArray(args?.models)
+				? (args.models as string[])
+				: undefined,
+			defaultModelId:
+				typeof args?.default_model_id === "string"
+					? args.default_model_id
+					: undefined,
+			modelsSourceUrl:
+				typeof args?.models_source_url === "string"
+					? args.models_source_url
+					: undefined,
+			protocol:
+				typeof args?.protocol === "string"
+					? (args.protocol as ProviderProtocol)
+					: undefined,
+			client:
+				typeof args?.client === "string"
+					? (args.client as ProviderClient)
+					: undefined,
+			capabilities: Array.isArray(args?.capabilities)
+				? (args.capabilities as ProviderCapability[])
+				: undefined,
+		});
+	}
+	if (command === "run_provider_oauth_login") {
+		const providerId = normalizeOAuthProvider(String(args?.provider ?? ""));
+		const saved = await loginAndSaveLocalProviderOAuthCredentials(
+			providerSettingsManager,
+			providerId,
+			openExternalUrl,
+		);
+		if (saved.provider !== providerId) {
+			markLocalProviderEnabled(providerSettingsManager, providerId, {
+				tokenSource: "oauth",
+			});
+		}
+		return {
+			provider: providerId,
+			accessToken: saved.auth?.accessToken ?? saved.apiKey ?? "",
+		};
+	}
+	if (command === "kerberosec_account") {
+		const settings = providerSettingsManager.getProviderSettings("kerberosec");
+		const apiBaseUrl =
+			settings?.baseUrl?.trim() || getKerberoSecEnvironmentConfig().apiBaseUrl;
+		const authToken = await resolveHubKerberoSecAccountAuthToken({
+			settings,
+			apiBaseUrl,
+		});
+		if (!authToken) {
+			throw new Error("No KerberoSec account auth token found");
+		}
+		const accountService = new KerberoSecAccountService({
+			apiBaseUrl,
+			getAuthToken: async () => authToken,
+		});
+		return await executeKerberoSecAccountAction(
+			args as KerberoSecAccountActionRequest,
+			accountService,
+		);
+	}
+	if (command === "get_global_settings") {
+		return readGlobalSettings();
+	}
+	if (command === "set_telemetry_opt_out") {
+		if (typeof args?.telemetry_opt_out !== "boolean") {
+			throw new Error("telemetry_opt_out must be a boolean");
+		}
+		setTelemetryOptOutGlobally(args.telemetry_opt_out);
+		return readGlobalSettings();
+	}
+	if (command === "set_auto_update_enabled") {
+		if (typeof args?.auto_update_enabled !== "boolean") {
+			throw new Error("auto_update_enabled must be a boolean");
+		}
+		setAutoUpdateEnabledGlobally(args.auto_update_enabled);
+		return readGlobalSettings();
+	}
+	if (command === "list_connector_channels") {
+		return connectorChannelsPayload();
+	}
+	if (command === "start_connector_channel") {
+		const response = await startConnectorChannel(args);
+		broadcastHubState(ctx);
+		return response;
+	}
+	if (command === "stop_connector_channel") {
+		const response = await stopConnectorChannel(args);
+		broadcastHubState(ctx);
+		return response;
+	}
+	if (command === "list_mcp_servers") {
+		return readMcpServersResponse();
+	}
+	if (command === "set_mcp_server_disabled") {
+		return setMcpServerDisabled(
+			String(args?.name ?? "").trim(),
+			Boolean(args?.disabled),
+		);
+	}
+	if (command === "upsert_mcp_server") {
+		const input =
+			args?.input && typeof args.input === "object"
+				? (args.input as JsonRecord)
+				: ((args ?? {}) as JsonRecord);
+		return upsertMcpServer(input);
+	}
+	if (command === "delete_mcp_server") {
+		return deleteMcpServer(String(args?.name ?? "").trim());
+	}
+	if (command === "ensure_mcp_settings_file") {
+		return ensureMcpSettingsFile();
+	}
+	if (command === "open_mcp_settings_file") {
+		const path = ensureMcpSettingsFile();
+		openExternalUrl(path);
+		return path;
+	}
+	if (ROUTINE_SCHEDULE_COMMANDS.has(command)) {
+		return await handleRoutineScheduleCommand(command, args, workspaceRoot);
+	}
+	if (command === "get_process_context") {
+		return { workspaceRoot, cwd: workspaceRoot };
+	}
+	if (
+		command === "list_cli_sessions" ||
+		command === "list_discovered_sessions"
+	) {
+		return [...ctx.sessions.values()].map(toWebviewSessionSummary);
+	}
+	if (command === "search_sessions") {
+		if (!ctx.uiClient) throw new Error("Hub is not connected");
+		const query = String(args?.query ?? "").trim();
+		if (!query) return [];
+		return await ctx.uiClient.searchSessions({
+			query,
+			limit: typeof args?.limit === "number" ? args.limit : 50,
+			workspaceRoot:
+				typeof args?.workspaceRoot === "string"
+					? args.workspaceRoot
+					: undefined,
+		});
+	}
+	if (command === "read_session_hooks") {
+		return [];
+	}
+	if (command === "list_user_instruction_configs") {
+		return await listUserInstructionConfigs(workspaceRoot);
+	}
+	if (command === "list_marketplace_installed_entries") {
+		return listMarketplaceInstalledEntries(
+			args,
+			await listUserInstructionConfigs(workspaceRoot),
+		);
+	}
+	if (command === "install_marketplace_entry") {
+		const result = await installMarketplaceEntryForDesktopCommand(args);
+		broadcastHubState(ctx);
+		return result;
+	}
+	if (command === "uninstall_marketplace_entry") {
+		const result = await uninstallMarketplaceEntryForDesktopCommand(args);
+		broadcastHubState(ctx);
+		return result;
+	}
+	if (command === "uninstall_local_primitive") {
+		const result = await uninstallLocalPrimitive(args, { workspaceRoot });
+		broadcastHubState(ctx);
+		return result;
+	}
+	if (command === "toggle_disabled_plugin_tool") {
+		const toolName = String(args?.name ?? "").trim();
+		if (!toolName) throw new Error("tool name is required");
+		if (!ctx.uiClient) throw new Error("Hub settings client is not connected");
+		await ctx.uiClient.toggleSetting({
+			type: "tools",
+			name: toolName,
+			workspaceRoot,
+			cwd: workspaceRoot,
+		});
+		return await listUserInstructionConfigs(workspaceRoot);
+	}
+	if (command === "set_tool_disabled") {
+		const rawNames = Array.isArray(args?.names) ? args.names : [args?.name];
+		const toolNames = rawNames
+			.map((name) => String(name ?? "").trim())
+			.filter(Boolean);
+		if (toolNames.length === 0) throw new Error("tool name is required");
+		for (const name of toolNames) {
+			if (!ctx.uiClient)
+				throw new Error("Hub settings client is not connected");
+			await ctx.uiClient.toggleSetting({
+				type: "tools",
+				name,
+				enabled: args?.disabled !== true,
+				workspaceRoot,
+				cwd: workspaceRoot,
+			});
+		}
+		return await listUserInstructionConfigs(workspaceRoot);
+	}
+	if (command === "set_plugin_disabled") {
+		const pluginPath = String(args?.path ?? "").trim();
+		if (!pluginPath) throw new Error("plugin path is required");
+		if (!ctx.uiClient) throw new Error("Hub settings client is not connected");
+		await ctx.uiClient.toggleSetting({
+			type: "plugins",
+			path: pluginPath,
+			enabled: args?.disabled !== true,
+			workspaceRoot,
+			cwd: workspaceRoot,
+		});
+		return await listUserInstructionConfigs(workspaceRoot);
+	}
+	throw new Error(`unsupported desktop command: ${command}`);
+}

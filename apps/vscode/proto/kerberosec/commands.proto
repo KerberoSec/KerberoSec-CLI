@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package kerberosec;
+
+import "kerberosec/common.proto";
+
+option go_package = "github.com/kerberosec/grpc-go/kerberosec";
+option java_multiple_files = true;
+option java_package = "bot.kerberosec.proto";
+
+// Service for running IDE commands, for example context menu actions,
+// commands, etc.
+// In contrast to the rest of the ProtoBus services, these are
+// intended to be called by the IDE directly instead of through the webview,
+// because they are triggered by interactions in the IDE.
+service CommandsService {
+  rpc addToKerberoSec(CommandContext) returns (Empty);
+  rpc fixWithKerberoSec(CommandContext) returns (Empty);
+  rpc explainWithKerberoSec(CommandContext) returns (Empty);
+  rpc improveWithKerberoSec(CommandContext) returns (Empty);
+}
+
+message CommandContext {
+  // The absolute path of the current file.
+  optional string file_path = 1;
+  // The selected source text.
+  optional string selected_text = 2;
+  // The language identifier for the current file.
+  optional string language = 3;
+  // Any diagnostic problems for the current file.
+  repeated kerberosec.Diagnostic diagnostics = 4;
+}

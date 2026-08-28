@@ -1,0 +1,165 @@
+---
+title: "Config"
+sidebarTitle: "Config"
+description: "Understand where KerberoSec stores configuration and how global and project config work together."
+---
+
+KerberoSec configuration lives in two scopes:
+
+- **Global configuration** in `~/.kerberosec/` (applies globally across all KerberoSec applications, including IDE, CLI, and SDK)
+- **Project configuration** in `.kerberosec/` (applies only to the current workspace)
+
+## Configuration Directory Layout
+
+KerberoSec stores shared configuration across a few well-known locations. The primary root is `~/.kerberosec/`, with structured app state under `~/.kerberosec/data/`:
+
+```text
+~/.kerberosec/
+  data/
+    settings/
+      providers.json           # API keys and provider configuration
+      global-settings.json     # Global settings
+      kerberosec_mcp_settings.json  # MCP settings
+    teams/                     # Team state
+    sessions/                  # Session data
+    db/                        # SQLite databases (for example cron.db)
+    workflows/                 # Global workflows
+  rules/                       # Global rules
+  hooks/                       # Global hooks
+  skills/                      # Global skills
+  agents/                      # Global agent definitions
+  plugins/                     # Global plugins (.js, .ts)
+  cron/                        # Global cron specs
+```
+
+Additional global search paths supported by the code:
+
+```text
+~/Documents/KerberoSec/
+  Rules/                       # Additional global rules
+  Hooks/                       # Additional global hooks
+  Plugins/                     # Additional global plugins
+  Workflows/                   # Additional global workflows
+```
+
+Project-level configuration lives in `.kerberosec/` at your repository root:
+
+```text
+.kerberosec/
+  rules/                       # Project rules
+  skills/                      # Project skills
+  hooks/                       # Lifecycle hooks
+  agents/                      # Project agent definitions
+  plugins/                     # Project plugins
+  cron/                        # Workspace cron specs
+```
+
+Notes:
+
+- Global provider settings, global settings, and MCP settings are stored under `~/.kerberosec/data/settings/`.
+- Global workflows resolve from `~/.kerberosec/data/workflows/`.
+- Global rules, hooks, skills, agents, plugins, and cron specs resolve directly under `~/.kerberosec/`.
+- Rules, hooks, plugins, and workflows may also be discovered from `~/Documents/KerberoSec/` for compatibility.
+
+## What Goes Where?
+
+- Use **global (`~/.kerberosec/`)** for defaults shared across all KerberoSec applications (IDE, CLI, SDK) on your machine.
+- Use **project (`.kerberosec/`)** for team-shared behavior that should travel with the repo.
+
+Commit `.kerberosec/` files you want to share with your team. Keep secrets out of the repo.
+
+## Configure Through the CLI
+
+Use the interactive config UI:
+
+```bash
+kerberosec config
+```
+
+From there, you can view/edit:
+
+- Settings (global + workspace)
+- Rules
+- Skills
+- Hooks
+
+## Useful Configuration Commands
+
+Use a custom configuration directory:
+
+```bash
+kerberosec --config /path/to/custom/config "your task"
+```
+
+Or via environment variable:
+
+```bash
+export KERBEROSEC_DATA_DIR=/custom/path/to/kerberosec
+kerberosec "your task"
+```
+
+View CLI logs when troubleshooting:
+
+```bash
+kerberosec dev log
+```
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `KERBEROSEC_DATA_DIR` | Custom data directory (replaces `~/.kerberosec/data/`) |
+| `KERBEROSEC_HUB_ADDRESS` | Override hub address (default: `127.0.0.1:25463`) |
+| `KERBEROSEC_SESSION_BACKEND_MODE` | Force backend mode (`local`, `hub`, `remote`, `auto`) |
+| `KERBEROSEC_SANDBOX` | Enable sandbox mode |
+| `KERBEROSEC_SANDBOX_DATA_DIR` | Sandbox session storage directory |
+| `KERBEROSEC_HOOKS_DIR` | Additional hooks directory |
+| `KERBEROSEC_COMMAND_PERMISSIONS` | JSON policy restricting shell commands |
+
+### KERBEROSEC_DATA_DIR
+
+```bash
+export KERBEROSEC_DATA_DIR=/custom/path/to/kerberosec
+kerberosec "your task"
+```
+
+### KERBEROSEC_COMMAND_PERMISSIONS
+
+Restrict which shell commands KerberoSec can execute:
+
+```bash
+export KERBEROSEC_COMMAND_PERMISSIONS='{"allow": ["npm *", "git *"], "deny": ["rm -rf *"]}'
+```
+
+Format:
+
+```json
+{
+  "allow": ["pattern1", "pattern2"],
+  "deny": ["pattern3"],
+  "allowRedirects": true
+}
+```
+
+Rules:
+
+- `deny` overrides `allow`
+- If `allow` is set, commands not matching `allow` are denied
+- `allowRedirects` controls shell redirects (`>`, `>>`, `<`), default `false`
+
+## Related Docs
+
+- [CLI Configuration](/cli/configuration)
+- [Rules](/customization/kerberosec-rules)
+- [Skills](/customization/skills)
+- [Hooks](/customization/hooks)
+- [Plugins](/customization/plugins)
+- [.kerberosecignore](/customization/kerberosecignore) (deprecated)
+
+## Security Notes
+
+<Warning>
+Only use rules, hooks, skills, and plugins from sources you trust.
+</Warning>
+
+Hooks and plugins can execute code. Review them like any other executable artifact before adding them globally or to a project.

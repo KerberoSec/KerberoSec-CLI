@@ -1,0 +1,344 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "compile-standalone",
+			"type": "shell",
+			"command": "bun run compile-standalone",
+			"group": "build",
+			"problemMatcher": [],
+			"presentation": {
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode"
+			}
+		},
+		{
+			"label": "npm: protos",
+			"type": "shell",
+			"command": "bun run protos",
+			"problemMatcher": [],
+			"isBackground": false,
+			"presentation": {
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true"
+				}
+			}
+		},
+		{
+			"label": "watch",
+			"dependsOn": [
+				"npm: protos",
+				"npm: build:webview",
+				"npm: dev:webview",
+				"npm: watch:tsc",
+				"npm: watch:esbuild"
+			],
+			"presentation": {
+				"reveal": "always"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "watch:test",
+			"dependsOn": [
+				"npm: protos",
+				"npm: build:webview:test",
+				"npm: dev:webview",
+				"npm: watch:tsc",
+				"npm: watch:esbuild:test"
+			],
+			"presentation": {
+				"reveal": "always"
+			},
+			"group": "build"
+		},
+		{
+			"type": "shell",
+			"command": "bun run build:webview",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"label": "npm: build:webview",
+			"dependsOn": [
+				"npm: protos"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true"
+				}
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run build:webview:test",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"label": "npm: build:webview:test",
+			"dependsOn": [
+				"npm: protos"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true",
+					"IS_TEST": "true"
+				}
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run dev:webview",
+			"group": "build",
+			"problemMatcher": [
+				{
+					"pattern": [
+						{
+							"regexp": "^(?!)((?:.*))$",
+							"kind": "file",
+							"file": 1,
+							"message": 1
+						}
+					],
+					"background": {
+						"activeOnStart": true,
+						"beginsPattern": "^Building webview for|^\\s*VITE",
+						"endsPattern": "^.*Local:\\s+http://127\\.0\\.0\\.1:[0-9]+/"
+					}
+				}
+			],
+			"isBackground": true,
+			"label": "npm: dev:webview",
+			"dependsOn": [
+				"npm: protos"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true"
+				}
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run watch:esbuild",
+			"group": "build",
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": "^✘ \\[ERROR\\] (.*)$",
+						"message": 1
+					},
+					{
+						"regexp": "^\\s+(.*):(\\d+):(\\d+):$",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^\\[watch\\] build started$",
+					"endsPattern": "^\\[watch\\] build finished$"
+				}
+			},
+			"isBackground": true,
+			"label": "npm: watch:esbuild",
+			"dependsOn": [
+				"npm: protos",
+				"build-sdk:debug"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true"
+				}
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run watch:esbuild:test",
+			"group": "build",
+			"problemMatcher": {
+				"pattern": [
+					{
+						"regexp": "^✘ \\[ERROR\\] (.*)$",
+						"message": 1
+					},
+					{
+						"regexp": "^\\s+(.*):(\\d+):(\\d+):$",
+						"file": 1,
+						"line": 2,
+						"column": 3
+					}
+				],
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "^\\[watch\\] build started$",
+					"endsPattern": "^\\[watch\\] build finished$"
+				}
+			},
+			"isBackground": true,
+			"label": "npm: watch:esbuild:test",
+			"dependsOn": [
+				"npm: protos",
+				"build-sdk:debug"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true",
+					"IS_TEST": "true"
+				}
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run watch:tsc",
+			"group": "build",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"label": "npm: watch:tsc",
+			"dependsOn": [
+				"npm: protos"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode"
+			}
+		},
+		{
+			"type": "shell",
+			"command": "bun run watch-tests",
+			"label": "npm: watch-tests",
+			"problemMatcher": "$tsc-watch",
+			"isBackground": true,
+			"dependsOn": [
+				"npm: protos"
+			],
+			"presentation": {
+				"reveal": "always",
+				"group": "watchers"
+			},
+			"group": "build",
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode"
+			}
+		},
+		{
+			"label": "tasks: watch-tests",
+			"dependsOn": [
+				"npm: protos",
+				"npm: watch",
+				"npm: watch-tests"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "stop",
+			"command": "echo ${input:terminate}",
+			"type": "shell"
+		},
+		{
+			"label": "clean-tmp-user",
+			"type": "shell",
+			"dependsOn": [
+				"watch"
+			],
+			"command": "rm -rf ${workspaceFolder}/apps/vscode/dist/tmp/user && mkdir -p ${workspaceFolder}/apps/vscode/dist/tmp/user"
+		},
+		{
+			"type": "shell",
+			"command": "bun run storybook",
+			"group": "build",
+			"problemMatcher": [],
+			"isBackground": false,
+			"label": "npm: storybook",
+			"dependsOn": [
+				"npm: protos",
+				"npm: build:webview"
+			],
+			"presentation": {
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}/apps/vscode",
+				"env": {
+					"IS_DEV": "true"
+				}
+			}
+		},
+		{
+			"label": "build-sdk",
+			"type": "shell",
+			"command": "bun run build:sdk",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"label": "build-sdk:debug",
+			"type": "shell",
+			"command": "bun run build:sdk",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"presentation": {
+				"group": "watch",
+				"reveal": "always"
+			},
+			"options": {
+				"cwd": "${workspaceFolder}",
+				"env": {
+					"KERBEROSEC_SOURCEMAPS": "1"
+				}
+			}
+		}
+	],
+	"inputs": [
+		{
+			"id": "terminate",
+			"type": "command",
+			"command": "workbench.action.tasks.terminate",
+			"args": "terminateAll"
+		}
+	]
+}

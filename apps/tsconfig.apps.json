@@ -1,0 +1,31 @@
+{
+	"compilerOptions": {
+		"paths": {
+			"@kerberosec/agents": ["../sdk/packages/agents/src/index.ts"],
+			"@kerberosec/agents/*": [
+				"../sdk/packages/agents/src/*",
+				"../sdk/packages/agents/src/*/index.ts"
+			],
+			"@kerberosec/kerberosec-hub": ["./kerberosec-hub/src/server.ts"],
+			"@kerberosec/core": ["../sdk/packages/core/src/index.ts"],
+			"@kerberosec/core/hub/daemon-entry": [
+				"../sdk/packages/core/src/hub/daemon/entry.ts"
+			],
+			"@kerberosec/core/*": [
+				"../sdk/packages/core/src/*",
+				"../sdk/packages/core/src/*/index.ts"
+			],
+			"@kerberosec/core/telemetry": [
+				"../sdk/packages/core/src/services/telemetry/index.ts"
+			],
+			"@kerberosec/llms": ["../sdk/packages/llms/src/index.ts"],
+			"@kerberosec/shared": ["../sdk/packages/shared/src/index.ts"],
+			"@kerberosec/shared/storage": ["../sdk/packages/shared/src/storage/index.ts"],
+			"@kerberosec/shared/db": ["../sdk/packages/shared/src/db/index.ts"],
+			"@kerberosec/shared/*": [
+				"../sdk/packages/shared/src/*",
+				"../sdk/packages/shared/src/*/index.ts"
+			]
+		}
+	}
+}

@@ -1,0 +1,22 @@
+{
+	"extends": "../tsconfig.base.json",
+	"compilerOptions": {
+		"rootDir": "..",
+		"noEmit": true,
+		"paths": {
+			"@kerberosec/agents": ["../agents/src/index.ts"],
+			"@kerberosec/agents/*": ["../agents/src/*", "../agents/src/*/index.ts"],
+			"@kerberosec/llms": ["../llms/src/index.ts"],
+			"@kerberosec/llms/browser": ["../llms/src/index.browser.ts"],
+			"@kerberosec/shared": ["../shared/src/index.ts"],
+			"@kerberosec/shared/automation": ["../shared/src/automation/index.ts"],
+			"@kerberosec/shared/browser": ["../shared/src/index.browser.ts"],
+			"@kerberosec/shared/db": ["../shared/src/db/index.ts"],
+			"@kerberosec/shared/storage": ["../shared/src/storage/index.ts"],
+			"@kerberosec/shared/types": ["../shared/src/types/index.ts"],
+			"@kerberosec/shared/*": ["../shared/src/*", "../shared/src/*/index.ts"]
+		}
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules", "dist", "fixtures"]
+}

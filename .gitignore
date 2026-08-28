@@ -1,0 +1,46 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Build & Bundled Outputs
+dist
+dist-standalone
+out
+tmp
+pkg
+test-results
+coverage
+coverage-unit
+.nyc_output
+
+# Environment & Secrets
+.env
+*.env
+.secrets
+secrets.json
+
+# IDE & Editor Files
+.DS_Store
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+*~
+
+# TypeScript Build Info & Cache
+*.tsbuildinfo
+.tui-test
+tui-traces
+tests/**/cache
+.next
+
+# Database & SQLite files
+*.db
+*.db-shm
+*.db-wal
+
+# VS Code Test & Extensions
+.vscode-test/
+*.vsix

@@ -1,0 +1,55 @@
+{
+	"compilerOptions": {
+		"target": "ES2022",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"lib": ["ES2022"],
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
+		"resolveJsonModule": true,
+		"paths": {
+			"@kerberosec/agents": ["./packages/agents/src/index.ts"],
+			"@kerberosec/agents/*": [
+				"./packages/agents/src/*",
+				"./packages/agents/src/*/index.ts"
+			],
+			"@kerberosec/kerberosec-hub": ["./apps/kerberosec-hub/src/server.ts"],
+			"@kerberosec/core": ["./packages/core/src/index.ts"],
+			"@kerberosec/core/hub": ["./packages/core/src/hub/index.ts"],
+			"@kerberosec/core/hub/daemon-entry": [
+				"./packages/core/src/hub/daemon/entry.ts"
+			],
+			"@kerberosec/core/telemetry": [
+				"./packages/core/src/services/telemetry/index.ts"
+			],
+			"@kerberosec/core/*": [
+				"./packages/core/src/*",
+				"./packages/core/src/*/index.ts"
+			],
+			"@kerberosec/llms": ["./packages/llms/src/index.ts"],
+			"@kerberosec/llms/browser": ["./packages/llms/src/index.browser.ts"],
+			"@kerberosec/sdk": ["./packages/sdk/src/index.ts"],
+			"@kerberosec/shared": ["./packages/shared/src/index.ts"],
+			"@kerberosec/shared/automation": [
+				"./packages/shared/src/automation/index.ts"
+			],
+			"@kerberosec/shared/browser": ["./packages/shared/src/index.browser.ts"],
+			"@kerberosec/shared/db": ["./packages/shared/src/db/index.ts"],
+			"@kerberosec/shared/storage": ["./packages/shared/src/storage/index.ts"],
+			"@kerberosec/shared/types": ["./packages/shared/src/types/index.ts"],
+			"@kerberosec/shared/*": [
+				"./packages/shared/src/*",
+				"./packages/shared/src/*/index.ts"
+			]
+		}
+	},
+	"include": ["**/*.ts", "**/*.tsx", "**/bun.mts", "../vitest.config.ts"],
+	"exclude": [
+		"node_modules",
+		"**/dist/**",
+		"**/.next/**",
+		"packages/gateway/**"
+	]
+}

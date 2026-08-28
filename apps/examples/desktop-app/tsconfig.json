@@ -1,0 +1,48 @@
+{
+	"compilerOptions": {
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"allowJs": true,
+		"target": "ES6",
+		"skipLibCheck": true,
+		"strict": true,
+		"noEmit": true,
+		"esModuleInterop": true,
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"jsx": "react-jsx",
+		"incremental": true,
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/*": ["./*"],
+			"@kerberosec/agents": ["../../../sdk/packages/agents/src/index.ts"],
+			"@kerberosec/core": ["../../../sdk/packages/core/src/index.ts"],
+			"@kerberosec/core/hub": ["../../../sdk/packages/core/src/hub/index.ts"],
+			"@kerberosec/core/hub/daemon-entry": [
+				"../../../sdk/packages/core/src/hub/daemon/entry.ts"
+			],
+			"@kerberosec/llms": ["../../../sdk/packages/llms/src/index.ts"],
+			"@kerberosec/shared": ["../../../sdk/packages/shared/src/index.ts"],
+			"@kerberosec/shared/storage": [
+				"../../../sdk/packages/shared/src/storage/index.ts"
+			],
+			"@kerberosec/shared/db": ["../../../sdk/packages/shared/src/db/index.ts"],
+			"@kerberosec/shared/*": [
+				"../../../sdk/packages/shared/src/*",
+				"../../../sdk/packages/shared/src/*/index.ts"
+			]
+		}
+	},
+	"include": [
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		".next/dev/types/**/*.ts"
+	],
+	"exclude": ["node_modules"]
+}

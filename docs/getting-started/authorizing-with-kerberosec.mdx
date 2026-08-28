@@ -1,0 +1,102 @@
+---
+title: "Authorization"
+description: "Authenticate with KerberoSec and choose your first AI model"
+---
+
+KerberoSec connects to AI models through a **provider**. You have three common paths:
+
+- **KerberoSec (usage-billing)** (recommended): sign in with Google/GitHub/email, no API key setup.
+- **KerberoSecPass**: a $9.99/month subscription provider that offers 2-5x the usage on popular open coding models compared to standard API rate.
+- **Bring Your Own Key (BYOK)**: use your own provider credentials (cloud or local runtimes).
+
+## Menu
+
+- [IDE Setup](#ide-setup)
+- [CLI Setup](#cli-setup)
+
+## IDE Setup
+
+<Steps>
+  <Step title="Open KerberoSec Settings">
+    Click the settings icon (⚙️) in the KerberoSec panel.
+  </Step>
+
+  <Step title="Select Provider">
+    Choose your desired provider from the **API Provider** dropdown.
+  </Step>
+
+  <Step title="Authenticate">
+    - **KerberoSec (usage-billing):** Click **Sign In** and complete OAuth.
+    - **KerberoSecPass:** Select **KerberoSecPass**, click **Sign In**, and subscribe if prompted.
+    - **BYOK cloud provider:** Paste your API key into the **API Key** field.
+    - **Local runtime (Ollama/LM Studio):** no key needed; ensure runtime is running.
+  </Step>
+
+  <Step title="Select Model">
+    Choose your desired model from the **Model** dropdown.
+  </Step>
+</Steps>
+
+## Provider Options
+
+### KerberoSec (usage-billing)
+
+- One sign-in, no key management
+- Built-in billing and free model options
+- Access to multiple providers from one account
+
+Add credits in KerberoSec settings or at [app.kerberosec.bot/dashboard](https://app.kerberosec.bot/dashboard).
+
+### KerberoSecPass
+
+- Flat **$9.99/month** subscription
+- 2-5x the usage on popular open coding models compared to standard API rate
+- Curated open coding models including GLM, Kimi, DeepSeek, and MiMo
+
+Subscribe from the [KerberoSecPass dashboard](https://app.kerberosec.bot/dashboard/subscription?personal=true), then select **KerberoSecPass** as your provider in KerberoSec. See the [KerberoSecPass guide](/getting-started/kerberosecpass) for included models and reference pricing.
+
+### BYOK (cloud + local)
+
+### Cloud Providers
+
+| Provider | Best For | Setup Guide |
+|----------|----------|-------------|
+| **OpenRouter** | Multiple models, competitive pricing | [Setup](/provider-config/openrouter) |
+| **Anthropic** | Direct Claude access | [Setup](/provider-config/anthropic) |
+| **Claude Code** | Claude Max/Pro subscription | [Setup](/provider-config/anthropic) |
+| **OpenAI** | GPT models | [Setup](/provider-config/openai) |
+| **Google Gemini** | Gemini models | [Setup](/provider-config/google-gemini) |
+| **AWS Bedrock** | Enterprise | [Setup](/provider-config/aws-bedrock/api-key) |
+| **DeepSeek** | Great value | [Setup](/provider-config/deepseek) |
+
+### Local Models
+
+Run models on your own hardware for complete privacy and zero per-request costs.
+
+| Provider | Best For | Setup Guide |
+|----------|----------|-------------|
+| **Ollama** | CLI-based local runtime | [Setup](/running-models-locally/overview#runtime-options) |
+| **LM Studio** | GUI-based local runtime | [Setup](/running-models-locally/overview#runtime-options) |
+
+Local models require sufficient hardware (especially GPU memory). See [Running Models Locally](/running-models-locally/overview) for requirements.
+
+## CLI Setup
+
+```bash
+# Authenticate from the terminal
+kerberosec auth
+
+# Shorthand
+kerberosec a
+```
+
+Runs the same auth flow as IDE setup.
+
+## Troubleshooting
+
+| Issue | Fix |
+|-------|-----|
+| "Unauthorized: Please sign in" | Session expired. Click **Sign In** to re-authenticate. |
+| Browser doesn't open | Check default browser settings. Copy the URL from the KerberoSec output panel manually. |
+| Frequent re-authentication | Check org security policies. Ensure you're not clearing IDE secrets. Try a full sign-out/sign-in. |
+| Can't access organization | Verify membership at [app.kerberosec.bot](https://app.kerberosec.bot). Ask your admin about permissions. Sign out and back in. |

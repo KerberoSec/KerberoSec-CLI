@@ -1,0 +1,30 @@
+{
+	"extends": "../tsconfig.json",
+	"compilerOptions": {
+		"paths": {
+			"@/*": ["./*"],
+			"@kerberosec/agents": ["../../../../sdk/packages/agents/src/index.ts"],
+			"@kerberosec/core": ["../../../../sdk/packages/core/src/index.ts"],
+			"@kerberosec/llms": ["../../../../sdk/packages/llms/src/index.ts"],
+			"@kerberosec/shared": ["../../../../sdk/packages/shared/src/index.ts"],
+			"@kerberosec/shared/storage": [
+				"../../../../sdk/packages/shared/src/storage/index.ts"
+			],
+			"@kerberosec/shared/db": [
+				"../../../../sdk/packages/shared/src/db/index.ts"
+			],
+			"@kerberosec/shared/*": [
+				"../../../../sdk/packages/shared/src/*",
+				"../../../../sdk/packages/shared/src/*/index.ts"
+			]
+		}
+	},
+	"include": [
+		"next-env.d.ts",
+		"**/*.ts",
+		"**/*.tsx",
+		".next/types/**/*.ts",
+		".next/dev/types/**/*.ts"
+	],
+	"exclude": ["node_modules"]
+}

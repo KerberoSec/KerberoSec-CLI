@@ -1,0 +1,139 @@
+---
+title: "Installing KerberoSec"
+description: "Choose your installation path: IDE Extension, CLI, SDK, or Kanban"
+---
+
+## Choose Your Install Path
+
+- [IDE Extension](#ide-extension) — VS Code, Cursor, JetBrains, Windsurf, VSCodium, Antigravity
+- [CLI](#cli) — terminal workflows
+- [Kanban](#kanban) (preview) — easily manage multiple agents through a kanban board
+- [SDK](#sdk) — build with `@kerberosec/sdk`
+
+## IDE Extension
+
+Use this if you want KerberoSec inside your editor UI.
+
+<Tabs>
+  <Tab title="VS Code / Cursor / Windsurf / VSCodium / Antigravity">
+    <Steps>
+      <Step title="Open Extensions">
+        Press `Ctrl/Cmd + Shift + X`.
+      </Step>
+      <Step title="Search for KerberoSec">
+        Type `KerberoSec`.
+      </Step>
+      <Step title="Install">
+        Click **Install** on the KerberoSec extension.
+      </Step>
+      <Step title="Open KerberoSec">
+        Find KerberoSec in the extension sidebar.
+      </Step>
+      <Step title="Authorize with KerberoSec">
+        After installing the extension, complete provider setup in KerberoSec settings. Use the KerberoSec Provider for pay-as-you-go access, KerberoSecPass for a flat monthly subscription, or bring your own provider key.
+
+        [Authorize with KerberoSec](/getting-started/authorizing-with-kerberosec)
+      </Step>
+    </Steps>
+
+    <Note>
+    Windsurf and VSCodium use Open VSX. The install flow is the same.
+    </Note>
+  </Tab>
+
+  <Tab title="JetBrains">
+    <Steps>
+      <Step title="Open Plugins Marketplace">
+        **Settings** → **Plugins** → **Marketplace**.
+      </Step>
+      <Step title="Install KerberoSec">
+        Search `KerberoSec`, click **Install**, then restart the IDE.
+      </Step>
+      <Step title="Open KerberoSec">
+        **View** → **Tool Windows** → **KerberoSec**.
+      </Step>
+      <Step title="Authorize with KerberoSec">
+        After installing the extension, complete provider setup in KerberoSec settings. Use the KerberoSec Provider for pay-as-you-go access, KerberoSecPass for a flat monthly subscription, or bring your own provider key.
+
+        [Authorize with KerberoSec](/getting-started/authorizing-with-kerberosec)
+      </Step>
+    </Steps>
+
+    Alternative: install from the [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/28247-kerberosec).
+  </Tab>
+</Tabs>
+
+## CLI
+
+Use this if you want KerberoSec in terminal workflows (interactive + automation).
+
+<Steps>
+  <Step title="Install Node.js">
+    Install Node.js 20+ (22 recommended).
+  </Step>
+  <Step title="Install CLI">
+    ```bash
+    npm install -g kerberosec
+    ```
+  </Step>
+  <Step title="Authenticate">
+    ```bash
+    kerberosec auth
+    ```
+  </Step>
+  <Step title="Run KerberoSec">
+    ```bash
+    kerberosec
+    # or
+    kerberosec "your task"
+    ```
+  </Step>
+</Steps>
+
+More details: [CLI Installation & Setup](/usage/cli-overview)
+
+## Kanban
+
+Use this if you want task-board workflows with agent execution.
+
+<Steps>
+  <Step title="Install Node.js">
+    Install Node.js 18+.
+  </Step>
+  <Step title="Launch Kanban">
+    ```bash
+    npx kanban
+    ```
+  </Step>
+</Steps>
+
+More details: [Kanban](/usage/kanban)
+
+## SDK
+
+Use this if you are building your own app/agent on top of KerberoSec.
+
+<Steps>
+  <Step title="Create project">
+    ```bash
+    mkdir my-agent && cd my-agent
+    npm init -y
+    ```
+  </Step>
+  <Step title="Install SDK">
+    ```bash
+    npm install @kerberosec/sdk
+    ```
+  </Step>
+  <Step title="Build and run">
+    Browse SDK examples to run your first agent.
+  </Step>
+</Steps>
+
+Start here: [SDK Examples](/sdk/examples)
+
+
+## Need Help?
+
+- [Troubleshooting](/troubleshooting/networking-and-proxies)
+- [Discord community](https://discord.gg/kerberosec)

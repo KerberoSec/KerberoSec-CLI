@@ -1,0 +1,65 @@
+{
+	"name": "@kerberosec/vscode",
+	"displayName": "KerberoSec Chat",
+	"description": "Autonomous coding agent right in your IDE, capable of creating/editing files, running commands, using the browser, and more with your permission every step of the way. Backed by the KerberoSec CLI runtime.",
+	"version": "0.0.0",
+	"private": true,
+	"publisher": "kerberosec",
+	"icon": "src/webview/public/icon.png",
+	"license": "Apache-2.0",
+	"engines": {
+		"vscode": "^1.90.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"main": "./dist/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "kerberosecVscode.openChat",
+				"title": "KerberoSec: Open Chat in Editor"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "kerberosec",
+					"title": "KerberoSec",
+					"icon": "src/webview/public/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"kerberosec": [
+				{
+					"type": "webview",
+					"id": "kerberosecVscode.chatView",
+					"name": "Chat",
+					"icon": "src/webview/public/icon.svg"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"build:webview": "cd ./src/webview && bun run build",
+		"build": "bun run build:webview && bun build ./src/extension.ts ./src/hub-daemon.ts --outdir ./dist --target=node --format=cjs --external=vscode --minify",
+		"watch": "bun build ./src/extension.ts ./src/hub-daemon.ts --outdir ./dist --target=node --format=cjs --external=vscode --minify --watch",
+		"typecheck": "tsc --noEmit",
+		"test": "vitest run --config vitest.config.ts",
+		"dev": "bun run watch"
+	},
+	"dependencies": {
+		"@ai-sdk/react": "^4.0.61",
+		"@kerberosec/core": "workspace:*",
+		"@kerberosec/llms": "workspace:*",
+		"@kerberosec/shared": "workspace:*",
+		"ai": "^7.0.58"
+	},
+	"devDependencies": {
+		"@types/node": "^25.3.5",
+		"@types/vscode": "^1.90.0",
+		"typescript": "^5.9.3",
+		"vitest": "^4.0.18"
+	}
+}

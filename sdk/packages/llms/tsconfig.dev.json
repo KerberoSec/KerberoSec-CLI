@@ -1,0 +1,12 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"baseUrl": ".",
+		"rootDir": "..",
+		"paths": {
+			"@kerberosec/agents": ["../agents/src/index.ts"],
+			"@kerberosec/shared": ["../shared/src/index.ts"],
+			"@kerberosec/shared/*": ["../shared/src/*", "../shared/src/*/index.ts"]
+		}
+	}
+}

@@ -1,0 +1,12 @@
+{
+	"$schema": "https://schema.tauri.app/config/2",
+	"productName": "KerberoSec Beta",
+	"identifier": "bot.kerberosec.app.beta",
+	"plugins": {
+		"updater": {
+			"endpoints": [
+				"https://github.com/kerberosec/kerberosec/releases/download/desktop-beta/latest.json"
+			]
+		}
+	}
+}

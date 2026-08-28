@@ -1,0 +1,20 @@
+.kerberosec-ui-agent-prompt-queue__toggle,
+.kerberosec-ui-agent-prompt-queue__editor {
+	box-sizing: border-box;
+	font-family: inherit;
+	font-style: inherit;
+	font-variant: inherit;
+}
+
+.kerberosec-ui-agent-prompt-queue__action {
+	font: inherit;
+}
+
+.kerberosec-ui-agent-prompt-queue__editor {
+	border-style: solid;
+	font-weight: inherit;
+}
+
+.kerberosec-ui-agent-prompt-queue__items[hidden] {
+	display: none;
+}

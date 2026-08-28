@@ -1,0 +1,222 @@
+---
+title: "Model Orchestration"
+description: "Use multiple AI models strategically: optimize costs, reduce bias, and leverage model-specific strengths in your workflows"
+---
+
+KerberoSec CLI's `--config` and `--thinking` flags enable sophisticated multi-model workflows. Instead of using a single model for all tasks, you can route different work to different models based on cost, capability, and specialization.
+
+## Why Orchestrate Multiple Models?
+
+**Cost Optimization**
+
+By routing work to the right model for the job, you can dramatically reduce API costs. Fast, inexpensive models like Haiku and Gemini Flash handle simple tasks such as summarization, while expensive models like Opus and O1 are reserved for complex reasoning and planning. This approach can reduce costs by 10-100x on routine operations.
+
+**Bias Reduction**
+
+Different models catch different issues, so cross-validating solutions with multiple AI perspectives helps reduce blind spots that come from relying on a single model. In code reviews especially, combining viewpoints surfaces problems that any one model might miss.
+
+**Specialization**
+
+Certain models excel in specific domains: Codex and DeepSeek are strong at code generation, while GPT-4 and Claude shine at documentation and prose. Security analysis in particular benefits from combining multiple model viewpoints, since each brings different training data and heuristics to the table.
+
+## Pattern 1: CI/CD Code Review
+
+See our production GitHub Actions workflow that uses KerberoSec CLI for automated PR reviews: [kerberosec-pr-review.yml](https://github.com/kerberosec/kerberosec/blob/main/.github/workflows/kerberosec-pr-review.yml)
+
+**Key capabilities demonstrated:**
+- **Automated inline suggestions**: Creates GitHub suggestion blocks that authors can commit with one click
+- **SME identification**: Analyzes git history to find subject matter experts for each file
+- **Related issue discovery**: Searches for context from past issues and PRs
+- **Security-first permissions**: Read-only codebase access, can only post reviews
+- **Deep code analysis**: Understands intent, compares approaches, identifies edge cases
+
+The workflow runs on every PR and provides maintainers with comprehensive context to make faster, more informed decisions.
+
+## Pattern 2: Task Phase Optimization
+
+Use different models for different phases of work. Route simple tasks to cheap models, complex reasoning to premium models.
+
+### Example: Issue Analysis Pipeline
+
+```bash
+# Get latest issue content
+ISSUE_CONTENT=$(gh issue view $(gh issue list -L 1 | awk '{print $1}'))
+
+# Phase 1: Quick summary with cheap model
+SUMMARY=$(echo "$ISSUE_CONTENT" | kerberosec --auto-approve true --config ~/.kerberosec-haiku \
+  "summarize this issue in 2-3 sentences")
+
+# Phase 2: Detailed plan with expensive model + thinking
+PLAN=$(echo "$SUMMARY" | kerberosec --auto-approve true --thinking high --config ~/.kerberosec-opus \
+  "create detailed implementation plan with edge cases")
+
+# Phase 3: Execute with mid-tier model
+echo "$PLAN" | kerberosec --auto-approve true --config ~/.kerberosec-sonnet \
+  "implement the plan from above"
+```
+
+<Note>
+Each `kerberosec` invocation needs to complete before passing output to the next phase. Use shell variables to store intermediate results rather than piping `kerberosec` commands directly.
+</Note>
+
+**Cost impact:**
+- Haiku: $0.80 per million input tokens
+- Opus: $15 per million input tokens  
+- Sonnet: $3 per million input tokens
+
+This pattern uses Opus only when needed for complex reasoning, saving ~10x on API costs compared to using Opus for everything.
+
+### Setting Up Model Configs
+
+Create separate configuration directories for each model:
+
+```bash
+# Create config directories
+mkdir -p ~/.kerberosec-haiku ~/.kerberosec-sonnet ~/.kerberosec-opus
+
+# Configure each with different models
+kerberosec --config ~/.kerberosec-haiku auth anthropic --modelid claude-haiku-4-20250514
+kerberosec --config ~/.kerberosec-sonnet auth anthropic --modelid claude-sonnet-4-20250514  
+kerberosec --config ~/.kerberosec-opus auth anthropic --modelid claude-opus-4-5-20251101
+
+# Or use different providers entirely
+kerberosec --config ~/.kerberosec-gemini auth gemini --modelid gemini-2.0-flash-exp
+kerberosec --config ~/.kerberosec-codex auth openai-codex --modelid gpt-5-latest
+```
+
+Now you can switch models per-task with `--config`:
+
+```bash
+kerberosec --config ~/.kerberosec-haiku "quick task"
+kerberosec --config ~/.kerberosec-opus "complex reasoning task"
+```
+
+## Pattern 3: Multi-Model Review & Consensus
+
+Get multiple AI perspectives on the same change, then synthesize their feedback.
+
+### Example: Diff Review Pipeline
+
+```bash
+# Get the latest commit
+DIFF=$(git show)
+
+# Review 1: Gemini's perspective
+echo "$DIFF" | kerberosec --auto-approve true --config ~/.kerberosec-gemini \
+    "review this diff and write your analysis to gemini-review.md"
+
+# Review 2: Codex's perspective
+echo "$DIFF" | kerberosec --auto-approve true --config ~/.kerberosec-codex \
+    "review this diff and write your analysis to codex-review.md"
+
+# Review 3: Opus's perspective
+echo "$DIFF" | kerberosec --auto-approve true --config ~/.kerberosec-opus \
+    "review this diff and write your analysis to opus-review.md"
+
+# Synthesize all reviews into a consensus
+cat gemini-review.md codex-review.md opus-review.md | kerberosec --auto-approve true \
+    "summarize these 3 reviews and identify: 1) issues all models agree on, 2) issues only one model caught, 3) your final recommendation"
+```
+
+**Why this works:**
+- **Redundancy**: Issues caught by all 3 models are high-confidence
+- **Coverage**: Each model has blind spots; together they cover more ground
+- **Prioritization**: Consensus issues should be fixed first
+- **Learning**: See which model types catch which issue types
+
+### Advanced: Parallel Reviews
+
+Run reviews in parallel for faster feedback:
+
+```bash
+# Run all reviews simultaneously
+git show | kerberosec --auto-approve true --config ~/.kerberosec-gemini "review and save to gemini-review.md" &
+git show | kerberosec --auto-approve true --config ~/.kerberosec-codex "review and save to codex-review.md" &
+git show | kerberosec --auto-approve true --config ~/.kerberosec-opus "review and save to opus-review.md" &
+
+# Wait for all to complete
+wait
+
+# Synthesize
+cat *-review.md | kerberosec --auto-approve true "create consensus review"
+```
+
+<Note>
+Parallel execution requires managing multiple KerberoSec instances. See [Multi-instance workflows](/usage/cli-overview#automation-patterns) for details.
+</Note>
+
+## Extended Thinking for Complex Tasks
+
+Use the `--thinking` flag when KerberoSec needs to analyze multiple approaches:
+
+```bash
+# Without thinking: Fast but may miss nuances
+kerberosec --auto-approve true "refactor this codebase"
+
+# With thinking: Slower but more thorough
+kerberosec --auto-approve true --thinking high \
+    "refactor this codebase - consider: performance, maintainability, backward compatibility"
+```
+
+The `--thinking <level>` flag sets reasoning effort. Use `--thinking high` or `--thinking xhigh` when you want the model to spend more effort on complex tradeoffs. Best for:
+- Architectural decisions
+- Security analysis
+- Complex refactoring
+- Multi-step planning
+
+## Best Practices
+
+1. **Profile your workload**: Track which tasks are simple vs. complex
+2. **Match models to tasks**: Use fast models for summaries, powerful models for reasoning
+3. **Automate switching**: Script model selection based on task type
+4. **Monitor costs**: Different models have 10-100x price differences
+5. **Validate important decisions**: Use multi-model consensus for critical changes
+
+## Production Examples
+
+### Cost-Optimized PR Review
+
+```bash
+# Haiku: Quick summary and issue identification
+gh pr view $PR | kerberosec --auto-approve true --config ~/.kerberosec-haiku \
+    "list all issues to fix, output as JSON"
+
+# Opus with thinking: Deep analysis only if issues found
+if [ -s issues.json ]; then
+    kerberosec --auto-approve true --thinking high --config ~/.kerberosec-opus \
+        "analyze these issues and recommend fixes"
+fi
+```
+
+### Security-Focused Multi-Model Scan
+
+```bash
+# Different models have different security perspectives
+git diff main | kerberosec --auto-approve true --config ~/.kerberosec-gemini "security review" > gemini-sec.md &
+git diff main | kerberosec --auto-approve true --config ~/.kerberosec-opus "security review" > opus-sec.md &
+git diff main | kerberosec --auto-approve true --config ~/.kerberosec-codex "security review" > codex-sec.md &
+wait
+
+# High-priority: Issues all 3 models found
+cat *-sec.md | kerberosec --auto-approve true "find security issues all 3 reviews mentioned"
+```
+
+## Related Documentation
+
+<Columns cols={2}>
+  <Card title="CLI Reference" icon="terminal" href="/cli/cli-reference">
+    Complete documentation for --config and --thinking flags
+  </Card>
+  
+  <Card title="Headless Mode" icon="robot" href="/usage/cli-overview#headless-mode">
+    Run KerberoSec autonomously in scripts, CI/CD pipelines, and automated workflows.
+  </Card>
+  
+  <Card title="KerberoSec Provider" icon="brain" href="/getting-started/kerberosec-provider">
+    Fastest built-in model access setup and account workflow
+  </Card>
+  
+  <Card title="CI/CD Integration" icon="github" href="/cli/samples/github-integration">
+    Automate GitHub workflows with KerberoSec CLI
+  </Card>
+</Columns>

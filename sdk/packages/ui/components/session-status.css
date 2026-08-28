@@ -1,0 +1,19 @@
+.kerberosec-ui-session-status {
+	--kerberosec-ui-session-status-color: var(--neutral-a4);
+}
+
+.kerberosec-ui-session-status__dot {
+	background: var(--kerberosec-ui-session-status-color);
+}
+
+.kerberosec-ui-session-status--neutral .kerberosec-ui-session-status__dot {
+	visibility: hidden;
+}
+
+.kerberosec-ui-session-status--running {
+	--kerberosec-ui-session-status-color: var(--primary);
+}
+
+.kerberosec-ui-session-status--error {
+	--kerberosec-ui-session-status-color: var(--error-text);
+}

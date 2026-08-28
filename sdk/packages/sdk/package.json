@@ -1,0 +1,37 @@
+{
+	"name": "@kerberosec/sdk",
+	"description": "KerberoSec SDK - user-facing alias for @kerberosec/core",
+	"version": "0.0.81",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/kerberosec/kerberosec",
+		"directory": "sdk/packages/sdk"
+	},
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"main": "./dist/index.js",
+	"private": false,
+	"publishConfig": {
+		"access": "public"
+	},
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "bun run bun.mts && bun tsc -p tsconfig.build.json",
+		"typecheck": "bun tsc -p tsconfig.json --noEmit"
+	},
+	"dependencies": {
+		"@kerberosec/core": "workspace:*"
+	},
+	"engines": {
+		"node": ">=22"
+	},
+	"files": [
+		"dist"
+	],
+	"license": "Apache-2.0"
+}

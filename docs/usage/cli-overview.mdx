@@ -1,0 +1,164 @@
+---
+title: "CLI Overview"
+sidebarTitle: "CLI Overview"
+description: "Use KerberoSec CLI for interactive terminal sessions and automated headless workflows."
+---
+
+## Prerequisites
+
+- KerberoSec CLI installed (install via `npm i -g kerberosec`)
+- Provider authenticated (`kerberosec auth`) — use the KerberoSec Provider, KerberoSecPass, or your own provider key ([Authorization Guide](/getting-started/authorizing-with-kerberosec#cli-setup))
+
+## Quick Start
+
+```bash
+# Interactive session
+kerberosec
+
+# Run one task immediately
+kerberosec "refactor this module to use async/await"
+
+# Structured output for scripts
+kerberosec --json "list TODO comments"
+```
+
+## Headless mode
+
+Use headless mode for scripts/automation and processable output.
+
+Headless is triggered when using flags like `--json`, when stdin is piped, or when output is redirected.
+
+#### When headless activates
+
+| Invocation | Reason |
+|---|---|
+| `kerberosec --json "task"` | JSON output mode |
+| `cat file \| kerberosec "task"` | stdin is piped |
+| `kerberosec "task" > output.txt` | stdout is redirected |
+
+```bash
+# CI/script style execution
+git diff | kerberosec "review these changes"
+
+# JSON for parsing
+kerberosec --json "summarize this changelog" | jq -r '.text'
+```
+
+See: [Headless Mode](#headless-mode)
+
+### Autonomous execution
+
+For fully unattended runs, use auto-approval:
+
+```bash
+kerberosec --auto-approve true "run tests and fix failures"
+```
+
+Mode selection also works in headless runs:
+
+```bash
+# plan-first
+kerberosec -p "design migration plan"
+
+# act immediately (default)
+kerberosec "apply migration"
+```
+
+<Warning>
+Autonomous execution can modify files and run commands without further prompts. Use a clean branch and review results.
+</Warning>
+
+## High-Value Commands
+
+```bash
+kerberosec --help
+kerberosec <command> --help
+```
+
+| Command | Purpose |
+|---|---|
+| `kerberosec` | Start interactive mode or run a prompt |
+| `kerberosec auth` | Authenticate and set provider/model |
+| `kerberosec config` | Open the interactive config view |
+| `kerberosec mcp` | Manage MCP servers |
+| `kerberosec doctor` | Diagnose/fix configuration issues |
+| `kerberosec history` | Show and manage task history |
+| `kerberosec schedule` | Manage scheduled tasks |
+| `kerberosec hub` | Manage local hub daemon |
+| `kerberosec kanban` | Launch Kanban app |
+
+## Most-Used Global Flags
+
+Source of truth: [CLI Reference](/cli/cli-reference)
+
+| Flag | Purpose |
+|---|---|
+| `-p, --plan` | Start in Plan mode |
+| `--auto-approve <boolean>` | Global tool auto-approval (`true`/`false`, default `true`) |
+| `-m, --model <model>` | Override model for this run |
+| `-P, --provider <id>` | Override provider for this run |
+| `-c, --cwd <path>` | Set working directory |
+| `--config <dir>` | Use config directory |
+| `--data-dir <dir>` | Use isolated local state |
+| `--json` | Output newline-delimited JSON messages |
+| `--thinking <level>` | Set reasoning effort: `none\|low\|medium\|high\|xhigh` (default `medium`) |
+| `-t, --timeout <seconds>` | Set task timeout |
+
+## Automation Patterns
+
+### Pipe context in
+
+```bash
+cat README.md | kerberosec "summarize key setup steps"
+git diff | kerberosec "review for potential regressions"
+```
+
+### Chain tasks
+
+```bash
+git diff | kerberosec "explain these changes" | kerberosec "write a commit message"
+```
+
+### Restrict command execution
+
+```bash
+export KERBEROSEC_COMMAND_PERMISSIONS='{"allow": ["npm *", "git *"], "deny": ["rm -rf *", "sudo *"]}'
+```
+
+### Include images in tasks
+
+```bash
+kerberosec -i "fix the layout issue shown in @./screenshot.png"
+
+# or reference inline
+kerberosec "fix the UI shown in @./design-mockup.png"
+```
+
+### Set execution timeout
+
+```bash
+kerberosec --timeout 600 "run full test suite"
+```
+
+## JSON Output Schema
+
+When using `--json`, each line is a JSON message object.
+
+```json
+{"type":"say","text":"I'll create the file now.","ts":1760501486669,"say":"text"}
+```
+
+| Field | Type | Description |
+|---|---|---|
+| `type` | `"ask"` or `"say"` | Message category |
+| `text` | `string` | Message content |
+| `ts` | `number` | Unix timestamp in milliseconds |
+| `say` | `string` | Subtype when `type` is `"say"` |
+| `ask` | `string` | Subtype when `type` is `"ask"` |
+| `reasoning` | `string` | Optional model reasoning |
+| `partial` | `boolean` | Streaming flag |
+
+## Next Steps
+
+- [CLI Reference](/cli/cli-reference)
+- [ACP](/usage/acp) — use KerberoSec as the coding agent in Zed, JetBrains IDEs, Neovim, and other ACP clients

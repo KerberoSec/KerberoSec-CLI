@@ -4,7 +4,25 @@ This guide walks you through setting up and running **KerberoSec CLI** on a comp
 
 ---
 
-## 📋 Prerequisites & System Requirements
+## ⚡ 1-Step Quick Installation (Recommended)
+
+If you have cloned or copied the repository, you can set up everything automatically by running:
+
+```bash
+chmod +x setup.sh
+./setup.sh
+```
+
+The script automatically:
+1. Installs system build tools & dependencies (`git`, `curl`, `build-essential`).
+2. Installs and configures the **Bun** runtime.
+3. (Optional) Prompts to install **Ollama** and pulls the coding model.
+4. Installs all project packages and builds both the SDK & CLI bundle.
+5. Configures the global `kerberosec` command in your `$PATH`.
+
+---
+
+## 📋 Prerequisites & Manual Setup Instructions
 
 - **Supported Operating Systems**: Linux (Ubuntu, Kali, Debian, Arch, Fedora), macOS (Apple Silicon & Intel), Windows 10/11 (via WSL2).
 - **Hardware**: Any modern 64-bit CPU, minimum 4 GB RAM (8 GB+ recommended).

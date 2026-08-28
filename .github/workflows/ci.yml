@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build-and-test:
+    name: Build & Test CLI (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install Dependencies
+        run: bun install
+
+      - name: Lint & Format Check
+        run: bun biome check --diagnostic-level=error apps/cli/src/
+
+      - name: Build CLI Bundle
+        run: bun -F @kerberosec/cli build
+
+      - name: Run Tests
+        run: bun --cwd apps/cli vitest run src/tui/hooks/use-root-keyboard.test.ts

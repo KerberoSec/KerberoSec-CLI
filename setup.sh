@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
-# ==============================================================================
-#  KerberoSec CLI - Automated Setup & Installer Script
-#  Author: Arun Kumar (https://github.com/KerberoSec)
-# ==============================================================================
+# KerberoSec CLI Automated Setup and Installer Script
+# Author Arun Kumar (https://github.com/KerberoSec)
 
 set -e
 

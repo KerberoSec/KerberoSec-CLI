@@ -1,4 +1,4 @@
-# 🚀 KerberoSec CLI - Complete Setup Guide
+# 🚀 KerberoSec CLI Setup Guide
 
 This guide walks you through setting up and running **KerberoSec CLI** on a completely new laptop or fresh operating system (Linux, macOS, or Windows WSL2).
 

@@ -11,7 +11,7 @@ on:
 
 jobs:
   build-and-test:
-    name: Build & Test CLI (${{ matrix.os }})
+    name: Build and Test CLI (${{ matrix.os }})
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

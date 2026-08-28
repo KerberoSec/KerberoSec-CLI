@@ -34,9 +34,9 @@
 ---
 
 ## 🌟 Table of Contents
-1. [Overview and Vision](#-overview-and-vision)
-2. [Key Highlights](#-key-highlights)
-3. [Comprehensive Architecture and System Diagrams](#-comprehensive-architecture-and-system-diagrams)
+1. [Overview and Core Vision](#-overview-and-core-vision)
+2. [Key Architectural Highlights](#-key-architectural-highlights)
+3. [Deep-Dive Architecture and System Diagrams](#-deep-dive-architecture-and-system-diagrams)
    - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
    - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
    - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
@@ -51,8 +51,14 @@
    - [Diagram 12: Context Mentions and File Pinning Engine](#diagram-12-context-mentions-and-file-pinning-engine)
    - [Diagram 13: Fuzzy Command Palette and Action Dispatcher](#diagram-13-fuzzy-command-palette-and-action-dispatcher)
    - [Diagram 14: Subprocess Shell Runner and PTY Output Capture](#diagram-14-subprocess-shell-runner-and-pty-output-capture)
-   - [Diagram 15: Authentication State Machine and Logout Flow](#diagram-15-authentication-state-machine-and-logout-flow)
-   - [Diagram 16: Dynamic Theme Engine and ANSI Color Resolution](#diagram-16-dynamic-theme-engine-and-ansi-color-resolution)
+   - [Diagram 15: Session Forking and Branching Timeline Engine](#diagram-15-session-forking-and-branching-timeline-engine)
+   - [Diagram 16: Git Worktree Sandbox and Workspace Isolation](#diagram-16-git-worktree-sandbox-and-workspace-isolation)
+   - [Diagram 17: Autonomous Routine Scheduling and Cron Engine](#diagram-17-autonomous-routine-scheduling-and-cron-engine)
+   - [Diagram 18: Multi-Modal Clipboard Image Processing Pipeline](#diagram-18-multi-modal-clipboard-image-processing-pipeline)
+   - [Diagram 19: Mistake Detection and Self-Healing Guardrails](#diagram-19-mistake-detection-and-self-healing-guardrails)
+   - [Diagram 20: Real-Time Token Analytics and Cost Engine](#diagram-20-real-time-token-analytics-and-cost-engine)
+   - [Diagram 21: Authentication State Machine and Logout Flow](#diagram-21-authentication-state-machine-and-logout-flow)
+   - [Diagram 22: Dynamic Theme Engine and ANSI Color Resolution](#diagram-22-dynamic-theme-engine-and-ansi-color-resolution)
 4. [Step-by-Step Execution Journey](#-step-by-step-execution-journey)
 5. [Installation and Automated 1-Step Setup](#-installation-and-automated-1-step-setup)
 6. [Commands and Keyboard Shortcuts Reference](#-commands-and-keyboard-shortcuts-reference)
@@ -60,7 +66,7 @@
 
 ---
 
-## 🌟 Overview and Vision
+## 🌟 Overview and Core Vision
 
 **KerberoSec CLI** is an open-source, autonomous AI coding companion built specifically for the terminal. It delivers an end-to-end software development assistant capable of understanding complex monorepo codebases, designing multi-tier software architectures, applying granular file diffs, running shell commands, executing test suites, and orchestrating distributed Model Context Protocol (MCP) servers.
 
@@ -71,7 +77,7 @@ Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is 
 
 ---
 
-## 🚀 Key Highlights
+## 🚀 Key Architectural Highlights
 
 - 🤖 **First-Class Offline Local AI**:
   - Full support for open-weights coding models (`qwen2.5-coder:1.5b`, `qwen2.5-coder:7b`, `llama3`, `deepseek-coder`).
@@ -82,6 +88,10 @@ Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is 
   - **Plan Mode**: Read-only mode designed for inspecting architecture, exploring files, and drafting technical proposals without touching code on disk.
   - **Act Mode**: Autonomous write mode for creating files, replacing code chunks, and running verification tests.
   - Toggle between modes seamlessly using <kbd>Tab</kbd>.
+- 🌳 **Session Forking & Git Worktree Isolation**:
+  - Branch conversations into alternative solution trees and run dangerous tasks inside isolated shadow worktrees.
+- ⏰ **Autonomous Cron & Routine Scheduling**:
+  - Schedule recurring background tasks (e.g. daily test runs, vulnerability sweeps, dependency reviews).
 - 🔐 **Account Management & Clean `/logout`**:
   - Reset auth tokens, switch accounts, and return instantly to the onboarding login screen with `/logout`.
 - ⌨️ **Ergonomic Terminal Keyboard Navigation**:
@@ -96,7 +106,7 @@ Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is 
 
 ---
 
-## 🏛️ Comprehensive Architecture and System Diagrams
+## 🏛️ Deep-Dive Architecture and System Diagrams
 
 ### Diagram 1: Monorepo Package Topology and Boundaries
 
@@ -432,7 +442,90 @@ sequenceDiagram
 
 ---
 
-### Diagram 15: Authentication State Machine and Logout Flow
+### Diagram 15: Session Forking and Branching Timeline Engine
+
+```mermaid
+graph TD
+    RootTurn["Turn 1: Project Setup"] --> Turn2["Turn 2: Database Schema"]
+    Turn2 --> Turn3A["Turn 3A: REST API Implementation (Branch A)"]
+    Turn2 --> Turn3B["Turn 3B: GraphQL API Implementation (Branch B)"]
+    
+    Turn3A --> ForkAction["User Triggers Session Fork on Turn 2"]
+    ForkAction --> ClonedContext["Create New Branch Timeline with Preserved Checkpoints"]
+    ClonedContext --> Turn3B
+```
+
+---
+
+### Diagram 16: Git Worktree Sandbox and Workspace Isolation
+
+```mermaid
+flowchart LR
+    Task["Task Requires High-Risk Refactor"] --> CreateWorktree["git worktree add -b refactor-sandbox"]
+    CreateWorktree --> IsolatedDir["Isolated Sandbox Directory (/tmp/kerberosec-refactor)"]
+    IsolatedDir --> AgentExecution["Agent Generates & Tests Code in Sandbox"]
+    AgentExecution --> VerifyTests{"Did All Tests Pass?"}
+    VerifyTests -- "Yes" --> MergeBranch["Merge Sandbox Branch into Main Workspace"]
+    VerifyTests -- "No" --> PurgeWorktree["git worktree remove --force (Zero Residue)"]
+```
+
+---
+
+### Diagram 17: Autonomous Routine Scheduling and Cron Engine
+
+```mermaid
+flowchart TD
+    CronConfig["schedule.json (e.g. '0 2 * * *' Daily at 2 AM)"] --> CronScheduler["ScheduleService Daemon"]
+    CronScheduler --> TriggerEvent["Cron Timer Fires"]
+    TriggerEvent --> BuildSubagent["Spawn Headless Worker Agent"]
+    BuildSubagent --> RunRoutine["Execute Routine: 'Run test suite & scan for security bugs'"]
+    RunRoutine --> EmitReport["Save Diagnostic Markdown Report in .kerberosec/reports/"]
+    EmitReport --> Notify["Emit High-Priority Terminal Notification on Next Session"]
+```
+
+---
+
+### Diagram 18: Multi-Modal Clipboard Image Processing Pipeline
+
+```mermaid
+flowchart LR
+    PasteEvent["User Presses Ctrl+V with Clipboard Image"] --> DetectClipboard{"Detect Clipboard Type (PNG / JPEG / WebP)"}
+    DetectClipboard --> ReadBuffer["Read Native OS Buffer via xclip / wl-paste / pbpaste"]
+    ReadBuffer --> Downsample["Downsample & Compress if > 2000px"]
+    Downsample --> Base64Encode["Encode Image Buffer into Base64 Data URI"]
+    Base64Encode --> ContextInject["Inject Multi-Modal Image Block into Vision LLM Context"]
+```
+
+---
+
+### Diagram 19: Mistake Detection and Self-Healing Guardrails
+
+```mermaid
+flowchart TD
+    ToolResult["Tool Result Emitted"] --> LoopDetector{"Same Tool Called 3+ Times with Identical Error?"}
+    LoopDetector -- "Yes (Infinite Loop Detected)" --> HaltLoop["Trigger Circuit Breaker & Re-prompt Model with Loop Warning"]
+    
+    LoopDetector -- "No" --> PathValidator{"Target File Path Valid in Workspace?"}
+    PathValidator -- "No (Hallucinated Path)" --> SuggestPath["Fuzzy Match File Tree & Provide Nearest Path Suggestion"]
+    PathValidator -- "Yes" --> ProceedTurn["Proceed to Next Reasoning Turn"]
+```
+
+---
+
+### Diagram 20: Real-Time Token Analytics and Cost Engine
+
+```mermaid
+flowchart LR
+    TokenStream["Raw LLM Stream Chunks"] --> Counter["Token Counter & Tokenizer"]
+    Counter --> SplitStats["Split: Input Tokens, Output Tokens, Cached Tokens"]
+    SplitStats --> PriceMatrix["Lookup Provider Pricing Model (per 1M Tokens)"]
+    PriceMatrix --> SessionTotal["Aggregate Cumulative Session Cost"]
+    SessionTotal --> UpdateStatusBar["Live Update Status Bar: $0.0024 (1,420 Tokens)"]
+```
+
+---
+
+### Diagram 21: Authentication State Machine and Logout Flow
 
 ```mermaid
 stateDiagram-v2
@@ -452,7 +545,7 @@ stateDiagram-v2
 
 ---
 
-### Diagram 16: Dynamic Theme Engine and ANSI Color Resolution
+### Diagram 22: Dynamic Theme Engine and ANSI Color Resolution
 
 ```mermaid
 flowchart TD

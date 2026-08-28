@@ -10,6 +10,94 @@ KerberoSec CLI is built with high performance in mind:
 
 ---
 
+## Master Architecture, System Design, and Runtime Execution Topology
+
+```mermaid
+graph TD
+    subgraph UI_TUI ["1. Terminal User Interface (apps/cli - OpenTUI + React 19)"]
+        RawTTY["Terminal ANSI PTY Stream"] --> RootKey["useRootKeyboard Dispatcher<br>(Double Ctrl+C Exit, Tab Mode Toggle, Esc Abort, Ctrl+P Palette)"]
+        RootKey --> SessionCtx["Session & Theme Context Provider"]
+        SessionCtx --> ChatView["ChatView Component (Virtual Scroller)"]
+        ChatView --> MsgBubbles["Message Hierarchy (User Bubble, Reasoning Block, Unified Diff View)"]
+        ChatView --> InputBox["Input Area & Autocomplete (/slash Commands & @mentions)"]
+        ChatView --> PaletteModal["Fuzzy Command Palette Modal (Ctrl+P)"]
+        ChatView --> StatusBar["Live Status Bar (Active Model, Mode, Cost, Token Counter)"]
+    end
+
+    subgraph Runtime_Coord ["2. Interactive Session Runtime & Turn Coordinator (@kerberosec/core)"]
+        InputBox -->|Submit Prompt| TurnQueue["Interactive Turn Buffer & Prompt Queue"]
+        TurnQueue --> Hydrator["Context Hydration Engine<br>(System Rules, @Pinned AST Files, Conversation Memory)"]
+        Hydrator --> HeadroomCheck{"Token Headroom Check (>80% Window?)"}
+        HeadroomCheck -- "Yes" --> Compactor["Compaction Coordinator<br>(Summarizes Earlier History Turns)"]
+        HeadroomCheck -- "No" --> ReActPlanner["ReAct Multi-Step Decision Engine"]
+        Compactor --> ReActPlanner
+        ShadowSnap["In-Memory Shadow Snapshot Buffer"] <--> ReActPlanner
+    end
+
+    subgraph LLM_Routing ["3. Universal Multi-Provider Protocol Translation Layer (@kerberosec/llms)"]
+        ReActPlanner --> ModelRouter{"Universal LLM Router"}
+        
+        ModelRouter -- "Local Offline (Ollama)" --> OllamaDaemon["Ollama Auto-Daemon Controller<br>(Health Check Port 11434 & Auto-Serve)"]
+        OllamaDaemon --> LocalInference["Local GPU/CPU Inference Engine<br>(qwen2.5-coder:1.5b/7b/32b, deepseek-coder)"]
+        
+        ModelRouter -- "Cloud (Anthropic)" --> AnthropicAdapter["Anthropic Messages API (Claude 3.7 Sonnet/Opus)"]
+        ModelRouter -- "Cloud (OpenAI)" --> OpenAIAdapter["OpenAI Chat Completions API (GPT-4o)"]
+        ModelRouter -- "Cloud (Google)" --> GeminiAdapter["Google Gemini Content API (Gemini 2.0 Flash/Pro)"]
+        ModelRouter -- "Cloud (Groq)" --> GroqAdapter["Groq Ultra-Fast API (Llama 3.3 70B)"]
+
+        LocalInference --> TokenStreamParser["Unified Streaming Token Parser & Normalizer"]
+        AnthropicAdapter --> TokenStreamParser
+        OpenAIAdapter --> TokenStreamParser
+        GeminiAdapter --> TokenStreamParser
+        GroqAdapter --> TokenStreamParser
+        TokenStreamParser -->|Live Token Stream| ChatView
+    end
+
+    subgraph Agent_Core_Tools ["4. Core Agent Engine & Tool Execution Subsystem"]
+        TokenStreamParser -->|Tool Call Request| PermGate{"Security Permission Gate<br>(Auto-Approve Policy vs Interactive Approval)"}
+        PermGate -- "Interactive Approval" --> DiffViewer["Render Unified ANSI Color Diff Modal"]
+        DiffViewer -->|User Confirmed| ToolDispatcher["Central Tool Registry & Dispatcher"]
+        PermGate -- "Auto-Approved / Read Tool" --> ToolDispatcher
+
+        ToolDispatcher --> FileEngine["File Engine (read_file, write_to_file, replace_file_content)"]
+        ToolDispatcher --> SearchEngine["Codebase Search Engine (grep_search, find_by_name)"]
+        ToolDispatcher --> ShellRunner["Shell Process Runner (Subprocess PTY Execution)"]
+        ToolDispatcher --> WorktreeMgr["Git Worktree Sandbox Manager"]
+        ToolDispatcher --> SubagentHub["Subagent Delegation Hub (@kerberosec/agents)"]
+        ToolDispatcher --> McpHost["Model Context Protocol (MCP) Host Client"]
+    end
+
+    subgraph External_Integrations ["5. Subagents, MCP Servers & External Services"]
+        SubagentHub --> ResearchWorker["Research Subagent (Read-Only Codebase Explorer)"]
+        SubagentHub --> DebugWorker["Diagnostic Subagent (Test Harness Runner & Log Parser)"]
+        
+        McpHost -->|STDIO / JSON-RPC 2.0| SQLiteServer["SQLite MCP Server (mcp-server-sqlite)"]
+        McpHost -->|STDIO / JSON-RPC 2.0| PostgresServer["PostgreSQL MCP Server (@modelcontextprotocol/server-postgres)"]
+        McpHost -->|STDIO / JSON-RPC 2.0| GitHubServer["GitHub MCP Server (@modelcontextprotocol/server-github)"]
+        McpHost -->|STDIO / JSON-RPC 2.0| BraveServer["Brave Web Search MCP Server (@modelcontextprotocol/server-brave-search)"]
+        McpHost -->|HTTP SSE Transport| CloudMcpServer["Remote Enterprise Cloud MCP Server"]
+    end
+
+    subgraph Storage_Configs ["6. Workspace, Configuration Files & Storage Layer"]
+        FileEngine <--> LocalDiskFiles["Target Source Code Files on Local Disk"]
+        ShellRunner <--> HostOSShell["Host Operating System Shell (Bash / Zsh / POSIX)"]
+        WorktreeMgr <--> GitRepoControl["Git Repository Version Control & Worktrees"]
+        Hydrator <--> RulesFile[".kerberosecrules (Architecture Standards & Guidelines)"]
+        Hydrator <--> SkillsDir[".kerberosec/skills/ (Custom Automation Workflows)"]
+        McpHost <--> McpConfigFile[".kerberosec/mcp_settings.json (MCP Server Configurations)"]
+    end
+
+    FileEngine -->|Tool Result & Output| CircuitBreaker{"Mistake Detector & Loop Breaker"}
+    SearchEngine -->|Search Results| CircuitBreaker
+    ShellRunner -->|Exit Code & Logs| CircuitBreaker
+    CircuitBreaker -- "Error / Syntax Issue" --> SelfCorrectionLoop["Self-Correction Loop: Feed Error Stack to Next Turn"]
+    SelfCorrectionLoop --> ReActPlanner
+    CircuitBreaker -- "Success / Finished" --> TurnDone["Mark Turn Complete & Finalize Output"]
+    TurnDone --> SessionCtx
+```
+
+---
+
 ## Primary Recommendation: Local Offline Models for Maximum Data Security
 
 KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** as the primary runtime engine for all software development and security auditing workflows.

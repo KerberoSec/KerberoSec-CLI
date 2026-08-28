@@ -1,5 +1,13 @@
 # KerberoSec CLI
 
+**Next-Generation Autonomous Agentic AI Coding Assistant for your Terminal**
+
+Architected, developed, and maintained by **Arun Kumar**
+
+---
+
+## About KerberoSec CLI
+
 KerberoSec CLI is a terminal-native autonomous coding assistant engineered from the ground up for software developers, security engineers, and DevOps practitioners. Rather than acting as a standard conversational chatbot, KerberoSec CLI operates as a full-fledged autonomous agentic runtime inside your terminal. It directly interfaces with your local file system, terminal shell, Git version control, and Model Context Protocol (MCP) servers to understand entire codebases, architect solutions, execute multi-file refactors, and verify code changes with live test runs.
 
 KerberoSec CLI is built with high performance in mind:
@@ -13,99 +21,48 @@ KerberoSec CLI is built with high performance in mind:
 ## Master Architecture, System Design, and Runtime Execution Topology
 
 ```mermaid
-flowchart TD
-    %% -------------------------------------------------------------
-    %% 1. PRESENTATION & TERMINAL UI SUBSYSTEM
-    %% -------------------------------------------------------------
-    subgraph S1 ["1. Presentation and Terminal Reactive UI (apps/cli - OpenTUI + React 19)"]
-        TTY["Terminal Raw ANSI / TTY Stream"] --> RootKey["useRootKeyboard Event Hub<br>[Ctrl+C Timer, Tab Mode Toggle, Esc Abort, Ctrl+P Palette]"]
-        RootKey --> SessionState["Session Context & Theme Provider"]
-        SessionState --> ChatView["ChatView (Virtual Scroll Engine)"]
-        ChatView --> MsgBubbles["Message Tree<br>[User Prompts, Live Reasoning Blocks, ANSI Diff Modals]"]
-        ChatView --> InputSection["Input Area & Autocomplete<br>[Slash Commands (/), File Mentions (@)]"]
-        ChatView --> CmdPalette["Fuzzy Command Palette Modal (Ctrl+P)"]
-        ChatView --> StatusBar["Live Status Bar<br>[Model, Mode, Cumulative Cost, Token Counter]"]
+graph TB
+    subgraph UI ["Terminal Interface Layer (apps/cli - OpenTUI + React 19)"]
+        User["Developer Prompt / Keyboard Input"] --> TUI["Reactive Terminal UI & Command Palette (Ctrl+P)"]
+        TUI --> ModeSwitch["Plan Mode (Read-Only) <---> Act Mode (Autonomous)"]
     end
 
-    %% -------------------------------------------------------------
-    %% 2. SESSION RUNTIME & CONTEXT ORCHESTRATION
-    %% -------------------------------------------------------------
-    subgraph S2 ["2. Session Runtime and Context Orchestration (@kerberosec/core)"]
-        InputSection -->|Submit Prompt| PromptQueue["Interactive Turn Buffer & Execution Queue"]
-        PromptQueue --> ContextHydrator["Context Hydration Engine<br>[.kerberosecrules, @Pinned AST Outlines, Conversation Memory]"]
-        ContextHydrator --> HeadroomCheck{"Token Window Check<br>(>80% Context Headroom?)"}
-        HeadroomCheck -- "Yes" --> Compactor["Compaction Coordinator<br>[Summarize Past Turns into Succinct Checkpoints]"]
-        HeadroomCheck -- "No" --> ReActEngine["ReAct Multi-Step Decision Planner"]
-        Compactor --> ReActEngine
-        ShadowBuffer["In-Memory Shadow Snapshot Buffer"] <-->|Pre-Edit Snapshots & Instant Rollbacks| ReActEngine
+    subgraph Core ["Agent Runtime & Decision Engine (@kerberosec/core)"]
+        ModeSwitch --> Hydrator["Context Engine (.kerberosecrules + @Mentions + Memory)"]
+        Hydrator --> ReAct["ReAct Reasoning & Decision Planner"]
+        ReAct <--> ShadowSnap["In-Memory Shadow Snapshots & Rollback"]
     end
 
-    %% -------------------------------------------------------------
-    %% 3. UNIVERSAL LLM PROTOCOL ROUTING LAYER
-    %% -------------------------------------------------------------
-    subgraph S3 ["3. Universal LLM Protocol Translation Layer (@kerberosec/llms)"]
-        ReActEngine --> Router{"Universal Multi-Provider Router"}
-        
-        Router -- "Local Offline" --> OllamaManager["Ollama Auto-Daemon Manager<br>[Health Check Port 11434 & Auto-Serve]"]
-        OllamaManager --> LocalInference["Local GPU/CPU Inference<br>[qwen2.5-coder 1.5B/7B/32B, deepseek-coder]"]
-        
-        Router -- "Cloud APIs" --> CloudAdapters["Universal Cloud Adapters<br>[Anthropic Claude 3.7, OpenAI GPT-4o, Gemini 2.0, Groq]"]
-        
-        LocalInference --> StreamNormalizer["Unified Streaming Token Parser & Normalizer"]
-        CloudAdapters --> StreamNormalizer
-        StreamNormalizer -->|Real-Time Token Stream| ChatView
+    subgraph LLM ["Universal Model Router (@kerberosec/llms)"]
+        ReAct --> Router{"Model Selector"}
+        Router -- "Local Offline" --> Ollama["Ollama Daemon (Port 11434)<br>qwen2.5-coder / deepseek-coder"]
+        Router -- "Cloud APIs" --> Cloud["Cloud Providers<br>Claude 3.7 / GPT-4o / Gemini 2.0 / Groq"]
+        Ollama --> Stream["Streaming Token Parser"]
+        Cloud --> Stream
+        Stream -->|Live Typewriter| TUI
     end
 
-    %% -------------------------------------------------------------
-    %% 4. SECURITY GUARDRAILS & TOOL DISPATCHER
-    %% -------------------------------------------------------------
-    subgraph S4 ["4. Security Guardrails and Tool Execution Subsystem"]
-        StreamNormalizer -->|Tool Call Request| SecurityGate{"Security Permission Gate<br>[Auto-Approve Policy vs Human-in-the-Loop]"}
-        SecurityGate -- "Interactive Approval" --> DiffPreview["Render Colorized Unified Diff Modal"]
-        DiffPreview -->|Developer Confirmed| ToolHub["Central Tool Registry & Dispatcher"]
-        SecurityGate -- "Auto-Approved / Read Tool" --> ToolHub
+    subgraph Tools ["Tool Subsystems, Subagents & MCP"]
+        Stream --> Gate{"Security Gate"}
+        Gate -- "Approve / Read" --> Dispatcher["Tool Registry & Dispatcher"]
+        Gate -- "Write Action" --> DiffView["Color ANSI Diff Modal"]
+        DiffView --> Dispatcher
 
-        ToolHub --> FileSubsystem["File Engine<br>[read_file, write_to_file, replace_file_content]"]
-        ToolHub --> SearchSubsystem["Codebase Search Engine<br>[grep_search, find_by_name]"]
-        ToolHub --> ShellSubsystem["Shell Process Runner<br>[Subprocess PTY Command Execution]"]
-        ToolHub --> SandboxSubsystem["Git Worktree Sandbox Manager"]
-        ToolHub --> SubagentHub["Subagent Delegation Hub (@kerberosec/agents)"]
-        ToolHub --> McpHost["Model Context Protocol (MCP) Host Client"]
+        Dispatcher --> FileOps["File System (read, write, replace_content)"]
+        Dispatcher --> ShellOps["Shell Process Runner (PTY Execution)"]
+        Dispatcher --> SearchOps["Code Search (grep_search, find_by_name)"]
+        Dispatcher --> Subagents["Subagent Hub (Research & Diagnostics)"]
+        Dispatcher --> MCP["MCP Host (SQLite, Postgres, GitHub, Brave)"]
     end
 
-    %% -------------------------------------------------------------
-    %% 5. DISTRIBUTED WORKERS & MCP SERVERS
-    %% -------------------------------------------------------------
-    subgraph S5 ["5. Distributed Subagents and MCP Server Integrations"]
-        SubagentHub --> ResearchSubagent["Research Subagent<br>[Read-Only Codebase Explorer]"]
-        SubagentHub --> DiagnosticSubagent["Diagnostic Subagent<br>[Test Runner & Error Log Parser]"]
-        
-        McpHost -->|STDIO / JSON-RPC 2.0| LocalMCPServers["Local MCP Servers<br>[SQLite, PostgreSQL, GitHub, Brave Search, Docker]"]
-        McpHost -->|HTTP SSE Transport| RemoteCloudMCP["Remote Enterprise Cloud MCP Servers"]
+    subgraph Loop ["Self-Correction & Feedback Loop"]
+        FileOps --> Breaker{"Mistake Detector & Circuit Breaker"}
+        ShellOps --> Breaker
+        Breaker -- "Error / Test Failure" --> SelfHeal["Self-Correction Loop"]
+        SelfHeal --> ReAct
+        Breaker -- "Success" --> Done["Turn Complete"]
+        Done --> TUI
     end
-
-    %% -------------------------------------------------------------
-    %% 6. PERSISTENT STORAGE & REPOSITORY ENVIRONMENT
-    %% -------------------------------------------------------------
-    subgraph S6 ["6. Workspace Storage, Configuration and Environment"]
-        FileSubsystem <--> LocalFiles["Project Source Code Files on Local Disk"]
-        ShellSubsystem <--> HostShell["Host Terminal Operating System (Bash / Zsh / POSIX)"]
-        SandboxSubsystem <--> GitRepo["Git Repository Version Control & Worktrees"]
-        ContextHydrator <--> RulesConfig[".kerberosecrules (Architecture Standards)"]
-        ContextHydrator <--> SkillsConfig[".kerberosec/skills/ (Automation Workflows)"]
-        McpHost <--> McpSettings[".kerberosec/mcp_settings.json (MCP Server Configs)"]
-    end
-
-    %% -------------------------------------------------------------
-    %% 7. SELF-HEALING FEEDBACK LOOP
-    %% -------------------------------------------------------------
-    FileSubsystem -->|Tool Result & Logs| MistakeDetector{"Mistake Detector & Loop Breaker"}
-    SearchSubsystem -->|Search Matches| MistakeDetector
-    ShellSubsystem -->|Command Exit Code| MistakeDetector
-    MistakeDetector -- "Error / Test Failure Detected" --> SelfHealingLoop["Self-Healing Feedback Loop<br>[Inject Error Stack & Refine Plan]"]
-    SelfHealingLoop --> ReActEngine
-    MistakeDetector -- "Task Complete" --> FinalizeTurn["Finalize Output & Update Conversation State"]
-    FinalizeTurn --> SessionState
 ```
 
 ---
@@ -129,66 +86,66 @@ KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** a
 
 ## Table of Contents
 1. [About KerberoSec CLI](#about-kerberosec-cli)
-2. [Primary Recommendation: Local Offline Models for Maximum Data Security](#primary-recommendation-local-offline-models-for-maximum-data-security)
-3. [Hardware Guide: Best Local Ollama Models per GPU and VRAM](#hardware-guide-best-local-ollama-models-per-gpu-and-vram)
-4. [Key Architectural Highlights](#key-architectural-highlights)
-5. [Performance and Resource Footprint](#performance-and-resource-footprint)
-6. [Security and Privacy Guarantees](#security-and-privacy-guarantees)
-7. [Supported Languages and Tech Stacks](#supported-languages-and-tech-stacks)
-8. [Complete Installation and Setup Guide](#complete-installation-and-setup-guide)
+2. [Master Architecture, System Design, and Runtime Execution Topology](#master-architecture-system-design-and-runtime-execution-topology)
+3. [Primary Recommendation: Local Offline Models for Maximum Data Security](#primary-recommendation-local-offline-models-for-maximum-data-security)
+4. [Hardware Guide: Best Local Ollama Models per GPU and VRAM](#hardware-guide-best-local-ollama-models-per-gpu-and-vram)
+5. [Comprehensive Slash Commands Reference](#comprehensive-slash-commands-reference)
+6. [Keyboard Shortcuts Reference](#keyboard-shortcuts-reference)
+7. [Model Context Protocol (MCP) Deep Dive and Configuration Guide](#model-context-protocol-mcp-deep-dive-and-configuration-guide)
+   - [What is MCP and How It Works in KerberoSec](#what-is-mcp-and-how-it-works-in-kerberosec)
+   - [Configuration Files and Precedence Rules](#configuration-files-and-precedence-rules)
+   - [Managing MCP via the `/mcp` Interactive Dialog](#managing-mcp-via-the-mcp-interactive-dialog)
+   - [Production-Ready MCP Server Recipes](#production-ready-mcp-server-recipes)
+   - [Creating a Custom In-House MCP Server](#creating-a-custom-in-house-mcp-server)
+   - [MCP Troubleshooting and Debugging](#mcp-troubleshooting-and-debugging)
+8. [Real-World Interactive Use Case Walkthroughs](#real-world-interactive-use-case-walkthroughs)
+   - [Walkthrough 1: Automated Legacy Code Migration](#walkthrough-1-automated-legacy-code-migration)
+   - [Walkthrough 2: Autonomous Unit Test Suite Generation](#walkthrough-2-autonomous-unit-test-suite-generation)
+   - [Walkthrough 3: Automated Security and Vulnerability Sweep](#walkthrough-3-automated-security-and-vulnerability-sweep)
+   - [Walkthrough 4: Live Bug Debugging with Diagnostic Subagents](#walkthrough-4-live-bug-debugging-with-diagnostic-subagents)
+9. [Context Window Management and Token Optimization](#context-window-management-and-token-optimization)
+10. [Multi-Modal Vision and UI Screenshot Debugging](#multi-modal-vision-and-ui-screenshot-debugging)
+11. [Custom Repository Rules Engine (`.kerberosecrules`)](#custom-repository-rules-engine-kerberosecrules)
+12. [Custom Skills and Workflow Automation (`.kerberosec/skills/`)](#custom-skills-and-workflow-automation-kerberosecskills)
+13. [Enterprise and Team Deployment Architecture](#enterprise-and-team-deployment-architecture)
+14. [Headless CI/CD Mode and Automation Scripts](#headless-cicd-mode-and-automation-scripts)
+15. [Key Architectural Highlights](#key-architectural-highlights)
+16. [Performance and Resource Footprint](#performance-and-resource-footprint)
+17. [Security and Privacy Guarantees](#security-and-privacy-guarantees)
+18. [Supported Languages and Tech Stacks](#supported-languages-and-tech-stacks)
+19. [Complete Installation and Setup Guide](#complete-installation-and-setup-guide)
    - [Method 1: Automated 1-Step Setup (Recommended)](#method-1-automated-1-step-setup-recommended)
    - [Method 2: Manual Step-by-Step Installation](#method-2-manual-step-by-step-installation)
    - [Method 3: Docker and Docker Compose Container Run](#method-3-docker-and-docker-compose-container-run)
-9. [Comprehensive Slash Commands Reference](#comprehensive-slash-commands-reference)
-10. [Keyboard Shortcuts Reference](#keyboard-shortcuts-reference)
-11. [Model Context Protocol (MCP) Deep Dive and Configuration Guide](#model-context-protocol-mcp-deep-dive-and-configuration-guide)
-    - [What is MCP and How It Works in KerberoSec](#what-is-mcp-and-how-it-works-in-kerberosec)
-    - [Configuration Files and Precedence Rules](#configuration-files-and-precedence-rules)
-    - [Managing MCP via the `/mcp` Interactive Dialog](#managing-mcp-via-the-mcp-interactive-dialog)
-    - [Production-Ready MCP Server Recipes](#production-ready-mcp-server-recipes)
-    - [Creating a Custom In-House MCP Server](#creating-a-custom-in-house-mcp-server)
-    - [MCP Troubleshooting and Debugging](#mcp-troubleshooting-and-debugging)
-12. [Real-World Interactive Use Case Walkthroughs](#real-world-interactive-use-case-walkthroughs)
-    - [Walkthrough 1: Automated Legacy Code Migration](#walkthrough-1-automated-legacy-code-migration)
-    - [Walkthrough 2: Autonomous Unit Test Suite Generation](#walkthrough-2-autonomous-unit-test-suite-generation)
-    - [Walkthrough 3: Automated Security and Vulnerability Sweep](#walkthrough-3-automated-security-and-vulnerability-sweep)
-    - [Walkthrough 4: Live Bug Debugging with Diagnostic Subagents](#walkthrough-4-live-bug-debugging-with-diagnostic-subagents)
-13. [Context Window Management and Token Optimization](#context-window-management-and-token-optimization)
-14. [Multi-Modal Vision and UI Screenshot Debugging](#multi-modal-vision-and-ui-screenshot-debugging)
-15. [Custom Repository Rules Engine (`.kerberosecrules`)](#custom-repository-rules-engine-kerberosecrules)
-16. [Custom Skills and Workflow Automation (`.kerberosec/skills/`)](#custom-skills-and-workflow-automation-kerberosecskills)
-17. [Enterprise and Team Deployment Architecture](#enterprise-and-team-deployment-architecture)
-18. [Headless CI/CD Mode and Automation Scripts](#headless-cicd-mode-and-automation-scripts)
-19. [Deep-Dive Architecture and System Diagrams](#deep-dive-architecture-and-system-diagrams)
-    - [Diagram 0: Complete Master System Architecture and Unified End-to-End Topology](#diagram-0-complete-master-system-architecture-and-unified-end-to-end-topology)
-    - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
-    - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
-    - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
-    - [Diagram 4: Interactive Turn Lifecycle and Prompt Queue](#diagram-4-interactive-turn-lifecycle-and-prompt-queue)
-    - [Diagram 5: ReAct Decision Loop and Self-Correction Engine](#diagram-5-react-decision-loop-and-self-correction-engine)
-    - [Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture](#diagram-6-checkpoint-engine-and-shadow-snapshot-architecture)
-    - [Diagram 7: Chunk Diff Matching and Conflict Resolution Algorithm](#diagram-7-chunk-diff-matching-and-conflict-resolution-algorithm)
-    - [Diagram 8: Multi-Provider LLM Protocol Translation Layer](#diagram-8-multi-provider-llm-protocol-translation-layer)
-    - [Diagram 9: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-9-local-offline-ollama-auto-daemon-lifecycle)
-    - [Diagram 10: Model Context Protocol (MCP) Host and Tool Registry](#diagram-10-model-context-protocol-mcp-host-and-tool-registry)
-    - [Diagram 11: Concurrent Subagent Delegation Pipeline](#diagram-11-concurrent-subagent-delegation-pipeline)
-    - [Diagram 12: Context Mentions and File Pinning Engine](#diagram-12-context-mentions-and-file-pinning-engine)
-    - [Diagram 13: Fuzzy Command Palette and Action Dispatcher](#diagram-13-fuzzy-command-palette-and-action-dispatcher)
-    - [Diagram 14: Subprocess Shell Runner and PTY Output Capture](#diagram-14-subprocess-shell-runner-and-pty-output-capture)
-    - [Diagram 15: Session Forking and Branching Timeline Engine](#diagram-15-session-forking-and-branching-timeline-engine)
-    - [Diagram 16: Git Worktree Sandbox and Workspace Isolation](#diagram-16-git-worktree-sandbox-and-workspace-isolation)
-    - [Diagram 17: Autonomous Routine Scheduling and Cron Engine](#diagram-17-autonomous-routine-scheduling-and-cron-engine)
-    - [Diagram 18: Multi-Modal Clipboard Image Processing Pipeline](#diagram-18-multi-modal-clipboard-image-processing-pipeline)
-    - [Diagram 19: Mistake Detection and Self-Healing Guardrails](#diagram-19-mistake-detection-and-self-healing-guardrails)
-    - [Diagram 20: Real-Time Token Analytics and Cost Engine](#diagram-20-real-time-token-analytics-and-cost-engine)
-    - [Diagram 21: Authentication State Machine and Logout Flow](#diagram-21-authentication-state-machine-and-logout-flow)
-    - [Diagram 22: Dynamic Theme Engine and ANSI Color Resolution](#diagram-22-dynamic-theme-engine-and-ansi-color-resolution)
-    - [Diagram 23: Docker Container Isolation and Host-to-Bridge Architecture](#diagram-23-docker-container-isolation-and-host-to-bridge-architecture)
-20. [Step-by-Step Execution Journey](#step-by-step-execution-journey)
-21. [Environment Variables and Configuration](#environment-variables-and-configuration)
-22. [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
-23. [Troubleshooting and Common Solutions](#troubleshooting-and-common-solutions)
-24. [Author and License](#author-and-license)
+20. [Deep-Dive Architecture and System Diagrams](#deep-dive-architecture-and-system-diagrams)
+   - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
+   - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
+   - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
+   - [Diagram 4: Interactive Turn Lifecycle and Prompt Queue](#diagram-4-interactive-turn-lifecycle-and-prompt-queue)
+   - [Diagram 5: ReAct Decision Loop and Self-Correction Engine](#diagram-5-react-decision-loop-and-self-correction-engine)
+   - [Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture](#diagram-6-checkpoint-engine-and-shadow-snapshot-architecture)
+   - [Diagram 7: Chunk Diff Matching and Conflict Resolution Algorithm](#diagram-7-chunk-diff-matching-and-conflict-resolution-algorithm)
+   - [Diagram 8: Multi-Provider LLM Protocol Translation Layer](#diagram-8-multi-provider-llm-protocol-translation-layer)
+   - [Diagram 9: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-9-local-offline-ollama-auto-daemon-lifecycle)
+   - [Diagram 10: Model Context Protocol (MCP) Host and Tool Registry](#diagram-10-model-context-protocol-mcp-host-and-tool-registry)
+   - [Diagram 11: Concurrent Subagent Delegation Pipeline](#diagram-11-concurrent-subagent-delegation-pipeline)
+   - [Diagram 12: Context Mentions and File Pinning Engine](#diagram-12-context-mentions-and-file-pinning-engine)
+   - [Diagram 13: Fuzzy Command Palette and Action Dispatcher](#diagram-13-fuzzy-command-palette-and-action-dispatcher)
+   - [Diagram 14: Subprocess Shell Runner and PTY Output Capture](#diagram-14-subprocess-shell-runner-and-pty-output-capture)
+   - [Diagram 15: Session Forking and Branching Timeline Engine](#diagram-15-session-forking-and-branching-timeline-engine)
+   - [Diagram 16: Git Worktree Sandbox and Workspace Isolation](#diagram-16-git-worktree-sandbox-and-workspace-isolation)
+   - [Diagram 17: Autonomous Routine Scheduling and Cron Engine](#diagram-17-autonomous-routine-scheduling-and-cron-engine)
+   - [Diagram 18: Multi-Modal Clipboard Image Processing Pipeline](#diagram-18-multi-modal-clipboard-image-processing-pipeline)
+   - [Diagram 19: Mistake Detection and Self-Healing Guardrails](#diagram-19-mistake-detection-and-self-healing-guardrails)
+   - [Diagram 20: Real-Time Token Analytics and Cost Engine](#diagram-20-real-time-token-analytics-and-cost-engine)
+   - [Diagram 21: Authentication State Machine and Logout Flow](#diagram-21-authentication-state-machine-and-logout-flow)
+   - [Diagram 22: Dynamic Theme Engine and ANSI Color Resolution](#diagram-22-dynamic-theme-engine-and-ansi-color-resolution)
+   - [Diagram 23: Docker Container Isolation and Host-to-Bridge Architecture](#diagram-23-docker-container-isolation-and-host-to-bridge-architecture)
+21. [Step-by-Step Execution Journey](#step-by-step-execution-journey)
+22. [Environment Variables and Configuration](#environment-variables-and-configuration)
+23. [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
+24. [Troubleshooting and Common Solutions](#troubleshooting-and-common-solutions)
+25. [Author and License](#author-and-license)
 
 ---
 

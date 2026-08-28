@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/icons/icon.png" width="110" alt="KerberoSec Logo" />
+  <img src="assets/icons/icon.png" width="120" alt="KerberoSec Logo" />
 </p>
 
 <h1 align="center">KerberoSec CLI</h1>
@@ -34,70 +34,79 @@
 ---
 
 ## 🌟 Table of Contents
-1. [Overview](#-overview)
+1. [Overview and Vision](#-overview-and-vision)
 2. [Key Highlights](#-key-highlights)
-3. [Architecture and System Design](#-architecture-and-system-design)
-   - [Monorepo Package Topology](#monorepo-package-topology)
-   - [Diagram 1: System Layer Architecture](#diagram-1-system-layer-architecture)
-   - [Diagram 2: Terminal UI and Keyboard Event Routing](#diagram-2-terminal-ui-and-keyboard-event-routing)
-   - [Diagram 3: Interactive Session Runtime and Compaction Loop](#diagram-3-interactive-session-runtime-and-compaction-loop)
-   - [Diagram 4: Core Agent Engine and Checkpoint Security Gate](#diagram-4-core-agent-engine-and-checkpoint-security-gate)
-   - [Diagram 5: Offline Ollama Auto-Daemon Lifecycle](#diagram-5-offline-ollama-auto-daemon-lifecycle)
-   - [Diagram 6: MCP Integration and Subagent Delegation](#diagram-6-mcp-integration-and-subagent-delegation)
+3. [Deep-Dive Architecture and System Diagrams](#-deep-dive-architecture-and-system-diagrams)
+   - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
+   - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
+   - [Diagram 3: Keyboard Dispatch and Event State Machine](#diagram-3-keyboard-dispatch-and-event-state-machine)
+   - [Diagram 4: Interactive Turn Lifecycle and Prompt Queue](#diagram-4-interactive-turn-lifecycle-and-prompt-queue)
+   - [Diagram 5: ReAct Decision Loop and Self-Correction Engine](#diagram-5-react-decision-loop-and-self-correction-engine)
+   - [Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture](#diagram-6-checkpoint-engine-and-shadow-snapshot-architecture)
+   - [Diagram 7: Multi-Provider LLM Protocol Translation Layer](#diagram-7-multi-provider-llm-protocol-translation-layer)
+   - [Diagram 8: Local Offline Ollama Auto-Daemon Lifecycle](#diagram-8-local-offline-ollama-auto-daemon-lifecycle)
+   - [Diagram 9: Model Context Protocol (MCP) Host and Tool Registry](#diagram-9-model-context-protocol-mcp-host-and-tool-registry)
+   - [Diagram 10: Concurrent Subagent Delegation Pipeline](#diagram-10-concurrent-subagent-delegation-pipeline)
+   - [Diagram 11: Authentication State Machine and Logout Flow](#diagram-11-authentication-state-machine-and-logout-flow)
 4. [Step-by-Step Execution Journey](#-step-by-step-execution-journey)
-5. [Quick Start and Automated Setup](#-quick-start-and-automated-setup)
-6. [Commands and Shortcuts Reference](#-commands-and-shortcuts-reference)
+5. [Installation and Automated 1-Step Setup](#-installation-and-automated-1-step-setup)
+6. [Commands and Keyboard Shortcuts Reference](#-commands-and-keyboard-shortcuts-reference)
 7. [Author and License](#-author-and-license)
 
 ---
 
-## 🌟 Overview
+## 🌟 Overview and Vision
 
-**KerberoSec CLI** is a professional terminal-native autonomous AI coding agent designed to inspect large codebases, plan multi-step technical architectures, edit files with unified diffs, execute shell commands, run diagnostics, and manage Model Context Protocol (MCP) servers.
+**KerberoSec CLI** is an open-source, autonomous AI coding companion built specifically for the terminal. It delivers an end-to-end software development assistant capable of understanding complex monorepo codebases, designing multi-tier software architectures, applying granular file diffs, running shell commands, executing test suites, and orchestrating distributed Model Context Protocol (MCP) servers.
 
-Powered by **OpenTUI & React 19**, KerberoSec CLI combines the speed and responsiveness of native terminal tools with the reasoning capabilities of both local offline models (Ollama) and cutting-edge cloud models.
+Traditional coding assistants operate as basic chat wrappers. KerberoSec CLI is engineered as an **agentic runtime environment**:
+- It runs an autonomous **ReAct (Reason + Act)** loop that plans actions, observes outputs, catches runtime errors, and self-corrects.
+- It provides a zero-flicker **reactive terminal user interface** powered by **OpenTUI and React 19**.
+- It provides first-class support for **offline local inference (Ollama)** with automated background daemon management, allowing developers to code securely on air-gapped machines without sending source code to third-party cloud servers.
 
 ---
 
 ## 🚀 Key Highlights
 
-- 🤖 **Offline Local AI (First-Class Ollama Integration)**:
-  - Supports `qwen2.5-coder:1.5b`, `qwen2.5-coder:7b`, `llama3`, and `deepseek-coder`.
-  - **Auto-Daemon Management**: Automatically detects if the background Ollama server is running on port `11434` and launches `ollama serve` seamlessly when needed.
+- 🤖 **First-Class Offline Local AI**:
+  - Full support for open-weights coding models (`qwen2.5-coder:1.5b`, `qwen2.5-coder:7b`, `llama3`, `deepseek-coder`).
+  - **Zero-Config Background Daemon**: Automatically verifies if the Ollama service on port `11434` is active, launching `ollama serve` in the background when an Ollama model is selected.
 - ☁️ **Cloud AI Providers**:
-  - Out-of-the-box support for Anthropic Claude 3.7 Sonnet, OpenAI GPT-4o, Google Gemini 2.0, Groq, DeepSeek, and OpenRouter.
-- ⚡ **Plan vs. Act Dual Execution Modes**:
-  - **Plan Mode**: Read-only mode for codebase analysis, architecture planning, and trade-off evaluation without touching files.
-  - **Act Mode**: Autonomous write mode for code generation, file replacements, and test execution.
-  - Switch modes instantly with <kbd>Tab</kbd>.
-- 🔐 **Account Lifecycle and Clean `/logout`**:
-  - Wipe cached credentials and return to the interactive login onboarding flow with `/logout`.
-- ⌨️ **Ergonomic Keyboard Bindings**:
-  - **Single <kbd>Ctrl</kbd>+<kbd>C</kbd>**: Preserved for terminal copying; never kills running prompts.
-  - **Double <kbd>Ctrl</kbd>+<kbd>C</kbd> (within 2s)**: Cleanly exits the CLI.
-  - **<kbd>Esc</kbd>**: Aborts active reasoning or turn streaming.
+  - Seamless integration with Anthropic (Claude 3.7 Sonnet / Opus), OpenAI (GPT-4o), Google Gemini (2.0 Flash/Pro), Groq, DeepSeek, and OpenRouter.
+- ⚡ **Dual Plan vs. Act Execution Modes**:
+  - **Plan Mode**: Read-only mode designed for inspecting architecture, exploring files, and drafting technical proposals without touching code on disk.
+  - **Act Mode**: Autonomous write mode for creating files, replacing code chunks, and running verification tests.
+  - Toggle between modes seamlessly using <kbd>Tab</kbd>.
+- 🔐 **Account Management & Clean `/logout`**:
+  - Reset auth tokens, switch accounts, and return instantly to the onboarding login screen with `/logout`.
+- ⌨️ **Ergonomic Terminal Keyboard Navigation**:
+  - **Single <kbd>Ctrl</kbd>+<kbd>C</kbd>**: Preserved for copying text; never cancels running thinking streams.
+  - **Double <kbd>Ctrl</kbd>+<kbd>C</kbd> (within 2s)**: Exits the CLI cleanly.
+  - **<kbd>Esc</kbd>**: Cancels active reasoning or tool execution.
   - **<kbd>Ctrl</kbd>+<kbd>P</kbd>**: Opens the fuzzy Command Palette.
-- 📦 **1-Step Automated Installer (`setup.sh`)**:
-  - Complete automated installer sets up Bun, Ollama, builds packages, and configures global CLI access.
+- 🔌 **Extensible Model Context Protocol (MCP)**:
+  - Connect external MCP servers over stdio or HTTP SSE to equip the agent with custom database tools, deployment scripts, and external APIs.
+- 📦 **Automated 1-Step Setup (`setup.sh`)**:
+  - Automatically installs system packages, sets up Bun and Ollama, compiles all monorepo packages, and creates global terminal commands.
 
 ---
 
-## 🏛️ Architecture and System Design
+## 🏛️ Deep-Dive Architecture and System Diagrams
 
-### Monorepo Package Topology
+### Diagram 1: Monorepo Package Topology and Boundaries
 
 ```mermaid
-graph LR
-    subgraph Applications ["Apps"]
-        CLI["@kerberosec/cli<br>(apps/cli)"]
+graph TD
+    subgraph AppsLayer ["Applications Layer (apps/)"]
+        CLI["@kerberosec/cli<br>(Terminal User Interface & CLI Entrypoint)"]
     end
 
-    subgraph SDKPackages ["SDK Packages (sdk/packages/)"]
-        Core["@kerberosec/core<br>(Agent Engine & Tools)"]
-        LLMs["@kerberosec/llms<br>(Model Provider Routing)"]
-        Agents["@kerberosec/agents<br>(Subagent Coordination)"]
-        Shared["@kerberosec/shared<br>(Contracts & Schemas)"]
-        UI["@kerberosec/ui<br>(Themes & ANSI Tokens)"]
+    subgraph CoreSDK ["Core SDK Packages (sdk/packages/)"]
+        Core["@kerberosec/core<br>(Agent Engine, Tool Registry, Checkpoints)"]
+        LLMs["@kerberosec/llms<br>(Universal Multi-Provider Model Router)"]
+        Agents["@kerberosec/agents<br>(Subagent Orchestration & Protocols)"]
+        Shared["@kerberosec/shared<br>(TypeScript Schemas, Contracts, RPC)"]
+        UI["@kerberosec/ui<br>(Themes, Color Tokens, ANSI Layouts)"]
     end
 
     CLI --> Core
@@ -113,182 +122,250 @@ graph LR
 
 ---
 
-### Diagram 1: System Layer Architecture
+### Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree
 
 ```mermaid
 graph TD
-    subgraph ClientLayer ["1. Terminal Presentation Layer (apps/cli)"]
-        A["Terminal Window (xterm / Ghostty / iTerm2 / WSL)"] --> B["OpenTUI and React Virtual DOM Engine"]
-        B --> C["Keyboard Router (Double Ctrl+C, Tab, Esc)"]
-        B --> D["Slash Command Router (/logout, /model, /mcp)"]
-        B --> E["Active Views (Chat, Onboarding, Config, History)"]
-    end
+    Root["OpenTUI Root Instance (React 19)"] --> SessionCtx["Session Context Provider"]
+    SessionCtx --> ThemeCtx["Theme & Style Provider"]
+    ThemeCtx --> ViewRouter{"Active View Router"}
 
-    subgraph RuntimeLayer ["2. Interactive Session Runtime (apps/cli/src/runtime)"]
-        F["InteractiveSessionRuntime"]
-        C -->|Prompt / Input| F
-        D -->|Action| F
-        F --> G["Turn State Tracker"]
-        F --> H["Context Hydration & Token Budget Manager"]
-        F --> I["Streaming Output Formatter (Markdown / Diffs / ANSI)"]
-        I -->|Live UI Updates| E
-    end
+    ViewRouter -- "appView == 'chat'" --> ChatView["ChatView Component"]
+    ViewRouter -- "appView == 'onboarding'" --> OnboardView["OnboardingView Component"]
+    ViewRouter -- "appView == 'config'" --> ConfigView["ConfigView Component"]
+    ViewRouter -- "appView == 'history'" --> HistoryView["HistoryView Component"]
 
-    subgraph CoreLayer ["3. Core Agent Engine (@kerberosec/core)"]
-        J["Agent Execution Engine"]
-        F -->|Submit Turn| J
-        J --> K["Tool Policy & Permission Gate"]
-        J --> L["Checkpoint & Shadow Snapshot Engine"]
-    end
-
-    subgraph LLMLayer ["4. Model Router (@kerberosec/llms)"]
-        N["Multi-Provider Model Router"]
-        J --> N
-        N --> O["Local Offline Ollama Engine"]
-        N --> P["Cloud Providers (Claude, OpenAI, Gemini, Groq)"]
-    end
-
-    subgraph ExecutionLayer ["5. Tool Execution & Subagents"]
-        Q["File System (Read, Write, Diff Edit)"]
-        R["Shell Terminal Process Runner (PTY)"]
-        S["External MCP Client Manager"]
-        T["Concurrent Subagent Orchestrator"]
-        K --> Q
-        K --> R
-        K --> S
-        K --> T
-    end
-
-    O --> J
-    P --> J
-    Q --> J
-    R --> J
-    S --> J
-    T --> J
-    J --> F
+    ChatView --> MsgList["ChatMessageList (Virtual Scroll Area)"]
+    MsgList --> UserBubble["User Message Bubble"]
+    MsgList --> ThoughtBubble["Thinking and Reasoning Block"]
+    MsgList --> ToolBubble["Tool Output and Unified Diff Viewer"]
+    
+    ChatView --> InputSection["InputBar & Textarea Area"]
+    InputSection --> AutoDrop["Autocomplete Dropdown (/slash & @mentions)"]
+    InputSection --> QueueDisplay["Queued Prompts Indicator"]
+    ChatView --> StatusBar["Status Bar (Model, Cost, Mode Indicator)"]
 ```
 
 ---
 
-### Diagram 2: Terminal UI and Keyboard Event Routing
+### Diagram 3: Keyboard Dispatch and Event State Machine
 
 ```mermaid
 flowchart TD
-    KeyInput["User Presses Key in Terminal"] --> KeyRouter{"useRootKeyboard Router"}
+    KeyRaw["Raw Terminal Key Input"] --> KeyRouter{"useRootKeyboard Hook"}
     
-    KeyRouter -- "Ctrl + C" --> CtrlCCheck{"Is Prompt Running or Idle?"}
-    CtrlCCheck --> PressTimer{"Pressed 2x within 2 seconds?"}
-    PressTimer -- "Yes (2nd press)" --> ExitApp["Cleanly Exit KerberoSec CLI"]
-    PressTimer -- "No (1st press)" --> CopyToast["Preserve Clipboard and Display Toast: Press Ctrl+C again to exit"]
+    KeyRouter -- "Ctrl + C" --> CtrlCDelay{"Is 2nd press within 2000ms?"}
+    CtrlCDelay -- "Yes" --> ExitApp["Cleanly Exit KerberoSec CLI"]
+    CtrlCDelay -- "No" --> ToastNotice["Keep Active Input, Allow Copy & Show Toast: Press Ctrl+C again to exit"]
 
-    KeyRouter -- "Escape" --> EscapeCheck{"Is Prompt Running?"}
-    EscapeCheck -- "Yes" --> AbortStream["Abort Active Stream / Tool Execution"]
-    EscapeCheck -- "No" --> CloseModal["Close Open Dialog or Modal"]
+    KeyRouter -- "Escape" --> RunningCheck{"Is Prompt Running or Thinking?"}
+    RunningCheck -- "Yes" --> AbortPrompt["Abort Ongoing Model Turn"]
+    RunningCheck -- "No" --> CloseDialog["Close Active Modal / Palette / Menu"]
 
     KeyRouter -- "Tab" --> ToggleMode["Toggle Mode: Plan Mode <---> Act Mode"]
-    KeyRouter -- "Ctrl + P" --> OpenPalette["Open Fuzzy Command Palette Modal"]
-    KeyRouter -- "Slash (/)" --> Autocomplete["Open Slash Commands Autocomplete Menu"]
+    KeyRouter -- "Shift + Tab" --> ToggleApprove["Toggle Auto-Approve Policy"]
+    KeyRouter -- "Ctrl + P" --> OpenPalette["Open Command Palette Modal"]
+    KeyRouter -- "Forward Slash (/)" --> TriggerSlash["Open Slash Command Autocomplete"]
 ```
 
 ---
 
-### Diagram 3: Interactive Session Runtime and Compaction Loop
+### Diagram 4: Interactive Turn Lifecycle and Prompt Queue
+
+```mermaid
+flowchart LR
+    UserInput["User Enters Prompt"] --> Enqueue["Enqueue in Turn Buffer"]
+    Enqueue --> Hydrate["Hydrate Context (Rules + Files + History)"]
+    Hydrate --> CheckHeadroom{"Token Count Approaches Limit?"}
+    
+    CheckHeadroom -- "Yes" --> Compact["Compaction Coordinator: Summarize Older Turns"]
+    CheckHeadroom -- "No" --> DispatchReq["Send Request to Model Provider"]
+    Compact --> DispatchReq
+
+    DispatchReq --> SSEStream["Raw Streaming Token Chunks"]
+    SSEStream --> Parser{"Stream Chunk Type"}
+    Parser -- "Thinking" --> RenderThought["Live Typewriter in Reasoning Block"]
+    Parser -- "Markdown" --> RenderText["Live Typewriter in Chat Bubble"]
+    Parser -- "Tool Call" --> ExecTool["Dispatch to Core Agent Tool Engine"]
+```
+
+---
+
+### Diagram 5: ReAct Decision Loop and Self-Correction Engine
 
 ```mermaid
 flowchart TD
-    PromptIn["User Submits Prompt"] --> TurnQueue["Prompt Queue Buffer"]
-    TurnQueue --> Hydrate["Hydrate Context: System Prompts + Rules + History"]
-    Hydrate --> CheckHeadroom{"Token Count Approaches Context Limit?"}
+    StartTurn["Start Turn with Context"] --> Reason["Model Generates Reasoning & Selects Tool"]
+    Reason --> EvaluateGate{"Security Permission Gate"}
     
-    CheckHeadroom -- "Yes" --> Compaction["Compaction Coordinator: Condense Previous Turns into Summary Checkpoint"]
-    CheckHeadroom -- "No" --> StreamReq["Dispatch Prompt to LLM Router"]
-    Compaction --> StreamReq
+    EvaluateGate -- "Read Tool (read_file, grep)" --> ExecRead["Execute Immediately"]
+    EvaluateGate -- "Write Tool (replace_content)" --> GenerateDiff["Create Unified Diff & Request Approval"]
+    EvaluateGate -- "Shell Command (run_command)" --> ConfirmCmd["Request Command Approval"]
+
+    GenerateDiff --> ApplyDiff["Apply Changes to Workspace"]
+    ConfirmCmd --> SpawnPTY["Execute Command in Subprocess PTY"]
     
-    StreamReq --> StreamParser["Real-Time Token Stream Parser"]
-    StreamParser --> Splitter{"Detect Chunk Type"}
-    Splitter -- "Reasoning" --> ThinkingBlock["Stream into Thinking Block UI"]
-    Splitter -- "Markdown Content" --> MarkdownUI["Stream into Chat View UI"]
-    Splitter -- "Structured Tool Call" --> ToolDispatcher["Forward to Tool Execution Engine"]
+    ExecRead --> CaptureOutput["Capture Tool STDOUT & STDERR"]
+    ApplyDiff --> CaptureOutput
+    SpawnPTY --> CaptureOutput
+
+    CaptureOutput --> CheckError{"Did Tool Error Out?"}
+    CheckError -- "Yes (Syntax / Command Error)" --> SelfCorrect["Feed Error Stack into Next Turn for Self-Correction"]
+    SelfCorrect --> Reason
+    CheckError -- "No (Success)" --> FinalCheck{"Is Objective Complete?"}
+    FinalCheck -- "No" --> Reason
+    FinalCheck -- "Yes" --> CompleteTurn["Emit Final Answer & Mark Turn Done"]
 ```
 
 ---
 
-### Diagram 4: Core Agent Engine and Checkpoint Security Gate
-
-```mermaid
-flowchart TD
-    ToolCall["Model Emits Tool Invocation"] --> SecurityGate{"Evaluate Security Tier"}
-    
-    SecurityGate -- "Tier 1: Read-Only (read_file, grep, list_dir)" --> ExecSafe["Execute Instantly (Auto-Approved)"]
-    
-    SecurityGate -- "Tier 2: File Mutations (write_file, replace_content)" --> Snapshot["Create In-Memory Shadow Snapshot (Checkpoint Engine)"]
-    Snapshot --> DiffView["Render Unified Diff Preview in TUI"]
-    DiffView --> ApprovalCheck{"Auto-Approve Enabled?"}
-    ApprovalCheck -- "Yes" --> ApplyDiff["Apply Changes to Disk"]
-    ApprovalCheck -- "No" --> UserPrompt{"User Approves Diff?"}
-    UserPrompt -- "Approved" --> ApplyDiff
-    UserPrompt -- "Rejected" --> Rollback["Roll Back to In-Memory Snapshot"]
-
-    SecurityGate -- "Tier 3: System Commands (run_command)" --> ConfirmCmd["Prompt User with Command & Working Directory"]
-    ConfirmCmd --> SpawnPTY["Spawn Subprocess with PTY Stream"]
-```
-
----
-
-### Diagram 5: Offline Ollama Auto-Daemon Lifecycle
-
-```mermaid
-flowchart TD
-    SelectOllama["User Selects Local Ollama Model (e.g. qwen2.5-coder:1.5b)"] --> CheckPort{"Is Port 11434 Listening?"}
-    
-    CheckPort -- "Yes (Server Online)" --> CheckModel{"Is Model Downloaded Locally?"}
-    
-    CheckPort -- "No (Server Offline)" --> SpawnDaemon["Spawn Background Daemon: 'ollama serve'"]
-    SpawnDaemon --> PollDaemon["Poll http://127.0.0.1:11434/api/version"]
-    PollDaemon --> CheckModel
-    
-    CheckModel -- "Yes" --> StreamReady["Ready to Stream Prompts Fully Offline"]
-    CheckModel -- "No" --> AutoPull["Auto-Pull Model: 'ollama pull model'"]
-    AutoPull --> StreamReady
-```
-
----
-
-### Diagram 6: MCP Integration and Subagent Delegation
+### Diagram 6: Checkpoint Engine and Shadow Snapshot Architecture
 
 ```mermaid
 graph TD
-    subgraph MainAgent ["Main Agent Coordinator (@kerberosec/core)"]
-        Planner["ReAct Planning Engine"]
+    subgraph PreEdit ["1. Pre-Modification Phase"]
+        TargetFile["Target File on Disk"] --> ReadSource["Read Source Content"]
+        ReadSource --> ShadowMem["Store Shadow In-Memory Snapshot"]
     end
 
-    subgraph MCPHost ["Model Context Protocol (MCP) Client"]
-        MCPConfig["mcp_settings.json"]
-        MCPClient["JSON-RPC Client (STDIO / SSE Transport)"]
-        ExtServers["External MCP Servers (Databases, Cloud APIs, Web Search)"]
+    subgraph EditPhase ["2. Modification Phase"]
+        ShadowMem --> DiffEngine["AST & Chunk Matcher Engine"]
+        DiffEngine --> GenUnifiedDiff["Generate Unified Colorized Diff"]
+        GenUnifiedDiff --> UserDecision{"User Approval?"}
     end
 
-    subgraph Subagents ["Concurrent Subagent Engine (@kerberosec/agents)"]
-        ResearchAgent["Research Subagent (Codebase Exploration)"]
-        DebugAgent["Debugger Subagent (Test Trace Analysis)"]
+    subgraph PostPhase ["3. Resolution Phase"]
+        UserDecision -- "Approved" --> WriteDisk["Atomic Write to Disk File"]
+        UserDecision -- "Rejected / Cancelled" --> Rollback["Restore Target File from Shadow Snapshot"]
+    end
+```
+
+---
+
+### Diagram 7: Multi-Provider LLM Protocol Translation Layer
+
+```mermaid
+graph TD
+    UnifiedReq["Universal Prompt Payload (@kerberosec/llms)"] --> Router{"Provider Selector"}
+
+    Router -- "Provider: ollama" --> OllamaAdapter["Ollama HTTP REST Adapter"]
+    Router -- "Provider: anthropic" --> AnthropicAdapter["Anthropic Messages API Adapter"]
+    Router -- "Provider: openai" --> OpenAIAdapter["OpenAI Chat Completions Adapter"]
+    Router -- "Provider: google" --> GeminiAdapter["Google Gemini Content API Adapter"]
+    Router -- "Provider: groq" --> GroqAdapter["Groq OpenAI-Compatible Adapter"]
+
+    OllamaAdapter --> LocalPort["http://127.0.0.1:11434 (Local Engine)"]
+    AnthropicAdapter --> CloudAnthropic["api.anthropic.com (Cloud)"]
+    OpenAIAdapter --> CloudOpenAI["api.openai.com (Cloud)"]
+    GeminiAdapter --> CloudGemini["generativelanguage.googleapis.com (Cloud)"]
+    GroqAdapter --> CloudGroq["api.groq.com (Cloud)"]
+
+    LocalPort --> StreamUnified["Unified Token Stream Parser"]
+    CloudAnthropic --> StreamUnified
+    CloudOpenAI --> StreamUnified
+    CloudGemini --> StreamUnified
+    CloudGroq --> StreamUnified
+    StreamUnified --> Output["Normalized Chunks to Session Runtime"]
+```
+
+---
+
+### Diagram 8: Local Offline Ollama Auto-Daemon Lifecycle
+
+```mermaid
+flowchart TD
+    Init["User Selects Local Model (e.g. qwen2.5-coder:1.5b)"] --> HealthCheck{"Poll http://127.0.0.1:11434/api/version"}
+    
+    HealthCheck -- "200 OK (Daemon Running)" --> ModelQuery{"Check Installed Models via /api/tags"}
+    HealthCheck -- "Connection Refused (Daemon Offline)" --> LaunchDaemon["Spawn Background Process: 'ollama serve'"]
+    
+    LaunchDaemon --> PollLoop["Poll Port 11434 until accepting connections"]
+    PollLoop --> ModelQuery
+
+    ModelQuery -- "Model Present" --> StreamReady["Ready for Offline Token Generation"]
+    ModelQuery -- "Model Missing" --> PullCmd["Trigger: 'ollama pull model'"]
+    PullCmd --> StreamReady
+```
+
+---
+
+### Diagram 9: Model Context Protocol (MCP) Host and Tool Registry
+
+```mermaid
+graph TD
+    subgraph MainAgentEngine ["KerberoSec Agent Engine (@kerberosec/core)"]
+        ToolRegistry["Central Tool Registry"]
     end
 
-    Planner -->|Query Custom Tools| MCPClient
-    MCPConfig --> MCPClient
-    MCPClient --> ExtServers
-    ExtServers -->|Tool Results| MCPClient
-    MCPClient -->|Observation Payload| Planner
+    subgraph MCPClientHost ["MCP Host & Client Manager"]
+        Config["mcp_settings.json"] --> Hub["McpHub Coordinator"]
+        Hub --> StdioTransport["STDIO Transport Process"]
+        Hub --> SSETransport["HTTP Server-Sent Events (SSE)"]
+    end
 
-    Planner -->|Delegate Subtask| Subagents
-    ResearchAgent -->|Synthesized Insights| Planner
-    DebugAgent -->|Diagnostic Report| Planner
+    subgraph ExternalServers ["External MCP Servers"]
+        Server1["Database MCP Server (PostgreSQL / SQLite)"]
+        Server2["Web Search MCP Server (Brave / Google)"]
+        Server3["Cloud Deployment MCP Server (AWS / GitHub)"]
+    end
+
+    StdioTransport <--> Server1
+    StdioTransport <--> Server2
+    SSETransport <--> Server3
+
+    Hub -->|Dynamic Tool Discovery & JSON-RPC| ToolRegistry
+    ToolRegistry -->|Execute MCP Tool| Hub
+```
+
+---
+
+### Diagram 10: Concurrent Subagent Delegation Pipeline
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor MainAgent as Main Coordinator Agent
+    participant SubHub as Subagent Hub (@kerberosec/agents)
+    participant ResearchAgent as Research Subagent (Read-Only)
+    participant DebugAgent as Debugger Subagent (Diagnostic)
+
+    MainAgent->>SubHub: Delegate Subtask ("Analyze auth module & run tests")
+    par Parallel Subagent Execution
+        SubHub->>ResearchAgent: Explore file dependencies and imports
+        ResearchAgent-->>SubHub: Return architectural map
+    and
+        SubHub->>DebugAgent: Execute test harness & parse stack traces
+        DebugAgent-->>SubHub: Return failed assertion analysis
+    end
+    SubHub-->>MainAgent: Synthesize insights into main conversation
+    MainAgent->>MainAgent: Execute targeted fix in workspace
+```
+
+---
+
+### Diagram 11: Authentication State Machine and Logout Flow
+
+```mermaid
+stateDiagram-v2
+    [*] --> Unauthenticated: First Launch
+    Unauthenticated --> Authenticating: Select Provider (Ollama / API Key)
+    Authenticating --> Authenticated: Token Verified & Model Ready
+    
+    Authenticated --> RunningTask: User Submits Prompt
+    RunningTask --> Authenticated: Task Complete
+    
+    Authenticated --> LoggingOut: User Types /logout or clicks Log Out
+    RunningTask --> LoggingOut: User Types /logout
+    
+    LoggingOut --> PurgeState: Cancel Active Turn & Clear Memory Tokens
+    PurgeState --> Unauthenticated: Render Onboarding View Full-Screen
 ```
 
 ---
 
 ## 🔄 Step-by-Step Execution Journey
 
-Here is the exact step-by-step trace of how a prompt travels through the system:
+The complete step-by-step trace of how a prompt travels through the system:
 
 ```mermaid
 sequenceDiagram
@@ -331,7 +408,7 @@ sequenceDiagram
 
 ---
 
-## ⚡ Quick Start and Automated Setup
+## ⚡ Installation and Automated 1-Step Setup
 
 ### Method 1: Automated 1-Step Setup (Recommended)
 
@@ -344,7 +421,7 @@ chmod +x setup.sh
 ```
 
 The installer script automatically:
-1. Installs system build tools (`git`, `curl`, `build-essential`).
+1. Installs system build packages (`git`, `curl`, `build-essential`).
 2. Installs and configures the **Bun** runtime.
 3. Installs and configures **Ollama** with recommended coding models.
 4. Installs monorepo dependencies and compiles the SDK and CLI bundle.
@@ -381,7 +458,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 ---
 
-## ⌨️ Commands and Shortcuts Reference
+## ⌨️ Commands and Keyboard Shortcuts Reference
 
 ### Slash Commands
 | Command | Description |

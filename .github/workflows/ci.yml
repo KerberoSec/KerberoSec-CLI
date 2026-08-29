@@ -29,19 +29,19 @@ jobs:
       - name: Setup Bun
         uses: oven-sh/setup-bun@v2
         with:
-          bun-version: latest
+          bun-version: 1.3.13
 
       - name: Install Dependencies
         run: bun install
-
-      - name: Lint & Format Check
-        run: bun biome check --diagnostic-level=error apps/cli/src/
 
       - name: Build SDK
         run: bun run build:sdk
 
       - name: Build CLI Bundle
         run: bun -F @kerberosec/cli build
+
+      - name: Lint and Format Check
+        run: bun biome check --diagnostic-level=error apps/cli/src/
 
       - name: Run Tests
         run: bun --cwd apps/cli vitest run src/tui/hooks/use-root-keyboard.test.ts

@@ -374,7 +374,11 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 		(providerId: string) => {
 			setActiveProviderId(providerId);
 			const provider = providers.find((p) => p.id === providerId);
-			setActiveProviderName(provider?.name ?? providerId);
+			setActiveProviderName(
+				providerId === "kerberosec-pass"
+					? "Cline Usage-Billing"
+					: (provider?.name ?? providerId),
+			);
 			setModelsDefaultId(provider?.defaultModelId ?? "");
 			if (shouldUseFeaturedKerberoSecModelPicker(providerId)) {
 				setKerberoSecModelSelected(0);
@@ -396,7 +400,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 	const transitionToKerberoSecPassSubscription = useCallback(() => {
 		setActiveProviderId("kerberosec-pass");
 		const provider = providers.find((p) => p.id === "kerberosec-pass");
-		setActiveProviderName(provider?.name ?? "KerberoSecPass");
+		setActiveProviderName(provider?.name ?? "Cline Usage-Billing");
 		setModelsDefaultId(provider?.defaultModelId ?? "");
 		setKerberoSecPassSubscriptionSelected(0);
 		setStep("kerberosec_pass_subscription");
@@ -405,13 +409,11 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 
 	const handleAuthComplete = useCallback(
 		(providerId: OnboardingOAuthProviderId) => {
-			if (providerId === "kerberosec-pass") {
-				transitionToKerberoSecPassSubscription();
-				return;
-			}
-			transitionToModelPicker(providerId);
+			transitionToModelPicker(
+				providerId === "kerberosec-pass" ? "kerberosec" : providerId,
+			);
 		},
-		[transitionToKerberoSecPassSubscription, transitionToModelPicker],
+		[transitionToModelPicker],
 	);
 
 	const resetAuth = useCallback(() => {

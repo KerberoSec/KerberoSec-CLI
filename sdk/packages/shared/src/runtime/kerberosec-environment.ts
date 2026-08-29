@@ -17,16 +17,16 @@ export const KERBEROSEC_ENVIRONMENTS: Readonly<
 > = {
 	production: {
 		environment: "production",
-		appBaseUrl: "https://app.kerberosec.bot",
-		apiBaseUrl: "https://api.kerberosec.bot",
-		mcpBaseUrl: "https://api.kerberosec.bot/v1/mcp",
+		appBaseUrl: "https://app.cline.bot",
+		apiBaseUrl: "https://api.cline.bot",
+		mcpBaseUrl: "https://api.cline.bot/v1/mcp",
 		workOsClientId: "client_01K3A541FN8TA3EPPHTD2325AR",
 	},
 	staging: {
 		environment: "staging",
-		appBaseUrl: "https://staging-app.kerberosec.bot",
-		apiBaseUrl: "https://core-api.staging.int.kerberosec.bot",
-		mcpBaseUrl: "https://core-api.staging.int.kerberosec.bot/v1/mcp",
+		appBaseUrl: "https://staging-app.cline.bot",
+		apiBaseUrl: "https://core-api.staging.int.cline.bot",
+		mcpBaseUrl: "https://core-api.staging.int.cline.bot/v1/mcp",
 		workOsClientId: "client_01K3A5415VF6QBQBG3XYCW91G6",
 	},
 	local: {

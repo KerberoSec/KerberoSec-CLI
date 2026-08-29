@@ -37,7 +37,30 @@ const CUSTOM_MODELS: Map<string, Map<string, ModelInfo>> = new Map();
 const CUSTOM_PROVIDERS: Map<string, ModelCollection> = new Map();
 
 function getProviderFromCache(providerId: string): ModelCollection | undefined {
-	return CUSTOM_PROVIDERS.get(providerId) ?? PROVIDER_CACHE.get(providerId);
+	const custom = CUSTOM_PROVIDERS.get(providerId);
+	const builtin = PROVIDER_CACHE.get(providerId);
+	if (!custom) return builtin;
+	if (!builtin) return custom;
+	return {
+		provider: {
+			...builtin.provider,
+			...custom.provider,
+			capabilities: [
+				...new Set([
+					...(builtin.provider.capabilities ?? []),
+					...(custom.provider.capabilities ?? []),
+				]),
+			],
+			metadata: {
+				...builtin.provider.metadata,
+				...custom.provider.metadata,
+			},
+		},
+		models: {
+			...builtin.models,
+			...custom.models,
+		},
+	};
 }
 
 export function getProviderIds(): string[] {

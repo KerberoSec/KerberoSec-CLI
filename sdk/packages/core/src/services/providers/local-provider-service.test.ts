@@ -1225,7 +1225,7 @@ describe("models.json model overlays", () => {
 			const provider = await LlmsModels.getProvider("kerberosec");
 			expect(provider).toMatchObject({
 				id: "kerberosec",
-				baseUrl: "https://api.kerberosec.bot/api/v1",
+				baseUrl: "https://api.cline.bot/api/v1",
 				defaultModelId: KERBEROSEC_DEFAULT_MODEL_ID,
 			});
 

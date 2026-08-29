@@ -41,7 +41,7 @@ import {
 import type { Provider } from "@/lib/provider-schema";
 import { cn } from "@/lib/utils";
 
-const CREATE_ACCOUNT_URL = "https://app.kerberosec.bot";
+const CREATE_ACCOUNT_URL = "https://app.cline.bot";
 
 export const GITHUB_ONBOARDING_FEATURE_FLAG = "code-onboarding-github";
 

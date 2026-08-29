@@ -19,6 +19,7 @@ export function useAccountDialog(opts: {
 	loadAccount: () => Promise<KerberoSecAccountSnapshot>;
 	switchAccount: (organizationId?: string | null) => Promise<void>;
 	onAccountChange?: () => Promise<void>;
+	onLogout?: () => Promise<void> | void;
 	openModelSelector: (options?: OpenModelSelectorOptions) => Promise<void>;
 	refocusTextarea: () => void;
 }) {
@@ -28,6 +29,7 @@ export function useAccountDialog(opts: {
 		loadAccount,
 		switchAccount,
 		onAccountChange,
+		onLogout,
 		openModelSelector,
 		refocusTextarea,
 	} = opts;
@@ -58,7 +60,7 @@ export function useAccountDialog(opts: {
 			return;
 		}
 		if (action === "learn-more") {
-			await open("https://kerberosec.bot", { wait: false }).catch(() => {});
+			await open("https://cline.bot", { wait: false }).catch(() => {});
 			refocusTextarea();
 			return;
 		}
@@ -70,7 +72,7 @@ export function useAccountDialog(opts: {
 					<OAuthLoginContent
 						{...ctx}
 						providerId="kerberosec"
-						providerName="KerberoSec"
+						providerName="Cline"
 					/>
 				),
 			});
@@ -81,8 +83,12 @@ export function useAccountDialog(opts: {
 			}
 		}
 		if (action === "logout") {
-			await onAccountChange?.();
-			refocusTextarea();
+			if (onLogout) {
+				await onLogout();
+			} else {
+				await onAccountChange?.();
+				refocusTextarea();
+			}
 			return;
 		}
 		refocusTextarea();
@@ -90,6 +96,7 @@ export function useAccountDialog(opts: {
 		dialog,
 		loadAccount,
 		onAccountChange,
+		onLogout,
 		openModelSelector,
 		refocusTextarea,
 		switchAccount,

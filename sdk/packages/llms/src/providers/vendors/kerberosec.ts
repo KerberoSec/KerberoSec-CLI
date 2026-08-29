@@ -10,6 +10,7 @@ import type {
 	GatewayResolvedProviderConfig,
 } from "@kerberosec/shared";
 import {
+	getKerberoSecEnvironmentConfig,
 	modelProducesImages,
 	usesImageGenerationOperation,
 } from "@kerberosec/shared";
@@ -131,6 +132,8 @@ async function executeWebSearch(
 					? { Authorization: `Bearer ${provider.apiKey}` }
 					: {}),
 				"Content-Type": "application/json",
+				"User-Agent": "Cline/2.0.0",
+				"X-CLIENT-TYPE": "cline-cli",
 				...provider.headers,
 			},
 			body: JSON.stringify({
@@ -240,7 +243,9 @@ export async function createKerberoSecProviderModule(
 ): Promise<ProviderFactoryResult> {
 	const providerOptions: KerberoSecProviderOptions = {
 		apiKey: await resolveApiKey(config),
-		baseURL: config.baseUrl ?? "https://api.kerberosec.bot/api/v1",
+		baseURL:
+			config.baseUrl ??
+			`${getKerberoSecEnvironmentConfig().apiBaseUrl}/api/v1`,
 		headers: config.headers,
 		fetch: config.fetch,
 		onResponseError: readResponseErrorHandler(config),

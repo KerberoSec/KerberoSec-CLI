@@ -263,6 +263,10 @@ export function useOnboardingKeyboard(input: {
 		}
 
 		if (input.step === "kerberosec_model") {
+			if (key.name === "tab") {
+				input.setStep("byo_provider");
+				return;
+			}
 			const total = input.kerberosecEntries.length;
 			if (total === 0) return;
 			if (key.name === "up" || (key.ctrl && key.name === "p")) {

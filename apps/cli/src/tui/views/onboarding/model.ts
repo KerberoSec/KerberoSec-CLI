@@ -60,10 +60,10 @@ export interface KerberoSecPassSubscriptionOption {
 
 export const MAIN_MENU: MenuOption[] = [
 	{
-		label: "Sign in with Cline",
-		value: "kerberosec-pass",
-		detail: "Low cost subscription for everyone",
-		icon: "\u2726",
+		label: "Bring your own provider",
+		value: "byo",
+		detail: "Local Ollama models or API key (Anthropic, OpenAI, Gemini, Groq)",
+		icon: "\u26b7",
 	},
 	{
 		label: "Sign in with ChatGPT",
@@ -72,10 +72,10 @@ export const MAIN_MENU: MenuOption[] = [
 		icon: "\u2726",
 	},
 	{
-		label: "Bring your own provider",
-		value: "byo",
-		detail: "API key or local server (e.g. Ollama)",
-		icon: "\u26b7",
+		label: "Sign in with Cline",
+		value: "kerberosec-pass",
+		detail: "Low cost subscription for everyone",
+		icon: "\u2726",
 	},
 ];
 
@@ -92,7 +92,7 @@ export const KERBEROSEC_PASS_SUBSCRIPTION_OPTIONS: KerberoSecPassSubscriptionOpt
 	[
 		{
 			value: "subscribe",
-			label: "Subscribe to KerberoSecPass",
+			label: "Subscribe to ClinePass",
 		},
 		{
 			value: "refresh",
@@ -208,11 +208,12 @@ export function toModelEntriesFromKnownModels(
 }
 
 export function getOAuthProviderLabel(providerId: string): string {
-	if (providerId === "kerberosec-pass") {
-		return "KerberoSecPass";
-	}
-	if (providerId === "kerberosec") {
-		return "KerberoSec";
+	if (
+		providerId === "kerberosec-pass" ||
+		providerId === "cline" ||
+		providerId === "kerberosec"
+	) {
+		return "Cline";
 	}
 	if (providerId === "openai-codex") {
 		return "ChatGPT";

@@ -31,14 +31,14 @@ import { invalidateProviderCatalogCache } from "@/lib/provider-model-catalog";
 import { cn } from "@/lib/utils";
 import { PageFrame, PageHeader } from "../page-layout";
 
-const DASHBOARD_URL = "https://app.kerberosec.bot/dashboard";
-const USAGE_DASHBOARD_URL = "https://app.kerberosec.bot/dashboard/usage";
-const USER_CREDITS_URL =
-	"https://app.kerberosec.bot/dashboard/account?tab=credits&redirect=true";
-const ORGANIZATION_CREDITS_URL =
-	"https://app.kerberosec.bot/dashboard/organization?tab=credits&redirect=true";
-const CREATE_ORGANIZATION_URL = "https://app.kerberosec.bot/onboarding?step=1";
-const CREATE_ACCOUNT_URL = "https://app.kerberosec.bot";
+const DASHBOARD_URL = "https://app.cline.bot/dashboard";
+const USAGE_DASHBOARD_URL = "https://app.cline.bot/dashboard/usage";
+const BUY_PERSONAL_CREDITS_URL =
+	"https://app.cline.bot/dashboard/account?tab=credits&redirect=true";
+const BUY_ORGANIZATION_CREDITS_URL =
+	"https://app.cline.bot/dashboard/organization?tab=credits&redirect=true";
+const CREATE_ORGANIZATION_URL = "https://app.cline.bot/onboarding?step=1";
+const CREATE_ACCOUNT_URL = "https://app.cline.bot";
 
 function normalizeAccountViewError(error: unknown): Error {
 	const message = error instanceof Error ? error.message : String(error);

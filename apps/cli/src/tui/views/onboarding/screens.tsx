@@ -6,6 +6,7 @@ import {
 	CODEX_CLI_INSTALL_URL,
 	type CodexCliStatus,
 } from "../../../utils/codex-cli";
+import { KerberoSecBanner } from "../../components/kerberosec-banner";
 import {
 	KerberoSecModelPicker,
 	type KerberoSecModelPickerEntry,
@@ -15,10 +16,7 @@ import {
 	SearchableList,
 	type SearchableListState,
 } from "../../components/searchable-list";
-import {
-	TrackedRobot,
-	type useMouseTracker,
-} from "../../components/tracked-robot";
+import type { useMouseTracker } from "../../components/tracked-robot";
 import { useTheme } from "../../hooks/use-theme";
 import { getInputRuleColor, getUserMessageBackground } from "../../palette";
 import { FIELD_ORDER } from "./fields";
@@ -78,9 +76,7 @@ function OnboardingFrame({
 			alignItems="center"
 			onMouseMove={mouse.onMouseMove}
 		>
-			{!compact && (
-				<TrackedRobot cursorX={mouse.cursor.x} cursorY={mouse.cursor.y} />
-			)}
+			{!compact && <KerberoSecBanner />}
 			<box
 				flexDirection="column"
 				width={contentWidth}
@@ -482,7 +478,7 @@ export function OnboardingKerberoSecModelScreen(props: {
 				<strong>Choose a model</strong>
 			</text>
 			<text fg="gray" paddingX={1}>
-				You can change this anytime
+				 Provider:Cline Usage-Billing(tab to change provider)
 			</text>
 
 			<KerberoSecModelPicker
@@ -492,7 +488,7 @@ export function OnboardingKerberoSecModelScreen(props: {
 			/>
 
 			<text fg="gray" paddingX={1}>
-				<em>↑/↓ navigate, Enter to select, Esc to go back, Ctrl+C to exit</em>
+				<em>↑/↓ navigate, Enter to select, Tab to change provider, Esc to go back</em>
 			</text>
 		</OnboardingFrame>
 	);
@@ -566,34 +562,34 @@ export function OnboardingKerberoSecPassSubscriptionScreen(props: {
 							flexShrink={0}
 						>
 							{isSubscribed
-								? "KerberoSecPass subscription active"
-								: "KerberoSecPass subscription required"}
+								? "ClinePass subscription active"
+								: "ClinePass subscription required"}
 						</text>
 
 						{isLoading ? (
 							<box flexDirection="row" gap={1} flexShrink={0}>
 								<spinner name="dots" color="gray" />
 								<text fg="gray">
-									Checking your KerberoSecPass subscription...
+									Checking your ClinePass subscription...
 								</text>
 							</box>
 						) : isSubscribed ? (
 							<text fg={defaultFg} selectable flexShrink={0}>
-								Current plan: {props.currentPlanName || "KerberoSecPass"}
+								Current plan: {props.currentPlanName || "ClinePass"}
 							</text>
 						) : isError ? (
 							<text
 								fg={defaultFg}
 								selectable
 								flexShrink={0}
-								content="Could not verify your KerberoSecPass subscription. Re-check before choosing a KerberoSecPass model."
+								content="Could not verify your ClinePass subscription. Re-check before choosing a ClinePass model."
 							/>
 						) : (
 							<text
 								fg={defaultFg}
 								selectable
 								flexShrink={0}
-								content="No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan."
+								content="No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan."
 							/>
 						)}
 
@@ -870,10 +866,7 @@ export function OnboardingMainMenuScreen(props: {
 			alignItems="center"
 			onMouseMove={props.mouse.onMouseMove}
 		>
-			<TrackedRobot
-				cursorX={props.mouse.cursor.x}
-				cursorY={props.mouse.cursor.y}
-			/>
+			<KerberoSecBanner />
 
 			<box
 				flexDirection="column"

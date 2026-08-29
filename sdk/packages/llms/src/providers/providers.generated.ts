@@ -465,16 +465,16 @@ export const GENERATED_PROVIDER_SPECS: readonly BuiltinSpec[] = [
 	},
 	{
 		id: "kerberosec-pass",
-		name: "KerberoSecPass",
-		description: "KerberoSecPass model provider from models.dev",
+		name: "ClinePass",
+		description: "ClinePass model provider from models.dev",
 		family: "openai-compatible",
 		capabilities: ["tools", "reasoning", "prompt-cache"],
 		modelsProviderId: "kerberosec-pass",
 		defaultModelId: "kerberosec-pass/glm-5.3",
-		apiKeyEnv: ["KERBEROSEC_API_KEY"],
-		docsUrl: "https://docs.kerberosec.bot/getting-started/kerberosecpass",
+		apiKeyEnv: ["CLINE_API_KEY", "KERBEROSEC_API_KEY"],
+		docsUrl: "https://docs.cline.bot/getting-started/clinepass",
 		defaults: {
-			baseUrl: "https://api.kerberosec.bot/api/v1",
+			baseUrl: "https://api.cline.bot/api/v1",
 		},
 	},
 	{

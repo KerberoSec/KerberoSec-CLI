@@ -17,11 +17,12 @@ const PROVIDER_API_KEY_URLS: Record<string, string> = {
 	cerebras: "https://cloud.cerebras.ai",
 	fireworks: "https://app.fireworks.ai/settings/users/api-keys",
 	together: "https://api.together.ai/settings/api-keys",
-	kerberosec: "https://app.kerberosec.bot",
+	kerberosec: "https://app.cline.bot",
+	"kerberosec-pass": "https://app.cline.bot",
 };
 
 /** KerberoSec account dashboard, where KerberoSec API keys are created and managed. */
-export const KERBEROSEC_DASHBOARD_URL = "https://app.kerberosec.bot";
+export const KERBEROSEC_DASHBOARD_URL = "https://app.cline.bot";
 
 /**
  * Resolve the "get an API key" URL for a provider, preferring the catalog's

@@ -149,7 +149,7 @@ const HELP_ROWS: HelpRow[] = [
 		kind: "entry",
 		id: "c-account",
 		key: "/account",
-		desc: "View KerberoSec account and switch account",
+		desc: "View account and switch organization",
 	},
 	{
 		kind: "entry",

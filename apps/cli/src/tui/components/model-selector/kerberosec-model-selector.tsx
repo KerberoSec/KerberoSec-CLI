@@ -227,14 +227,14 @@ export function KerberoSecModelSelectorDialogContent(
 	const palette = useDialogPalette();
 	const [state, setState] = useState<KerberoSecModelEntriesState>({
 		status: "loading",
-		message: "Loading KerberoSec models...",
+		message: "Loading models...",
 	});
 	const generation = useRef(0);
 
 	const reload = useCallback(async () => {
 		const currentGeneration = generation.current + 1;
 		generation.current = currentGeneration;
-		setState({ status: "loading", message: "Loading KerberoSec models..." });
+		setState({ status: "loading", message: "Loading models..." });
 		try {
 			const entries = await loadEntries();
 			if (generation.current === currentGeneration) {

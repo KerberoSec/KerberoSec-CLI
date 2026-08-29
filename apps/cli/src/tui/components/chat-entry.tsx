@@ -350,12 +350,12 @@ function KerberoSecCreditsKerberoSecPassErrorView(props: {
 				borderColor="red"
 				paddingX={1}
 			>
-				<text fg="red">KerberoSec Credits depleted</text>
+				<text fg="red">Cline Credits depleted</text>
 				<text
 					fg={props.defaultFg}
 					selectable
 					content={
-						"You have run out of KerberoSec credits. Add credits in the dashboard or purchase and switch to KerberoSecPass to continue."
+						"You have run out of Cline credits. Add credits in the dashboard or purchase and switch to ClinePass to continue."
 					}
 				/>
 				<box flexDirection="row">
@@ -367,15 +367,15 @@ function KerberoSecCreditsKerberoSecPassErrorView(props: {
 					</text>
 				</box>
 				<box flexDirection="row">
-					<text fg="gray">Purchase KerberoSecPass: </text>
+					<text fg="gray">Purchase ClinePass: </text>
 					<text fg={linkColor} selectable>
 						<a href={subscriptionUrl}>{subscriptionUrl}</a>
 					</text>
 				</box>
 				<box flexDirection="row">
-					<text fg="gray">Switch to KerberoSecPass: </text>
+					<text fg="gray">Switch to ClinePass: </text>
 					<text fg="gray">
-						type /settings in CLI and switch provider to KerberoSecPass
+						type /model in CLI and switch provider to ClinePass
 					</text>
 				</box>
 			</box>

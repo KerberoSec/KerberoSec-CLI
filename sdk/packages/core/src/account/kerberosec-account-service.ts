@@ -295,6 +295,8 @@ export class KerberoSecAccountService {
 					headers: {
 						Authorization: `Bearer ${token}`,
 						"Content-Type": "application/json",
+						"User-Agent": "Cline/2.0.0",
+						"X-CLIENT-TYPE": "cline-cli",
 						...(extraHeaders ?? {}),
 					},
 					body:

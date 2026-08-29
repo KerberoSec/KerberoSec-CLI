@@ -51,7 +51,7 @@ const LOADED_ACTIONS: AccountAction[] = [
 	{
 		id: "change-model",
 		label: "Change model",
-		description: "Open the KerberoSec model selector",
+		description: "Open the model selector",
 		enabled: true,
 	},
 	{
@@ -78,13 +78,13 @@ const UNAUTHENTICATED_ACTIONS: AccountAction[] = [
 	{
 		id: "login",
 		label: "Sign in or create account",
-		description: "Use KerberoSec OAuth",
+		description: "Use Cline OAuth",
 		enabled: true,
 	},
 	{
 		id: "learn-more",
 		label: "Learn more",
-		description: "Open kerberosec.bot",
+		description: "Open cline.bot",
 		enabled: true,
 	},
 ];
@@ -375,8 +375,6 @@ export function AccountDialogContent(
 				return;
 			}
 			if (action.id === "logout") {
-				logoutKerberoSecAccount();
-				void onAccountChange?.();
 				resolve("logout");
 				return;
 			}
@@ -442,7 +440,7 @@ export function AccountDialogContent(
 	if (state.status === "loading") {
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
-				<text fg={palette.act}>KerberoSec Account</text>
+				<text fg={palette.act}>Cline Account</text>
 				<text fg="gray">{state.message}</text>
 				<text fg="gray">Esc to close</text>
 			</box>
@@ -452,7 +450,7 @@ export function AccountDialogContent(
 	if (state.status === "error") {
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
-				<text fg={palette.act}>KerberoSec Account</text>
+				<text fg={palette.act}>Cline Account</text>
 				<text fg="red">{state.message}</text>
 				<text fg="gray">Esc to close</text>
 			</box>
@@ -462,8 +460,8 @@ export function AccountDialogContent(
 	if (state.status === "unauthenticated") {
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
-				<text fg={palette.act}>KerberoSec Account</text>
-				<text>Sign in or create a KerberoSec account.</text>
+				<text fg={palette.act}>Cline Account</text>
+				<text>Sign in or create a Cline account.</text>
 				<text fg="gray">
 					Get access to the latest models with regular free promos and
 					discounts.
@@ -516,12 +514,12 @@ export function AccountDialogContent(
 	const displayName =
 		loaded.user.displayName?.trim() ||
 		loaded.user.email?.trim() ||
-		"KerberoSec user";
+		"Cline user";
 	const activeAccount = loaded.activeOrganization?.name ?? "Personal account";
 
 	return (
 		<box flexDirection="column" paddingX={1} gap={1}>
-			<text fg={palette.act}>KerberoSec Account</text>
+			<text fg={palette.act}>Cline Account</text>
 
 			<box flexDirection="row" gap={2}>
 				<box

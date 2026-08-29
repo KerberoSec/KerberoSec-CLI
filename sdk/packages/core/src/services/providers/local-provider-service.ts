@@ -755,14 +755,25 @@ export async function listLocalProviders(
 				);
 				const directSettings = state.providers[id]?.settings;
 				const persistedSettings = manager.getProviderSettings(id);
-				const name = info?.name ?? titleCaseFromId(id);
+				const builtinCollection = LlmsModels.MODEL_COLLECTIONS_BY_PROVIDER_ID[
+					id
+				] as LlmsModels.ModelCollection | undefined;
+				const builtinProvider = builtinCollection?.provider;
+				const name = info?.name ?? builtinProvider?.name ?? titleCaseFromId(id);
 				const capabilities = resolveProviderCapabilities(
-					info?.capabilities,
+					resolveProviderCapabilities(
+						builtinProvider?.capabilities,
+						info?.capabilities,
+					),
 					persistedSettings?.capabilities,
 				);
 				const configFields =
-					readProviderConfigFields(info?.metadata) ??
+					readProviderConfigFields(info?.metadata ?? builtinProvider?.metadata) ??
 					fallbackProviderConfigFields(info);
+				const rank = Math.min(
+					getPopularRank(info?.metadata),
+					getPopularRank(builtinProvider?.metadata),
+				);
 				return {
 					provider: {
 						id,
@@ -806,7 +817,7 @@ export async function listLocalProviders(
 						),
 						modelList,
 					},
-					rank: getPopularRank(info?.metadata),
+					rank,
 				};
 			},
 		),

@@ -9,7 +9,7 @@ import {
 } from "../../utils/dialog-keys";
 
 const KERBEROSEC_PASS_SUBSCRIPTION_PATH = "/dashboard/subscription";
-const DEFAULT_APP_BASE_URL = "https://app.kerberosec.bot";
+const DEFAULT_APP_BASE_URL = "https://app.cline.bot";
 
 /**
  * Persist a manually entered API key for an OAuth-capable provider — the

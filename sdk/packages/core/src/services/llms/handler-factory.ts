@@ -202,11 +202,17 @@ export function createAgentModelFromConfig(
 	const pc = config.providerConfig as ProviderConfig | undefined;
 	const baseProviderConfig =
 		pc?.providerId === config.providerId ? pc : undefined;
+	const sessionAccessToken = (config as { accessToken?: string }).accessToken;
 	const normalizedProviderConfig: ProviderConfig = {
 		...(baseProviderConfig ?? {}),
 		providerId: config.providerId,
 		modelId: config.modelId,
-		apiKey: config.apiKey ?? baseProviderConfig?.apiKey,
+		apiKey:
+			config.apiKey ||
+			baseProviderConfig?.apiKey ||
+			sessionAccessToken ||
+			baseProviderConfig?.accessToken,
+		accessToken: sessionAccessToken ?? baseProviderConfig?.accessToken,
 		baseUrl: config.baseUrl ?? baseProviderConfig?.baseUrl,
 		headers: config.headers ?? baseProviderConfig?.headers,
 		knownModels: resolveKnownModelsFromConfig(config),
@@ -244,7 +250,9 @@ export function createAgentModelFromConfig(
 		providerConfigs: [
 			{
 				providerId: normalizedProviderConfig.providerId,
-				apiKey: normalizedProviderConfig.apiKey,
+				apiKey:
+					normalizedProviderConfig.apiKey ||
+					normalizedProviderConfig.accessToken,
 				baseUrl: normalizedProviderConfig.baseUrl,
 				headers: normalizedProviderConfig.headers,
 				timeoutMs: normalizedProviderConfig.timeoutMs,

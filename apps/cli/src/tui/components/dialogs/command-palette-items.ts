@@ -84,8 +84,8 @@ const ACTION_ITEMS: Array<{
 		action: "account",
 		label: "Open Account",
 		shortcut: "Opt+A",
-		description: "View or switch your KerberoSec account",
-		keywords: ["account", "login", "auth", "kerberosec"],
+		description: "View or switch your account",
+		keywords: ["account", "login", "auth", "cline"],
 	},
 	{
 		action: "logout",

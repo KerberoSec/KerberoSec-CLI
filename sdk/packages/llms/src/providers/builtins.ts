@@ -663,7 +663,7 @@ function createKerberoSecLikeSpec(
 	return {
 		id: input.id,
 		name: input.name,
-		description: input.description ?? "KerberoSec API endpoint",
+		description: input.description ?? "Cline API endpoint",
 		family: input.family ?? "openai-compatible",
 		popular: input.popular,
 		modelToolCapabilities: NATIVE_WEB_SEARCH_MODEL_TOOL_CAPABILITIES,
@@ -671,7 +671,7 @@ function createKerberoSecLikeSpec(
 		modelsProviderId: input.modelsProviderId,
 		modelsFactory: input.modelsFactory,
 		defaultModelId: input.defaultModelId,
-		apiKeyEnv: ["KERBEROSEC_API_KEY"],
+		apiKeyEnv: ["CLINE_API_KEY", "KERBEROSEC_API_KEY"],
 		defaults: {
 			get baseUrl(): string {
 				return `${getKerberoSecEnvironmentConfig().apiBaseUrl}/api/v1`;
@@ -721,8 +721,8 @@ async function handleKerberoSecResponseError(
 const kerberosec = createKerberoSecLikeSpec({
 	id: "kerberosec",
 	family: "kerberosec",
-	name: "KerberoSec Usage-Billing",
-	popular: 1,
+	name: "Cline Usage-Billing",
+	popular: 3,
 	modelsFactory: buildKerberoSecModels,
 	defaultModelId: KERBEROSEC_DEFAULT_MODEL_ID,
 	defaults: {
@@ -737,9 +737,9 @@ const kerberosec = createKerberoSecLikeSpec({
 const kerberosecPass = createKerberoSecLikeSpec({
 	id: KERBEROSEC_PASS_PROVIDER_ID,
 	family: "kerberosec",
-	name: "KerberoSecPass",
-	popular: 2,
-	description: "KerberoSec API endpoint with KerberoSecPass models",
+	name: "ClinePass",
+	popular: 4,
+	description: "Cline API endpoint with ClinePass models",
 	modelsProviderId: KERBEROSEC_PASS_PROVIDER_ID,
 	defaultModelId: firstGeneratedModelId(KERBEROSEC_PASS_PROVIDER_ID),
 	metadata: { usageCostDisplay: "subscription" },
@@ -1029,7 +1029,7 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		// OpenAI-compatible `/v1` endpoint: `/v1` ignores `options.num_ctx`, so
 		// models would always load with Ollama's 4096-token server default.
 		family: "ollama",
-		popular: 25,
+		popular: 1,
 		capabilities: ["tools"],
 		defaultModelId: "",
 		apiKeyEnv: ["OLLAMA_API_KEY"],
@@ -1101,7 +1101,7 @@ const BUILTIN_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 			"OpenAI ChatGPT subscription access uses an OAuth device code flow.",
 		family: "openai",
 		modelToolCapabilities: NATIVE_WEB_SEARCH_MODEL_TOOL_CAPABILITIES,
-		popular: 5,
+		popular: 2,
 		capabilities: ["reasoning", "oauth"],
 		defaultModelId: OPENAI_CODEX_DEFAULT_MODEL_ID,
 		modelsFactory: buildOpenAICodexModels,

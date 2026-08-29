@@ -54,9 +54,9 @@ function buildKerberoSecModelEntries(
 	return entries;
 }
 
-// Shown under the Free section header when picking a model for KerberoSecPass
+// Shown under the Free section header when picking a model for ClinePass
 export const KERBEROSEC_PASS_FREE_SECTION_DESCRIPTION =
-	"Try with limited usage, separate from KerberoSecPass quota.";
+	"Try with limited usage, separate from ClinePass quota.";
 
 // KerberoSecPass shows the subscription's models plus the KerberoSec free models — both
 // providers hit the same KerberoSec API, so free models are selectable in place

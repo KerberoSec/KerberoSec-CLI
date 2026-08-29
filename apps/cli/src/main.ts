@@ -1046,8 +1046,9 @@ export async function runCli(): Promise<void> {
 		}
 
 		let knownModels: Config["knownModels"];
+		let persistedProviderConfig: import("@kerberosec/core").ProviderConfig | undefined;
 		try {
-			const persistedProviderConfig = providerSettingsManager.getProviderConfig(
+			persistedProviderConfig = providerSettingsManager.getProviderConfig(
 				provider,
 				{
 					includeKnownModels: false,
@@ -1095,12 +1096,13 @@ export async function runCli(): Promise<void> {
 
 		const config: Config = {
 			providerId: provider,
+			providerConfig: persistedProviderConfig,
 			modelId:
 				args.model ??
 				selectedProviderSettings?.model ??
 				knownModelIds[0] ??
 				"anthropic/claude-sonnet-4.6",
-			apiKey: apiKey ?? "",
+			apiKey: apiKey ?? persistedProviderConfig?.apiKey ?? "",
 			knownModels,
 			systemPrompt: await resolveSystemPrompt({
 				cwd,
@@ -1133,7 +1135,7 @@ export async function runCli(): Promise<void> {
 			workspaceRoot,
 			extensionContext: {
 				client: {
-					name: "kerberosec-cli",
+					name: "cline-cli",
 					version: cliBuildInfo.version,
 					platform: "cli",
 					platformVersion: cliBuildInfo.version,

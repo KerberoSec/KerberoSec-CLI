@@ -194,8 +194,9 @@ function buildProviderConfig(
 		modelCatalog,
 	};
 	const providerConfig: ProviderConfig = {
-		...toProviderConfig(settings),
 		...(sessionProviderConfig ?? {}),
+		...toProviderConfig(settings),
+		...(config.modelId ? { modelId: config.modelId } : {}),
 	};
 	if (resolvedHeaders) {
 		providerConfig.headers = resolvedHeaders;

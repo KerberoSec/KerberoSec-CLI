@@ -800,7 +800,7 @@ export class AcpAgent implements Agent {
 			workspaceRoot,
 			extensionContext: {
 				client: {
-					name: "kerberosec-acp",
+					name: "cline-acp",
 					version: cliBuildInfo.version,
 					platform: "cli",
 					platformVersion: cliBuildInfo.version,

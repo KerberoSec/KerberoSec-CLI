@@ -154,8 +154,8 @@ describe("onboarding model helpers", () => {
 	});
 
 	it("formats OAuth provider labels for onboarding status views", () => {
-		expect(getOAuthProviderLabel("kerberosec")).toBe("KerberoSec");
-		expect(getOAuthProviderLabel("kerberosec-pass")).toBe("KerberoSecPass");
+		expect(getOAuthProviderLabel("kerberosec")).toBe("Cline");
+		expect(getOAuthProviderLabel("kerberosec-pass")).toBe("Cline");
 		expect(getOAuthProviderLabel("openai-codex")).toBe("ChatGPT");
 		expect(getOAuthProviderLabel("oca")).toBe("oca");
 	});

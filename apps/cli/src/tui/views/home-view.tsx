@@ -11,6 +11,7 @@ import {
 	resolveModelMaxInputTokens,
 	StatusBar,
 } from "../components/status-bar";
+import { KerberoSecBanner } from "../components/kerberosec-banner";
 import { TrackedRobot, useMouseTracker } from "../components/tracked-robot";
 import { useSession } from "../contexts/session-context";
 import { useTheme } from "../hooks/use-theme";
@@ -95,13 +96,8 @@ export function HomeView(props: {
 			justifyContent="center"
 			onMouseMove={mouse.onMouseMove}
 		>
-			<TrackedRobot cursorX={trackedCursorX} cursorY={trackedCursorY} />
+			<KerberoSecBanner color="white" />
 			<box marginTop={1} marginBottom={1} flexShrink={0}>
-				<text fg={defaultFg}>
-					<strong>What can I do for you?</strong>
-				</text>
-			</box>
-			<box marginBottom={1} flexShrink={0}>
 				<text fg="gray">
 					<em>
 						Use / for slash commands, @ for file mentions, Ctrl+P for menu

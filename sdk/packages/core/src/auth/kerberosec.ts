@@ -56,7 +56,8 @@ interface KerberoSecAuthApiUser {
 	subject: string | null;
 	email: string;
 	name: string;
-	kerberosecUserId: string | null;
+	clineUserId?: string | null;
+	kerberosecUserId?: string | null;
 	accounts: string[] | null;
 }
 
@@ -154,7 +155,9 @@ function toKerberoSecCredentials(
 	fallback: Partial<KerberoSecOAuthCredentials> = {},
 ): KerberoSecOAuthCredentials {
 	const accountId =
-		responseData.userInfo.kerberosecUserId ?? fallback.accountId;
+		responseData.userInfo.clineUserId ??
+		responseData.userInfo.kerberosecUserId ??
+		fallback.accountId;
 	const refreshToken = responseData.refreshToken ?? fallback.refresh;
 	if (!refreshToken) {
 		throw new Error("Token response did not include a refresh token");

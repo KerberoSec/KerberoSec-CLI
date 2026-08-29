@@ -9,6 +9,7 @@ export interface KerberoSecRecommendedModelEntry {
 
 export interface KerberoSecRecommendedModelsPayload {
 	kerberosecPass?: KerberoSecRecommendedModelEntry[];
+	clinePass?: KerberoSecRecommendedModelEntry[];
 	free?: KerberoSecRecommendedModelEntry[];
 }
 
@@ -71,7 +72,7 @@ export function normalizeKerberoSecRecommendedProviderModels(
 	payload: KerberoSecRecommendedModelsPayload,
 	openRouterModels: Record<string, ModelInfo>,
 ): Record<string, Record<string, ModelInfo>> {
-	const kerberosecPass = payload.kerberosecPass ?? [];
+	const kerberosecPass = payload.kerberosecPass ?? payload.clinePass ?? [];
 	const models: Record<string, ModelInfo> = {};
 	const kerberosecFreeModels: Record<string, ModelInfo> = {};
 	const openRouterModelsByName = buildModelsNameMap(openRouterModels);
@@ -142,11 +143,18 @@ export function normalizeKerberoSecRecommendedProviderModels(
 export async function fetchKerberoSecRecommendedModelsPayload(
 	fetcher: typeof fetch = fetch,
 ): Promise<KerberoSecRecommendedModelsPayload> {
-	const url = `${getKerberoSecEnvironmentConfig().apiBaseUrl}/api/v1/ai/kerberosec/recommended-models`;
-	const response = await fetcher(url);
-	if (!response.ok) {
+	const base = getKerberoSecEnvironmentConfig().apiBaseUrl;
+	let response = await fetcher(
+		`${base}/api/v1/ai/cline/recommended-models`,
+	).catch(() => undefined);
+	if (!response || !response.ok) {
+		response = await fetcher(
+			`${base}/api/v1/ai/kerberosec/recommended-models`,
+		).catch(() => undefined);
+	}
+	if (!response || !response.ok) {
 		throw new Error(
-			`Failed to load KerberoSec recommended models from ${url}: HTTP ${response.status}`,
+			`Failed to load recommended models from ${base}: HTTP ${response?.status ?? "unknown"}`,
 		);
 	}
 

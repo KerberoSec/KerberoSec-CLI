@@ -45,16 +45,16 @@ export const FALLBACK_KERBEROSEC_RECOMMENDED_MODELS: KerberoSecRecommendedModels
 	{
 		recommended: [
 			{
-				id: "anthropic/claude-opus-4.6",
-				name: "Claude Opus 4.6",
-				description: "Most intelligent model for agents and coding",
-				tags: ["BEST"],
-			},
-			{
 				id: "anthropic/claude-sonnet-4.6",
 				name: "Claude Sonnet 4.6",
 				description: "Strong coding and agent performance",
 				tags: ["NEW"],
+			},
+			{
+				id: "anthropic/claude-opus-4.6",
+				name: "Claude Opus 4.6",
+				description: "Most intelligent model for agents and coding",
+				tags: ["BEST"],
 			},
 			{
 				id: "google/gemini-3.1-pro-preview",
@@ -71,15 +71,27 @@ export const FALLBACK_KERBEROSEC_RECOMMENDED_MODELS: KerberoSecRecommendedModels
 		],
 		free: [
 			{
-				id: "kwaipilot/kat-coder-pro",
-				name: "KwaiKAT Kat Coder Pro",
-				description: "Advanced agentic coding model",
+				id: "deepseek/deepseek-v4-flash",
+				name: "DeepSeek V4 Flash",
+				description: "High-efficiency fast reasoning coding model",
 				tags: ["FREE"],
 			},
 			{
-				id: "arcee-ai/trinity-large-preview:free",
-				name: "Arcee AI Trinity Large Preview",
-				description: "Advanced large preview model",
+				id: "z-ai/glm-5.3-flash",
+				name: "GLM-5.3-Flash",
+				description: "Ultra-fast low-latency code generation",
+				tags: ["FREE"],
+			},
+			{
+				id: "poolside/laguna-s-2.1:free",
+				name: "Laguna S 2.1",
+				description: "Fast free model for coding and agent tasks",
+				tags: ["FREE"],
+			},
+			{
+				id: "minimax/minimax-m3:free",
+				name: "MiniMax M3",
+				description: "High-intelligence long-context free model",
 				tags: ["FREE"],
 			},
 		],
@@ -128,9 +140,12 @@ function normalizeResponse(
 		? data.recommended
 		: [];
 	const freeRaw = Array.isArray(data.free) ? data.free : [];
-	const kerberosecPassRaw = Array.isArray(data.kerberosecPass)
-		? data.kerberosecPass
-		: [];
+	const rawRecord = data as Record<string, unknown>;
+	const kerberosecPassRaw = Array.isArray(rawRecord.kerberosecPass)
+		? rawRecord.kerberosecPass
+		: Array.isArray(rawRecord.clinePass)
+			? rawRecord.clinePass
+			: [];
 	const recommended = recommendedRaw
 		.map(normalizeModel)
 		.filter((model): model is KerberoSecRecommendedModel => model !== null);
@@ -295,20 +310,28 @@ export async function fetchKerberoSecRecommendedModels(
 	try {
 		const base = getConfiguredApiBaseUrl(options);
 		const fetchImpl = options.fetchImpl ?? fetch;
-		const resp = await fetchWithTimeout(
+		let resp = await fetchWithTimeout(
 			fetchImpl,
-			`${base}/api/v1/ai/kerberosec/recommended-models`,
+			`${base}/api/v1/ai/cline/recommended-models`,
 			timeoutMs,
-		);
-		if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
-		const json: unknown = await resp.json();
-		const data = normalizeResponse(json);
-		if (data) {
-			return await resolveDisplayNames(
-				data,
-				options.catalogLoader ?? getLiveModelsCatalog,
-				Math.max(0, deadline - Date.now()),
-			);
+		).catch(() => undefined);
+		if (!resp || !resp.ok) {
+			resp = await fetchWithTimeout(
+				fetchImpl,
+				`${base}/api/v1/ai/kerberosec/recommended-models`,
+				timeoutMs,
+			).catch(() => undefined);
+		}
+		if (resp && resp.ok) {
+			const json: unknown = await resp.json();
+			const data = normalizeResponse(json);
+			if (data) {
+				return await resolveDisplayNames(
+					data,
+					options.catalogLoader ?? getLiveModelsCatalog,
+					Math.max(0, deadline - Date.now()),
+				);
+			}
 		}
 	} catch {
 		// Fall back to the bundled list when the remote source is unavailable.

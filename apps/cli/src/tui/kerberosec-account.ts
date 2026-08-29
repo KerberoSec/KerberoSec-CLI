@@ -20,7 +20,7 @@ import { identifyTelemetryAccount } from "../utils/telemetry";
 import type { Config } from "../utils/types";
 
 export const KERBEROSEC_CREDITS_DASHBOARD_URL =
-	"https://app.kerberosec.bot/dashboard/account?tab=credits";
+	"https://app.cline.bot/dashboard/account?tab=credits";
 
 type KerberoSecAccountConfig = Pick<Config, "apiKey" | "logger" | "providerId">;
 

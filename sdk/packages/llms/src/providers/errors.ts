@@ -4,11 +4,14 @@ export const KERBEROSEC_NOT_SUBSCRIBED_RESPONSE_MESSAGE =
 	"the user is not subscribed to required model plan";
 const KERBEROSEC_NOT_SUBSCRIBED_FORMATTED_MESSAGE_PREFIX =
 	"no access to kerberosecpass subscription models yet. subscribe to kerberosecpass";
+const CLINE_NOT_SUBSCRIBED_FORMATTED_MESSAGE_PREFIX =
+	"no access to clinepass subscription models yet. subscribe to clinepass";
 export const KERBEROSEC_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_RESPONSE_MESSAGE =
 	"organization accounts cannot use individual model inference subscriptions";
 
 const KERBEROSEC_PASS_LIMIT_PREFIX = "you have reached your";
 const KERBEROSEC_PASS_LIMIT_MARKER = "kerberosecpass limit";
+const CLINE_PASS_LIMIT_MARKER = "clinepass limit";
 const KERBEROSEC_PASS_LIMIT_SUFFIX = "please try again later.";
 const KERBEROSEC_FREE_MODEL_LIMIT_MARKER = "free limit reached on model";
 const KERBEROSEC_FREE_MODEL_LIMIT_RETRY_MARKER = "try again in ";
@@ -29,7 +32,11 @@ function findKerberoSecPassLimitMessageBounds(
 	}
 
 	const end = suffixStart + KERBEROSEC_PASS_LIMIT_SUFFIX.length;
-	if (!normalized.slice(start, end).includes(KERBEROSEC_PASS_LIMIT_MARKER)) {
+	const chunk = normalized.slice(start, end);
+	if (
+		!chunk.includes(KERBEROSEC_PASS_LIMIT_MARKER) &&
+		!chunk.includes(CLINE_PASS_LIMIT_MARKER)
+	) {
 		return undefined;
 	}
 
@@ -44,7 +51,7 @@ export function getKerberoSecPassSubscriptionUrl(): string {
 }
 
 export function getKerberoSecNotSubscribedMessage(): string {
-	return `No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan: ${getKerberoSecPassSubscriptionUrl()}`;
+	return `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${getKerberoSecPassSubscriptionUrl()}`;
 }
 
 export class KerberoSecNotSubscribedError extends Error {
@@ -58,7 +65,7 @@ export class KerberoSecNotSubscribedError extends Error {
 }
 
 export function getKerberoSecOrgIndividualInferenceSubscriptionMessage(): string {
-	return "Organization accounts cannot use KerberoSecPass subscriptions. Go to /account -> change account to switch to your personal account for KerberoSecPass";
+	return "Organization accounts cannot use ClinePass subscriptions. Go to /account -> change account to switch to your personal account for ClinePass";
 }
 
 export class KerberoSecOrgIndividualInferenceSubscriptionError extends Error {
@@ -119,7 +126,8 @@ export function isKerberoSecNotSubscribedMessage(text: string): boolean {
 	const normalized = text.trim().toLowerCase();
 	return (
 		normalized.includes(KERBEROSEC_NOT_SUBSCRIBED_RESPONSE_MESSAGE) ||
-		normalized.includes(KERBEROSEC_NOT_SUBSCRIBED_FORMATTED_MESSAGE_PREFIX)
+		normalized.includes(KERBEROSEC_NOT_SUBSCRIBED_FORMATTED_MESSAGE_PREFIX) ||
+		normalized.includes(CLINE_NOT_SUBSCRIBED_FORMATTED_MESSAGE_PREFIX)
 	);
 }
 

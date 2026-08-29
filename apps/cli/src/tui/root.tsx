@@ -297,12 +297,24 @@ function App(props: TuiProps) {
 		refocusTextarea: () => refocusTextareaRef.current(),
 	});
 
+	const handleLogout = useCallback(async () => {
+		logoutKerberoSecAccount();
+		props.config.apiKey = "";
+		props.config.providerId = "";
+		session.clearEntries();
+		session.setHasSubmitted(false);
+		await props.onAccountChange?.();
+		showToast("Logged out successfully", "success");
+		setAppView("onboarding");
+	}, [props.config, props.onAccountChange, session, showToast]);
+
 	const openAccount = useAccountDialog({
 		dialog,
 		termHeight,
 		loadAccount: props.loadKerberoSecAccount,
 		switchAccount: props.switchKerberoSecAccount,
 		onAccountChange: props.onAccountChange,
+		onLogout: handleLogout,
 		openModelSelector,
 		refocusTextarea: () => refocusTextareaRef.current(),
 	});
@@ -695,17 +707,6 @@ function App(props: TuiProps) {
 		setSessionLastTotalCost,
 		setSessionLastTotalTokens,
 	]);
-
-	const handleLogout = useCallback(async () => {
-		logoutKerberoSecAccount();
-		props.config.apiKey = "";
-		props.config.providerId = "";
-		session.clearEntries();
-		session.setHasSubmitted(false);
-		await props.onAccountChange?.();
-		showToast("Logged out successfully", "success");
-		setAppView("onboarding");
-	}, [props.config, props.onAccountChange, session, showToast]);
 
 	const { handleSlashCommand, openHistory } = useLocalCommandActions({
 		slashCommandRegistry,

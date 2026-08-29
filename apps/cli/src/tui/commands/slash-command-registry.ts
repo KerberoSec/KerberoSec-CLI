@@ -70,7 +70,7 @@ const TUI_LOCAL_COMMANDS: Array<{
 	},
 	{
 		name: "account",
-		description: "View KerberoSec account",
+		description: "View account details and organization",
 	},
 	{
 		name: "logout",

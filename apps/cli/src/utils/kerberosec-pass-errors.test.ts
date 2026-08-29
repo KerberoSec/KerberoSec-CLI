@@ -22,7 +22,7 @@ describe("kerberosec-pass-errors", () => {
 		).toBe(true);
 
 		const sdkFormatted =
-			"No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan: https://app.kerberosec.bot/dashboard/subscription?personal=true";
+			"No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: https://app.cline.bot/dashboard/subscription?personal=true";
 		const formatted = getCliNotSubscribedMessage();
 		expect(isKerberoSecPassSubscriptionError(sdkFormatted)).toBe(true);
 		expect(isKerberoSecPassSubscriptionError(formatted)).toBe(true);
@@ -62,7 +62,7 @@ describe("kerberosec-pass-errors", () => {
 			getCliKerberoSecPassLimitMessage(raw),
 		);
 		expect(formatCliErrorMessage(new Error(raw))).toContain(
-			"Switch to KerberoSec usage-based billing",
+			"Switch to Cline usage-based billing",
 		);
 		expect(formatCliErrorMessage(new Error(raw))).toContain(
 			"--provider kerberosec",

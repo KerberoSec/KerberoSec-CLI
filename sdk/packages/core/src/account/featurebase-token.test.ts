@@ -10,7 +10,7 @@ describe("KerberoSecAccountService.fetchFeaturebaseToken", () => {
 	it("returns featurebaseJwt on success", async () => {
 		const fetchImpl = vi.fn(async (input: unknown, init?: RequestInit) => {
 			expect(String(input)).toBe(
-				"https://api.kerberosec.bot/api/v1/users/me/featurebase-token",
+				"https://api.cline.bot/api/v1/users/me/featurebase-token",
 			);
 			expect(init?.headers).toMatchObject({
 				Authorization: "Bearer workos:token-123",
@@ -25,7 +25,7 @@ describe("KerberoSecAccountService.fetchFeaturebaseToken", () => {
 		});
 
 		const service = new KerberoSecAccountService({
-			apiBaseUrl: "https://api.kerberosec.bot",
+			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
 		});
@@ -43,7 +43,7 @@ describe("KerberoSecAccountService.fetchFeaturebaseToken", () => {
 		});
 
 		const service = new KerberoSecAccountService({
-			apiBaseUrl: "https://api.kerberosec.bot",
+			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
 		});
@@ -56,7 +56,7 @@ describe("KerberoSecAccountService.fetchFeaturebaseToken", () => {
 		const fetchImpl = vi.fn();
 
 		const service = new KerberoSecAccountService({
-			apiBaseUrl: "https://api.kerberosec.bot",
+			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => undefined,
 			fetchImpl: fetchImpl as unknown as typeof fetch,
 		});
@@ -75,7 +75,7 @@ describe("KerberoSecAccountService.fetchFeaturebaseToken", () => {
 		});
 
 		const service = new KerberoSecAccountService({
-			apiBaseUrl: "https://api.kerberosec.bot",
+			apiBaseUrl: "https://api.cline.bot",
 			getAuthToken: async () => "workos:token-123",
 			fetchImpl: fetchImpl as unknown as typeof fetch,
 		});

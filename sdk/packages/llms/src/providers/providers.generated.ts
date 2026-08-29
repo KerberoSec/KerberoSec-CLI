@@ -471,8 +471,7 @@ export const GENERATED_PROVIDER_SPECS: readonly BuiltinSpec[] = [
 		capabilities: ["tools", "reasoning", "prompt-cache"],
 		modelsProviderId: "kerberosec-pass",
 		defaultModelId: "kerberosec-pass/glm-5.3",
-		apiKeyEnv: ["CLINE_API_KEY", "KERBEROSEC_API_KEY"],
-		docsUrl: "https://docs.cline.bot/getting-started/clinepass",
+		apiKeyEnv: ["KERBEROSEC_API_KEY"],
 		defaults: {
 			baseUrl: "https://api.cline.bot/api/v1",
 		},

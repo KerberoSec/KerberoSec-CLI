@@ -33,10 +33,10 @@ export interface ResolveProviderRequestHeadersInput {
 }
 
 const DEFAULT_KERBEROSEC_REQUEST_HEADERS: Record<string, string> = {
-	"HTTP-Referer": "https://cline.bot",
-	"X-Title": "Cline",
+	"HTTP-Referer": "https://github.com/KerberoSec/KerberoSec-CLI",
+	"X-Title": "KerberoSec",
 	"X-IS-MULTIROOT": "false",
-	"X-CLIENT-TYPE": "cline-sdk",
+	"X-CLIENT-TYPE": "kerberosec-sdk",
 };
 
 function isKerberoSecBillingProvider(providerId: string): boolean {
@@ -61,7 +61,7 @@ function resolveKerberoSecClientVersion(
 	return (
 		trimNonEmpty(client?.version) ??
 		trimNonEmpty(client?.versionHeaderFallback) ??
-		"3.50.0"
+		"unknown"
 	);
 }
 
@@ -72,24 +72,20 @@ function buildKerberoSecRequestHeaders(
 		return undefined;
 	}
 	const source = resolveSource(input.source, input.defaultSource);
-	const rawClientName = trimNonEmpty(input.client?.name);
-	const clientType =
-		rawClientName && rawClientName.startsWith("cline-")
-			? rawClientName
-			: `cline-${source}`;
+	const clientType = trimNonEmpty(input.client?.name) ?? `kerberosec-${source}`;
 	const clientVersion = resolveKerberoSecClientVersion(input.client);
 	const platform = trimNonEmpty(input.client?.platform) ?? source;
 	const platformVersion =
 		trimNonEmpty(input.client?.platformVersion) ?? clientVersion;
 	return {
 		...DEFAULT_KERBEROSEC_REQUEST_HEADERS,
-		"User-Agent": `Cline/${clientVersion}`,
+		"User-Agent": `KerberoSec/${clientVersion}`,
 		"X-IS-MULTIROOT": input.client?.isMultiRoot === true ? "true" : "false",
 		"X-CLIENT-TYPE": clientType,
 		"X-CLIENT-VERSION": clientVersion,
 		"X-PLATFORM": platform,
 		"X-PLATFORM-VERSION": platformVersion,
-		"X-CORE-VERSION": input.coreVersion ?? clientVersion,
+		"X-CORE-VERSION": input.coreVersion,
 		"X-Task-ID": input.sessionId,
 	};
 }

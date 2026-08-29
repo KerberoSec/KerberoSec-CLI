@@ -1886,7 +1886,7 @@ describe("listLocalProviders", () => {
 			{
 				provider: "kerberosec",
 				apiKey: "test-key",
-				baseUrl: "https://api.kerberosec.bot/api/v1",
+				baseUrl: "https://api.cline.bot/api/v1",
 				model: "anthropic/claude-sonnet-4.6",
 			},
 			{ setLastUsed: false },

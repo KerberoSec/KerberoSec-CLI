@@ -83,7 +83,7 @@ describe("OpenRouter image transport", () => {
 
 		expect(fetchMock).toHaveBeenCalledOnce();
 		expect(String(fetchMock.mock.calls[0]?.[0])).toBe(
-			"https://api.kerberosec.bot/api/v1/images",
+			"https://api.cline.bot/api/v1/images",
 		);
 		expect(requestBody).toMatchObject({
 			model: "google/gemini-image-test",
@@ -167,7 +167,7 @@ describe("OpenRouter image transport", () => {
 		);
 
 		expect(String(fetchMock.mock.calls[0]?.[0])).toBe(
-			"https://api.kerberosec.bot/api/v1/chat/completions",
+			"https://api.cline.bot/api/v1/chat/completions",
 		);
 		expect(responseTextSpy).not.toHaveBeenCalled();
 		expect(events).toContainEqual({

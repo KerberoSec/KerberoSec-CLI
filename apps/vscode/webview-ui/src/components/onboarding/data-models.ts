@@ -62,7 +62,7 @@ export function getKerberoSecUIOnboardingGroups(groupedModels: OnboardingModelGr
 
 export function getOnboardingGroupDisplayName(group: string): string {
 	if (group === KERBEROSECPASS_GROUP) {
-		return "KerberoSecPass"
+		return "ClinePass"
 	}
 	return group
 }

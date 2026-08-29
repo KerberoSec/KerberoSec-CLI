@@ -1,9 +1,7 @@
-import { useTerminalDimensions } from "@opentui/react";
 import { useState } from "react";
 import {
 	AutocompleteDropdown,
 	type AutocompleteDropdownProps,
-	DROPDOWN_MAX_HEIGHT,
 } from "../components/autocomplete-dropdown";
 import { InputBar, type TextareaHandle } from "../components/input-bar";
 import {
@@ -12,7 +10,6 @@ import {
 	StatusBar,
 } from "../components/status-bar";
 import { KerberoSecBanner } from "../components/kerberosec-banner";
-import { TrackedRobot, useMouseTracker } from "../components/tracked-robot";
 import { useSession } from "../contexts/session-context";
 import { useTheme } from "../hooks/use-theme";
 import {
@@ -21,7 +18,7 @@ import {
 	getModeInputPlaceholder,
 } from "../palette";
 import { getThemeModeAccent } from "../themes";
-import { HOME_VIEW_MAX_WIDTH, type TuiProps } from "../types";
+import type { TuiProps } from "../types";
 
 export function HomeView(props: {
 	config: TuiProps["config"];
@@ -55,16 +52,13 @@ export function HomeView(props: {
 		repoStatus,
 	} = props;
 	const session = useSession();
-	const { width, height } = useTerminalDimensions();
-	const mouse = useMouseTracker();
-	const [inputCursor, setInputCursor] = useState<{
+	const [, setInputCursor] = useState<{
 		visualCol: number;
 		visualRow: number;
 	} | null>(null);
 
 	const theme = useTheme();
 	const terminalBg = theme.background;
-	const defaultFg = theme.defaultForeground;
 	const accent = getThemeModeAccent(theme, session.uiMode);
 	const inputRuleColor = getInputRuleColor(terminalBg);
 	const inputForeground = getModeInputForeground(session.uiMode, terminalBg);
@@ -75,84 +69,70 @@ export function HomeView(props: {
 	const maxInputTokens = resolveModelMaxInputTokens(config);
 	const hasAutocomplete =
 		props.autocomplete?.mode && props.autocomplete.options.length > 0;
-	const contentWidth = Math.min(width, HOME_VIEW_MAX_WIDTH);
-	const hasTypedInput = inputValue.trim().length > 0;
-	const inputStartX = Math.floor((width - contentWidth) / 2) + 2;
-	const clamp = (value: number, min: number, max: number) =>
-		Math.max(min, Math.min(max, value));
-	const trackedCursorX = hasTypedInput
-		? clamp(inputStartX + (inputCursor?.visualCol ?? 0), 0, width)
-		: mouse.cursor.x;
-	const trackedCursorY = hasTypedInput
-		? clamp(height - 2 + (inputCursor?.visualRow ?? 0), 0, height)
-		: mouse.cursor.y;
 
 	return (
 		<box
 			flexDirection="column"
 			width="100%"
 			height="100%"
-			alignItems="center"
-			justifyContent="center"
-			onMouseMove={mouse.onMouseMove}
 		>
-			<KerberoSecBanner color="white" />
-			<box marginTop={1} marginBottom={1} flexShrink={0}>
-				<text fg="gray">
-					<em>
-						Use / for slash commands, @ for file mentions, Ctrl+P for menu
-					</em>
-				</text>
+			<box
+				flexDirection="column"
+				flexGrow={1}
+				alignItems="center"
+				justifyContent="center"
+			>
+				<KerberoSecBanner color="white" />
+				<box marginTop={1} marginBottom={1} flexShrink={0}>
+					<text fg="gray">
+						<em>
+							Use / for slash commands, @ for file mentions, Ctrl+P for menu
+						</em>
+					</text>
+				</box>
 			</box>
 
-			<box flexDirection="column" width={contentWidth} flexShrink={0}>
-				<InputBar
-					accent={accent}
-					ruleColor={inputRuleColor}
-					inputForeground={inputForeground}
-					inputPlaceholder={inputPlaceholder}
-					placeholder={placeholder}
-					initialValue={inputValue}
-					inputKey={inputKey}
-					onSubmit={onSubmit}
-					onContentChange={onContentChange}
-					onVisualCursorChange={setInputCursor}
-					onImagePaste={onImagePaste}
-					onLargeTextPaste={onLargeTextPaste}
-					onFocusRequest={props.onInputFocusRequest}
-					textareaRef={props.textareaRef}
-				/>
+			<box flexDirection="column" flexShrink={0} width="100%">
+				{hasAutocomplete && props.autocomplete && (
+					<AutocompleteDropdown
+						{...props.autocomplete}
+						accent={accent}
+					/>
+				)}
 
-				<box flexDirection="column" height={DROPDOWN_MAX_HEIGHT + 1}>
-					{hasAutocomplete && props.autocomplete ? (
-						<AutocompleteDropdown
-							{...props.autocomplete}
-							accent={accent}
-							containerWidth={Math.min(width, HOME_VIEW_MAX_WIDTH)}
-						/>
-					) : (
-						<box marginTop={1}>
-							<StatusBar
-								providerId={config.providerId}
-								modelId={modelDisplayName}
-								totalTokens={session.lastTotalTokens}
-								totalCost={session.lastTotalCost}
-								maxInputTokens={maxInputTokens}
-								uiMode={session.uiMode}
-								autoApproveAll={session.autoApproveAll}
-								workspaceName={
-									config.workspaceRoot
-										? (config.workspaceRoot.split("/").pop() ?? "")
-										: ""
-								}
-								gitBranch={repoStatus.branch}
-								gitDiffStats={repoStatus.diffStats}
-								onToggleMode={props.onToggleMode}
-								variant="home"
-							/>
-						</box>
-					)}
+				<box>
+					<InputBar
+						accent={accent}
+						ruleColor={inputRuleColor}
+						inputForeground={inputForeground}
+						inputPlaceholder={inputPlaceholder}
+						placeholder={placeholder}
+						initialValue={inputValue}
+						inputKey={inputKey}
+						onSubmit={onSubmit}
+						onContentChange={onContentChange}
+						onVisualCursorChange={setInputCursor}
+						onImagePaste={onImagePaste}
+						onLargeTextPaste={onLargeTextPaste}
+						onFocusRequest={props.onInputFocusRequest}
+						textareaRef={props.textareaRef}
+					/>
 				</box>
+
+				<StatusBar
+					providerId={config.providerId}
+					modelId={modelDisplayName}
+					totalTokens={session.lastTotalTokens}
+					totalCost={session.lastTotalCost}
+					maxInputTokens={maxInputTokens}
+					uiMode={session.uiMode}
+					autoApproveAll={session.autoApproveAll}
+					workspaceName={config.workspaceRoot ?? ""}
+					gitBranch={repoStatus.branch}
+					gitDiffStats={repoStatus.diffStats}
+					onToggleMode={props.onToggleMode}
+					variant="home"
+				/>
 			</box>
 		</box>
 	);

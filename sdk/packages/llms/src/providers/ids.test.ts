@@ -113,7 +113,7 @@ describe("provider-ids", () => {
 
 		expect(provider).toMatchObject({
 			id: "kerberosec-pass",
-			name: "KerberoSecPass",
+			name: "ClinePass",
 			client: "openai-compatible",
 		});
 		expect(models).toHaveProperty(provider?.defaultModelId ?? "");

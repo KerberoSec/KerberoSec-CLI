@@ -254,8 +254,8 @@ describe("handleEvent text formatting", () => {
 			{} as Config,
 		);
 
-		expect(errorOutput).toContain("KerberoSecPass limit reached");
-		expect(errorOutput).toContain("Switch to KerberoSec usage-based billing");
+		expect(errorOutput).toContain("ClinePass limit reached");
+		expect(errorOutput).toContain("Switch to Cline usage-based billing");
 		expect(errorOutput).toContain("--provider kerberosec");
 	});
 

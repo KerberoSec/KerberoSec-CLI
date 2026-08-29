@@ -154,7 +154,7 @@ const ModelSelection = ({
 	if (isKerberoSecPass && modelGroups.length === 0) {
 		return (
 			<div className="flex w-full max-w-lg flex-col items-center justify-center my-8 px-2 text-center">
-				<p className="text-foreground text-sm m-0">No KerberoSecPass models are available right now.</p>
+				<p className="text-foreground text-sm m-0">No ClinePass models are available right now.</p>
 				<p className="text-foreground/70 text-sm mt-1">Please choose another option or try again later.</p>
 			</div>
 		)

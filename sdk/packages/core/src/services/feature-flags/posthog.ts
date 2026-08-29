@@ -21,7 +21,7 @@ export function buildKerberoSecPostHogClient(
 	options?: PostHogOptions | undefined,
 ): PostHog {
 	return new PostHog(apiKey, {
-		host: "https://data.kerberosec.bot",
+		host: "https://data.cline.bot",
 		...options,
 	});
 }

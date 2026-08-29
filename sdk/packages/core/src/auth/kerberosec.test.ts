@@ -386,7 +386,7 @@ describe("auth/kerberosec loginKerberoSecOAuth", () => {
 		const onAuth = vi.fn();
 		const capture = vi.fn();
 		const credentials = await loginKerberoSecOAuth({
-			apiBaseUrl: "https://api.kerberosec.bot",
+			apiBaseUrl: "https://api.cline.bot",
 			useWorkOSDeviceAuth: true,
 			telemetry: {
 				capture,
@@ -458,7 +458,7 @@ describe("auth/kerberosec loginKerberoSecOAuth", () => {
 
 		await expect(
 			loginKerberoSecOAuth({
-				apiBaseUrl: "https://api.kerberosec.bot",
+				apiBaseUrl: "https://api.cline.bot",
 				useWorkOSDeviceAuth: true,
 				telemetry: { capture } as never,
 				callbacks: {
@@ -508,7 +508,7 @@ describe("auth/kerberosec completeKerberoSecDeviceAuth", () => {
 				deviceCode: "device-code",
 				expiresInSeconds: 300,
 				pollIntervalSeconds: 1,
-				apiBaseUrl: "https://api.kerberosec.bot",
+				apiBaseUrl: "https://api.cline.bot",
 				telemetry: { capture } as never,
 			}),
 		).rejects.toThrow("authorization denied");

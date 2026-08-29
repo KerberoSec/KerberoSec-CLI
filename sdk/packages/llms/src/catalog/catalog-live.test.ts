@@ -1064,7 +1064,7 @@ describe("models-dev-catalog", () => {
 
 		expect(fetcher).toHaveBeenCalledWith("https://models.dev/api.json");
 		expect(fetcher).toHaveBeenCalledWith(
-			"https://api.kerberosec.bot/api/v1/ai/kerberosec/recommended-models",
+			"https://api.cline.bot/api/v1/ai/kerberosec/recommended-models",
 		);
 		expect(result.openrouter).toHaveProperty("vendor/live-base-model");
 		expect(

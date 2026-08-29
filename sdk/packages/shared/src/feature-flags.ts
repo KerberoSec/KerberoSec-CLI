@@ -1,5 +1,5 @@
 export const FeatureFlag = {
-	/** Enables KerberoSecPass provider/model list exposure in supported clients. */
+	/** Enables ClinePass provider/model list exposure in supported clients. */
 	KERBEROSEC_PASS: "ext-kerberosec-pass",
 	/** Shows the GitHub integration step in the desktop app */
 	CODE_ONBOARDING_GITHUB: "code-onboarding-github",

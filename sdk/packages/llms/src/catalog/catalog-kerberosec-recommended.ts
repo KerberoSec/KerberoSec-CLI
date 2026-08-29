@@ -145,11 +145,11 @@ export async function fetchKerberoSecRecommendedModelsPayload(
 ): Promise<KerberoSecRecommendedModelsPayload> {
 	const base = getKerberoSecEnvironmentConfig().apiBaseUrl;
 	let response = await fetcher(
-		`${base}/api/v1/ai/cline/recommended-models`,
+		`${base}/api/v1/ai/kerberosec/recommended-models`,
 	).catch(() => undefined);
 	if (!response || !response.ok) {
 		response = await fetcher(
-			`${base}/api/v1/ai/kerberosec/recommended-models`,
+			`${base}/api/v1/ai/cline/recommended-models`,
 		).catch(() => undefined);
 	}
 	if (!response || !response.ok) {

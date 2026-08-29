@@ -8,7 +8,6 @@ import {
 	formatKerberoSecCredits,
 	isKerberoSecAccountAuthErrorMessage,
 	type KerberoSecAccountSnapshot,
-	logoutKerberoSecAccount,
 } from "../../kerberosec-account";
 
 export type AccountDialogAction =
@@ -84,7 +83,7 @@ const UNAUTHENTICATED_ACTIONS: AccountAction[] = [
 	{
 		id: "learn-more",
 		label: "Learn more",
-		description: "Open cline.bot",
+		description: "Open GitHub repository",
 		enabled: true,
 	},
 ];

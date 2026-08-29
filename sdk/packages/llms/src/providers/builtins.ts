@@ -722,7 +722,7 @@ const kerberosec = createKerberoSecLikeSpec({
 	id: "kerberosec",
 	family: "kerberosec",
 	name: "Cline Usage-Billing",
-	popular: 3,
+	popular: 2,
 	modelsFactory: buildKerberoSecModels,
 	defaultModelId: KERBEROSEC_DEFAULT_MODEL_ID,
 	defaults: {
@@ -738,7 +738,7 @@ const kerberosecPass = createKerberoSecLikeSpec({
 	id: KERBEROSEC_PASS_PROVIDER_ID,
 	family: "kerberosec",
 	name: "ClinePass",
-	popular: 4,
+	popular: 3,
 	description: "Cline API endpoint with ClinePass models",
 	modelsProviderId: KERBEROSEC_PASS_PROVIDER_ID,
 	defaultModelId: firstGeneratedModelId(KERBEROSEC_PASS_PROVIDER_ID),
@@ -1030,8 +1030,8 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		// models would always load with Ollama's 4096-token server default.
 		family: "ollama",
 		popular: 1,
-		capabilities: ["tools"],
-		defaultModelId: "",
+		capabilities: ["tools", "reasoning"],
+		defaultModelId: "qwen3:1.7b",
 		apiKeyEnv: ["OLLAMA_API_KEY"],
 		// Local Ollama models are discovered dynamically; do not inherit the
 		// generated Ollama Cloud catalog when merging the models.dev spec.
@@ -1101,7 +1101,7 @@ const BUILTIN_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 			"OpenAI ChatGPT subscription access uses an OAuth device code flow.",
 		family: "openai",
 		modelToolCapabilities: NATIVE_WEB_SEARCH_MODEL_TOOL_CAPABILITIES,
-		popular: 2,
+		popular: 4,
 		capabilities: ["reasoning", "oauth"],
 		defaultModelId: OPENAI_CODEX_DEFAULT_MODEL_ID,
 		modelsFactory: buildOpenAICodexModels,

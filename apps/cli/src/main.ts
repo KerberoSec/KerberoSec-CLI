@@ -1128,14 +1128,14 @@ export async function runCli(): Promise<void> {
 			telemetry: getCliTelemetryService(loggerAdapter.core),
 			defaultToolAutoApprove,
 			toolPolicies,
-			enableSpawnAgent: !isYoloMode,
-			enableAgentTeams: !isYoloMode,
+			enableSpawnAgent: !isYoloMode && provider !== "ollama",
+			enableAgentTeams: !isYoloMode && provider !== "ollama",
 			enableTools: true,
 			cwd,
 			workspaceRoot,
 			extensionContext: {
 				client: {
-					name: "cline-cli",
+					name: "kerberosec-cli",
 					version: cliBuildInfo.version,
 					platform: "cli",
 					platformVersion: cliBuildInfo.version,

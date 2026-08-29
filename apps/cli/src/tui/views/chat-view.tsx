@@ -78,7 +78,7 @@ export function ChatView(props: {
 	const inputForeground = getModeInputForeground(session.uiMode, terminalBg);
 	const inputPlaceholder = getModeInputPlaceholder(session.uiMode, terminalBg);
 	const placeholder =
-		session.uiMode === "plan" ? "Plan something..." : "Ask anything...";
+		session.uiMode === "plan" ? "Plan something..." : "What can I do for you?";
 	const modelDisplayName = resolveModelDisplayName(config);
 	const maxInputTokens = resolveModelMaxInputTokens(config);
 	const runtimeInteraction = props.runtimeInteraction ?? null;
@@ -150,11 +150,7 @@ export function ChatView(props: {
 					maxInputTokens={maxInputTokens}
 					uiMode={session.uiMode}
 					autoApproveAll={session.autoApproveAll}
-					workspaceName={
-						config.workspaceRoot
-							? (config.workspaceRoot.split("/").pop() ?? "")
-							: ""
-					}
+					workspaceName={config.workspaceRoot ?? ""}
 					gitBranch={repoStatus.branch}
 					gitDiffStats={repoStatus.diffStats}
 					onToggleMode={props.onToggleMode}

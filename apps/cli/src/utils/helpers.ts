@@ -136,7 +136,7 @@ function summarizeRunCommandsInput(input: unknown): string {
 			}
 			return formatStructuredCommand(obj.commands);
 		}
-		if (typeof obj.command === "string") {
+		if (obj.command !== undefined) {
 			return formatStructuredCommand(obj);
 		}
 		if (typeof obj.CommandLine === "string") {
@@ -201,10 +201,11 @@ export function formatToolInput(toolName: string, input: unknown): string {
 		case "ask_question":
 			return formatAskQuestionInput(obj);
 		case "read_files":
-		case "read_file":
-		case "view_file":
 			if (Array.isArray(obj.file_paths)) {
 				return truncate(obj.file_paths.join(", "), 120);
+			}
+			if (Array.isArray(obj.paths)) {
+				return truncate(obj.paths.join(", "), 120);
 			}
 			if (Array.isArray(obj.files)) {
 				return truncate(
@@ -219,6 +220,9 @@ export function formatToolInput(toolName: string, input: unknown): string {
 					120,
 				);
 			}
+			break;
+		case "read_file":
+		case "view_file":
 			if (
 				typeof obj.path === "string" ||
 				typeof obj.file_path === "string" ||

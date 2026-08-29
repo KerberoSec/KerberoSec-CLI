@@ -132,8 +132,8 @@ async function executeWebSearch(
 					? { Authorization: `Bearer ${provider.apiKey}` }
 					: {}),
 				"Content-Type": "application/json",
-				"User-Agent": "Cline/2.0.0",
-				"X-CLIENT-TYPE": "cline-cli",
+				"User-Agent": "KerberoSec/2.0.0",
+				"X-CLIENT-TYPE": "kerberosec-cli",
 				...provider.headers,
 			},
 			body: JSON.stringify({

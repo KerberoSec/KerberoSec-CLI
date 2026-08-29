@@ -36,7 +36,7 @@ describe("resolveProviderRequestHeaders", () => {
 		});
 
 		expect(headers).toMatchObject({
-			"HTTP-Referer": "https://kerberosec.bot",
+			"HTTP-Referer": "https://github.com/KerberoSec/KerberoSec-CLI",
 			"X-Title": "KerberoSec",
 			"User-Agent": "KerberoSec/3.0.38",
 			"X-IS-MULTIROOT": "false",

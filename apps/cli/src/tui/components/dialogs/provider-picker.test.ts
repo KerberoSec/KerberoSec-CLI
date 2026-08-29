@@ -51,7 +51,7 @@ describe("buildKerberoSecPassSubscriptionPageUrl", () => {
 	it("opens the personal subscription page on production by default", () => {
 		expect(
 			buildKerberoSecPassSubscriptionPageUrl(undefined).startsWith(
-				"https://app.kerberosec.bot/dashboard/subscription?personal=true",
+				"https://app.cline.bot/dashboard/subscription?personal=true",
 			),
 		).toBe(true);
 	});
@@ -59,9 +59,9 @@ describe("buildKerberoSecPassSubscriptionPageUrl", () => {
 	it("keeps the configured app base URL", () => {
 		expect(
 			buildKerberoSecPassSubscriptionPageUrl(
-				"https://staging-app.kerberosec.bot",
+				"https://staging-app.cline.bot",
 			).startsWith(
-				"https://staging-app.kerberosec.bot/dashboard/subscription?personal=true",
+				"https://staging-app.cline.bot/dashboard/subscription?personal=true",
 			),
 		).toBe(true);
 	});

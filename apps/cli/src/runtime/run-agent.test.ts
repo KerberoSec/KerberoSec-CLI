@@ -40,19 +40,19 @@ const sessionEventsMocks = vi.hoisted(() => ({
 
 const KERBEROSEC_PASS_SUBSCRIPTION_URL =
 	"https://app.kerberosec.bot/dashboard/subscription?personal=true";
-const SDK_KERBEROSEC_PASS_SUBSCRIPTION_MESSAGE = `No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan: ${KERBEROSEC_PASS_SUBSCRIPTION_URL}`;
-const CLI_KERBEROSEC_PASS_SUBSCRIPTION_MESSAGE = `No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan: ${getCliSubscriptionUrl()}`;
+const SDK_KERBEROSEC_PASS_SUBSCRIPTION_MESSAGE = `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${KERBEROSEC_PASS_SUBSCRIPTION_URL}`;
+const CLI_KERBEROSEC_PASS_SUBSCRIPTION_MESSAGE = `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${getCliSubscriptionUrl()}`;
 const KERBEROSEC_PASS_LIMIT_DETAIL_MESSAGE =
 	"You have reached your 5-hour KerberoSecpass limit. The limit resets in 5h, please try again later.";
 const CLI_KERBEROSEC_PASS_LIMIT_MESSAGE = [
-	"KerberoSecPass limit reached",
+	"ClinePass limit reached",
 	KERBEROSEC_PASS_LIMIT_DETAIL_MESSAGE,
-	"Switch to KerberoSec usage-based billing and retry with the KerberoSec provider.",
-	"Interactive CLI: open the model selector with /model, choose KerberoSec, then retry.",
+	"Switch to Cline usage-based billing and retry with the Cline provider.",
+	"Interactive CLI: open the model selector with /model, choose Cline, then retry.",
 	"Headless CLI: rerun with --provider kerberosec.",
 ].join("\n");
 const KERBEROSEC_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_MESSAGE =
-	"Organization accounts cannot use KerberoSecPass subscriptions. Go to /account -> change account to switch to your personal account for KerberoSecPass";
+	"Organization accounts cannot use ClinePass subscriptions. Go to /account -> change account to switch to your personal account for ClinePass";
 
 vi.mock(
 	"@kerberosec/core",

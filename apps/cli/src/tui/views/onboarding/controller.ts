@@ -397,16 +397,6 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 		[providers, loadModelsForProvider, providerSettingsManager],
 	);
 
-	const transitionToKerberoSecPassSubscription = useCallback(() => {
-		setActiveProviderId("kerberosec-pass");
-		const provider = providers.find((p) => p.id === "kerberosec-pass");
-		setActiveProviderName(provider?.name ?? "Cline Usage-Billing");
-		setModelsDefaultId(provider?.defaultModelId ?? "");
-		setKerberoSecPassSubscriptionSelected(0);
-		setStep("kerberosec_pass_subscription");
-		refreshKerberoSecPassSubscriptionStatus();
-	}, [providers, refreshKerberoSecPassSubscriptionStatus]);
-
 	const handleAuthComplete = useCallback(
 		(providerId: OnboardingOAuthProviderId) => {
 			transitionToModelPicker(

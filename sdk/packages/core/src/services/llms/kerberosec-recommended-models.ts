@@ -310,28 +310,20 @@ export async function fetchKerberoSecRecommendedModels(
 	try {
 		const base = getConfiguredApiBaseUrl(options);
 		const fetchImpl = options.fetchImpl ?? fetch;
-		let resp = await fetchWithTimeout(
+		const resp = await fetchWithTimeout(
 			fetchImpl,
-			`${base}/api/v1/ai/cline/recommended-models`,
+			`${base}/api/v1/ai/kerberosec/recommended-models`,
 			timeoutMs,
-		).catch(() => undefined);
-		if (!resp || !resp.ok) {
-			resp = await fetchWithTimeout(
-				fetchImpl,
-				`${base}/api/v1/ai/kerberosec/recommended-models`,
-				timeoutMs,
-			).catch(() => undefined);
-		}
-		if (resp && resp.ok) {
-			const json: unknown = await resp.json();
-			const data = normalizeResponse(json);
-			if (data) {
-				return await resolveDisplayNames(
-					data,
-					options.catalogLoader ?? getLiveModelsCatalog,
-					Math.max(0, deadline - Date.now()),
-				);
-			}
+		);
+		if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+		const json: unknown = await resp.json();
+		const data = normalizeResponse(json);
+		if (data) {
+			return await resolveDisplayNames(
+				data,
+				options.catalogLoader ?? getLiveModelsCatalog,
+				Math.max(0, deadline - Date.now()),
+			);
 		}
 	} catch {
 		// Fall back to the bundled list when the remote source is unavailable.

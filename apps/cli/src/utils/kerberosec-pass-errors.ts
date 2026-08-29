@@ -26,16 +26,16 @@ export function getCliSubscriptionUrl(): string {
 }
 
 export function getCliNotSubscribedMessage(): string {
-	return `No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan: ${getCliSubscriptionUrl()}`;
+	return `No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan: ${getCliSubscriptionUrl()}`;
 }
 
 export function getCliKerberoSecPassLimitMessage(message: string): string {
 	const detail = getKerberoSecPassLimitDetailMessage(message) ?? message.trim();
 	const lines = [
-		"KerberoSecPass limit reached",
+		"ClinePass limit reached",
 		detail,
-		"Switch to KerberoSec usage-based billing and retry with the KerberoSec provider.",
-		"Interactive CLI: open the model selector with /model, choose KerberoSec, then retry.",
+		"Switch to Cline usage-based billing and retry with the Cline provider.",
+		"Interactive CLI: open the model selector with /model, choose Cline, then retry.",
 		"Headless CLI: rerun with --provider kerberosec.",
 	];
 	return lines.filter((line) => line.trim().length > 0).join("\n");
@@ -79,9 +79,14 @@ function isFormattedKerberoSecPassSubscriptionMessage(
 ): boolean {
 	const normalized = message.trim().toLowerCase();
 	return (
-		normalized.includes(
-			"no access to kerberosecpass subscription models yet",
-		) && normalized.includes("subscribe to kerberosecpass")
+		(normalized.includes(
+			"no access to clinepass subscription models yet",
+		) ||
+			normalized.includes(
+				"no access to kerberosecpass subscription models yet",
+			)) &&
+		(normalized.includes("subscribe to clinepass") ||
+			normalized.includes("subscribe to kerberosecpass"))
 	);
 }
 

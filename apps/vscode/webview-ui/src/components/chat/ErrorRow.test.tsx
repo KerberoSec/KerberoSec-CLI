@@ -286,7 +286,7 @@ describe("ErrorRow", () => {
 			expect(screen.queryByText(formattedMessage)).not.toBeInTheDocument()
 		})
 
-		it("renders KerberoSecPass limit error and switches to KerberoSec usage-based billing", async () => {
+		it("renders ClinePass limit error and switches to Cline usage-based billing", async () => {
 			const limitMessage = "You have reached your weekly KerberoSecpass limit. The limit resets in 7d, please try again later."
 			const mockKerberoSecError = {
 				message: limitMessage,

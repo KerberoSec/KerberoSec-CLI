@@ -24,7 +24,7 @@ function resolveKerberoSecRecommendedModelsUrl(baseUrl: string): string {
 	const apiBaseUrl = normalizedBaseUrl.endsWith("/api/v1")
 		? normalizedBaseUrl.slice(0, -"/api/v1".length)
 		: normalizedBaseUrl;
-	return `${apiBaseUrl}/api/v1/ai/cline/recommended-models`;
+	return `${apiBaseUrl}/api/v1/ai/kerberosec/recommended-models`;
 }
 
 async function fetchKerberoSecFreeModelIds(
@@ -36,24 +36,12 @@ async function fetchKerberoSecFreeModelIds(
 		KERBEROSEC_RECOMMENDED_MODELS_TIMEOUT_MS,
 	);
 	try {
-		let response = await fetch(
+		const response = await fetch(
 			resolveKerberoSecRecommendedModelsUrl(baseUrl),
 			{
 				signal: controller.signal,
 			},
 		).catch(() => undefined);
-		if (!response || !response.ok) {
-			const normalizedBaseUrl = baseUrl.trim().replace(/\/+$/, "");
-			const apiBaseUrl = normalizedBaseUrl.endsWith("/api/v1")
-				? normalizedBaseUrl.slice(0, -"/api/v1".length)
-				: normalizedBaseUrl;
-			response = await fetch(
-				`${apiBaseUrl}/api/v1/ai/kerberosec/recommended-models`,
-				{
-					signal: controller.signal,
-				},
-			).catch(() => undefined);
-		}
 		if (!response || !response.ok) return undefined;
 		const json = (await response.json()) as { free?: unknown };
 		return Array.isArray(json.free)

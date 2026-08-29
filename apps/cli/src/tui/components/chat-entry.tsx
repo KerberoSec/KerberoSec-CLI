@@ -52,10 +52,14 @@ function formatMediaSize(byteLength: number): string {
 	return `${(byteLength / (1024 * 1024)).toFixed(1)} MiB`;
 }
 
+function formatReasoningContent(text: string): string {
+	return text.replace(/\*\*(.*?)\*\*/g, "$1").replace(/\*\*/g, "");
+}
+
 function ReasoningBlock(props: { text: string; streaming: boolean }) {
 	const [expanded, setExpanded] = useState(false);
 	const { width } = useTerminalDimensions();
-	const content = trimLeading(props.text);
+	const content = formatReasoningContent(trimLeading(props.text));
 	if (!content.trim()) {
 		if (props.streaming) {
 			return (
@@ -109,19 +113,10 @@ function ReasoningBlock(props: { text: string; streaming: boolean }) {
 		);
 	}
 
-	const padding = 4;
-	const prefix = "\u25b8 Thought: ";
-	const available = Math.max(10, width - padding - prefix.length - 3);
-	const flat = content.replace(/\n/g, " ").trim();
-	const tail =
-		flat.length <= available
-			? flat
-			: `...${flat.slice(flat.length - available)}`;
-
 	return (
 		<box onMouseDown={() => setExpanded(true)}>
 			<text fg="gray" selectable>
-				{"\u25b8"} <em>Thought: {tail}</em>
+				{"\u25b8"} <em>Thought</em>
 			</text>
 		</box>
 	);
@@ -435,15 +430,15 @@ function KerberoSecPassSubscriptionErrorView(props: {
 				borderColor={planAccent}
 				paddingX={1}
 			>
-				<text fg={planAccent}>KerberoSecPass subscription required</text>
+				<text fg={planAccent}>ClinePass subscription required</text>
 				<text
 					fg={props.defaultFg}
 					selectable
-					content="No access to KerberoSecPass subscription models yet. Subscribe to KerberoSecPass, the low cost open weights model coding plan."
+					content="No access to ClinePass subscription models yet. Subscribe to ClinePass, the low cost open weights model coding plan."
 				/>
 				{planFeatures.length > 0 && (
 					<box flexDirection="column" marginTop={1}>
-						<text fg={props.defaultFg}>KerberoSecPass includes:</text>
+						<text fg={props.defaultFg}>ClinePass includes:</text>
 						{planFeatures.map((feature) => (
 							<text key={feature} fg={props.defaultFg} selectable>
 								<span fg="green">✓ </span>
@@ -485,7 +480,7 @@ function KerberoSecOrgIndividualInferenceSubscriptionErrorView(props: {
 				borderColor={planAccent}
 				paddingX={1}
 			>
-				<text fg={planAccent}>Personal KerberoSecPass required</text>
+				<text fg={planAccent}>Personal ClinePass required</text>
 				<text
 					fg={props.defaultFg}
 					selectable
@@ -547,12 +542,12 @@ function KerberoSecPassLimitErrorView(props: {
 				borderColor={accent}
 				paddingX={1}
 			>
-				<text fg={props.theme.accents.error}>KerberoSecPass limit reached</text>
+				<text fg={props.theme.accents.error}>ClinePass limit reached</text>
 				<text fg={props.defaultFg} selectable content={detail} />
 				<text
 					fg={props.defaultFg}
 					selectable
-					content="Switch to KerberoSec usage-based billing and retry with the KerberoSec provider."
+					content="Switch to Cline usage-based billing and retry with the Cline provider."
 				/>
 				<box flexDirection="row">
 					<text fg="gray">Headless CLI: </text>

@@ -250,7 +250,7 @@ export interface TuiProps {
 
 export type InlineStream = "text" | "reasoning" | undefined;
 
-export const HOME_VIEW_MAX_WIDTH = 68;
+export const HOME_VIEW_MAX_WIDTH = 120;
 export const MAX_BUFFERED_LINES = 500;
 export const DEFAULT_MAX_INPUT_TOKENS = 200000;
 export const COMPLETION_DEBOUNCE_MS = 120;

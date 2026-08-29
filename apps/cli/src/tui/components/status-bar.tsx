@@ -1,3 +1,4 @@
+import { homedir } from "node:os";
 import type { AgentMode } from "@kerberosec/core";
 import { useTerminalDimensions } from "@opentui/react";
 import {
@@ -6,6 +7,18 @@ import {
 } from "../../utils/usage-cost-display";
 import { useTheme } from "../hooks/use-theme";
 import { HOME_VIEW_MAX_WIDTH } from "../types";
+
+export function formatTildePath(dir: string): string {
+	if (!dir) return "";
+	const home = homedir();
+	if (dir === home) {
+		return "~";
+	}
+	if (dir.startsWith(`${home}/`) || dir.startsWith(`${home}\\`)) {
+		return `~${dir.slice(home.length)}`;
+	}
+	return dir;
+}
 
 export function createContextBar(
 	used: number,
@@ -99,7 +112,7 @@ export function resolveModelDisplayName(config: {
 		displayName = `${displayName} (${config.reasoningEffort})`;
 	}
 	if (config.providerId === "kerberosec-pass") {
-		displayName = `KerberoSecPass: ${displayName}`;
+		displayName = `ClinePass: ${displayName}`;
 	}
 	return displayName;
 }
@@ -213,14 +226,9 @@ export function StatusBar(props: StatusBarProps) {
 			? `${modelId.slice(0, modelMaxLen - 3)}...`
 			: modelId;
 
-	// Repo row: [workspace (branch) | N files +X -Y]
-	// Git stats stay visible; path/branch truncates with "..." when narrow.
-	const hasGitDiff = gitDiffStats && gitDiffStats.files > 0;
-	const gitSuffix = hasGitDiff
-		? ` | ${gitDiffStats.files} file${gitDiffStats.files !== 1 ? "s" : ""} +${gitDiffStats.additions} -${gitDiffStats.deletions}`
-		: "";
-	const pathPart = workspaceName + (gitBranch ? ` (${gitBranch})` : "");
-	const pathMax = Math.max(5, avail - gitSuffix.length);
+	const displayWorkspace = formatTildePath(workspaceName);
+	const pathPart = displayWorkspace + (gitBranch ? ` (${gitBranch})` : "");
+	const pathMax = Math.max(5, avail);
 	const truncatedPath =
 		pathPart.length > pathMax
 			? `${pathPart.slice(0, pathMax - 3)}...`
@@ -249,30 +257,19 @@ export function StatusBar(props: StatusBarProps) {
 			</box>
 
 			{!firstRowFits && <text fg="gray">{renderContextText(false)}</text>}
-
-			<text fg={defaultFg}>
-				{truncatedPath}
-				{hasGitDiff && (
-					<span fg="gray">
-						{" | "}
-						{gitDiffStats.files} file
-						{gitDiffStats.files !== 1 ? "s" : ""}{" "}
-						<span fg={successColor}>+{gitDiffStats.additions}</span>{" "}
-						<span fg="red">-{gitDiffStats.deletions}</span>
-					</span>
+			<box flexDirection="row" justifyContent="space-between">
+				<text fg={defaultFg}>{truncatedPath}</text>
+				{autoApproveAll ? (
+					<text fg={defaultFg}>
+						<span fg={successColor}>
+							{"\u23f5\u23f5"} Auto-approve all enabled
+						</span>
+						<span fg="gray"> (Shift+Tab)</span>
+					</text>
+				) : (
+					<text fg="gray">Auto-approve all disabled (Shift+Tab)</text>
 				)}
-			</text>
-
-			{autoApproveAll ? (
-				<text fg={defaultFg}>
-					<span fg={successColor}>
-						{"\u23f5\u23f5"} Auto-approve all enabled
-					</span>
-					<span fg="gray"> (Shift+Tab)</span>
-				</text>
-			) : (
-				<text fg="gray">Auto-approve all disabled (Shift+Tab)</text>
-			)}
+			</box>
 		</box>
 	);
 }

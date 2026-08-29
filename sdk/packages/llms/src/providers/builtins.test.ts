@@ -230,7 +230,7 @@ describe("kerberosec-pass builtin spec", () => {
 
 		expect(provider).toMatchObject({
 			id: "kerberosec-pass",
-			name: "KerberoSecPass",
+			name: "ClinePass",
 			baseUrl: `${KERBEROSEC_ENVIRONMENTS.production.apiBaseUrl}/api/v1`,
 			client: "openai-compatible",
 			capabilities: expect.arrayContaining([
@@ -373,9 +373,9 @@ describe("built-in provider metadata", () => {
 
 	it("marks popular providers with a provider capability and rank", async () => {
 		await expect(getProvider("kerberosec")).resolves.toMatchObject({
-			name: "KerberoSec Usage-Billing",
+			name: "Cline Usage-Billing",
 			capabilities: expect.arrayContaining(["popular"]),
-			metadata: { popularRank: 1 },
+			metadata: { popularRank: 2 },
 		});
 		await expect(getProvider("zai")).resolves.not.toMatchObject({
 			capabilities: expect.arrayContaining(["popular"]),

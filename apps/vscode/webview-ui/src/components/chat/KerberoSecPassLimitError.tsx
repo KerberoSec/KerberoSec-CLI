@@ -38,8 +38,8 @@ const KerberoSecPassLimitError = ({ message }: KerberoSecPassLimitErrorProps) =>
 			)
 			setDidSwitch(true)
 		} catch (error) {
-			console.error("Failed to switch to KerberoSec usage-based billing:", error)
-			setError("Failed to switch provider. Select KerberoSec Usage-Billing in API Configuration settings.")
+			console.error("Failed to switch to Cline usage-based billing:", error)
+			setError("Failed to switch provider. Select Cline Usage-Billing in API Configuration settings.")
 		} finally {
 			setIsSwitching(false)
 		}
@@ -49,10 +49,10 @@ const KerberoSecPassLimitError = ({ message }: KerberoSecPassLimitErrorProps) =>
 		<div
 			className="p-2 border-none rounded-md mb-2 bg-(--vscode-textBlockQuote-background)"
 			data-testid="kerberosec-pass-limit-error">
-			<div className="text-error mb-2">KerberoSecPass limit reached</div>
+			<div className="text-error mb-2">ClinePass limit reached</div>
 			<div className="text-(--vscode-descriptionForeground) text-xs wrap-anywhere">{message}</div>
 			<div className="text-(--vscode-descriptionForeground) text-xs mt-2">
-				Would you like to switch to Usage-Based billing and retry with the KerberoSec provider?
+				Would you like to switch to Usage-Based billing and retry with the Cline provider?
 			</div>
 			<VSCodeButton
 				appearance="primary"

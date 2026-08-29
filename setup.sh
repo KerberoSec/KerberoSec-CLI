@@ -82,26 +82,10 @@ else
 fi
 
 # ------------------------------------------------------------------------------
-# 3. Check and (Optionally) Install Ollama for Local Models
+# 3. Setup, Optimize, and Tune Ollama with Maximum GPU Performance
 # ------------------------------------------------------------------------------
-echo -e "\n${YELLOW}Checking Ollama (Local AI Model Engine)...${NC}"
-if ! command -v ollama &>/dev/null; then
-    echo -e "${CYAN}Ollama is not installed. Would you like to install it for offline AI models? [Y/n]${NC}"
-    read -r -p "> " install_ollama
-    install_ollama=${install_ollama:-Y}
-    if [[ "$install_ollama" =~ ^[Yy]$ ]]; then
-        echo -e "${CYAN}Installing Ollama...${NC}"
-        curl -fsSL https://ollama.com/install.sh | sh
-    fi
-fi
-
-if command -v ollama &>/dev/null; then
-    echo -e "${GREEN}[OK] Ollama is installed.${NC}"
-    # Check if a coding model exists
-    if ! ollama list 2>/dev/null | grep -q "qwen2.5-coder"; then
-        echo -e "${CYAN}Pulling recommended model qwen2.5-coder:1.5b...${NC}"
-        ollama pull qwen2.5-coder:1.5b || true
-    fi
+if [ -f "$REPO_DIR/ollama.sh" ]; then
+    bash "$REPO_DIR/ollama.sh"
 fi
 
 # ------------------------------------------------------------------------------

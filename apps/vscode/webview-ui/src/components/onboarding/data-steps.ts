@@ -22,7 +22,7 @@ export const STEP_CONFIG = {
 		],
 	},
 	[NEW_USER_TYPE.KERBEROSEC_PASS]: {
-		title: "Select a KerberoSecPass model",
+		title: "Select a ClinePass model",
 		buttons: [
 			{ text: "Create my Account", action: "signup", variant: "default" },
 			{ text: "Back", action: "back", variant: "secondary" },
@@ -57,10 +57,10 @@ export const STEP_CONFIG = {
 } as const
 
 const KERBEROSEC_PASS_USER_TYPE_SELECTION: UserTypeSelection = {
-	title: "KerberoSecPass",
+	title: "ClinePass",
 	description: "Low cost subscription plan for best open weights model.",
 	type: NEW_USER_TYPE.KERBEROSEC_PASS,
-	learnMoreUrl: "https://docs.kerberosec.bot/getting-started/kerberosecpass",
+	learnMoreUrl: "https://docs.cline.bot/getting-started/clinepass",
 }
 
 const BASE_USER_TYPE_SELECTIONS: UserTypeSelection[] = [

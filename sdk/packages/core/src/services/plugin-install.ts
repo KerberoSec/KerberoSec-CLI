@@ -103,7 +103,7 @@ interface PluginPackageManifest {
 
 const INSTALLS_DIRECTORY_NAME = "_installed";
 const PACKAGE_DIRECTORY_NAME = "package";
-const OFFICIAL_PLUGINS_REPO = "https://github.com/kerberosec/plugins.git";
+const OFFICIAL_PLUGINS_REPO = "https://github.com/cline/plugins.git";
 const REMOTE_PLUGIN_FETCH_TIMEOUT_MS = 30_000;
 const REMOTE_PLUGIN_MAX_BYTES = 10 * 1024 * 1024;
 const HOST_PROVIDED_SDK_PREFIX = "@kerberosec/";

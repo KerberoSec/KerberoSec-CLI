@@ -1046,7 +1046,9 @@ export async function runCli(): Promise<void> {
 		}
 
 		let knownModels: Config["knownModels"];
-		let persistedProviderConfig: import("@kerberosec/core").ProviderConfig | undefined;
+		let persistedProviderConfig:
+			| import("@kerberosec/core").ProviderConfig
+			| undefined;
 		try {
 			persistedProviderConfig = providerSettingsManager.getProviderConfig(
 				provider,

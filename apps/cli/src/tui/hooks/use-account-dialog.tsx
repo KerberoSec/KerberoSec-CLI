@@ -60,7 +60,9 @@ export function useAccountDialog(opts: {
 			return;
 		}
 		if (action === "learn-more") {
-			await open("https://github.com/KerberoSec/KerberoSec-CLI", { wait: false }).catch(() => {});
+			await open("https://github.com/KerberoSec/KerberoSec-CLI", {
+				wait: false,
+			}).catch(() => {});
 			refocusTextarea();
 			return;
 		}

@@ -79,9 +79,7 @@ function isFormattedKerberoSecPassSubscriptionMessage(
 ): boolean {
 	const normalized = message.trim().toLowerCase();
 	return (
-		(normalized.includes(
-			"no access to clinepass subscription models yet",
-		) ||
+		(normalized.includes("no access to clinepass subscription models yet") ||
 			normalized.includes(
 				"no access to kerberosecpass subscription models yet",
 			)) &&

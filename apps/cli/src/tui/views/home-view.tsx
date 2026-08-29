@@ -4,12 +4,12 @@ import {
 	type AutocompleteDropdownProps,
 } from "../components/autocomplete-dropdown";
 import { InputBar, type TextareaHandle } from "../components/input-bar";
+import { KerberoSecBanner } from "../components/kerberosec-banner";
 import {
 	resolveModelDisplayName,
 	resolveModelMaxInputTokens,
 	StatusBar,
 } from "../components/status-bar";
-import { KerberoSecBanner } from "../components/kerberosec-banner";
 import { useSession } from "../contexts/session-context";
 import { useTheme } from "../hooks/use-theme";
 import {
@@ -71,11 +71,7 @@ export function HomeView(props: {
 		props.autocomplete?.mode && props.autocomplete.options.length > 0;
 
 	return (
-		<box
-			flexDirection="column"
-			width="100%"
-			height="100%"
-		>
+		<box flexDirection="column" width="100%" height="100%">
 			<box
 				flexDirection="column"
 				flexGrow={1}
@@ -94,10 +90,7 @@ export function HomeView(props: {
 
 			<box flexDirection="column" flexShrink={0} width="100%">
 				{hasAutocomplete && props.autocomplete && (
-					<AutocompleteDropdown
-						{...props.autocomplete}
-						accent={accent}
-					/>
+					<AutocompleteDropdown {...props.autocomplete} accent={accent} />
 				)}
 
 				<box>

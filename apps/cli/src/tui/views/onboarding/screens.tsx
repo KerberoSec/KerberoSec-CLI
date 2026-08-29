@@ -478,7 +478,7 @@ export function OnboardingKerberoSecModelScreen(props: {
 				<strong>Choose a model</strong>
 			</text>
 			<text fg="gray" paddingX={1}>
-				 Provider:Cline Usage-Billing(tab to change provider)
+				Provider:Cline Usage-Billing(tab to change provider)
 			</text>
 
 			<KerberoSecModelPicker
@@ -488,7 +488,9 @@ export function OnboardingKerberoSecModelScreen(props: {
 			/>
 
 			<text fg="gray" paddingX={1}>
-				<em>↑/↓ navigate, Enter to select, Tab to change provider, Esc to go back</em>
+				<em>
+					↑/↓ navigate, Enter to select, Tab to change provider, Esc to go back
+				</em>
 			</text>
 		</OnboardingFrame>
 	);
@@ -569,9 +571,7 @@ export function OnboardingKerberoSecPassSubscriptionScreen(props: {
 						{isLoading ? (
 							<box flexDirection="row" gap={1} flexShrink={0}>
 								<spinner name="dots" color="gray" />
-								<text fg="gray">
-									Checking your ClinePass subscription...
-								</text>
+								<text fg="gray">Checking your ClinePass subscription...</text>
 							</box>
 						) : isSubscribed ? (
 							<text fg={defaultFg} selectable flexShrink={0}>

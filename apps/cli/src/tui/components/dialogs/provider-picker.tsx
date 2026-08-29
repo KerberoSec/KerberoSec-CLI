@@ -1004,8 +1004,8 @@ export function OAuthApiKeyInputContent(
 			</text>
 
 			<text fg="gray">
-				Use an API key from your dashboard instead of OAuth login.
-				This replaces any saved login tokens.
+				Use an API key from your dashboard instead of OAuth login. This replaces
+				any saved login tokens.
 			</text>
 
 			<box flexDirection="column">

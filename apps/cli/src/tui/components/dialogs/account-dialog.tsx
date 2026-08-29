@@ -381,7 +381,7 @@ export function AccountDialogContent(
 				openOrganizationView();
 			}
 		},
-		[onAccountChange, openOrganizationView, resolve],
+		[openOrganizationView, resolve],
 	);
 
 	const runSelectedAction = useCallback(() => {

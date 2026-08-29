@@ -1,0 +1,84 @@
+name: sdk-test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    working-directory: .
+
+jobs:
+  quality-checks:
+    runs-on: ubuntu-latest
+    name: Quality Checks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build SDK and CLI
+        run: |
+          bun run build:sdk
+          bun -F @kerberosec/cli build
+
+      - name: Lint and Format
+        run: bun biome check --diagnostic-level=error apps/cli/src/
+
+  test:
+    needs: quality-checks
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-latest
+            node-version: "24.x"
+          - os: windows-latest
+            node-version: "24.x"
+    runs-on: ${{ matrix.os }}
+    name: Test (${{ matrix.os }}, Node ${{ matrix.node-version }})
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build SDK
+        run: bun run build:sdk
+
+      - name: Build CLI
+        run: bun -F @kerberosec/cli build
+
+      - name: Run Tests
+        run: bun -F @kerberosec/llms test src/providers/gateway.test.ts -t "does not pass extra tools"

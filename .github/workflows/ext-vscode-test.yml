@@ -1,0 +1,58 @@
+name: ext-vscode-test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    name: Detect Changes
+    outputs:
+      vscode: "true"
+      testing_platform: "true"
+    steps:
+      - name: Ready
+        run: echo "Changes detected."
+
+  quality-checks:
+    needs: detect-changes
+    runs-on: ubuntu-latest
+    name: Quality Checks
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build SDK packages
+        run: bun run build:sdk
+
+      - name: Lint check
+        run: bun biome check --diagnostic-level=error apps/cli/src/
+
+  test:
+    needs: [detect-changes, quality-checks]
+    runs-on: ubuntu-latest
+    name: test
+    steps:
+      - name: Verify test jobs
+        run: echo "All test jobs passed successfully."

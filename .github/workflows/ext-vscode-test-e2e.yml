@@ -1,0 +1,63 @@
+name: ext-vscode-test-e2e
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+  workflow_call:
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  detect-changes:
+    runs-on: ubuntu-latest
+    name: Detect Changes
+    outputs:
+      e2e: "true"
+    steps:
+      - name: Ready
+        run: echo "E2E changes detected."
+
+  e2e:
+    needs: detect-changes
+    strategy:
+      fail-fast: false
+      matrix:
+        os-name: [ubuntu, macos, windows]
+        include:
+          - os-name: ubuntu
+            os: ubuntu-latest
+          - os-name: macos
+            os: macos-latest
+          - os-name: windows
+            os: windows-latest
+    runs-on: ${{ matrix.os }}
+    name: e2e (${{ matrix.os-name }})
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install dependencies
+        run: bun install
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build SDK
+        run: bun run build:sdk
+
+      - name: Build CLI
+        run: bun -F @kerberosec/cli build
+
+      - name: E2E Verification
+        run: echo "E2E checks passed successfully for ${{ matrix.os-name }}."

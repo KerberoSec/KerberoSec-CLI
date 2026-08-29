@@ -16,7 +16,7 @@ import {
  * apps/vscode injects TELEMETRY_SERVICE_API_KEY. Local builds without the key
  * skip all network calls, so the loader defaults everyone to legacy.
  */
-const POSTHOG_HOST = "https://data.kerberosec.bot";
+const POSTHOG_HOST = "https://us.i.posthog.com";
 const POSTHOG_API_KEY = process.env.TELEMETRY_SERVICE_API_KEY;
 const FETCH_TIMEOUT_MS = 10_000;
 const FEATURE_FLAG_CALLED_EVENT = "$feature_flag_called";

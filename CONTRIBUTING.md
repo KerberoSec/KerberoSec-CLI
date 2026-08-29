@@ -1,209 +1,103 @@
 # Contributing to KerberoSec
 
-We're thrilled you're interested in contributing to KerberoSec. Whether you're fixing a bug, adding a feature, or improving our docs, every contribution makes KerberoSec smarter! To keep our community vibrant and welcoming, all members must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
+We are thrilled you are interested in contributing to KerberoSec. Whether you are fixing a bug, adding a feature, or improving our docs, every contribution makes KerberoSec smarter! To keep our community vibrant and welcoming, all members must adhere to our [Code of Conduct](CODE_OF_CONDUCT.md).
 
 ## Reporting Bugs or Issues
 
-Bug reports help make KerberoSec better for everyone! Before creating a new issue, please [search existing ones](https://github.com/kerberosec/kerberosec/issues) to avoid duplicates. When you're ready to report a bug, head over to our [issues page](https://github.com/kerberosec/kerberosec/issues/new/choose) where you'll find a template to help you with filling out the relevant information.
+Bug reports help make KerberoSec better for everyone! Before creating a new issue, please [search existing ones](https://github.com/KerberoSec/KerberoSec-CLI/issues) to avoid duplicates. When you are ready to report a bug, head over to our [issues page](https://github.com/KerberoSec/KerberoSec-CLI/issues/new/choose) where you will find a template to help you with filling out the relevant information.
 
-<blockquote class='warning-note'>
-     🔐 <b>Important:</b> If you discover a security vulnerability, please use the <a href="https://github.com/kerberosec/kerberosec/security/advisories/new">GitHub security tool to report it privately</a>.
-</blockquote>
-
+> **Important:** If you discover a security vulnerability, please use the [GitHub Security Advisory tool](https://github.com/KerberoSec/KerberoSec-CLI/security/advisories/new) or contact us directly at arungaming1973@gmail.com to report it privately.
 
 ## Before Contributing
 
-All contributions must begin with a GitHub Issue, unless the change is for small bug fixes, typo corrections, minor wording improvements, or simple type fixes that don't change functionality.
-**For features and contributions**:
-- First check the [Feature Requests discussions board](https://github.com/kerberosec/kerberosec/discussions/categories/feature-requests) for similar ideas
-- If your idea is new, create a new feature request  
-- Wait for approval from core maintainers before starting implementation
-- Once approved, feel free to begin working on a PR with the help of our community!
+All contributions should begin with a GitHub Issue, unless the change is for small bug fixes, typo corrections, minor wording improvements, or simple type fixes that do not change functionality.
 
-**PRs without approved issues may be closed.**
-
+**For features and major contributions**:
+- First check the [Feature Requests discussions board](https://github.com/KerberoSec/KerberoSec-CLI/discussions) for similar ideas
+- If your idea is new, create a new feature request or issue
+- Wait for feedback from core maintainers before starting large implementations
+- Once aligned, submit a focused Pull Request
 
 ## Deciding What to Work On
 
-Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/kerberosec/kerberosec/labels/good%20first%20issue) or ["help wanted"](https://github.com/kerberosec/kerberosec/labels/help%20wanted). These are specifically curated for new contributors and areas where we'd love some help!
+Looking for a good first contribution? Check out issues labeled ["good first issue"](https://github.com/KerberoSec/KerberoSec-CLI/labels/good%20first%20issue) or ["help wanted"](https://github.com/KerberoSec/KerberoSec-CLI/labels/help%20wanted). These are specifically curated for new contributors.
 
-We also welcome contributions to our [documentation](https://github.com/kerberosec/kerberosec/tree/main/docs)! Whether it's fixing typos, improving existing guides, or creating new educational content - we'd love to build a community-driven repository of resources that helps everyone get the most out of KerberoSec. You can start by diving into `/docs` and looking for areas that need improvement.
+We also welcome contributions to our documentation! Whether it is fixing typos, improving existing guides, or creating new architectural walkthroughs, we would love to build a community-driven repository of resources.
 
 ## Development Setup
 
+### 1. Prerequisites
+- **Bun Runtime** (v1.1.0 or newer): [bun.sh](https://bun.sh)
+- **Node.js** (v20+ for compatibility utilities)
+- **Git**
 
-### Local Development Instructions
+### 2. Local Repository Setup
+```bash
+# Clone the repository
+git clone https://github.com/KerberoSec/KerberoSec-CLI.git
+cd KerberoSec-CLI
 
-1. Clone the repository _(Requires [git-lfs](https://git-lfs.com/))_:
-    ```bash
-    git clone https://github.com/kerberosec/kerberosec.git
-    ```
-2. Open the project in VSCode:
-    ```bash
-    code kerberosec
-    ```
-3. Install [bun](https://bun.com)
-4. Install the necessary dependencies for the extension and webview-gui:
-    ```bash
-    cd apps/vscode && bun run install:all && cd ../..
-    cd sdk && bun run build && cd ..
-    ```
-5. Generate Protocol Buffer files (required before first build):
-6. Launch by pressing `F5` (or `Run`->`Start Debugging`) to open a new VSCode window with the extension loaded. (You may need to install the [esbuild problem matchers extension](https://marketplace.visualstudio.com/items?itemName=connor4312.esbuild-problem-matchers) if you run into issues building the project.)
+# Install monorepo dependencies
+bun install
+```
 
+### 3. Building the Core SDK and CLI
+```bash
+# Compile all core SDK packages (@kerberosec/shared, @kerberosec/core, @kerberosec/llms, @kerberosec/agents, @kerberosec/ui)
+bun run build:sdk
 
+# Compile the KerberoSec CLI binary
+bun -F @kerberosec/cli build
+```
 
+### 4. Running the CLI in Development Mode
+```bash
+# Run CLI directly via Bun
+bun run apps/cli/src/index.ts
 
-### Creating a Pull Request
+# Or test in single prompt mode
+bun run apps/cli/src/index.ts "explain this repository"
+```
 
-1. Commit your changes.
-
-2. Push your branch and create a PR on GitHub. Our CI will:
-   - Run tests and checks
-3. Testing
-    - Run `cd apps/vscode && bun run test` to run tests locally. 
-    - Before submitting PR, run `bun run format:fix` to format your code
-
-### Extension
-
-1. **VS Code Extensions**
-
-    - When opening the project, VS Code will prompt you to install recommended extensions
-    - These extensions are required for development - please accept all installation prompts
-    - If you dismissed the prompts, you can install them manually from the Extensions panel
-
-2. **Local Development**
-    - cd into the vscode extension, `cd apps/vscode`
-    - Run `bun run install:all` to install dependencies
-    - Run `bun run protos` to generate Protocol Buffer files (required before first build)
-    - Run `bun run test` to run tests locally
-    - Run → Start Debugging or `>Debug: Select and Start Debugging` and wait for a new VS Code instance to open
-    - **Terminal Workflow**: Use `bun run dev` (generates protos + runs watch mode) or `bun run watch` (if protos already generated)
-    - Before submitting PR, run `bun run format:fix` to format your code
-
-3. **Linux-specific Setup**
-    VS Code extension tests on Linux require the following system libraries:
-
-    - `dbus`
-    - `libasound2`
-    - `libatk-bridge2.0-0`
-    - `libatk1.0-0`
-    - `libdrm2`
-    - `libgbm1`
-    - `libgtk-3-0`
-    - `libnss3`
-    - `libx11-xcb1`
-    - `libxcomposite1`
-    - `libxdamage1`
-    - `libxfixes3`
-    - `libxkbfile1`
-    - `libxrandr2`
-    - `xvfb`
-
-    These libraries provide necessary GUI components and system services for the test environment.
-
-    For example, on Debian-based distributions (e.g., Ubuntu), you can install these libraries using apt:
-    ```bash
-    sudo apt update
-    sudo apt install -y \
-      dbus \
-      libasound2 \
-      libatk-bridge2.0-0 \
-      libatk1.0-0 \
-      libdrm2 \
-      libgbm1 \
-      libgtk-3-0 \
-      libnss3 \
-      libx11-xcb1 \
-      libxcomposite1 \
-      libxdamage1 \
-      libxfixes3 \
-      libxkbfile1 \
-      libxrandr2 \
-      xvfb
-    ```
+### 5. Running the VS Code Extension
+If you are developing the VS Code extension:
+1. Navigate to `cd apps/vscode`
+2. Run `bun run install:all`
+3. Press `F5` in VS Code to launch the extension development host
 
 ## Writing and Submitting Code
 
-Anyone can contribute code to KerberoSec, but we ask that you follow these guidelines to ensure your contributions can be smoothly integrated:
-
 1. **Keep Pull Requests Focused**
+   - Limit PRs to a single feature or bug fix.
+   - Break large refactors into logical commits that can be reviewed independently.
 
-    - Limit PRs to a single feature or bug fix
-    - Split larger changes into smaller, related PRs
-    - Break changes into logical commits that can be reviewed independently
-
-2. **Code Quality**
-
-    - Run `bun run lint` to check code style
-    - Run `bun run format` to automatically format code
-    - All PRs must pass CI checks which include both linting and formatting
-    - Address any warnings or errors from linter before submitting
-    - Follow TypeScript best practices and maintain type safety
+2. **Code Quality and Formatting**
+   - Run Biome checks before committing:
+     ```bash
+     bun biome check apps/cli/src/
+     ```
+   - Auto-format code if needed:
+     ```bash
+     bun biome format --write apps/cli/src/
+     ```
 
 3. **Testing**
+   - Run the automated unit test suite across the monorepo:
+     ```bash
+     bun test
+     ```
+   - Ensure all unit and integration tests pass before opening a PR.
 
-    - Add tests for new features
-    - Run `bun test` to ensure all tests pass
-    - Update existing tests if your changes affect them
-    - Include both unit tests and integration tests where appropriate
+4. **Commit Guidelines**
+   - Use conventional commit messages (e.g., `feat:`, `fix:`, `docs:`, `refactor:`, `test:`).
+   - Reference related issue numbers in commit descriptions (e.g., `fixes #12`).
 
-    **End-to-End (E2E) Testing**
-    
-    KerberoSec includes comprehensive E2E tests using Playwright that simulate real user interactions with the extension in VS Code:
-    
-    - **Running E2E tests:**
-      ```bash
-      bun run test:e2e        # Build and run all E2E tests
-      bun run e2e             # Run tests without rebuilding
-      bun run test:e2e -- --debug  # Run with interactive debugger
-      ```
-    
-    - **Writing E2E tests:**
-      - Tests are located in `src/test/e2e/`
-      - Use the `e2e` fixture for single-root workspace tests
-      - Use `e2eMultiRoot` fixture for multi-root workspace tests
-      - Follow existing patterns in `auth.test.ts`, `chat.test.ts`, `diff.test.ts`, and `editor.test.ts`
-      - See `src/test/e2e/README.md` for detailed documentation
-    
-    - **Debug mode features:**
-      - Interactive Playwright Inspector for step-by-step debugging
-      - Record new interactions and generate test code automatically
-      - Visual VS Code instance for manual testing
-      - Element inspection and selector validation
-    
-    - **Test environment:**
-      - Automated VS Code setup with KerberoSec extension loaded
-      - Mock API server for backend testing
-      - Temporary workspaces with test fixtures
-      - Video recording for failed tests
-
-4. **Versioning & Changelog Notes**
-
-    - Contributors do not need to create changelog-entry files as part of PRs.
-    - Maintainers handle release versioning and changelog curation during the release process.
-
-5. **Commit Guidelines**
-
-    - Write clear, descriptive commit messages
-    - Use conventional commit format (e.g., "feat:", "fix:", "docs:")
-    - Reference relevant issues in commits using #issue-number
-
-6. **Before Submitting**
-
-    - Rebase your branch on the latest main
-    - Ensure your branch builds successfully
-    - Double-check all tests are passing
-    - Review your changes for any debugging code or console logs
-
-7. **Pull Request Description**
-    - Clearly describe what your changes do
-    - Include steps to test the changes
-    - List any breaking changes
-    - Add screenshots for UI changes
+5. **Pull Request Description**
+   - Clearly describe the purpose of the change.
+   - Include reproduction or verification steps.
+   - Attach screenshots or recordings for any UI changes.
 
 ## Contribution Agreement
 
-By submitting a pull request, you agree that your contributions will be licensed under the same license as the project ([Apache 2.0](LICENSE)).
+By submitting a pull request, you agree that your contributions will be licensed under the project's [Apache 2.0 License](LICENSE).
 
-Remember: Contributing to KerberoSec isn't just about writing code - it's about being part of a community that's shaping the future of AI-assisted development. Let's build something amazing together! 🚀

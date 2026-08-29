@@ -8,15 +8,15 @@
 		"vscode": "^1.101.0"
 	},
 	"author": {
-		"name": "KerberoSec Bot Inc."
+		"name": "Arun Kumar (KerberoSec)"
 	},
 	"license": "Apache-2.0",
 	"publisher": "saoudrizwan",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/kerberosec/kerberosec"
+		"url": "https://github.com/KerberoSec/KerberoSec-CLI"
 	},
-	"homepage": "https://kerberosec.bot",
+	"homepage": "https://github.com/KerberoSec/KerberoSec-CLI",
 	"categories": [
 		"AI",
 		"Chat",

@@ -97,7 +97,7 @@ const OPENROUTER_STICKY_SESSION_METADATA: GatewayProviderMetadata = {
  * which cannot fit KerberoSec's agentic prompts. Single source of truth — the
  * vendor, the VS Code session factory, and the settings UI all import this.
  */
-export const OLLAMA_DEFAULT_CONTEXT_WINDOW = 32768;
+export const OLLAMA_DEFAULT_CONTEXT_WINDOW = 65536;
 
 export type {
 	BuiltinSpec,

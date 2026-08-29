@@ -85,7 +85,6 @@ const migrationNoticeMocks = vi.hoisted(() => ({
 	markKerberoSecCliMigrationNoticeShown: vi.fn(),
 }));
 const updateMocks = vi.hoisted(() => ({
-	autoUpdateOnStartup: vi.fn(),
 	checkForUpdates: vi.fn(async () => 0),
 	getPreferredKanbanInstaller: vi.fn(() => undefined),
 }));
@@ -305,7 +304,6 @@ describe("runCli lightweight command dispatch", () => {
 			undefined,
 		);
 		migrationNoticeMocks.markKerberoSecCliMigrationNoticeShown.mockReset();
-		updateMocks.autoUpdateOnStartup.mockReset();
 		updateMocks.checkForUpdates.mockReset();
 		updateMocks.checkForUpdates.mockResolvedValue(0);
 		updateMocks.getPreferredKanbanInstaller.mockReset();

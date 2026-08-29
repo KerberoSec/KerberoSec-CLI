@@ -74,6 +74,7 @@ function createCliEnv(): NodeJS.ProcessEnv {
 			"providers.json",
 		),
 		KERBEROSEC_HOOKS_LOG_PATH: path.join(dataDir, "logs", "hooks.jsonl"),
+		KERBEROSEC_DISABLE_KERBEROSEC_PASS_NOTICE: "1",
 	};
 }
 

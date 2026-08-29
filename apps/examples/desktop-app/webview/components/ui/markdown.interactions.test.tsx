@@ -188,7 +188,7 @@ describe("MemoizedMarkdown interactions", () => {
 	});
 
 	test("opens mailto links directly through the external opener", async () => {
-		await renderMarkdown({ content: "[Email us](mailto:hi@kerberosec.bot)" });
+		await renderMarkdown({ content: "[Email us](mailto:contact@example.com)" });
 		const link = await vi.waitFor(() => {
 			const renderedLink = container.querySelector<HTMLElement>(
 				'[data-streamdown="link"]',
@@ -201,7 +201,7 @@ describe("MemoizedMarkdown interactions", () => {
 		await click(link);
 		expect(document.querySelector('[role="alertdialog"]')).toBeNull();
 		expect(openWindow).toHaveBeenCalledWith(
-			"mailto:hi@kerberosec.bot",
+			"mailto:contact@example.com",
 			"_blank",
 			"noopener,noreferrer",
 		);

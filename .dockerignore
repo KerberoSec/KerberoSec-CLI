@@ -1,10 +1,7 @@
-node_modules/
-dist/
-.git/
-.github/
-.tmp/
-.cache/
-*.tsbuildinfo
-.env
-.env.*
+node_modules
+.git
+.gitignore
+dist
+.cache
+.turbo
 *.log

@@ -46,17 +46,11 @@ interface AccountAction {
 	enabled: boolean;
 }
 
-const LOADED_ACTIONS: AccountAction[] = [
+const AUTHENTICATED_ACTIONS: AccountAction[] = [
 	{
 		id: "change-model",
 		label: "Change model",
 		description: "Open the model selector",
-		enabled: true,
-	},
-	{
-		id: "change-account",
-		label: "Change account",
-		description: "Switch personal account or organization",
 		enabled: true,
 	},
 	{
@@ -439,7 +433,7 @@ export function AccountDialogContent(
 	if (state.status === "loading") {
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
-				<text fg={palette.act}>Cline Account</text>
+				<text fg={palette.act}>KerberoSec CLI</text>
 				<text fg="gray">{state.message}</text>
 				<text fg="gray">Esc to close</text>
 			</box>
@@ -449,7 +443,7 @@ export function AccountDialogContent(
 	if (state.status === "error") {
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
-				<text fg={palette.act}>Cline Account</text>
+				<text fg={palette.act}>KerberoSec CLI</text>
 				<text fg="red">{state.message}</text>
 				<text fg="gray">Esc to close</text>
 			</box>
@@ -459,12 +453,9 @@ export function AccountDialogContent(
 	if (state.status === "unauthenticated") {
 		return (
 			<box flexDirection="column" paddingX={1} gap={1}>
-				<text fg={palette.act}>Cline Account</text>
+				<text fg={palette.act}>KerberoSec CLI</text>
 				<text>Sign in or create a Cline account.</text>
-				<text fg="gray">
-					Get access to the latest models with regular free promos and
-					discounts.
-				</text>
+				<text fg="gray">Get access to the latest models.</text>
 
 				<box flexDirection="column">
 					{actions.map((action, index) => (
@@ -518,7 +509,7 @@ export function AccountDialogContent(
 
 	return (
 		<box flexDirection="column" paddingX={1} gap={1}>
-			<text fg={palette.act}>Cline Account</text>
+			<text fg={palette.act}>KerberoSec CLI</text>
 
 			<box flexDirection="row" gap={2}>
 				<box

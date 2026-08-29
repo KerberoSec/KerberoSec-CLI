@@ -4,11 +4,11 @@
 const KERBEROSEC_TRUSTED_TESTER_DOMAINS = ["fibilabs.tech"]
 
 /**
- * Checks if the given email belongs to a KerberoSec bot user.
- * E.g. Emails ending with @kerberosec.bot
+ * Checks if the given email belongs to a Cline bot user.
+ * E.g. Emails ending with @cline.bot
  */
 function isKerberoSecBotUser(email: string): boolean {
-	return email.endsWith("@kerberosec.bot")
+	return email.endsWith("@cline.bot")
 }
 
 export function isKerberoSecInternalTester(email: string): boolean {

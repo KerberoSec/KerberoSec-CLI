@@ -40,7 +40,7 @@ const useDevEnv = process.env.IS_DEV === "true" || process.env.KERBEROSEC_ENVIRO
 export const posthogConfig: PostHogClientConfig = {
 	apiKey: BUILD_CONSTANTS.TELEMETRY_SERVICE_API_KEY,
 	errorTrackingApiKey: BUILD_CONSTANTS.ERROR_SERVICE_API_KEY,
-	host: "https://data.kerberosec.bot",
+	host: "https://us.i.posthog.com",
 	uiHost: useDevEnv ? "https://us.i.posthog.com" : "https://us.posthog.com",
 	enableErrorAutocapture: BUILD_CONSTANTS.ENABLE_ERROR_AUTOCAPTURE === "true",
 }

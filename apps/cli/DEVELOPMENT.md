@@ -79,19 +79,18 @@ If you're using `bun run dev`, you don't need to rebuild after every SDK change 
 ## Monorepo Structure
 
 ```
-kerberosec-sdk/
-  packages/           # SDK packages (published to npm)
-    shared/           # Contracts, schemas, path helpers, runtime utilities
-    llms/             # Provider settings, model catalogs, AI SDK handlers
-    agents/           # Stateless agent loop, tool orchestration, hooks
-    scheduler/        # Scheduled execution, concurrency control
-    core/             # Stateful orchestration, sessions, hub, storage, config
-    enterprise/       # Internal enterprise integrations (not published)
+KerberoSec-CLI/
+  sdk/
+    packages/         # Core SDK packages
+      shared/         # Contracts, schemas, path helpers, runtime utilities
+      llms/           # Provider settings, model catalogs, AI SDK handlers
+      agents/         # Stateless agent loop, tool orchestration, hooks
+      core/           # Stateful orchestration, sessions, hub, storage, config
+      ui/             # Theme contracts, token formatters, ANSI themes
   apps/
-    cli/              # This package - CLI host and TUI
-    code/             # Tauri + Next.js desktop app
+    cli/              # CLI host and reactive TUI
     vscode/           # VS Code extension
-    desktop/          # Desktop application
+    desktop-app/      # Desktop application
     examples/         # Sample integrations
   biome.json          # Linter and formatter config (Biome)
 ```

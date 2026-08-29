@@ -82,7 +82,8 @@ export function addRootOptions(cmd: Command): Command {
 			)
 			.option("--update", "Check for updates and install if available")
 			.option("--kanban", "Run the kanban app")
-			.option("-v, --verbose", "Show verbose output")
+			.option("-v, --verbose", "Show verbose output (default: true)", true)
+			.option("--no-verbose", "Disable verbose output")
 			// HIDDEN/LEGACY OPTIONS BELOW
 			.addOption(
 				// Act mode is the default. Keep the legacy flags accepted for users who
@@ -132,7 +133,7 @@ export function commanderToParsedArgs(program: Command): ParsedArgs {
 	const opts = program.opts();
 
 	const result: ParsedArgs = {
-		verbose: !!opts.verbose,
+		verbose: opts.verbose !== false,
 		interactive: !!opts.tui,
 		outputMode: opts.json ? "json" : "text",
 		mode: opts.plan ? "plan" : opts.yolo ? "yolo" : opts.zen ? "zen" : "act",

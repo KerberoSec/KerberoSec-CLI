@@ -471,7 +471,7 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 									to include context and preferences for your projects or globally for every conversation.{" "}
 									<VSCodeLink
 										className="text-xs"
-										href="https://docs.kerberosec.bot/features/kerberosec-rules"
+										href="https://docs.cline.bot/features/kerberosec-rules"
 										style={{ display: "inline", fontSize: "inherit" }}>
 										Docs
 									</VSCodeLink>
@@ -483,7 +483,7 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 									<span className="text-foreground font-bold">/workflow-name</span> in the chat.{" "}
 									<VSCodeLink
 										className="text-xs inline"
-										href="https://docs.kerberosec.bot/features/slash-commands/workflows">
+										href="https://docs.cline.bot/features/slash-commands/workflows">
 										Docs
 									</VSCodeLink>
 								</p>
@@ -607,7 +607,7 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 									<span className="text-base">
 										Workflows are being deprecated. Use skills instead.{" "}
 										<VSCodeLink
-											href="https://docs.kerberosec.bot/customization/skills"
+											href="https://docs.cline.bot/customization/skills"
 											style={{ display: "inline", fontSize: "inherit" }}>
 											Learn more
 										</VSCodeLink>
@@ -677,7 +677,7 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 											: "Toggle to enable/disable (chmod +x/-x)."}{" "}
 										<VSCodeLink
 											className="text-xs"
-											href="https://docs.kerberosec.bot/features/hooks"
+											href="https://docs.cline.bot/features/hooks"
 											style={{ display: "inline", fontSize: "inherit" }}>
 											Docs
 										</VSCodeLink>

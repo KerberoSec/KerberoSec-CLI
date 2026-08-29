@@ -125,11 +125,11 @@ export const WithLinks: Story = {
 	args: {
 		markdown: `Check out these resources:
 
-- Official documentation: https://github.com/kerberosec/kerberosec
-- API reference: https://api.kerberosec.bot/docs
-- Support forum: https://community.kerberosec.bot
+- Official repository: https://github.com/KerberoSec/KerberoSec-CLI
+- Documentation: https://docs.cline.bot
+- API reference: https://api.cline.bot
 
-You can also visit our website at https://kerberosec.bot for more information.`,
+You can also visit our GitHub repository at https://github.com/KerberoSec/KerberoSec-CLI for more information.`,
 		compact: false,
 		showCursor: false,
 	},

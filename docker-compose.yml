@@ -3,18 +3,34 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: kerberosec-cli:latest
-    container_name: kerberosec-cli
+    image: kerberosec:latest
+    container_name: kerberosec
     stdin_open: true
     tty: true
+    privileged: true
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+      - SYS_ADMIN
+      - SYS_PTRACE
     volumes:
       - ./:/workspace
+      - /workspace/node_modules
       - ~/.kerberosec:/root/.kerberosec
+      - /usr/share/wordlists
     environment:
       - OLLAMA_HOST=http://host.docker.internal:11434
       - KERBEROSEC_THEME=dark
       - OPENAI_API_KEY=${OPENAI_API_KEY:-}
       - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
       - GEMINI_API_KEY=${GEMINI_API_KEY:-}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-}
+      - AWS_DEFAULT_REGION=${AWS_DEFAULT_REGION:-us-east-1}
+      - AZURE_CLIENT_ID=${AZURE_CLIENT_ID:-}
+      - AZURE_CLIENT_SECRET=${AZURE_CLIENT_SECRET:-}
+      - AZURE_TENANT_ID=${AZURE_TENANT_ID:-}
+      - GOOGLE_APPLICATION_CREDENTIALS=${GOOGLE_APPLICATION_CREDENTIALS:-}
     extra_hosts:
       - "host.docker.internal:host-gateway"
+

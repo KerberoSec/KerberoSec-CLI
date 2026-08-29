@@ -11,10 +11,7 @@ import {
 	commanderToParsedArgs,
 	createProgram,
 } from "./commands/program";
-import {
-	autoUpdateOnStartup,
-	getPreferredKanbanInstaller,
-} from "./commands/update";
+import { getPreferredKanbanInstaller } from "./commands/update";
 import { CLI_DEFAULT_CHECKPOINT_CONFIG } from "./runtime/defaults";
 import type { TuiStartupTarget } from "./tui/types";
 import { filterChatModels } from "./utils/chat-models";
@@ -147,7 +144,6 @@ function startupTargetTakesPrecedenceOverMigrationNotice(
 
 export async function runCli(): Promise<void> {
 	installStreamErrorGuards();
-	autoUpdateOnStartup();
 
 	const cliArgs = process.argv.slice(2);
 	const isFullTTY =
@@ -752,7 +748,7 @@ export async function runCli(): Promise<void> {
 		}
 		const { checkForUpdates } = await import("./commands/update");
 		process.exitCode = await checkForUpdates({
-			verbose: rootOpts.verbose === true,
+			verbose: rootOpts.verbose !== false,
 		});
 		return;
 	}

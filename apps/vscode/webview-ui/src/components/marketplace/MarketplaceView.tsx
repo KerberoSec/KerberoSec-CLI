@@ -83,7 +83,7 @@ const PRIMITIVES: PrimitiveConfig[] = [
 		title: "Plugins",
 		description: (
 			<>
-				<VSCodeLink href="https://docs.kerberosec.bot/sdk/plugins">Plugins</VSCodeLink> are extensions for capabilities more
+				<VSCodeLink href="https://docs.cline.bot/sdk/plugins">Plugins</VSCodeLink> are extensions for capabilities more
 				complex than a single MCP server or skill, including custom tools, hooks, rules, slash commands, or bundled
 				skills.
 			</>

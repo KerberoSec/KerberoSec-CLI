@@ -678,7 +678,7 @@ describe("createGatewayApiHandler.createMessage", () => {
 
 		await expect(
 			factoryConfig?.fetch?.(
-				"https://api.kerberosec.bot/api/v1/chat/completions",
+				"https://api.cline.bot/api/v1/chat/completions",
 				{
 					method: "POST",
 				},

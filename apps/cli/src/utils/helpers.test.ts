@@ -44,7 +44,7 @@ describe("parseArgs", () => {
 	it("returns defaults when no arguments are supplied", () => {
 		const parsed = parseArgs([]);
 		expect(parsed).toEqual({
-			verbose: false,
+			verbose: true,
 			interactive: false,
 			outputMode: "text",
 			mode: "act",
@@ -55,6 +55,11 @@ describe("parseArgs", () => {
 			reasoningEffort: undefined,
 			defaultToolAutoApprove: true,
 		});
+	});
+
+	it("parses --no-verbose to disable verbose mode", () => {
+		const parsed = parseArgs(["--no-verbose"]);
+		expect(parsed.verbose).toBe(false);
 	});
 
 	it("parses prompt, runtime flags, and global approval settings", () => {

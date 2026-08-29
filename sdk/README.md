@@ -18,7 +18,7 @@
 </table>
 </div>
 
-The KerberoSec SDK is a TypeScript framework for building AI agents that can edit files, run shell commands, browse the web, call APIs, and use any custom tool you give them. It's the same engine that powers [KerberoSec](https://github.com/kerberosec/kerberosec), packaged as a library you can embed in your own applications.
+The KerberoSec SDK is a TypeScript framework for building AI agents that can edit files, run shell commands, browse the web, call APIs, and use any custom tool you give them. It's the same engine that powers [KerberoSec](https://github.com/KerberoSec/KerberoSec-CLI), packaged as a library you can embed in your own applications.
 
 ```typescript
 import { Agent } from "@kerberosec/sdk"
@@ -263,19 +263,16 @@ Works with every major LLM provider out of the box:
 
 ## Documentation
 
-Full documentation at [docs.kerberosec.bot/sdk](https://docs.kerberosec.bot/sdk/overview):
+Full documentation and examples are available in our [GitHub repository](https://github.com/KerberoSec/KerberoSec-CLI):
 
-- [Quickstart](https://docs.kerberosec.bot/sdk/quickstart) -- zero to running agent in 5 minutes
-- [Core Concepts](https://docs.kerberosec.bot/sdk/agents) -- agents, sessions, tools, events, extensions, hooks
-- [Guides](https://docs.kerberosec.bot/sdk/guides/building-an-agent) -- end-to-end tutorials for common patterns
-- [Architecture](https://docs.kerberosec.bot/sdk/architecture/overview) -- how the SDK is structured and why
-- [API Reference](https://docs.kerberosec.bot/sdk/reference/kerberosec-core) -- every method, type, and config option
-
+- [CLI Reference](apps/cli/README.md) -- interactive TUI, one-shot mode, and command-line flags
+- [SDK Architecture](sdk/README.md) -- agents, sessions, tools, events, extensions, and hooks
+- [Examples](sdk/examples) -- plugins, subagents, cron routines, and desktop integrations
 
 ## Contributing
 
-To contribute to the project, start with our [Contributing Guide](CONTRIBUTING.md) to learn the basics. You can also join our [Discord](https://discord.gg/kerberosec) to chat with other contributors in the `#contributors` channel. If you're looking for full-time work, check out our open positions on our [careers page](https://kerberosec.bot/join-us)!
+To contribute to the project, start with our [Contributing Guide](../CONTRIBUTING.md) to learn the basics. You can also visit our [GitHub repository](https://github.com/KerberoSec/KerberoSec-CLI) to open issues, contribute PRs, or participate in discussions!
 
 ## License
 
-[Apache 2.0 © 2026 KerberoSec Bot Inc.](./LICENSE)
+[Apache 2.0 © 2026 Arun Kumar (KerberoSec)](../LICENSE)

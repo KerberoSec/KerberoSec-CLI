@@ -202,7 +202,7 @@ Production?
 
 ## Resources
 
-Repository: https://github.com/kerberosec/kerberosec
-SDK Source: https://github.com/kerberosec/kerberosec/tree/main/sdk
-Documentation: https://docs.kerberosec.bot/sdk/overview
+Repository: https://github.com/KerberoSec/KerberoSec-CLI
+SDK Source: https://github.com/KerberoSec/KerberoSec-CLI/tree/main/sdk
+Documentation: https://github.com/KerberoSec/KerberoSec-CLI#readme
 Discord: https://discord.gg/kerberosec

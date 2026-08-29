@@ -17,7 +17,7 @@ describe("createKerberoSec", () => {
 	it("exposes web search as a provider-defined client tool", () => {
 		const kerberosec = createKerberoSec({
 			apiKey: "test-key",
-			baseURL: "https://api.kerberosec.bot/api/v1",
+			baseURL: "https://api.cline.bot/api/v1",
 			fetch: fetchMock,
 		});
 
@@ -33,7 +33,7 @@ describe("createKerberoSec", () => {
 			new Response(
 				JSON.stringify({
 					data: {
-						results: [{ title: "KerberoSec", url: "https://kerberosec.bot" }],
+						results: [{ title: "KerberoSec", url: "https://cline.bot" }],
 					},
 				}),
 				{ status: 200 },
@@ -41,11 +41,11 @@ describe("createKerberoSec", () => {
 		);
 		const kerberosec = createKerberoSec({
 			apiKey: "test-key",
-			baseURL: "https://api.kerberosec.bot/api/v1/",
+			baseURL: "https://api.cline.bot/api/v1/",
 			fetch: fetchMock,
 		});
 		const tool = kerberosec.tools.webSearch({
-			allowedDomains: [" kerberosec.bot ", ""],
+			allowedDomains: [" cline.bot ", ""],
 		});
 
 		const result = await tool.execute?.(
@@ -57,7 +57,7 @@ describe("createKerberoSec", () => {
 		);
 
 		expect(fetchMock).toHaveBeenCalledWith(
-			"https://api.kerberosec.bot/api/v1/search/websearch",
+			"https://api.cline.bot/api/v1/search/websearch",
 			expect.objectContaining({
 				method: "POST",
 				headers: expect.objectContaining({
@@ -66,22 +66,22 @@ describe("createKerberoSec", () => {
 				}),
 				body: JSON.stringify({
 					query: "latest KerberoSec release",
-					allowed_domains: ["kerberosec.bot"],
+					allowed_domains: ["cline.bot"],
 				}),
 			}),
 		);
 		expect(result).toEqual({
-			results: [{ title: "KerberoSec", url: "https://kerberosec.bot" }],
+			results: [{ title: "KerberoSec", url: "https://cline.bot" }],
 		});
 	});
 
 	it("rejects mutually exclusive domain filters before making a request", async () => {
 		const kerberosec = createKerberoSec({
-			baseURL: "https://api.kerberosec.bot/api/v1",
+			baseURL: "https://api.cline.bot/api/v1",
 			fetch: fetchMock,
 		});
 		const tool = kerberosec.tools.webSearch({
-			allowedDomains: ["kerberosec.bot"],
+			allowedDomains: ["cline.bot"],
 			blockedDomains: ["example.com"],
 		});
 
@@ -101,7 +101,7 @@ describe("createKerberoSec", () => {
 		fetchMock.mockResolvedValue(jsonCompletionResponse(modelId));
 		const kerberosec = createKerberoSec({
 			apiKey: "test-key",
-			baseURL: "https://api.kerberosec.bot/api/v1",
+			baseURL: "https://api.cline.bot/api/v1",
 			fetch: fetchMock,
 		});
 
@@ -128,7 +128,7 @@ describe("createKerberoSec", () => {
 			{
 				providerId,
 				apiKey: "test-key",
-				baseUrl: "https://api.kerberosec.bot/api/v1",
+				baseUrl: "https://api.cline.bot/api/v1",
 				fetch: fetchMock,
 			} as unknown as GatewayResolvedProviderConfig,
 			{ provider: { id: providerId } } as never,
@@ -194,7 +194,7 @@ describe("createKerberoSec", () => {
 		fetchMock.mockResolvedValue(jsonCompletionResponse(modelId));
 		const kerberosec = createKerberoSec({
 			apiKey: "test-key",
-			baseURL: "https://api.kerberosec.bot/api/v1",
+			baseURL: "https://api.cline.bot/api/v1",
 			fetch: fetchMock,
 		});
 

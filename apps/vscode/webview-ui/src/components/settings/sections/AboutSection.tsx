@@ -55,9 +55,9 @@ const AboutSection = ({ version, extensionVariant, renderSectionHeader }: AboutS
 
 					<h3 className="text-md font-semibold">Resources</h3>
 					<p>
-						<VSCodeLink href="https://docs.kerberosec.bot/">Documentation</VSCodeLink>
+						<VSCodeLink href="https://docs.cline.bot/">Documentation</VSCodeLink>
 						{" • "}
-						<VSCodeLink href="https://kerberosec.bot/">https://kerberosec.bot</VSCodeLink>
+						<VSCodeLink href="https://github.com/KerberoSec/KerberoSec-CLI">GitHub Repository</VSCodeLink>
 					</p>
 				</div>
 			</Section>

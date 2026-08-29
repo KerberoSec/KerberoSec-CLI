@@ -898,27 +898,156 @@ KerberoSec CLI includes built-in syntax highlighters, AST parsers, and tool exec
 
 ---
 
-## Complete Installation and Setup Guide
+## Complete Installation, Automation Scripts, and Container Guide
 
-### Method 1: Automated 1-Step Setup (Recommended)
+KerberoSec CLI provides fully automated bootstrap scripts, GPU model optimizers, a comprehensive security toolkit installer, and dual container environments.
 
-If you have cloned or copied the repository to any fresh machine (Linux, macOS, or Windows WSL2), run the automated setup script:
+---
 
+### 1. Autonomous Monorepo Setup (`setup.sh`)
+
+[`setup.sh`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/setup.sh) is the single-command installer for bootstrapping KerberoSec CLI on fresh Linux or macOS machines.
+
+#### What `setup.sh` Automates:
+1. **OS Package Management**: Detects the host package manager (`apt`, `dnf`, `pacman`, or `brew`) and installs missing build essentials (`curl`, `git`, `build-essential`, `procps`).
+2. **Bun Runtime Installation**: Downloads and configures the latest high-performance Bun runtime.
+3. **Autonomous Ollama Optimization**: Automatically triggers [`ollama.sh`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/ollama.sh) to detect hardware, enable GPU Flash Attention v2, 4-bit Quantized KV cache, and tune installed models.
+4. **Monorepo Compilation**: Resolves workspace dependencies with `bun install`, compiles all `@kerberosec/sdk` packages, and bundles the CLI binary (`bun -F @kerberosec/cli build`).
+5. **Global Executable Path**: Installs a global wrapper in `~/.local/bin/kerberosec` and updates your shell profile (`~/.bashrc` or `~/.zshrc`).
+
+#### How to Run:
 ```bash
-git clone https://github.com/KerberoSec/KerberoSec-CLI.git
-cd KerberoSec-CLI
-
 chmod +x setup.sh
 ./setup.sh
 ```
 
-The script automatically performs all configuration steps:
-1. Detects your operating system (Debian, Ubuntu, Kali, Fedora, Arch, macOS).
-2. Installs missing build packages (`git`, `curl`, `build-essential`).
-3. Installs and configures the **Bun** runtime.
-4. (Optional) Prompts to install **Ollama** and pulls the recommended coding model (`qwen2.5-coder:1.5b`).
-5. Installs monorepo dependencies and compiles both the SDK and CLI bundles.
-6. Configures the global `kerberosec` executable wrapper in `~/.local/bin` and exports PATH to your shell profile.
+#### Troubleshooting `setup.sh`:
+* **Issue**: `Permission denied` when running `./setup.sh`.
+  * **Fix**: Run `chmod +x setup.sh ollama.sh tools.sh`.
+* **Issue**: `kerberosec: command not found` after running `setup.sh`.
+  * **Fix**: Reload your shell profile: `source ~/.bashrc` (or `source ~/.zshrc`), or verify `~/.local/bin` is in your `$PATH`.
+* **Issue**: Missing package manager on minimal Linux containers.
+  * **Fix**: Ensure `curl` or `apt-get` is installed before running the script.
+
+---
+
+### 2. Autonomous Ollama GPU & Model Matrix Optimizer (`ollama.sh`)
+
+[`ollama.sh`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/ollama.sh) is an autonomous hardware accelerator that detects GPU capabilities and optimizes all local models installed in Ollama for maximum token generation speed and lowest latency.
+
+#### Model Matrix & Baseline Policy:
+* **Guaranteed Minimum Baseline**: **`qwen3:1.7b`** (or `qwen3.5:1.7b` / 1.7B parameters). Models under 1.7B lack reasoning depth for multi-turn tool loops.
+* **Higher Scaled Models ($\ge 1.7\text{B}$)**: Automatically scales context and batch parameters for all modern model families:
+  * **Qwen 3.5 & Qwen 3**: `qwen3.5:1.7b` to `qwen3.5:72b`
+  * **Qwen 2.5-Coder & Qwen 2.5**: `qwen2.5-coder:1.5b` to `qwen2.5-coder:32b`
+  * **Llama 3.x Series**: `llama3.5:4b`, `llama3.5:8b`, `llama3.3:70b`, `llama3.1:8b`
+  * **DeepSeek Series**: `deepseek-r1:1.5b` to `deepseek-r1:70b`, `deepseek-coder-v2:16b/236b`
+  * **Codestral & Mistral**: `codestral:22b`, `mistral-nemo:12b`, `mistral-small:22b`
+  * **Gemma 2 & Phi 4**: `gemma2:9b/27b`, `phi4:14b`, `phi3.5:3.8b`
+
+#### Applied GPU Optimizations:
+* **100% GPU Layer Offloading**: Injects `PARAMETER num_gpu 999` to ensure models reside entirely in VRAM.
+* **Flash Attention v2**: Sets `OLLAMA_FLASH_ATTENTION=1` (up to 3x token decoding speed).
+* **4-bit Quantized KV-Cache**: Sets `OLLAMA_KV_CACHE_TYPE=q4_0` (saves up to 75% memory, unlocking up to **128k context**).
+* **Zero Initial Latency**: Pins models in VRAM with `OLLAMA_KEEP_ALIVE=24h`.
+* **Universal Multi-Architecture Tool Calling**: Injects ChatML, Llama 3 header IDs, DeepSeek `<think>` reasoning block handling, and anti-hallucination stop tokens.
+
+#### How to Run:
+```bash
+chmod +x ollama.sh
+./ollama.sh
+```
+
+#### Troubleshooting `ollama.sh`:
+* **Issue**: `curl: (7) Failed to connect to localhost port 11434`.
+  * **Fix**: Start the Ollama background daemon: `nohup ollama serve >/dev/null 2>&1 &` or `sudo systemctl start ollama`.
+* **Issue**: Out of memory (OOM) or CUDA allocation errors on low-VRAM GPUs.
+  * **Fix**: The script automatically allocates safe context windows based on your detected VRAM tier (from 16k on 2GB GPUs to 128k on 24GB+ GPUs). Run `./ollama.sh` to apply the recommended tier.
+
+---
+
+### 3. All-In-One Security Toolkit & Runtime Installer (`tools.sh`)
+
+[`tools.sh`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/tools.sh) is an idempotent installer that equips your environment with CLI tools across all security, cloud auditing, active directory, and runtime domains.
+
+#### Modules Covered:
+* **Language Toolchains**: Rust (`cargo`), Go (`go`), Python (`pip`/`pipx`), Node.js, Java, Docker CLI, and PowerShell (`pwsh`).
+* **Web & Bug Bounty**: `subfinder`, `httpx`, `katana`, `nuclei`, `naabu`, `ffuf`, `gobuster`, `dalfox`, `gau`, `waybackurls`, `arjun`, `paramspider`, `gittools`.
+* **Network & Infrastructure**: `nmap`, `masscan`, `rustscan`, `hping3`, `arp-scan`, `tshark`, `tcpdump`, `socat`.
+* **Active Directory & Microsoft Entra ID**: `certipy-ad`, `bloodyAD`, `ROADtools`, `AzureHound`, `CloudFox`, `kerbrute`, `adidnsdump`, `coercer`.
+* **Cloud & Kubernetes Security**: Official AWS CLI v2, Azure CLI, Google Cloud SDK, `scoutsuite`, `prowler`, `trufflehog`, `kube-bench`, `kube-hunter`, `trivy`, `k9s`.
+* **Wordlists**: `SecLists`, `rockyou`, `FuzzDB`, and `Assetnote` collections under `/usr/share/wordlists` and `~/Tools/wordlists`.
+
+#### How to Run:
+```bash
+chmod +x tools.sh
+
+# Install all modules
+./tools.sh all
+
+# Or run specific modules independently:
+./tools.sh toolchains    # Runtimes only (Rust, Go, Python, Java, Docker, PowerShell)
+./tools.sh apt           # APT packages only
+./tools.sh python        # Pip & Pipx CLIs only
+./tools.sh go            # Go packages only
+./tools.sh bin           # Precompiled standalone binaries only
+./tools.sh azure         # Cloud audit and Azure AD / Entra ID tools only
+./tools.sh wordlists     # SecLists, Rockyou, and FuzzDB wordlists only
+```
+
+#### Troubleshooting `tools.sh`:
+* **Issue**: `pip install: error: externally-managed-environment`.
+  * **Fix**: `tools.sh` automatically exports `PIP_BREAK_SYSTEM_PACKAGES=1` to allow CLI utility installs under modern Python 3.12+ distributions.
+* **Issue**: GitHub API rate limits during binary downloads.
+  * **Fix**: Prebuilt binaries have fallback extraction routines. Re-running `./tools.sh bin` will resume uninstalled binaries.
+
+---
+
+### 4. Container Deployment with Docker and Docker Compose
+
+KerberoSec CLI provides a single, unified container configured in [`Dockerfile`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/Dockerfile) and [`docker-compose.yml`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/docker-compose.yml) that packages the complete environment: Kali Linux rolling base, Bun runtime, compiled KerberoSec CLI binary, official Cloud SDKs (AWS, Azure, GCP), Active Directory tools, security toolchains, and wordlists:
+
+```mermaid
+graph LR
+    subgraph Host ["Host Workstation"]
+        HostCode["./ (Workspace Source Files)"]
+        HostOllama["Local GPU Ollama Daemon (Port 11434)"]
+        HostCreds["~/.kerberosec (Auth & Configs)"]
+    end
+
+    subgraph Compose ["Unified Docker Environment"]
+        Service["KerberoSec Container (Dockerfile - Kali Rolling)<br>Bun Runtime + KerberoSec CLI + Cloud SDKs + Tools.sh + Wordlists"]
+    end
+
+    HostCode <-->|Bind Mount| Service
+    HostCreds <-->|Bind Mount| Service
+    HostOllama <-->|host.docker.internal:11434| Service
+```
+
+#### Running with Docker Compose:
+```bash
+# Build and run the unified container interactively
+docker compose run --rm kerberosec
+```
+
+#### Running with Docker Directly:
+```bash
+# 1. Build the unified Docker image
+docker build -t kerberosec .
+
+# 2. Run interactively with current workspace and host Ollama mapped
+docker run -it --rm \
+  -v $(pwd):/workspace \
+  -e OLLAMA_HOST=http://host.docker.internal:11434 \
+  --add-host=host.docker.internal:host-gateway \
+  kerberosec
+```
+
+#### Troubleshooting Docker and Docker Compose:
+* **Issue**: Container cannot connect to host Ollama (`host.docker.internal` unreachable).
+  * **Fix**: Ensure your host Ollama server listens on all interfaces (`OLLAMA_HOST=0.0.0.0:11434`) and that `extra_hosts: ["host.docker.internal:host-gateway"]` is present in `docker-compose.yml`.
+* **Issue**: Node modules collision between host OS and Linux container.
+  * **Fix**: `docker-compose.yml` includes an isolated anonymous volume mount (`- /workspace/node_modules`) to keep container binaries isolated from the host filesystem.
 
 ---
 
@@ -927,7 +1056,6 @@ The script automatically performs all configuration steps:
 If you prefer installing dependencies manually on a fresh machine:
 
 #### Step 1: Install System Prerequisites and Bun
-
 - **Debian / Ubuntu / Kali Linux**:
   ```bash
   sudo apt update && sudo apt install -y git curl build-essential procps
@@ -951,34 +1079,18 @@ curl -fsSL https://bun.sh/install | bash
 source ~/.bashrc # or source ~/.zshrc
 ```
 
-Verify Bun:
-```bash
-bun --version
-```
-
-#### Step 2: Clone Repository and Install Dependencies
-
+#### Step 2: Clone Repository and Build Packages
 ```bash
 git clone https://github.com/KerberoSec/KerberoSec-CLI.git
 cd KerberoSec-CLI
 bun install
-```
-
-#### Step 3: Compile SDK and CLI Bundle
-
-```bash
-# Build core SDK packages
 bun run build:sdk
-
-# Build the CLI production bundle
 bun -F @kerberosec/cli build
 ```
 
-#### Step 4: Configure Global Executable
-
+#### Step 3: Configure Global Executable
 ```bash
 mkdir -p ~/.local/bin
-
 cat << 'WRAPPER_EOF' > ~/.local/bin/kerberosec
 #!/usr/bin/env bash
 export PATH="$HOME/.bun/bin:$PATH"
@@ -987,38 +1099,6 @@ WRAPPER_EOF
 
 chmod +x ~/.local/bin/kerberosec
 export PATH="$HOME/.local/bin:$PATH"
-```
-*(Replace `/FULL_PATH_TO/KerberoSec-CLI` with your actual repository path).*
-
-#### Step 5: (Optional) Set Up Local Models with Ollama
-
-```bash
-# Install Ollama
-curl -fsSL https://ollama.com/install.sh | sh
-
-# Pull recommended model
-ollama pull qwen2.5-coder:1.5b
-```
-
----
-
-### Method 3: Docker and Docker Compose Container Run
-
-If you prefer running KerberoSec CLI inside an isolated container:
-
-#### Option A: Using Docker Compose
-```bash
-# Run interactively with live workspace mounting
-docker compose run --rm kerberosec
-```
-
-#### Option B: Using Docker Directly
-```bash
-# 1. Build the Docker image
-docker build -t kerberosec-cli .
-
-# 2. Run interactively with current directory mounted
-docker run -it --rm   -v $(pwd):/workspace   -e OLLAMA_HOST=http://host.docker.internal:11434   kerberosec-cli
 ```
 
 ---

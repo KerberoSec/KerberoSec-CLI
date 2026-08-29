@@ -23,7 +23,7 @@
 <a href="https://github.com/kerberosec/kerberosec/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank">Feature Requests</a>
 </td>
 <td align="center">
-<a href="https://docs.kerberosec.bot" target="_blank">Docs</a>
+<a href="https://github.com/KerberoSec/KerberoSec-CLI" target="_blank">Docs</a>
 </td>
 </tbody>
 </table>
@@ -372,4 +372,4 @@ See [DEVELOPMENT.md](./DEVELOPMENT.md) for local development setup, monorepo str
 
 ## License
 
-[Apache 2.0 © KerberoSec Bot Inc.](https://github.com/kerberosec/kerberosec/blob/main/LICENSE)
+[Apache 2.0 © Arun Kumar (KerberoSec)](https://github.com/KerberoSec/KerberoSec-CLI/blob/main/LICENSE)

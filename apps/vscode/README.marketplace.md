@@ -15,7 +15,7 @@
 <a href="https://github.com/kerberosec/kerberosec/discussions/categories/feature-requests?discussions_q=is%3Aopen+category%3A%22Feature+Requests%22+sort%3Atop" target="_blank"><strong>Feature Requests</strong></a>
 </td>
 <td align="center">
-<a href="https://docs.kerberosec.bot/getting-started/installing-kerberosec" target="_blank"><strong>Getting Started</strong></a>
+<a href="https://github.com/KerberoSec/KerberoSec-CLI" target="_blank"><strong>Getting Started</strong></a>
 </td>
 </tbody>
 </table>
@@ -34,7 +34,7 @@ Thanks to [Claude Sonnet's agentic coding capabilities](https://www.anthropic.c
 4. When a task is completed, KerberoSec will present the result to you with a terminal command like `open -a "Google Chrome" index.html`, which you run with a click of a button.
 
 > [!TIP]
-> Follow [this guide](https://docs.kerberosec.bot/usage/ide#move-kerberosec-to-the-right-sidebar) to open KerberoSec on the right side of your editor. This lets you use KerberoSec side-by-side with your file explorer, and see how he changes your workspace more clearly.
+> Open KerberoSec on the right side of your editor to use KerberoSec side-by-side with your file explorer.
 
 ---
 
@@ -130,13 +130,12 @@ For example, when working with a local web server, you can use 'Restore Workspac
 
 ## Contributing
 
-To contribute to the project, start with our [Contributing Guide](CONTRIBUTING.md) to learn the basics. You can also join our [Discord](https://discord.gg/kerberosec) to chat with other contributors in the `#contributors` channel. If you're looking for full-time work, check out our open positions on our [careers page](https://kerberosec.bot/join-us)!
+To contribute to the project, start with our [Contributing Guide](CONTRIBUTING.md) to learn the basics. You can also join our [Discord](https://discord.gg/kerberosec) to chat with other contributors in the `#contributors` channel.
 
 ## Enterprise
 
-Get the same KerberoSec experience with enterprise-grade controls: SSO (SAML/OIDC), global policies and configuration, observability with audit trails, private networking (VPC/private link), and self-hosted or on-prem deployments, and enterprise support. Learn more at our [enterprise page](https://kerberosec.bot/enterprise) or [talk to us](https://kerberosec.bot/contact-sales).
-
+Get the same KerberoSec experience with enterprise-grade controls: SSO (SAML/OIDC), global policies and configuration, observability with audit trails, private networking (VPC/private link), and self-hosted or on-prem deployments. For enterprise inquiries, contact us at arungaming1973@gmail.com.
 
 ## License
 
-[Apache 2.0 © 2026 KerberoSec Bot Inc.](./LICENSE)
+[Apache 2.0 © 2026 Arun Kumar (KerberoSec)](./LICENSE)

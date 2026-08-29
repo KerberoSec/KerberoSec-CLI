@@ -42,16 +42,16 @@ export const ChatMessageList = forwardRef<
 
 		switch (command) {
 			case "messages_page_up":
-				scrollbox.scrollBy(-scrollbox.height);
+				scrollbox.scrollBy(-scrollbox.height * 3);
 				return;
 			case "messages_page_down":
-				scrollbox.scrollBy(scrollbox.height);
+				scrollbox.scrollBy(scrollbox.height * 3);
 				return;
 			case "messages_half_page_up":
-				scrollbox.scrollBy(-Math.floor(scrollbox.height / 2));
+				scrollbox.scrollBy(-Math.floor((scrollbox.height * 3) / 2));
 				return;
 			case "messages_half_page_down":
-				scrollbox.scrollBy(Math.floor(scrollbox.height / 2));
+				scrollbox.scrollBy(Math.floor((scrollbox.height * 3) / 2));
 				return;
 			case "messages_first":
 				scrollbox.scrollTo(0);

@@ -811,7 +811,7 @@ function App(props: TuiProps) {
 		setIsStreaming: session.setIsStreaming,
 		addUsageDelta: session.addUsageDelta,
 		onTurnErrorReported: props.onTurnErrorReported,
-		verbose: props.config.verbose ?? false,
+		verbose: props.config.verbose ?? true,
 		modelId: props.config.modelId,
 	});
 
@@ -823,7 +823,7 @@ function App(props: TuiProps) {
 		initialPrompt: props.initialPrompt,
 		providerId: props.config.providerId,
 		modelId: props.config.modelId,
-		configVerbose: props.config.verbose ?? false,
+		configVerbose: props.config.verbose ?? true,
 		refreshRepoStatus,
 		setAppView,
 		turnErrorReportedRef: agentHandlers.turnErrorReportedRef,

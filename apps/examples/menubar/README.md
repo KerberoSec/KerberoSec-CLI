@@ -1,6 +1,3 @@
-### Preview
-
-![KerberoSec Hub Monitor preview](./assets/hub-monitor-preview.jpg)
 
 ### Architecture Overview
 

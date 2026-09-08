@@ -1,8 +1,5 @@
 # KerberoSec CLI
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/7123f9d1-afeb-48d5-93fa-e750dec0ebba" width="70%" />
-</p>
 
 <div align="center">
 <table>

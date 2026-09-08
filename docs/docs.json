@@ -8,15 +8,7 @@
 		"light": "#F0E6FF",
 		"dark": "#000000"
 	},
-	"logo": {
-		"light": "/assets/KerberoSec_Logo-complete_black.png",
-		"dark": "/assets/KerberoSec_Logo-complete_white.png",
-		"href": "https://kerberosec.bot/"
-	},
-	"favicon": {
-		"light": "/assets/robot_panel_light.png",
-		"dark": "/assets/robot_panel_dark.png"
-	},
+
 	"background": {
 		"color": {
 			"light": "#fafaf9",

@@ -1,6 +1,4 @@
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/a05da977-2cb7-498a-88ca-20f24c9562e1" width="100%" />
-</p>
+# KerberoSec SDK
 
 <div align="center">
 <table>

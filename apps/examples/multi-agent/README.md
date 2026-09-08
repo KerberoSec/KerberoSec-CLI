@@ -2,7 +2,6 @@
 
 A web app that spawns four specialist agents in parallel, streams their responses to the browser in real time via SSE, then feeds their findings into a synthesizer agent that produces a unified decision brief.
 
-![Agent War Room interface](assets/agent-war-room.png)
 
 ## Getting started
 

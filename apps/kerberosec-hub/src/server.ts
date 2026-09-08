@@ -63,12 +63,6 @@ const PUBLIC_BROWSER_PATHS = new Set([
 	"/health",
 	"/config.json",
 	"/api/marketplace/catalog",
-	"/icon.png",
-	"/icon.svg",
-	"/icon.ico",
-	"/32x32.png",
-	"/kerberosec-logo-filled.svg",
-	"/favicon.svg",
 ]);
 
 function isPublicStaticAssetPath(pathname: string): boolean {

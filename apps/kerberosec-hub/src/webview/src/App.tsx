@@ -431,11 +431,9 @@ function Shell({
 					onClick={() => onNavigate("home")}
 					type="button"
 				>
-					<img
-						alt=""
-						className="size-6 shrink-0 dark:invert"
-						src="/kerberosec-logo-filled.svg"
-					/>
+					<span className="size-6 shrink-0 flex items-center justify-center font-bold text-xs bg-primary text-primary-foreground rounded">
+						KS
+					</span>
 					<span className="truncate">KerberoSec Hub</span>
 				</button>
 				<nav

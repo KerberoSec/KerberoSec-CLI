@@ -723,8 +723,7 @@ fn main() {
 
             let _tray = TrayIconBuilder::with_id(TRAY_ID)
                 .icon(app.default_window_icon().cloned().unwrap_or_else(|| {
-                    tauri::image::Image::from_bytes(include_bytes!("../icons/32x32.png"))
-                        .expect("failed to load tray icon")
+                    tauri::image::Image::new(&[], 0, 0)
                 }))
                 .menu(&menu)
                 .show_menu_on_left_click(true)

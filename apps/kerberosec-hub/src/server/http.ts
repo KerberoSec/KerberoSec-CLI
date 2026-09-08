@@ -106,7 +106,6 @@ function renderDevIndexHtml(devServerUrl: string): string {
     window.__vite_plugin_react_preamble_installed__ = true;
   </script>
   <script type="module" src="${devServerUrl}/@vite/client"></script>
-  <link rel="icon" type="image/svg+xml" href="${devServerUrl}/kerberosec-logo-filled.svg" />
   <title>KerberoSec Hub</title>
 </head>
 <body>

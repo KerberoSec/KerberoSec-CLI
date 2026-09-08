@@ -173,7 +173,7 @@ fn tray_tooltip_text(app_name: &str, running_sessions: u32) -> String {
     if running_sessions == 0 {
         app_name.to_string()
     } else {
-        format!("{app_name} — {}", running_sessions_text(running_sessions))
+        format!("{app_name} - {}", running_sessions_text(running_sessions))
     }
 }
 
@@ -1068,13 +1068,10 @@ fn setup_tray_icon(app: &tauri::App) -> tauri::Result<()> {
     // This is the same glyph used by webview/components/kerberosec-logo.tsx,
     // rasterized without a background. Template mode lets macOS tint it for
     // the current menu-bar appearance.
-    #[cfg(target_os = "macos")]
-    let icon = tauri::image::Image::from_bytes(include_bytes!("../icons/tray/kerberosec-template.png"))?;
-    #[cfg(not(target_os = "macos"))]
     let icon = app
         .default_window_icon()
         .cloned()
-        .ok_or_else(|| tauri::Error::InvalidIcon(std::io::Error::other("missing app icon")))?;
+        .unwrap_or_else(|| tauri::image::Image::new(&[], 0, 0));
 
     let tray = TrayIconBuilder::with_id(TRAY_ICON_ID)
         .icon(icon)
@@ -1339,10 +1336,10 @@ mod tests {
         assert_eq!(running_sessions_text(1), "1 session running");
         assert_eq!(running_sessions_text(3), "3 sessions running");
         assert_eq!(tray_tooltip_text("KerberoSec", 0), "KerberoSec");
-        assert_eq!(tray_tooltip_text("KerberoSec", 3), "KerberoSec — 3 sessions running");
+        assert_eq!(tray_tooltip_text("KerberoSec", 3), "KerberoSec - 3 sessions running");
         assert_eq!(
             tray_tooltip_text("KerberoSec Beta", 2),
-            "KerberoSec Beta — 2 sessions running"
+            "KerberoSec Beta - 2 sessions running"
         );
         assert_eq!(tray_badge_text(0), None);
         assert_eq!(tray_badge_text(3), Some("3".to_string()));

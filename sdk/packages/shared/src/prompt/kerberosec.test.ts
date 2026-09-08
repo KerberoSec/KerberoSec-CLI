@@ -143,7 +143,9 @@ describe("buildKerberoSecSystemPrompt mode instructions", () => {
 			...BASE_OPTIONS,
 			providerId: "agent-router",
 		});
-		expect(prompt).toContain("Security Engineering, Code Auditing & Systems Assessment Agent");
+		expect(prompt).toContain(
+			"Security Engineering, Code Auditing & Systems Assessment Agent",
+		);
 		expect(prompt).not.toContain("Penetration Testing & Red Teaming");
 		expect(prompt).not.toContain("offensive security operations");
 		expect(prompt).not.toContain("exploit analysis");
@@ -158,7 +160,9 @@ describe("buildKerberoSecSystemPrompt mode instructions", () => {
 			...BASE_OPTIONS,
 			providerId: "openai",
 		});
-		expect(prompt).toContain("Security Engineering, Code Auditing & Systems Assessment Agent");
+		expect(prompt).toContain(
+			"Security Engineering, Code Auditing & Systems Assessment Agent",
+		);
 		expect(prompt).not.toContain("Penetration Testing & Red Teaming");
 		expect(prompt).not.toContain("metasploit");
 		expect(prompt).not.toContain("burpsuite");

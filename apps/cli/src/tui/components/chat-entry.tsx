@@ -695,9 +695,18 @@ function WafBlockedErrorView(props: {
 					content="This happens when shell command pipelines, redirections, or security payloads match firewall inspection rules."
 				/>
 				<text fg="gray">Suggestions:</text>
-				<text fg="gray">1. Keep commands concise and unchained (avoid '||', '&&', or subshell pipes).</text>
-				<text fg="gray">2. Start a fresh session with /new if an earlier turn contained flagged payloads.</text>
-				<text fg="gray">3. For local or offline security operations without remote filters, switch to local models via Ollama (/model).</text>
+				<text fg="gray">
+					1. Keep commands concise and unchained (avoid '||', '&&', or subshell
+					pipes).
+				</text>
+				<text fg="gray">
+					2. Start a fresh session with /new if an earlier turn contained
+					flagged payloads.
+				</text>
+				<text fg="gray">
+					3. For local or offline security operations without remote filters,
+					switch to local models via Ollama (/model).
+				</text>
 			</box>
 		</box>
 	);
@@ -732,9 +741,17 @@ function ContentBlockedErrorView(props: {
 					content="This occurs when prompts, commands, or context trigger provider-side moderation keywords."
 				/>
 				<text fg="gray">Suggestions:</text>
-				<text fg="gray">1. Rephrase your prompt (some remote gateways restrict direct execution phrasing or security terms).</text>
-				<text fg="gray">2. Start a fresh session with /new to clear previous turn context.</text>
-				<text fg="gray">3. For local or offline security operations without remote filters, switch to local models via Ollama (/model).</text>
+				<text fg="gray">
+					1. Rephrase your prompt (some remote gateways restrict direct
+					execution phrasing or security terms).
+				</text>
+				<text fg="gray">
+					2. Start a fresh session with /new to clear previous turn context.
+				</text>
+				<text fg="gray">
+					3. For local or offline security operations without remote filters,
+					switch to local models via Ollama (/model).
+				</text>
 			</box>
 		</box>
 	);
@@ -916,9 +933,7 @@ export function ChatEntryView(props: {
 				return <WafBlockedErrorView defaultFg={defaultFg} theme={theme} />;
 			}
 			if (isContentBlockedErrorMessage(entry.text)) {
-				return (
-					<ContentBlockedErrorView defaultFg={defaultFg} theme={theme} />
-				);
+				return <ContentBlockedErrorView defaultFg={defaultFg} theme={theme} />;
 			}
 			return (
 				<box flexDirection="row">

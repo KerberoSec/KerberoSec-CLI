@@ -332,11 +332,7 @@ export function OnboardingProviderConfigScreen(props: {
 								border
 								borderStyle="rounded"
 								borderColor={
-									isFocused
-										? props.error
-											? "red"
-											: colors.accent
-										: "gray"
+									isFocused ? (props.error ? "red" : colors.accent) : "gray"
 								}
 								paddingX={1}
 							>
@@ -902,10 +898,7 @@ export function OnboardingMainMenuScreen(props: {
 		>
 			{/* Banner */}
 			{height >= 12 && (
-				<KerberoSecBanner
-					compact={!isFull}
-					hideDetails={height < 24}
-				/>
+				<KerberoSecBanner compact={!isFull} hideDetails={height < 24} />
 			)}
 
 			{/* Welcome title */}
@@ -974,11 +967,7 @@ export function OnboardingMainMenuScreen(props: {
 				</box>
 			) : isCompact ? (
 				/* Compact (height 18-25): Single bordered container holding all 4 options */
-				<box
-					flexDirection="column"
-					width={effectiveWidth}
-					marginTop={0}
-				>
+				<box flexDirection="column" width={effectiveWidth} marginTop={0}>
 					<box
 						flexDirection="column"
 						border
@@ -1003,7 +992,9 @@ export function OnboardingMainMenuScreen(props: {
 										{isSel ? "\u276f" : " "}
 									</text>
 									<text
-										fg={isSel ? (colors.textOnSelection ?? defaultFg) : defaultFg}
+										fg={
+											isSel ? (colors.textOnSelection ?? defaultFg) : defaultFg
+										}
 										flexShrink={0}
 									>
 										<strong>{option.label}</strong>
@@ -1026,19 +1017,13 @@ export function OnboardingMainMenuScreen(props: {
 					</box>
 					{effectiveWidth < 68 && selectedOption && height >= 22 && (
 						<box marginTop={0} paddingX={1}>
-							<text fg="gray">
-								{selectedOption.detail}
-							</text>
+							<text fg="gray">{selectedOption.detail}</text>
 						</box>
 					)}
 				</box>
 			) : (
 				/* Minimal (height < 18): Sleek 1-line rows without card borders */
-				<box
-					flexDirection="column"
-					width={effectiveWidth}
-					marginTop={0}
-				>
+				<box flexDirection="column" width={effectiveWidth} marginTop={0}>
 					{props.menuOptions.map((option, i) => {
 						const isSel = i === props.menuSelected;
 						return (
@@ -1079,9 +1064,7 @@ export function OnboardingMainMenuScreen(props: {
 					})}
 					{effectiveWidth < 65 && selectedOption && height >= 14 && (
 						<box marginTop={0} paddingX={1}>
-							<text fg="gray">
-								{selectedOption.detail}
-							</text>
+							<text fg="gray">{selectedOption.detail}</text>
 						</box>
 					)}
 				</box>

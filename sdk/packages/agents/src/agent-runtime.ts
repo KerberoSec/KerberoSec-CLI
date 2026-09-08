@@ -2489,7 +2489,10 @@ export function extractTextualToolCalls(
 					}
 					if (parsed.arguments && typeof parsed.arguments === "object") {
 						rawInput = parsed.arguments;
-					} else if (parsed.parameters && typeof parsed.parameters === "object") {
+					} else if (
+						parsed.parameters &&
+						typeof parsed.parameters === "object"
+					) {
 						rawInput = parsed.parameters;
 					} else {
 						rawInput = parsed;

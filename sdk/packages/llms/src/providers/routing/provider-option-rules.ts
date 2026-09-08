@@ -430,7 +430,9 @@ const ollamaNativeOptionsRule: ProviderOptionRule = {
 			? Number.parseInt(envNumCtxRaw, 10)
 			: undefined;
 		const contextWindow =
-			(typeof envNumCtx === "number" && Number.isFinite(envNumCtx) && envNumCtx > 0
+			(typeof envNumCtx === "number" &&
+			Number.isFinite(envNumCtx) &&
+			envNumCtx > 0
 				? envNumCtx
 				: undefined) ??
 			input.context.model.contextWindow ??

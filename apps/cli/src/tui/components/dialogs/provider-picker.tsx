@@ -553,26 +553,40 @@ export function ProviderConfigInputContent(
 
 	const [values, setValues] = useState<ProviderConfigValues>(initialValues);
 
-	const [focusedField, setFocusedField] = useState<ProviderConfigFieldKey>(() => {
-		const emptyField = fieldKeys.find((k) => !initialValues[k]?.trim());
-		return emptyField ?? fieldKeys[0] ?? "apiKey";
-	});
+	const [focusedField, setFocusedField] = useState<ProviderConfigFieldKey>(
+		() => {
+			const emptyField = fieldKeys.find((k) => !initialValues[k]?.trim());
+			return emptyField ?? fieldKeys[0] ?? "apiKey";
+		},
+	);
 	const [error, setError] = useState("");
 
 	const submit = () => {
 		const currentIdx = fieldKeys.indexOf(focusedField);
-		if (fieldKeys.length > 1 && currentIdx >= 0 && currentIdx < fieldKeys.length - 1) {
+		if (
+			fieldKeys.length > 1 &&
+			currentIdx >= 0 &&
+			currentIdx < fieldKeys.length - 1
+		) {
 			setFocusedField(fieldKeys[currentIdx + 1] as ProviderConfigFieldKey);
 			return;
 		}
 
-		if (config.fields.apiKey && !config.fields.apiKey.optional && !values.apiKey?.trim()) {
+		if (
+			config.fields.apiKey &&
+			!config.fields.apiKey.optional &&
+			!values.apiKey?.trim()
+		) {
 			setFocusedField("apiKey");
 			setError("Please enter your API key");
 			return;
 		}
 
-		if (config.fields.baseUrl && !config.fields.baseUrl.optional && !values.baseUrl?.trim()) {
+		if (
+			config.fields.baseUrl &&
+			!config.fields.baseUrl.optional &&
+			!values.baseUrl?.trim()
+		) {
 			setFocusedField("baseUrl");
 			setError("Please enter Base URL");
 			return;
@@ -652,11 +666,7 @@ export function ProviderConfigInputContent(
 							border
 							borderStyle="rounded"
 							borderColor={
-								focusedField === key
-									? error
-										? "red"
-										: palette.act
-									: "gray"
+								focusedField === key ? (error ? "red" : palette.act) : "gray"
 							}
 							paddingX={1}
 						>

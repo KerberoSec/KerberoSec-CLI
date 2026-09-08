@@ -582,9 +582,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 			setByoError("");
 
 			// Focus the first visible field (or empty field)
-			const visible = FIELD_ORDER.filter(
-				(k) => config.fields[k] !== undefined,
-			);
+			const visible = FIELD_ORDER.filter((k) => config.fields[k] !== undefined);
 			const emptyField = visible.find((k) => !initialValues[k]?.trim());
 			setByoFocusedField(emptyField ?? visible[0] ?? "apiKey");
 			setStep("byo_apikey");
@@ -608,26 +606,36 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 	]);
 
 	const saveByoConfig = useCallback(() => {
-		const visible = FIELD_ORDER.filter(
-			(k) => byoFields[k] !== undefined,
-		);
+		const visible = FIELD_ORDER.filter((k) => byoFields[k] !== undefined);
 		const currentIdx = visible.indexOf(byoFocusedField);
 
 		// If current focused field is not the last visible field, advance focus to next field on Enter
-		if (visible.length > 1 && currentIdx >= 0 && currentIdx < visible.length - 1) {
+		if (
+			visible.length > 1 &&
+			currentIdx >= 0 &&
+			currentIdx < visible.length - 1
+		) {
 			setByoFocusedField(visible[currentIdx + 1] as ProviderConfigFieldKey);
 			return;
 		}
 
 		// Validation check: If apiKey is a visible requirement and not optional, require it
-		if (byoFields.apiKey && !byoFields.apiKey.optional && !byoValues.apiKey?.trim()) {
+		if (
+			byoFields.apiKey &&
+			!byoFields.apiKey.optional &&
+			!byoValues.apiKey?.trim()
+		) {
 			setByoFocusedField("apiKey");
 			setByoError("Please enter your API key");
 			return;
 		}
 
 		// If baseUrl is required and empty, require it
-		if (byoFields.baseUrl && !byoFields.baseUrl.optional && !byoValues.baseUrl?.trim()) {
+		if (
+			byoFields.baseUrl &&
+			!byoFields.baseUrl.optional &&
+			!byoValues.baseUrl?.trim()
+		) {
 			setByoFocusedField("baseUrl");
 			setByoError("Please enter Base URL");
 			return;

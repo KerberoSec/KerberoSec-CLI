@@ -1,9 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
-	KERBEROSEC_PASS_SUBSCRIPTION_OPTIONS,
-	MAIN_MENU,
 	getMainMenuOptions,
 	getOAuthProviderLabel,
+	KERBEROSEC_PASS_SUBSCRIPTION_OPTIONS,
+	MAIN_MENU,
 	shouldUseFeaturedKerberoSecModelPicker,
 	toModelEntriesFromKnownModels,
 	toModelEntry,

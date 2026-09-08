@@ -18,11 +18,7 @@ import {
 	TASK_PROVIDER_STREAM_STARTED_EVENT,
 } from "@kerberosec/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import {
-	AgentRuntime,
-	createTool,
-	extractTextualToolCalls,
-} from "./index";
+import { AgentRuntime, createTool, extractTextualToolCalls } from "./index";
 
 beforeEach(() => {
 	resetSdkErrorRateLimiterForTests();
@@ -3005,8 +3001,7 @@ describe("AgentRuntime sdk.error reporting", () => {
 		});
 
 		it("extracts direct known tool tag format", () => {
-			const text =
-				'<run_commands><commands>"ls -la"</commands></run_commands>';
+			const text = '<run_commands><commands>"ls -la"</commands></run_commands>';
 			const { toolCalls } = extractTextualToolCalls(text);
 			expect(toolCalls).toEqual([
 				{
@@ -3056,7 +3051,9 @@ describe("AgentRuntime sdk.error reporting", () => {
 			expect(firstAssistant.role).toBe("assistant");
 			const textPart = firstAssistant.content.find((p) => p.type === "text");
 			expect(textPart?.text).toBe("I will list the files:");
-			const toolPart = firstAssistant.content.find((p) => p.type === "tool-call");
+			const toolPart = firstAssistant.content.find(
+				(p) => p.type === "tool-call",
+			);
 			expect(toolPart?.toolName).toBe("run_commands");
 		});
 	});

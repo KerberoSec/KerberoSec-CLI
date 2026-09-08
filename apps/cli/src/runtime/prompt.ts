@@ -21,7 +21,9 @@ export async function resolveSystemPrompt(input: {
 	rules?: string;
 	mode?: AgentMode;
 }): Promise<string> {
-	const cwd = input.cwd ?? (typeof process !== "undefined" && process.cwd ? process.cwd() : ".");
+	const cwd =
+		input.cwd ??
+		(typeof process !== "undefined" && process.cwd ? process.cwd() : ".");
 	const metadata = await buildWorkspaceMetadata(cwd);
 	// Mode-tag and plan-mode instructions are appended by the shared prompt
 	// builder itself (see MODE_TAG_INSTRUCTIONS / PLAN_MODE_INSTRUCTIONS in

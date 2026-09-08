@@ -174,9 +174,15 @@ describe("sanitizeModerationTriggerText", () => {
 
 	it("sanitizes bare whoami and ls variants to prevent multi-turn intrusion blocks", () => {
 		expect(sanitizeModerationTriggerText("whoami")).toBe("check current user");
-		expect(sanitizeModerationTriggerText("run whoami")).toBe("check current user");
-		expect(sanitizeModerationTriggerText("run ls command")).toBe("list directory contents");
-		expect(sanitizeModerationTriggerText("ls -la")).toBe("list directory contents");
+		expect(sanitizeModerationTriggerText("run whoami")).toBe(
+			"check current user",
+		);
+		expect(sanitizeModerationTriggerText("run ls command")).toBe(
+			"list directory contents",
+		);
+		expect(sanitizeModerationTriggerText("ls -la")).toBe(
+			"list directory contents",
+		);
 	});
 });
 

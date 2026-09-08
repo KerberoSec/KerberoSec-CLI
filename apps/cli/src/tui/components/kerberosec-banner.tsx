@@ -49,11 +49,7 @@ export function KerberoSecBanner(props?: {
 				<text fg={fg}>
 					<strong>=== KerberoSec CLI ===</strong>
 				</text>
-				{showSubtitle && (
-					<text fg="gray">
-						{KERBEROSEC_SUBTITLE}
-					</text>
-				)}
+				{showSubtitle && <text fg="gray">{KERBEROSEC_SUBTITLE}</text>}
 				{showPath && (
 					<box flexDirection="row" alignItems="center">
 						<text fg="cyan">

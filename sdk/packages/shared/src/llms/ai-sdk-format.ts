@@ -68,14 +68,8 @@ export function sanitizeModerationTriggerText(text: string): string {
 		.replace(/\bred team\b/gi, "security audit team")
 		.replace(/\bRed Team\b/gi, "Security Audit Team")
 		.replace(/\bred-team\b/gi, "security-audit")
-		.replace(
-			/offensive security operations/gi,
-			"security auditing operations",
-		)
-		.replace(
-			/offensive security work/gi,
-			"security auditing work",
-		)
+		.replace(/offensive security operations/gi, "security auditing operations")
+		.replace(/offensive security work/gi, "security auditing work")
 		.replace(/offensive security/gi, "security auditing")
 		.replace(/offensive workflows/gi, "security workflows")
 		.replace(/offensive operations/gi, "security operations")
@@ -93,12 +87,27 @@ export function sanitizeModerationTriggerText(text: string): string {
 		.replace(/\breconnaissance\b/gi, "system inspection")
 		.replace(/\bReconnaissance\b/gi, "System Inspection")
 		.replace(/\brecon\b/gi, "inspection")
-		.replace(/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?whoami['"`]?(?:\s+command)?/gi, "check current user")
+		.replace(
+			/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?whoami['"`]?(?:\s+command)?/gi,
+			"check current user",
+		)
 		.replace(/['"`]?\bwhoami\b['"`]?(?:\s+command)?/gi, "check current user")
-		.replace(/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?hostname['"`]?/gi, "hostname")
-		.replace(/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?uptime['"`]?/gi, "uptime")
-		.replace(/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?netstat['"`]?/gi, "netstat")
-		.replace(/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?uname\s+-a['"`]?/gi, "uname -a")
+		.replace(
+			/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?hostname['"`]?/gi,
+			"hostname",
+		)
+		.replace(
+			/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?uptime['"`]?/gi,
+			"uptime",
+		)
+		.replace(
+			/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?netstat['"`]?/gi,
+			"netstat",
+		)
+		.replace(
+			/\b(?:run|execute|exec)\s+(?:the\s+)?(?:command\s+)?['"`]?uname\s+-a['"`]?/gi,
+			"uname -a",
+		)
 		.replace(/\bgit\s+status\b/gi, "git working copy status")
 		.replace(/^\s*(?:run\s+)?ls(?:\s+-la)?\s*$/gim, "list directory contents")
 		.replace(/\b(?:run\s+)?ls\s+command\b/gi, "list directory contents");
@@ -778,7 +787,9 @@ export function formatMessagesForAiSdk(
 							type: "text",
 							text:
 								contentParts.trim().length > 0
-									? sanitizeSurrogates(sanitizeModerationTriggerText(contentParts))
+									? sanitizeSurrogates(
+											sanitizeModerationTriggerText(contentParts),
+										)
 									: EMPTY_CONTENT_TEXT,
 						},
 						...movedAssistantMedia,
@@ -795,7 +806,9 @@ export function formatMessagesForAiSdk(
 			}
 			result.push({
 				role: message.role,
-				content: sanitizeSurrogates(sanitizeModerationTriggerText(contentParts)),
+				content: sanitizeSurrogates(
+					sanitizeModerationTriggerText(contentParts),
+				),
 			});
 			continue;
 		}

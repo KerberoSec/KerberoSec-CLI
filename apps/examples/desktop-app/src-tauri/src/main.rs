@@ -792,10 +792,7 @@ fn set_app_icon(app: tauri::AppHandle, icon: String) -> Result<bool, String> {
             )
             .map_err(|e| format!("failed resolving dock icon resource: {e}"))?;
         if !icon_path.exists() {
-            return Err(format!(
-                "dock icon resource missing: {}",
-                icon_path.display()
-            ));
+            return Ok(false);
         }
         app.run_on_main_thread(move || {
             use objc2::{AllocAnyThread, MainThreadMarker};

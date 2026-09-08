@@ -109,8 +109,10 @@ fn create_dev_application_bundle(
         }
     }
 
-    fs::copy(icon, resources.join("icon.icns"))
-        .map_err(|error| format!("failed copying the development app icon: {error}"))?;
+    if icon.exists() {
+        fs::copy(icon, resources.join("icon.icns"))
+            .map_err(|error| format!("failed copying the development app icon: {error}"))?;
+    }
     fs::write(
         contents.join("Info.plist"),
         dev_info_plist(identifier, app_name),

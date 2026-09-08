@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { copyFile, mkdtemp, readFile, rm } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
@@ -148,6 +149,13 @@ const main = async (): Promise<void> => {
 		// Runs from beforeBuildCommand on every platform, but only macOS builds
 		// bundle a DMG and only macOS ships tiffutil.
 		console.log("Skipping DMG background generation on non-macOS host.");
+		return;
+	}
+
+	if (!existsSync(BACKGROUND_1X) || !existsSync(BACKGROUND_2X)) {
+		console.log(
+			"Skipping DMG background generation; background images not found.",
+		);
 		return;
 	}
 

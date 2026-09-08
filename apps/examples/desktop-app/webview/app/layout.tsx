@@ -9,7 +9,6 @@ import "./globals.css";
 export const metadata: Metadata = {
 	title: "KerberoSec",
 	description: "Build software with KerberoSec.",
-
 };
 
 export default function RootLayout({

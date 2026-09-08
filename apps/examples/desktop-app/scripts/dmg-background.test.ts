@@ -36,18 +36,17 @@ describe("parseTiffInfo", () => {
 });
 
 describe("DMG source artwork", () => {
-	test.skipIf(!require("node:fs").existsSync(path.join(DMG_ROOT, "background.png")))(
-		"has the expected 1x and 2x dimensions",
-		async () => {
-			const [dimensions1x, dimensions2x] = await Promise.all([
-				readPngDimensions(path.join(DMG_ROOT, "background.png")),
-				readPngDimensions(path.join(DMG_ROOT, "background@2x.png")),
-			]);
+	test.skipIf(
+		!require("node:fs").existsSync(path.join(DMG_ROOT, "background.png")),
+	)("has the expected 1x and 2x dimensions", async () => {
+		const [dimensions1x, dimensions2x] = await Promise.all([
+			readPngDimensions(path.join(DMG_ROOT, "background.png")),
+			readPngDimensions(path.join(DMG_ROOT, "background@2x.png")),
+		]);
 
-			expect(dimensions1x).toEqual({ width: 640, height: 400 });
-			expect(dimensions2x).toEqual({ width: 1280, height: 800 });
-		},
-	);
+		expect(dimensions1x).toEqual({ width: 640, height: 400 });
+		expect(dimensions2x).toEqual({ width: 1280, height: 800 });
+	});
 });
 
 describe("validateTiffRepresentations", () => {

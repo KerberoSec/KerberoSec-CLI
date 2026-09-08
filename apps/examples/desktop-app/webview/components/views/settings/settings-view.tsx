@@ -1015,18 +1015,26 @@ function GeneralSettingsContent({
 								onClick={() => void updateAppIcon(icon.id)}
 								type="button"
 							>
-								<img
-									alt=""
+								<div
 									className={cn(
-										"size-14 rounded-2xl transition-transform group-hover:scale-105",
+										"relative size-14 rounded-2xl flex items-center justify-center font-bold text-xs bg-muted text-muted-foreground border transition-transform group-hover:scale-105 overflow-hidden",
 										appIcon === icon.id &&
-											"ring-2 ring-ring ring-offset-2 ring-offset-background",
+											"ring-2 ring-ring ring-offset-2 ring-offset-background border-primary",
 									)}
-									draggable={false}
-									height={112}
-									src={appIconAssetPath(icon.id)}
-									width={112}
-								/>
+								>
+									<span>{icon.label.slice(0, 2).toUpperCase()}</span>
+									<img
+										alt=""
+										className="absolute inset-0 size-full object-cover"
+										draggable={false}
+										height={112}
+										onError={(e) => {
+											e.currentTarget.style.display = "none";
+										}}
+										src={appIconAssetPath(icon.id)}
+										width={112}
+									/>
+								</div>
 								<span
 									className={cn(
 										"text-xs",

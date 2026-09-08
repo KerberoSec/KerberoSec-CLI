@@ -28,6 +28,8 @@ export enum BUILT_IN_PROVIDER {
 	// Local/self-hosted
 	OLLAMA = "ollama",
 	LMSTUDIO = "lmstudio",
+	// Gateway / multi-model routers
+	AGENT_ROUTER = "agent-router",
 	// OpenAI-compatible
 	DEEPSEEK = "deepseek",
 	XAI = "xai",

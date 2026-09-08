@@ -4,6 +4,7 @@ node_modules/
 
 # Build artifacts and compiled outputs
 dist/
+dist-standalone/
 build/
 out/
 *.tsbuildinfo

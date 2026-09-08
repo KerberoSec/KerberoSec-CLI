@@ -114,9 +114,13 @@ const PROVIDER_CONFIG_FIELD_METADATA: Partial<
 		},
 	},
 	ollama: {
+		mode: "replace",
 		fields: {
-			apiKey: {
-				note: "Keep empty if no API key for local inference.",
+			baseUrl: {
+				label: "Base URL",
+				placeholder: "http://localhost:11434",
+				defaultValue: "http://localhost:11434",
+				optional: true,
 			},
 		},
 	},
@@ -189,6 +193,7 @@ const EDITABLE_BASE_URL_PROVIDER_IDS = new Set([
 	"lmstudio",
 	"litellm",
 	"openai-compatible",
+	"agent-router",
 ]);
 
 function shouldExposeBaseUrlField(

@@ -16,6 +16,14 @@ describe("team command prompt rewrite", () => {
 		});
 	});
 
+	it("rewrites /teams prompts", () => {
+		expect(rewriteTeamPrompt("/teams investigate rpc startup")).toEqual({
+			kind: "rewritten",
+			prompt:
+				'<user_command slash="team">spawn a team of agents for the following task: investigate rpc startup</user_command>',
+		});
+	});
+
 	it("preserves multiline team tasks", () => {
 		expect(
 			rewriteTeamPrompt("/team investigate rpc startup\ninclude tests"),

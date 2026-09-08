@@ -110,6 +110,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 	const [byoValues, setByoValues] = useState<ProviderConfigValues>({});
 	const [byoFocusedField, setByoFocusedField] =
 		useState<ProviderConfigFieldKey>("apiKey");
+	const [byoError, setByoError] = useState("");
 	const [codexCliStatus, setCodexCliStatus] = useState<
 		CodexCliStatus | undefined
 	>();
@@ -375,8 +376,8 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 			setActiveProviderId(providerId);
 			const provider = providers.find((p) => p.id === providerId);
 			setActiveProviderName(
-				providerId === "kerberosec-pass"
-					? "Cline Usage-Billing"
+				providerId === "kerberosec-pass" || providerId === "kerberosec"
+					? "Cline Usage Billing"
 					: (provider?.name ?? providerId),
 			);
 			setModelsDefaultId(provider?.defaultModelId ?? "");
@@ -578,12 +579,14 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 					existing?.sap?.deploymentId?.trim() ?? "";
 			}
 			setByoValues(initialValues);
+			setByoError("");
 
-			// Focus the first visible field
-			const firstField = FIELD_ORDER.find(
+			// Focus the first visible field (or empty field)
+			const visible = FIELD_ORDER.filter(
 				(k) => config.fields[k] !== undefined,
 			);
-			setByoFocusedField(firstField ?? "apiKey");
+			const emptyField = visible.find((k) => !initialValues[k]?.trim());
+			setByoFocusedField(emptyField ?? visible[0] ?? "apiKey");
 			setStep("byo_apikey");
 		},
 		[providers, startOAuthFlow, refreshCodexCliStatus, providerSettingsManager],
@@ -605,9 +608,32 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 	]);
 
 	const saveByoConfig = useCallback(() => {
-		// No required-field validation. If credentials are missing or wrong,
-		// the provider's own auth response is the authoritative error and is
-		// surfaced when the model picker / first turn runs.
+		const visible = FIELD_ORDER.filter(
+			(k) => byoFields[k] !== undefined,
+		);
+		const currentIdx = visible.indexOf(byoFocusedField);
+
+		// If current focused field is not the last visible field, advance focus to next field on Enter
+		if (visible.length > 1 && currentIdx >= 0 && currentIdx < visible.length - 1) {
+			setByoFocusedField(visible[currentIdx + 1] as ProviderConfigFieldKey);
+			return;
+		}
+
+		// Validation check: If apiKey is a visible requirement and not optional, require it
+		if (byoFields.apiKey && !byoFields.apiKey.optional && !byoValues.apiKey?.trim()) {
+			setByoFocusedField("apiKey");
+			setByoError("Please enter your API key");
+			return;
+		}
+
+		// If baseUrl is required and empty, require it
+		if (byoFields.baseUrl && !byoFields.baseUrl.optional && !byoValues.baseUrl?.trim()) {
+			setByoFocusedField("baseUrl");
+			setByoError("Please enter Base URL");
+			return;
+		}
+
+		setByoError("");
 		const apiKey = byoValues.apiKey?.trim();
 		const awsProfile = byoValues.awsProfile?.trim();
 		const hasAzureFields = byoFields.azureApiVersion;
@@ -633,16 +659,12 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 				: undefined,
 			sap: hasSapFields ? resolveProviderConfigSap(byoValues) : undefined,
 		});
-		// Emit a single `user.provider_configured` event mirroring the
-		// `{ provider }` payload shape used by the auth funnel. The save above
-		// is synchronous and infallible, so there's no start/fail counterpart;
-		// invalid credentials surface later as `task.provider_api_error` on
-		// the first real API call.
 		captureProviderConfigured(getCliTelemetryService(), activeProviderId);
 		transitionToModelPicker(activeProviderId);
 	}, [
 		byoValues,
 		byoFields,
+		byoFocusedField,
 		activeProviderId,
 		providerSettingsManager,
 		transitionToModelPicker,
@@ -828,6 +850,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 		authStatus,
 		authUrl,
 		byoDescription,
+		byoError,
 		byoFields,
 		byoFocusedField,
 		byoValues,
@@ -854,6 +877,7 @@ export function useOnboardingController(props: OnboardingControllerProps) {
 				? "Set model ID"
 				: "Create custom model ID",
 		handleByoFieldInput: (field: ProviderConfigFieldKey, value: string) => {
+			setByoError("");
 			setByoValues((prev) => updateProviderConfigValue(prev, field, value));
 		},
 		handleCustomModelIdInput: (value: string) => {

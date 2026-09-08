@@ -12,24 +12,14 @@ ENV PYTHONUNBUFFERED=1
 ENV PIP_BREAK_SYSTEM_PACKAGES=1
 
 # Layer 1: System essentials, Kali security tools, and wordlists
-RUN apt-get update && apt-get install -y \
-    kali-linux-headless \
-    kali-tools-information-gathering \
-    kali-tools-vulnerability \
-    kali-tools-web \
-    kali-tools-exploitation \
-    kali-tools-social-engineering \
-    kali-tools-password-recovery \
-    kali-tools-forensics \
-    kali-tools-sniffing-spoofing \
-    kali-tools-post-exploitation \
-    kali-tools-reverse-engineering \
-    kali-tools-fuzzing \
-    kali-tools-crypto-stego \
-    kali-tools-wireless \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl wget git zip unzip tar jq build-essential procps ca-certificates \
+    python3 python3-pip python3-venv python3-dev pipx \
+    gnupg lsb-release \
     wordlists \
-    seclists \
-    curl git build-essential procps ca-certificates unzip tar jq python3 python3-pip python3-venv \
+    nmap masscan socat netcat-openbsd tcpdump \
+    sqlmap hydra john hashcat ffuf feroxbuster nikto \
+    whois dnsutils iputils-ping \
     && rm -rf /var/lib/apt/lists/*
 
 # Layer 2: Install official Cloud SDKs (AWS, Azure, GCP)
@@ -39,12 +29,12 @@ RUN curl -s "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "/tmp/
     /tmp/aws/install && \
     rm -rf /tmp/aws /tmp/awscliv2.zip
 
-# 2. Azure CLI
-RUN curl -sL https://aka.ms/InstallAzureCLIDeb | bash && \
+# 2. Azure CLI (using DIST_CODE=bookworm for Kali compatibility)
+RUN curl -sL https://aka.ms/InstallAzureCLIDeb | DIST_CODE=bookworm bash && \
     rm -rf /var/lib/apt/lists/*
 
 # 3. Google Cloud SDK
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
     curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | gpg --dearmor -o /usr/share/keyrings/cloud.google.gpg && \
     apt-get update && apt-get install -y google-cloud-cli && \
     rm -rf /var/lib/apt/lists/*
@@ -56,7 +46,7 @@ RUN curl -fsSL https://bun.sh/install | bash
 
 # Layer 4: Run comprehensive security tools installer (tools.sh)
 COPY tools.sh /opt/tools.sh
-RUN chmod +x /opt/tools.sh && mkdir -p /root/Tools && cp /opt/tools.sh /root/Tools/tools.sh && bash /opt/tools.sh all
+RUN chmod +x /opt/tools.sh && mkdir -p /root/Tools && cp /opt/tools.sh /root/Tools/tools.sh && bash /opt/tools.sh bin && bash /opt/tools.sh wordlists
 
 # Layer 5: Workspace and CLI Monorepo Build
 WORKDIR /workspace
@@ -66,17 +56,15 @@ COPY . /workspace
 RUN chmod +x /workspace/setup.sh /workspace/ollama.sh /workspace/tools.sh && \
     bun install && \
     bun run build:sdk && \
-    bun -F @kerberosec/cli build && \
-    mkdir -p /root/.local/bin && \
-    printf '#!/usr/bin/env bash\nexport PATH="$HOME/.bun/bin:$PATH"\nexec bun run /workspace/apps/cli/src/index.ts "$@"\n' > /usr/local/bin/kerberosec && \
+    printf '#!/usr/bin/env bash\nexport LANG="C.UTF-8"\nexport LC_ALL="C.UTF-8"\nexport PATH="$HOME/.bun/bin:$PATH"\nexec bun run /workspace/apps/cli/src/index.ts "$@"\n' > /usr/local/bin/kerberosec && \
     chmod +x /usr/local/bin/kerberosec
 
 # Environment configurations
 ENV TOOLS_DIR=/root/Tools
-ENV WORDLISTS=/usr/share/seclists
+ENV WORDLISTS=/usr/share/wordlists
 
 # Cleanup build caches
 RUN rm -rf /var/lib/apt/lists/* /root/.cache /tmp/* /var/tmp/* && apt-get autoclean 2>/dev/null || true
 
 # Interactive CLI launch by default
-CMD ["bun", "run", "apps/cli/src/index.ts"]
+CMD ["kerberosec"]

@@ -1,4 +1,3 @@
-import { readGlobalSettings } from "@kerberosec/core";
 import { useTerminalDimensions } from "@opentui/react";
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";

@@ -424,7 +424,15 @@ const ollamaNativeOptionsRule: ProviderOptionRule = {
 	applies: (input) => input.target === "ollama",
 	suppresses: { genericThinking: true },
 	build: (input) => {
+		const envNumCtxRaw =
+			typeof process !== "undefined" ? process.env?.OLLAMA_NUM_CTX : undefined;
+		const envNumCtx = envNumCtxRaw
+			? Number.parseInt(envNumCtxRaw, 10)
+			: undefined;
 		const contextWindow =
+			(typeof envNumCtx === "number" && Number.isFinite(envNumCtx) && envNumCtx > 0
+				? envNumCtx
+				: undefined) ??
 			input.context.model.contextWindow ??
 			input.context.model.maxInputTokens ??
 			OLLAMA_DEFAULT_CONTEXT_WINDOW;

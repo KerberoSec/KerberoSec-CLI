@@ -11,7 +11,7 @@ import { writeDiagnostic } from "../utils/output";
  */
 export const ACP_AUTH_METHODS = [
 	{ id: "kerberosec", name: "Sign in with KerberoSec" },
-	{ id: "kerberosec-pass", name: "Sign in with KerberoSecPass" },
+	{ id: "kerberosec-pass", name: "Sign in with Cline" },
 	{ id: "openai-codex", name: "Sign in with ChatGPT Subscription" },
 ] as const;
 

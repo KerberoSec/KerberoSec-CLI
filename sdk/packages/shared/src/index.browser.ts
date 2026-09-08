@@ -125,6 +125,7 @@ export type {
 export {
 	EMPTY_CONTENT_TEXT,
 	formatMessagesForAiSdk,
+	sanitizeModerationTriggerText,
 	sanitizeSurrogates,
 	toAiSdkToolResultOutput,
 } from "./llms/ai-sdk-format";

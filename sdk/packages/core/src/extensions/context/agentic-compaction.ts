@@ -77,7 +77,7 @@ async function generateSummary(options: {
 	let reasoningChars = 0;
 	let incompleteReason: string | undefined;
 	for await (const chunk of handler.createMessage(
-		"Summarize the provided coding session into a concise continuation note with detailed next steps.",
+		"Summarize the provided coding and security session into a concise continuation note with detailed next steps. Preserve all user constraints and invariants verbatim.",
 		[{ role: "user", content: options.request }],
 	)) {
 		if (chunk.type === "text") {

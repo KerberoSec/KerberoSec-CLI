@@ -205,7 +205,7 @@ function OrganizationRow(props: {
 }
 
 function accountActions(snapshot: KerberoSecAccountSnapshot): AccountAction[] {
-	return LOADED_ACTIONS.map((action) => {
+	return AUTHENTICATED_ACTIONS.map((action) => {
 		if (action.id !== "change-account") {
 			return action;
 		}
@@ -283,7 +283,7 @@ export function AccountDialogContent(
 				? accountActions(snapshot)
 				: state.status === "unauthenticated"
 					? UNAUTHENTICATED_ACTIONS
-					: LOADED_ACTIONS,
+					: AUTHENTICATED_ACTIONS,
 		[snapshot, state.status],
 	);
 	const orgRows = useMemo(() => {

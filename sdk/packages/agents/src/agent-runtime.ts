@@ -53,11 +53,11 @@ const MAX_TOKENS_INCOMPLETE_TURN_MESSAGE =
 
 /**
  * Terminal message when a context-window overflow cannot be recovered because
- * there is no conversation history to compact — the system prompt, tools, and
+ * there is no conversation history to compact - the system prompt, tools, and
  * current input alone exceed the window.
  */
 export const CONTEXT_WINDOW_OVERFLOW_NOTHING_TO_COMPACT_MESSAGE =
-	"The request exceeds the model's context window and there is no conversation history to compact — the system prompt, tools, and current input alone are too large. Reduce attached content or switch to a model with a larger context window.";
+	"The request exceeds the model's context window and there is no conversation history to compact - the system prompt, tools, and current input alone are too large. Reduce attached content or switch to a model with a larger context window.";
 
 /**
  * Terminal message when a context-window overflow persists after the runtime
@@ -749,7 +749,7 @@ export class AgentRuntime {
 					// content (projecting it into content would replay tool_use blocks
 					// the model never gets results for). A turn that is only such
 					// activity is not empty: keep the message so the transcript and
-					// display projection retain it. Replay stays safe — the codec
+					// display projection retain it. Replay stays safe - the codec
 					// renders empty content as its placeholder text block.
 					const modelToolActivities = message.metadata?.modelToolActivities;
 					const hasModelToolActivity =
@@ -976,7 +976,7 @@ export class AgentRuntime {
 		await this.emit({
 			type: "status-notice",
 			snapshot: this.snapshot(),
-			message: "context window exceeded — compacting and retrying",
+			message: "context window exceeded - compacting and retrying",
 			metadata: {
 				kind: "context_overflow_recovery",
 				reason: "context_overflow_recovery",
@@ -1302,9 +1302,9 @@ export class AgentRuntime {
 					if (event.error) {
 						this.state.lastError = event.error;
 						// Models that classify at their own error boundary (where the
-						// raw provider error is still structured) win. Anything else —
+						// raw provider error is still structured) win. Anything else -
 						// custom `AgentModel` implementations, adapters that carry only
-						// a flattened message — is classified from the message so it
+						// a flattened message - is classified from the message so it
 						// stays eligible for overflow recovery.
 						this.state.lastErrorClass =
 							event.errorClass ?? classifyProviderError(event.error);
@@ -1312,6 +1312,46 @@ export class AgentRuntime {
 					}
 					break;
 				}
+			}
+		}
+
+		// Detect and extract textual pseudo-XML tool calls emitted in stream text
+		const updatedSequence: typeof sequence = [];
+		let hasExtractedTools = false;
+		for (const item of sequence) {
+			if (item.type !== "part" || item.part.type !== "text") {
+				updatedSequence.push(item);
+				continue;
+			}
+			const extracted = extractTextualToolCalls(item.part.text, this.tools);
+			if (extracted.toolCalls.length === 0) {
+				updatedSequence.push(item);
+				continue;
+			}
+			hasExtractedTools = true;
+			if (extracted.cleanedText.length > 0) {
+				updatedSequence.push({
+					type: "part",
+					part: { type: "text", text: extracted.cleanedText },
+				});
+			}
+			for (const call of extracted.toolCalls) {
+				const toolCallId = createUID("call_txt");
+				const toolKey = `txt_tool_${toolCallId}`;
+				toolAssemblies.set(toolKey, {
+					toolCallId,
+					toolName: call.toolName,
+					inputValue: call.input,
+					inputText: JSON.stringify(call.input),
+				});
+				updatedSequence.push({ type: "tool", key: toolKey });
+			}
+		}
+		if (hasExtractedTools) {
+			sequence.length = 0;
+			sequence.push(...updatedSequence);
+			if (finishReason === "stop") {
+				finishReason = "tool-calls";
 			}
 		}
 
@@ -1548,7 +1588,7 @@ export class AgentRuntime {
 		});
 		if (overflowRecovery) {
 			// Only retry a provider-rejected overflow with a request that is
-			// actually smaller — anything else is guaranteed to fail again.
+			// actually smaller - anything else is guaranteed to fail again.
 			//
 			// Serialized length is a coarse proxy for tokens, which is all this
 			// backstop needs: it answers "did anything get removed at all" for
@@ -1993,7 +2033,7 @@ export class AgentRuntime {
 				// Failures the model layer already recorded at its own error
 				// boundary (`provider.stream`, carried across the stream's
 				// string-flattening boundary as `finish.errorReported`) must not
-				// be re-reported here — that exactly doubled `sdk.error` volume.
+				// be re-reported here - that exactly doubled `sdk.error` volume.
 				// Everything else still reports: loop-originated failures, and
 				// failures from model implementations that do not record their
 				// own telemetry.
@@ -2163,6 +2203,337 @@ function mergeToolInputText(current: string, incoming: string): string {
 		return incoming;
 	}
 	return current + incoming;
+}
+
+export interface ExtractedTextualToolCall {
+	toolName: string;
+	input: Record<string, unknown>;
+}
+
+export interface ExtractTextualToolCallsResult {
+	cleanedText: string;
+	toolCalls: ExtractedTextualToolCall[];
+}
+
+function parseXmlValue(raw: string): unknown {
+	const trimmed = raw.trim();
+	if (!trimmed) return "";
+
+	if (
+		(trimmed.startsWith('"') && trimmed.endsWith('"')) ||
+		(trimmed.startsWith("'") && trimmed.endsWith("'"))
+	) {
+		try {
+			return JSON.parse(trimmed);
+		} catch {
+			return trimmed.slice(1, -1);
+		}
+	}
+
+	if (
+		(trimmed.startsWith("{") && trimmed.endsWith("}")) ||
+		(trimmed.startsWith("[") && trimmed.endsWith("]"))
+	) {
+		try {
+			return JSON.parse(trimmed);
+		} catch {
+			// Fall through to raw string
+		}
+	}
+
+	if (trimmed === "true") return true;
+	if (trimmed === "false") return false;
+	if (trimmed === "null") return null;
+	if (/^-?\d+(\.\d+)?$/.test(trimmed)) {
+		const num = Number(trimmed);
+		if (!Number.isNaN(num)) return num;
+	}
+
+	return trimmed;
+}
+
+function parseParametersFromXml(body: string): Record<string, unknown> {
+	const trimmedBody = body.trim();
+	if (trimmedBody.startsWith("{") && trimmedBody.endsWith("}")) {
+		try {
+			const parsed = JSON.parse(trimmedBody);
+			if (parsed && typeof parsed === "object" && !Array.isArray(parsed)) {
+				return parsed as Record<string, unknown>;
+			}
+		} catch {
+			// Fall through to regex matching
+		}
+	}
+
+	const params: Record<string, unknown> = {};
+	const paramRegex =
+		/<(?:parameter|param)\s+(?:name|param)=["']([^"']+)["'][^>]*>([\s\S]*?)<\/(?:parameter|param)>/gi;
+	let match: RegExpExecArray | null;
+	let foundParam = false;
+	while ((match = paramRegex.exec(body)) !== null) {
+		foundParam = true;
+		const name = match[1].trim();
+		const valRaw = match[2];
+		params[name] = parseXmlValue(valRaw);
+	}
+
+	if (!foundParam) {
+		const unclosedParamRegex =
+			/<(?:parameter|param)\s+(?:name|param)=["']([^"']+)["'][^>]*>([\s\S]*?)$/gi;
+		while ((match = unclosedParamRegex.exec(body)) !== null) {
+			foundParam = true;
+			const name = match[1].trim();
+			const valRaw = match[2];
+			params[name] = parseXmlValue(valRaw);
+		}
+	}
+
+	if (!foundParam) {
+		const tagRegex = /<([a-zA-Z0-9_]+)>([\s\S]*?)<\/\1>/gi;
+		let tagMatch: RegExpExecArray | null;
+		while ((tagMatch = tagRegex.exec(body)) !== null) {
+			foundParam = true;
+			const name = tagMatch[1].trim();
+			const valRaw = tagMatch[2];
+			params[name] = parseXmlValue(valRaw);
+		}
+	}
+
+	if (!foundParam && trimmedBody.length > 0) {
+		params.commands = parseXmlValue(trimmedBody);
+	}
+
+	return params;
+}
+
+function normalizeExtractedToolInput(
+	toolName: string,
+	input: Record<string, unknown>,
+): Record<string, unknown> {
+	const normalized = { ...input };
+	const normalizedName = toolName.toLowerCase().replace(/-/g, "_");
+
+	if (
+		normalizedName === "run_commands" ||
+		normalizedName === "bash" ||
+		normalizedName === "sh" ||
+		normalizedName === "command" ||
+		normalizedName === "run_command"
+	) {
+		if (typeof normalized.commands === "string") {
+			normalized.commands = [normalized.commands];
+		} else if (typeof normalized.command === "string") {
+			normalized.commands = [normalized.command];
+			delete normalized.command;
+		} else if (typeof normalized.cmd === "string") {
+			normalized.commands = [normalized.cmd];
+			delete normalized.cmd;
+		} else if (Array.isArray(normalized.commands)) {
+			normalized.commands = normalized.commands.map(String);
+		} else if (Array.isArray(normalized.command)) {
+			normalized.commands = (normalized.command as unknown[]).map(String);
+			delete normalized.command;
+		} else if (Array.isArray(normalized.args)) {
+			normalized.commands = (normalized.args as unknown[]).map(String);
+			delete normalized.args;
+		} else {
+			const strVals = Object.values(normalized).filter(
+				(v) => typeof v === "string",
+			) as string[];
+			if (strVals.length === 1) {
+				normalized.commands = [strVals[0]];
+			}
+		}
+	} else if (
+		normalizedName === "read_files" ||
+		normalizedName === "read_file" ||
+		normalizedName === "view_file"
+	) {
+		if (typeof normalized.paths === "string") {
+			normalized.paths = [normalized.paths];
+		} else if (typeof normalized.path === "string") {
+			normalized.paths = [normalized.path];
+			delete normalized.path;
+		} else if (typeof normalized.file === "string") {
+			normalized.paths = [normalized.file];
+			delete normalized.file;
+		} else if (Array.isArray(normalized.paths)) {
+			normalized.paths = normalized.paths.map(String);
+		} else if (Array.isArray(normalized.path)) {
+			normalized.paths = (normalized.path as unknown[]).map(String);
+			delete normalized.path;
+		} else if (Array.isArray(normalized.files)) {
+			normalized.paths = (normalized.files as unknown[]).map(String);
+			delete normalized.files;
+		}
+	} else if (
+		normalizedName === "search_codebase" ||
+		normalizedName === "grep_search" ||
+		normalizedName === "search"
+	) {
+		if (typeof normalized.queries === "string") {
+			normalized.queries = [normalized.queries];
+		} else if (typeof normalized.query === "string") {
+			normalized.queries = [normalized.query];
+			delete normalized.query;
+		} else if (Array.isArray(normalized.queries)) {
+			normalized.queries = normalized.queries.map(String);
+		} else if (Array.isArray(normalized.query)) {
+			normalized.queries = (normalized.query as unknown[]).map(String);
+			delete normalized.query;
+		}
+	}
+
+	return normalized;
+}
+
+function canonicalizeToolName(
+	toolName: string,
+	registeredTools?: Map<string, unknown>,
+): string {
+	const name = toolName.trim().toLowerCase().replace(/-/g, "_");
+	if (registeredTools?.has(name)) {
+		return name;
+	}
+	if (registeredTools?.has(toolName)) {
+		return toolName;
+	}
+	if (
+		name === "bash" ||
+		name === "sh" ||
+		name === "run_command" ||
+		name === "command" ||
+		name === "execute_command"
+	) {
+		if (!registeredTools || registeredTools.has("run_commands")) {
+			return "run_commands";
+		}
+	}
+	if (name === "read_file" || name === "view_file") {
+		if (!registeredTools || registeredTools.has("read_files")) {
+			return "read_files";
+		}
+	}
+	if (name === "search" || name === "grep_search") {
+		if (!registeredTools || registeredTools.has("search_codebase")) {
+			return "search_codebase";
+		}
+	}
+	if (name === "fetch" || name === "read_url_content") {
+		if (!registeredTools || registeredTools.has("fetch_web_content")) {
+			return "fetch_web_content";
+		}
+	}
+	if (
+		name === "edit" ||
+		name === "write" ||
+		name === "editor" ||
+		name === "replace_file_content" ||
+		name === "write_to_file"
+	) {
+		if (!registeredTools || registeredTools.has("edit_file")) {
+			return "edit_file";
+		}
+	}
+	return toolName.trim();
+}
+
+export function extractTextualToolCalls(
+	text: string,
+	registeredTools?: Map<string, unknown>,
+): ExtractTextualToolCallsResult {
+	if (!text || typeof text !== "string") {
+		return { cleanedText: text ?? "", toolCalls: [] };
+	}
+
+	const toolCalls: ExtractedTextualToolCall[] = [];
+	let cleanedText = text;
+
+	const recordCall = (
+		rawName: string,
+		rawInput: Record<string, unknown>,
+		fullMatch: string,
+	) => {
+		const toolName = canonicalizeToolName(rawName, registeredTools);
+		const input = normalizeExtractedToolInput(toolName, rawInput);
+		toolCalls.push({ toolName, input });
+		cleanedText = cleanedText.replace(fullMatch, "");
+	};
+
+	const callingRegex =
+		/<calling\s+(?:tool|name)=["']([^"']+)["'][^>]*>([\s\S]*?)(?:<\/calling>|$)/gi;
+	let match: RegExpExecArray | null;
+	while ((match = callingRegex.exec(text)) !== null) {
+		recordCall(match[1], parseParametersFromXml(match[2]), match[0]);
+	}
+
+	const invokeRegex =
+		/<invoke\s+(?:name|tool)=["']([^"']+)["'][^>]*>([\s\S]*?)(?:<\/invoke>|$)/gi;
+	while ((match = invokeRegex.exec(text)) !== null) {
+		recordCall(match[1], parseParametersFromXml(match[2]), match[0]);
+	}
+
+	const callTagRegex =
+		/<(?:tool_call|function_call)(?:\s+(?:name|tool)=["']([^"']+)["'])?[^>]*>([\s\S]*?)(?:<\/(?:tool_call|function_call)>|$)/gi;
+	while ((match = callTagRegex.exec(text)) !== null) {
+		let rawName = match[1]?.trim();
+		const body = match[2].trim();
+		let rawInput: Record<string, unknown> = {};
+
+		if (body.startsWith("{") && body.endsWith("}")) {
+			try {
+				const parsed = JSON.parse(body);
+				if (parsed && typeof parsed === "object") {
+					if (!rawName && typeof parsed.name === "string") {
+						rawName = parsed.name;
+					}
+					if (parsed.arguments && typeof parsed.arguments === "object") {
+						rawInput = parsed.arguments;
+					} else if (parsed.parameters && typeof parsed.parameters === "object") {
+						rawInput = parsed.parameters;
+					} else {
+						rawInput = parsed;
+					}
+				}
+			} catch {
+				rawInput = parseParametersFromXml(body);
+			}
+		} else {
+			rawInput = parseParametersFromXml(body);
+		}
+
+		if (rawName) {
+			recordCall(rawName, rawInput, match[0]);
+		}
+	}
+
+	const knownTools = [
+		"run_commands",
+		"run_command",
+		"bash",
+		"read_files",
+		"read_file",
+		"edit_file",
+		"apply_patch",
+		"search_codebase",
+		"fetch_web_content",
+		"ask_question",
+		"spawn_agent",
+		"skills",
+		"submit_and_exit",
+	];
+	const knownToolsRegex = new RegExp(
+		`<(${knownTools.join("|")})>([\\s\\S]*?)<\\/\\1>`,
+		"gi",
+	);
+	while ((match = knownToolsRegex.exec(text)) !== null) {
+		recordCall(match[1], parseParametersFromXml(match[2]), match[0]);
+	}
+
+	cleanedText = cleanedText.replace(/```(?:xml|json)?\s*```/g, "");
+	cleanedText = cleanedText.replace(/\n{3,}/g, "\n\n").trim();
+
+	return { cleanedText, toolCalls };
 }
 
 export function createAgentRuntime(config: AgentRuntimeConfig): AgentRuntime {

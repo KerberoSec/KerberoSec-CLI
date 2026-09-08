@@ -197,7 +197,17 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				}
 				case "content_end": {
 					switch (event.contentType) {
-						case "text":
+						case "text": {
+							closeInlineStream();
+							if (event.text !== undefined) {
+								updateLastEntry((prev) =>
+									prev.kind === "assistant_text"
+										? { ...prev, text: event.text ?? "", streaming: false }
+										: prev,
+								);
+							}
+							break;
+						}
 						case "reasoning":
 							closeInlineStream();
 							break;
@@ -239,7 +249,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "error":
 					// Recoverable errors are in-run notices (the MistakeTracker
 					// emits one for every recorded mistake, e.g. a plan-mode
-					// guard-blocked command) — the run continues, so the footer
+					// guard-blocked command) - the run continues, so the footer
 					// must keep reflecting the active turn instead of flipping
 					// to idle mid-run. Surface them only in verbose mode.
 					if (event.recoverable) {

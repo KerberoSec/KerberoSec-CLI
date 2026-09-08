@@ -602,6 +602,18 @@ export function buildModelOptions(
 	knownModels?: Record<string, Llms.ModelInfo>,
 ): ModelOption[] {
 	if (!knownModels) return [];
+
+	const getModelRank = (item: { key: string; name: string }): number => {
+		const lowerKey = item.key.toLowerCase();
+		const lowerName = item.name.toLowerCase();
+
+		if (lowerKey.includes("deepseek") || lowerName.includes("deepseek")) return 1;
+		if (lowerKey.includes("glm") || lowerName.includes("glm") || lowerKey.includes("zhipu") || lowerName.includes("zhipu")) return 2;
+		if (lowerKey.includes("gpt") || lowerName.includes("gpt") || lowerKey.includes("sol") || lowerName.includes("openai")) return 3;
+		if (lowerKey.includes("claude") || lowerName.includes("claude") || lowerKey.includes("opus") || lowerKey.includes("anthropic")) return 4;
+		return 10;
+	};
+
 	return Object.entries(knownModels)
 		.map(([key, info]) => ({
 			key,
@@ -610,5 +622,12 @@ export function buildModelOptions(
 			family: info.family,
 			supportsReasoning: info.capabilities?.includes("reasoning") ?? false,
 		}))
-		.sort((a, b) => a.name.localeCompare(b.name));
+		.sort((a, b) => {
+			const rankA = getModelRank(a);
+			const rankB = getModelRank(b);
+			if (rankA !== rankB) {
+				return rankA - rankB;
+			}
+			return a.name.localeCompare(b.name);
+		});
 }

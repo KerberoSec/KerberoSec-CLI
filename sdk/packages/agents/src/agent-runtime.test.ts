@@ -18,7 +18,11 @@ import {
 	TASK_PROVIDER_STREAM_STARTED_EVENT,
 } from "@kerberosec/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { AgentRuntime } from "./index";
+import {
+	AgentRuntime,
+	createTool,
+	extractTextualToolCalls,
+} from "./index";
 
 beforeEach(() => {
 	resetSdkErrorRateLimiterForTests();
@@ -228,7 +232,7 @@ describe("AgentRuntime", () => {
 
 	it("keeps a turn that is only provider-executed tool activity", async () => {
 		// No trailing text: the whole turn is observational activity. The
-		// empty-content guard must not reject it — the transcript would lose
+		// empty-content guard must not reject it - the transcript would lose
 		// the activity, which lives in metadata rather than content.
 		const model = new ScriptedModel([
 			() => [
@@ -439,7 +443,7 @@ describe("AgentRuntime", () => {
 		expect(model.requests[1]?.messages).toEqual(compactedMessages);
 		expect(statusNotices).toContainEqual(
 			expect.objectContaining({
-				message: "context window exceeded — compacting and retrying",
+				message: "context window exceeded - compacting and retrying",
 				metadata: expect.objectContaining({
 					kind: "context_overflow_recovery",
 				}),
@@ -599,7 +603,7 @@ describe("AgentRuntime", () => {
 	it("treats a media-only model turn as content", async () => {
 		// A model that answers with only a generated file (e.g. an
 		// image-output model) must not fail as "Model returned empty
-		// response" — the file event is assembled into the assistant message.
+		// response" - the file event is assembled into the assistant message.
 		const model = new ScriptedModel([
 			() => [
 				{
@@ -2922,6 +2926,138 @@ describe("AgentRuntime sdk.error reporting", () => {
 			operation: "agent.run",
 			handled: false,
 			error_message: "Model returned empty response",
+		});
+	});
+
+	describe("textual XML tool call recovery", () => {
+		it("extracts calling tag with parameter element", () => {
+			const text =
+				'I will run that now:\n<calling tool="run_commands"><parameter name="commands">"ls -la"</parameter></calling>';
+			const { cleanedText, toolCalls } = extractTextualToolCalls(text);
+			expect(cleanedText).toBe("I will run that now:");
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la"] },
+				},
+			]);
+		});
+
+		it("extracts calling tag with array parameter", () => {
+			const text =
+				'<calling tool="run_commands"><parameter name="commands">["ls -la", "pwd"]</parameter></calling>';
+			const { cleanedText, toolCalls } = extractTextualToolCalls(text);
+			expect(cleanedText).toBe("");
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la", "pwd"] },
+				},
+			]);
+		});
+
+		it("extracts calling tag with unquoted parameter value", () => {
+			const text =
+				'<calling tool="run_commands"><parameter name="commands">ls -la</parameter></calling>';
+			const { toolCalls } = extractTextualToolCalls(text);
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la"] },
+				},
+			]);
+		});
+
+		it("extracts calling tag with direct JSON body", () => {
+			const text =
+				'<calling tool="run_commands">{"commands": ["ls -la"]}</calling>';
+			const { toolCalls } = extractTextualToolCalls(text);
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la"] },
+				},
+			]);
+		});
+
+		it("extracts invoke tag format", () => {
+			const text =
+				'<invoke name="run_commands"><parameter name="commands">"ls -la"</parameter></invoke>';
+			const { toolCalls } = extractTextualToolCalls(text);
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la"] },
+				},
+			]);
+		});
+
+		it("extracts tool_call tag format with JSON", () => {
+			const text =
+				'<tool_call>{"name": "run_commands", "arguments": {"commands": ["ls -la"]}}</tool_call>';
+			const { toolCalls } = extractTextualToolCalls(text);
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la"] },
+				},
+			]);
+		});
+
+		it("extracts direct known tool tag format", () => {
+			const text =
+				'<run_commands><commands>"ls -la"</commands></run_commands>';
+			const { toolCalls } = extractTextualToolCalls(text);
+			expect(toolCalls).toEqual([
+				{
+					toolName: "run_commands",
+					input: { commands: ["ls -la"] },
+				},
+			]);
+		});
+
+		it("recovers and executes textual XML tool call end-to-end", async () => {
+			const executedCommands: string[] = [];
+			const bashTool = createTool({
+				name: "run_commands",
+				description: "Run commands",
+				inputSchema: { type: "object" },
+				execute: async (input: unknown) => {
+					const cast = input as { commands: string[] };
+					executedCommands.push(...cast.commands);
+					return [{ result: "file1.txt\nfile2.txt", success: true }];
+				},
+			});
+
+			const model = new ScriptedModel([
+				() => [
+					{
+						type: "text-delta",
+						text: 'I will list the files:\n<calling tool="run_commands"><parameter name="commands">"ls -la"</parameter></calling>',
+					},
+					{ type: "finish", reason: "stop" },
+				],
+				() => [
+					{ type: "text-delta", text: "Found file1.txt and file2.txt" },
+					{ type: "finish", reason: "stop" },
+				],
+			]);
+
+			const runtime = new AgentRuntime({
+				model,
+				tools: [bashTool],
+			});
+
+			const result = await runtime.run("List files");
+			expect(result.status).toBe("completed");
+			expect(executedCommands).toEqual(["ls -la"]);
+			expect(runtime.snapshot().messages.length).toBeGreaterThanOrEqual(3);
+			const firstAssistant = runtime.snapshot().messages[1];
+			expect(firstAssistant.role).toBe("assistant");
+			const textPart = firstAssistant.content.find((p) => p.type === "text");
+			expect(textPart?.text).toBe("I will list the files:");
+			const toolPart = firstAssistant.content.find((p) => p.type === "tool-call");
+			expect(toolPart?.toolName).toBe("run_commands");
 		});
 	});
 });

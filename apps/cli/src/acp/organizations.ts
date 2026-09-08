@@ -95,7 +95,7 @@ export function buildOrganizationConfigOption(
 		id: ORGANIZATION_CONFIG_ID,
 		name: "Account",
 		description:
-			"The KerberoSec account usage is billed to — your personal account or an organization",
+			"The KerberoSec account usage is billed to: your personal account or an organization",
 		category: "account",
 		currentValue: state.activeOrganizationId ?? PERSONAL_ACCOUNT_VALUE,
 		options: [

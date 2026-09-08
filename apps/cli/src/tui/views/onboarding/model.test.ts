@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
+	KERBEROSEC_PASS_SUBSCRIPTION_OPTIONS,
+	MAIN_MENU,
 	getMainMenuOptions,
 	getOAuthProviderLabel,
 	shouldUseFeaturedKerberoSecModelPicker,
@@ -9,6 +11,26 @@ import {
 } from "./model";
 
 describe("onboarding model helpers", () => {
+	it("has updated AgentRouter and Cline main menu options", () => {
+		const agentRouter = MAIN_MENU.find(
+			(option) => option.value === "agent-router",
+		);
+		expect(agentRouter?.detail).toBe(
+			"Multi-model gateway including Claude, GPT, & DeepSeek",
+		);
+
+		const kerberosecPass = MAIN_MENU.find(
+			(option) => option.value === "kerberosec-pass",
+		);
+		expect(kerberosecPass?.label).toBe("Sign in with Cline");
+		expect(kerberosecPass?.detail).toBe("Low cost subscription for everyone");
+
+		const subscribeOption = KERBEROSEC_PASS_SUBSCRIPTION_OPTIONS.find(
+			(option) => option.value === "subscribe",
+		);
+		expect(subscribeOption?.label).toBe("Subscribe to Cline");
+	});
+
 	it("hides KerberoSecPass from the main menu unless its feature flag is enabled", () => {
 		expect(
 			getMainMenuOptions().some((option) => option.value === "kerberosec-pass"),

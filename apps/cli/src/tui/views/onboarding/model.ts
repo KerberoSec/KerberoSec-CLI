@@ -66,6 +66,12 @@ export const MAIN_MENU: MenuOption[] = [
 		icon: "\u26b7",
 	},
 	{
+		label: "AgentRouter",
+		value: "agent-router",
+		detail: "Multi-model gateway including Claude, GPT, & DeepSeek",
+		icon: "\u2b22",
+	},
+	{
 		label: "Sign in with ChatGPT",
 		value: "openai-codex",
 		detail: "Use your ChatGPT Plus subscription",
@@ -92,7 +98,7 @@ export const KERBEROSEC_PASS_SUBSCRIPTION_OPTIONS: KerberoSecPassSubscriptionOpt
 	[
 		{
 			value: "subscribe",
-			label: "Subscribe to ClinePass",
+			label: "Subscribe to Cline",
 		},
 		{
 			value: "refresh",

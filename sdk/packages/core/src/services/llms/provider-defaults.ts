@@ -164,7 +164,7 @@ async function mergeKnownModels(
 	// For providers with a registered public model source (Ollama, LM Studio),
 	// the live response is the authoritative list of what the user has
 	// actually installed. Skip the bundled catalog so the picker doesn't
-	// show models that aren't downloaded — even when the live fetch fails or
+	// show models that aren't downloaded - even when the live fetch fails or
 	// returns nothing. Falling back to the bundled (cloud) catalog here would
 	// auto-select a model the user never installed (e.g. Ollama silently
 	// defaulting to a cloud nemotron model when the local server is down).
@@ -714,7 +714,10 @@ async function getPublicProviderModels(
 		return inFlight;
 	}
 
-	const request = fetchModelIdsFromSource(sourceUrl, providerId)
+	const request = fetchModelIdsFromSource(sourceUrl, providerId, {
+		headers: config.headers,
+		apiKey: config.apiKey,
+	})
 		.then((modelIds) => {
 			const data = Object.fromEntries(
 				modelIds.map((id) => [
@@ -918,7 +921,7 @@ export async function resolveProviderConfig(
 				? await getPrivateProviderModels(providerId, modelCatalog, config)
 				: {};
 		// Public (keyless) live model sources run whenever `modelsSourceUrl` is
-		// registered for the provider — even if the caller didn't pass a
+		// registered for the provider - even if the caller didn't pass a
 		// `config`. Falls back to the spec's default base URL so a fresh install
 		// still hits the default local model endpoint. Failures are swallowed
 		// below, so an unreachable server just leaves the picker on the bundled

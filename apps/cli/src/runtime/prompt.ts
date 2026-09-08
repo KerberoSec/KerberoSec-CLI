@@ -15,21 +15,22 @@ import {
 import { isImagePath, loadImageAsDataUrl } from "../utils/image-attachments";
 
 export async function resolveSystemPrompt(input: {
-	cwd: string;
+	cwd?: string;
 	explicitSystemPrompt?: string;
 	providerId?: string;
 	rules?: string;
 	mode?: AgentMode;
 }): Promise<string> {
-	const metadata = await buildWorkspaceMetadata(input.cwd);
+	const cwd = input.cwd ?? (typeof process !== "undefined" && process.cwd ? process.cwd() : ".");
+	const metadata = await buildWorkspaceMetadata(cwd);
 	// Mode-tag and plan-mode instructions are appended by the shared prompt
 	// builder itself (see MODE_TAG_INSTRUCTIONS / PLAN_MODE_INSTRUCTIONS in
 	// @kerberosec/shared), so only the caller-specific rules are merged here.
 	const rules = mergeRulesForSystemPrompt(undefined, input.rules);
 	return buildKerberoSecSystemPrompt({
 		ide: "Terminal Shell",
-		workspaceRoot: input.cwd,
-		workspaceName: basename(input.cwd),
+		workspaceRoot: cwd,
+		workspaceName: basename(cwd),
 		metadata,
 		rules,
 		mode: input.mode,
@@ -89,7 +90,7 @@ function resolveMentionPath(filePath: string): string {
  * prompt. When the session registers the runtime's `skills` tool (its
  * description requires the model to invoke it on slash-command references),
  * the typed command passes through and the instructions arrive as a tool
- * result — keeping the persisted transcript as what the user typed. When the
+ * result - keeping the persisted transcript as what the user typed. When the
  * tool is unavailable (yolo preset, user toggle), expansion is the only
  * delivery path.
  */

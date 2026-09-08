@@ -356,12 +356,17 @@ async function resolveModelIds(params: {
 	modelsSourceUrl?: string;
 	fallbackModelIds?: string[];
 	shouldRecompute: boolean;
+	headers?: Record<string, string> | null;
+	apiKey?: string | null;
 }): Promise<string[]> {
 	if (!params.shouldRecompute) {
 		return params.fallbackModelIds ?? [];
 	}
 	const fetchedModels = params.modelsSourceUrl
-		? await fetchModelIdsFromSource(params.modelsSourceUrl, params.providerId)
+		? await fetchModelIdsFromSource(params.modelsSourceUrl, params.providerId, {
+				headers: params.headers ?? undefined,
+				apiKey: params.apiKey ?? undefined,
+			}).catch(() => [])
 		: [];
 	return [...new Set([...(params.explicitModels ?? []), ...fetchedModels])];
 }
@@ -603,6 +608,8 @@ export async function updateLocalProvider(
 		modelsSourceUrl: nextModelsSourceUrl,
 		fallbackModelIds: existingModelIds,
 		shouldRecompute: shouldRecomputeModels,
+		headers: request.headers ?? null,
+		apiKey: request.apiKey ?? null,
 	});
 	if (modelIds.length === 0) {
 		throw new Error(
@@ -768,8 +775,9 @@ export async function listLocalProviders(
 					persistedSettings?.capabilities,
 				);
 				const configFields =
-					readProviderConfigFields(info?.metadata ?? builtinProvider?.metadata) ??
-					fallbackProviderConfigFields(info);
+					readProviderConfigFields(
+						info?.metadata ?? builtinProvider?.metadata,
+					) ?? fallbackProviderConfigFields(info);
 				const rank = Math.min(
 					getPopularRank(info?.metadata),
 					getPopularRank(builtinProvider?.metadata),

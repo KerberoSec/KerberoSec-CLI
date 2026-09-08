@@ -11,7 +11,7 @@ type TeamPromptRewriteResult =
 	| { kind: "rewritten"; prompt: string };
 
 export function rewriteTeamPrompt(input: string): TeamPromptRewriteResult {
-	const match = /^\/team\b([\s\S]*)$/i.exec(input.trim());
+	const match = /^\/teams?\b([\s\S]*)$/i.exec(input.trim());
 	if (!match) {
 		return { kind: "none" };
 	}

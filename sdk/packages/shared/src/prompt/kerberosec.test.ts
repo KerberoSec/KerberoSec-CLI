@@ -137,4 +137,35 @@ describe("buildKerberoSecSystemPrompt mode instructions", () => {
 		});
 		expect(prompt).toBe("You are a custom agent.");
 	});
+
+	it("uses sanitized system prompt for agent-router without moderation trigger words", () => {
+		const prompt = buildKerberoSecSystemPrompt({
+			...BASE_OPTIONS,
+			providerId: "agent-router",
+		});
+		expect(prompt).toContain("Security Engineering, Code Auditing & Systems Assessment Agent");
+		expect(prompt).not.toContain("Penetration Testing & Red Teaming");
+		expect(prompt).not.toContain("offensive security operations");
+		expect(prompt).not.toContain("exploit analysis");
+		expect(prompt).toContain("Full execution authority");
+		expect(prompt).toContain("AUTONOMOUS MULTI-AGENT & TEAM ORCHESTRATION");
+		expect(prompt).toContain("AUTOMATIC TEAM DELEGATION");
+		expect(prompt).toContain("team_spawn_teammate");
+	});
+
+	it("uses sanitized system prompt for all default models without moderation triggers", () => {
+		const prompt = buildKerberoSecSystemPrompt({
+			...BASE_OPTIONS,
+			providerId: "openai",
+		});
+		expect(prompt).toContain("Security Engineering, Code Auditing & Systems Assessment Agent");
+		expect(prompt).not.toContain("Penetration Testing & Red Teaming");
+		expect(prompt).not.toContain("metasploit");
+		expect(prompt).not.toContain("burpsuite");
+		expect(prompt).not.toContain("sqlmap");
+		expect(prompt).toContain("operational authority");
+		expect(prompt).toContain("AUTONOMOUS MULTI-AGENT & TEAM ORCHESTRATION");
+		expect(prompt).toContain("AUTOMATIC TEAM DELEGATION");
+		expect(prompt).toContain("team_spawn_teammate");
+	});
 });

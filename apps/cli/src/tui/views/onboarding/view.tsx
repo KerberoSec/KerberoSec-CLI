@@ -28,11 +28,8 @@ export function OnboardingView(props: OnboardingViewProps) {
 	const { width, height } = useTerminalDimensions();
 	const mouse = useMouseTracker();
 	const state = useOnboardingController(props);
-	const contentWidth = Math.min(
-		width - 4,
-		Math.max(68, Math.min(width - 4, 96)),
-	);
-	const compact = height < 24;
+	const contentWidth = Math.max(20, Math.min(width - 2, 76));
+	const compact = height < 34 || width < 86;
 
 	if (state.step === "done") {
 		return <OnboardingDoneScreen mouse={mouse} />;
@@ -75,6 +72,7 @@ export function OnboardingView(props: OnboardingViewProps) {
 				compact={compact}
 				contentWidth={contentWidth}
 				description={state.byoDescription}
+				error={state.byoError}
 				fields={state.byoFields}
 				focusedField={state.byoFocusedField}
 				mouse={mouse}
@@ -113,6 +111,7 @@ export function OnboardingView(props: OnboardingViewProps) {
 	if (state.step === "kerberosec_model") {
 		return (
 			<OnboardingKerberoSecModelScreen
+				activeProviderName={state.activeProviderName}
 				kerberosecEntries={state.kerberosecEntries}
 				kerberosecModelSelected={state.kerberosecModelSelected}
 				compact={compact}
@@ -185,6 +184,7 @@ export function OnboardingView(props: OnboardingViewProps) {
 
 	return (
 		<OnboardingMainMenuScreen
+			compact={compact}
 			contentWidth={contentWidth}
 			menuOptions={state.menuOptions}
 			menuSelected={state.menuSelected}

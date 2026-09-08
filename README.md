@@ -95,10 +95,23 @@ KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** a
    - [Walkthrough 2: Autonomous Unit Test Suite Generation](#walkthrough-2-autonomous-unit-test-suite-generation)
    - [Walkthrough 3: Automated Security and Vulnerability Sweep](#walkthrough-3-automated-security-and-vulnerability-sweep)
    - [Walkthrough 4: Live Bug Debugging with Diagnostic Subagents](#walkthrough-4-live-bug-debugging-with-diagnostic-subagents)
-9. [Context Window Management and Token Optimization](#context-window-management-and-token-optimization)
+9. [Context Window Management, Compaction Engine, and Memory Architecture](#context-window-management-compaction-engine-and-memory-architecture)
+   - [Basic Compaction vs Agentic Compaction Pipeline](#basic-compaction-vs-agentic-compaction-pipeline)
+   - [Token Budgeting and Trigger Thresholds](#token-budgeting-and-trigger-thresholds)
+   - [Protected Tail Preservation and Atomic Tool Pair Integrity](#protected-tail-preservation-and-atomic-tool-pair-integrity)
 10. [Multi-Modal Vision and UI Screenshot Debugging](#multi-modal-vision-and-ui-screenshot-debugging)
-11. [Custom Repository Rules Engine (`.kerberosecrules`)](#custom-repository-rules-engine-kerberosecrules)
-12. [Custom Skills and Workflow Automation (`.kerberosec/skills/`)](#custom-skills-and-workflow-automation-kerberosecskills)
+11. [Custom Repository Rules & Multi-Agent Dispatch Protocols](#custom-repository-rules--multi-agent-dispatch-protocols)
+   - [Repository Rules Engine (`.kerberosecrules`)](#repository-rules-engine-kerberosecrules)
+   - [Subagent Enclaves and Dispatch Topology](#subagent-enclaves-and-dispatch-topology)
+   - [Delegation Contracts and Asynchronous Message Passing](#delegation-contracts-and-asynchronous-message-passing)
+12. [Autonomous Skills and Security Automation Reference (`.kerberosec/skills/`)](#autonomous-skills-and-security-automation-reference-kerberosecskills)
+   - [Skills Architecture Overview and Discovery Hierarchy](#skills-architecture-overview-and-discovery-hierarchy)
+   - [Category 1: Autonomous Supervision & Continuous Monitoring](#category-1-autonomous-supervision--continuous-monitoring)
+   - [Category 2: Web Security Assessment, Red Teaming & Threat Intelligence](#category-2-web-security-assessment-red-teaming--threat-intelligence)
+   - [Category 3: Stylometric Voice Calibration & Executive Reporting](#category-3-stylometric-voice-calibration--executive-reporting)
+   - [Category 4: Artifact Visualization, Dashboards & Design Tokens](#category-4-artifact-visualization-dashboards--design-tokens)
+   - [Category 5: Code Quality, Verification & Delivery Pipelines](#category-5-code-quality-verification--delivery-pipelines)
+   - [Comprehensive 32-Skill Matrix](#comprehensive-32-skill-matrix)
 13. [Enterprise and Team Deployment Architecture](#enterprise-and-team-deployment-architecture)
 14. [Headless CI/CD Mode and Automation Scripts](#headless-cicd-mode-and-automation-scripts)
 15. [Key Architectural Highlights](#key-architectural-highlights)
@@ -303,12 +316,12 @@ graph TD
 
 | Local Model Name | Ollama Pull Command | Minimum VRAM / RAM | Tool Calling Success Rate | Performance Profile & Recommended Role |
 | :--- | :--- | :--- | :--- | :--- |
-| **Qwen 2.5 Coder 32B-Instruct** | `ollama run qwen2.5-coder:32b` | **20GB – 24GB VRAM**<br>(or 36GB+ Unified Mac RAM) | ⭐⭐⭐⭐⭐ **96.5%** | **The Best Overall Local Model**. Matches GPT-4o on coding benchmarks (HumanEval 92.7%). Flawlessly handles complex multi-file refactoring, regex diffs, and multi-step terminal workflows offline. |
-| **Qwen 2.5 Coder 14B-Instruct** | `ollama run qwen2.5-coder:14b` | **10GB – 12GB VRAM**<br>(or 16GB–24GB RAM) | ⭐⭐⭐⭐ **92.0%** | **The Workstation Sweet Spot**. Exceptional balance between fast token generation (35–55 t/s) and reliable tool calling. Executes bash and file operations cleanly. |
-| **DeepSeek-R1-Distill-Qwen-14B** | `ollama run deepseek-r1:14b` | **10GB – 12GB VRAM**<br>(or 16GB–24GB RAM) | ⭐⭐⭐⭐ **93.5%** | **Best for Chain-of-Thought Reasoning**. Generates rigorous internal reasoning before executing tools, making it superior for diagnosing intricate race conditions and vulnerabilities. |
-| **Qwen 2.5 Coder 7B-Instruct** | `ollama run qwen2.5-coder:7b` | **6GB – 8GB VRAM**<br>(or 12GB+ RAM) | ⭐⭐⭐ **84.0%** | **Minimum Recommended Agentic Baseline**. Capable of executing direct commands (`ls`, `cat`, `git status`) and single-file modifications. May require human guidance on long multi-turn loops. |
-| **Llama 3.3 70B-Instruct** | `ollama run llama3.3:70b` | **40GB – 48GB VRAM**<br>(or 64GB+ Mac RAM) | ⭐⭐⭐⭐⭐ **95.0%** | Flagship open-weights general-purpose model with strong tool execution and broad language comprehension. |
-| **Codestral 22B (Mistral)** | `ollama run codestral:22b` | **16GB – 20GB VRAM** | ⭐⭐⭐⭐ **90.5%** | Specialized coding model supporting 80+ programming languages with 32,768 context length. |
+| **Qwen 2.5 Coder 32B-Instruct** | `ollama run qwen2.5-coder:32b` | **20GB - 24GB VRAM**<br>(or 36GB+ Unified Mac RAM) | ⭐⭐⭐⭐⭐ **96.5%** | **The Best Overall Local Model**. Matches GPT-4o on coding benchmarks (HumanEval 92.7%). Flawlessly handles complex multi-file refactoring, regex diffs, and multi-step terminal workflows offline. |
+| **Qwen 2.5 Coder 14B-Instruct** | `ollama run qwen2.5-coder:14b` | **10GB - 12GB VRAM**<br>(or 16GB-24GB RAM) | ⭐⭐⭐⭐ **92.0%** | **The Workstation Sweet Spot**. Exceptional balance between fast token generation (35-55 t/s) and reliable tool calling. Executes bash and file operations cleanly. |
+| **DeepSeek-R1-Distill-Qwen-14B** | `ollama run deepseek-r1:14b` | **10GB - 12GB VRAM**<br>(or 16GB-24GB RAM) | ⭐⭐⭐⭐ **93.5%** | **Best for Chain-of-Thought Reasoning**. Generates rigorous internal reasoning before executing tools, making it superior for diagnosing intricate race conditions and vulnerabilities. |
+| **Qwen 2.5 Coder 7B-Instruct** | `ollama run qwen2.5-coder:7b` | **6GB - 8GB VRAM**<br>(or 12GB+ RAM) | ⭐⭐⭐ **84.0%** | **Minimum Recommended Agentic Baseline**. Capable of executing direct commands (`ls`, `cat`, `git status`) and single-file modifications. May require human guidance on long multi-turn loops. |
+| **Llama 3.3 70B-Instruct** | `ollama run llama3.3:70b` | **40GB - 48GB VRAM**<br>(or 64GB+ Mac RAM) | ⭐⭐⭐⭐⭐ **95.0%** | Flagship open-weights general-purpose model with strong tool execution and broad language comprehension. |
+| **Codestral 22B (Mistral)** | `ollama run codestral:22b` | **16GB - 20GB VRAM** | ⭐⭐⭐⭐ **90.5%** | Specialized coding model supporting 80+ programming languages with 32,768 context length. |
 
 ---
 
@@ -318,11 +331,11 @@ When running local models via Ollama, select the model size and quantization lev
 
 | Hardware Tier & VRAM | Typical GPUs / Hardware | Recommended Local Model | Quantization | Effective Speed | Tool Reliability |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **CPU Only (8GB - 16GB RAM)** | Intel Core i5/i7/i9, AMD Ryzen 5/7/9, Apple M1/M2 (8GB-16GB) | `qwen2.5-coder:7b` | `Q4_K_M` | 8–18 t/s | ⭐⭐⭐ Moderate |
-| **6GB VRAM** | NVIDIA RTX 3060 Laptop (6GB), RTX 2060, AMD RX 6600M | `qwen2.5-coder:7b` | `Q4_K_M` | 35–50 t/s | ⭐⭐⭐ Good |
-| **8GB VRAM** | NVIDIA RTX 4060 (8GB), RTX 3070, Apple M2/M3 (16GB-18GB) | `qwen2.5-coder:7b` | `Q5_K_M` / `Q8_0` | 45–65 t/s | ⭐⭐⭐ High |
-| **12GB - 16GB VRAM** | NVIDIA RTX 3060 12GB, RTX 4070 Ti, RTX 4080 (16GB), AMD RX 7800 XT, Apple M3 Pro | `qwen2.5-coder:14b`<br>`deepseek-r1:14b` | `Q4_K_M` / `Q5_K_M` | 30–55 t/s | ⭐⭐⭐⭐ Very High |
-| **24GB+ VRAM** | NVIDIA RTX 3090 (24GB), RTX 4090 (24GB), Apple M3/M4 Max (64GB-128GB) | `qwen2.5-coder:32b`<br>`llama3.3:70b` | `Q4_K_M` / `Q8_0` | 25–45 t/s | ⭐⭐⭐⭐⭐ Maximum |
+| **CPU Only (8GB - 16GB RAM)** | Intel Core i5/i7/i9, AMD Ryzen 5/7/9, Apple M1/M2 (8GB-16GB) | `qwen2.5-coder:7b` | `Q4_K_M` | 8-18 t/s | ⭐⭐⭐ Moderate |
+| **6GB VRAM** | NVIDIA RTX 3060 Laptop (6GB), RTX 2060, AMD RX 6600M | `qwen2.5-coder:7b` | `Q4_K_M` | 35-50 t/s | ⭐⭐⭐ Good |
+| **8GB VRAM** | NVIDIA RTX 4060 (8GB), RTX 3070, Apple M2/M3 (16GB-18GB) | `qwen2.5-coder:7b` | `Q5_K_M` / `Q8_0` | 45-65 t/s | ⭐⭐⭐ High |
+| **12GB - 16GB VRAM** | NVIDIA RTX 3060 12GB, RTX 4070 Ti, RTX 4080 (16GB), AMD RX 7800 XT, Apple M3 Pro | `qwen2.5-coder:14b`<br>`deepseek-r1:14b` | `Q4_K_M` / `Q5_K_M` | 30-55 t/s | ⭐⭐⭐⭐ Very High |
+| **24GB+ VRAM** | NVIDIA RTX 3090 (24GB), RTX 4090 (24GB), Apple M3/M4 Max (64GB-128GB) | `qwen2.5-coder:32b`<br>`llama3.3:70b` | `Q4_K_M` / `Q8_0` | 25-45 t/s | ⭐⭐⭐⭐⭐ Maximum |
 
 > [!WARNING]
 > **Avoid models under 7B for terminal automation!** Models like `qwen2.5-coder:1.5b` or `deepseek-coder:1.3b` lack the attention capacity to reliably structure JSON tool calls, causing command execution to fail. Always use at least `qwen2.5-coder:7b` or `qwen2.5-coder:14b`.
@@ -382,7 +395,19 @@ export GEMINI_API_KEY="AIzaSy..."
 # DeepSeek / Groq (Ultra-fast & cost-effective)
 export DEEPSEEK_API_KEY="sk-..."
 export GROQ_API_KEY="gsk_..."
+
+# AgentRouter Multi-Model Gateway (Claude, GPT, & DeepSeek via single key)
+export AGENT_ROUTER_API_KEY="sk-..."
 ```
+
+#### Multi-Model Gateway: AgentRouter
+
+KerberoSec CLI includes built-in support for **AgentRouter**, a multi-model gateway providing access to multiple model families (Claude, GPT, DeepSeek, GLM) through a single API key:
+
+* **Supported Models**: `gpt-5.6-sol`, `deepseek-v4-flash`, `glm-5.3`, `claude-opus-4-8`, `claude-opus-5`.
+* **Configurable Base URL**: By default routes through `https://agentrouter.org/v1`. The base URL can be edited directly in `/settings` or during onboarding to route through custom proxies or alternate endpoints (such as `https://co.agentrouter.org/v1`).
+* **Upstream WAF and Firewall Resilience**: Remote API gateways often route through Web Application Firewalls (such as Alibaba Cloud WAF or Cloudflare). Inbound requests containing complex shell pipelines or tool outputs can trigger false-positive WAF rules returning HTTP 405/403 HTML block pages. KerberoSec CLI intercepts upstream HTML blocks and content moderation responses, formatting them into clear, actionable advice rather than dumping raw HTML markup into the terminal.
+* **Direct Command Execution**: Prompts for gateway models are optimized to execute clean, direct shell commands (e.g. `whoami`, `ls -la`, `git status`) and avoid chained syntax (such as `|| echo` or subshell pipes) that can trigger remote firewall inspection rules.
 
 Launch KerberoSec CLI, type **`/model`**, and instantly switch between your local offline models and cloud providers as needed!
 
@@ -390,7 +415,7 @@ Launch KerberoSec CLI, type **`/model`**, and instantly switch between your loca
 
 ## Comprehensive Slash Commands Reference
 
-KerberoSec CLI provides a complete suite of built-in slash commands that can be triggered directly in the chat input or through the autocomplete menu:
+KerberoSec CLI provides a complete suite of built-in slash commands and autonomous execution workflows that can be triggered directly in the chat input or through the autocomplete menu:
 
 | Slash Command | Category | Description | Instructions and Behavior |
 | :--- | :--- | :--- | :--- |
@@ -404,10 +429,24 @@ KerberoSec CLI provides a complete suite of built-in slash commands that can be 
 | **`/plugins`** | Extensibility | Manage plugins and extensions | Lists installed plugins, enables or disables workspace extensions, and reloads plugin tools dynamically. |
 | **`/compact`** | Memory | Manually compact conversation context | Triggers the Compaction Coordinator to summarize older conversational turns into a succinct checkpoint, freeing up context headroom. |
 | **`/skills`** | Workflows | Browse and invoke custom skills | Opens the skills browser to view custom prompt workflows, automation routines, and repo-specific playbooks stored in `.kerberosec/skills/`. |
-| **`/fork`** | Session | Create a named session branch | Creates an isolated branch of the current conversation history at the active turn, allowing alternative implementation experiments without losing prior state. |
+| **`/loop`** | Supervision | Start autonomous monitoring loop | Activates the autonomous steward loop with dynamic pacing, adaptive backoff (1200-1800s heartbeat), and quiet hold termination. |
+| **`/schedule`** | Cron / Routine | Schedule recurring background tasks | Configures persistent Hub cron routines for security audits, interval fuzzing runs, and automated test checks. |
+| **`/batch`** | Batch Execution | Run parallel multi-target operations | Executes parallel security sweeps, multi-repository migrations, or batched audits. |
+| **`/deep-research`** | Intelligence | Multi-pass adversarial threat intelligence | Runs the 5-phase threat intelligence engine: scope, search, extract, 3-vote adversarial verification, and synthesis. |
+| **`/security-review`** | Security | Audit codebase security posture | Audits authentication boundaries, SQL injection risks, privilege escalation paths, and dependencies. |
+| **`/chrome-automation`** | Browser | DOM-aware browser automation | Drives Chrome/Chromium to interact with web targets, verify XSS/CSRF PoCs, and inspect network requests. |
+| **`/computer-use`** | GUI Automation | Native desktop application control | Automates GUI desktop tools such as Burp Suite, Wireshark, Ghidra, and terminal emulators via screenshots and clicks. |
+| **`/setup-writing-style`** | Personalization | Calibrate personal writing voice | Analyzes operator writing samples using stylometry to eliminate generic AI slop and calibrate authentic report voice. |
+| **`/init`** | Workspace | Initialize project AGENTS.md | Executes the 8-phase workspace discovery pipeline to architect non-derivable repo guidelines and rules. |
+| **`/verify`** | Verification | Pre-completion testing and assertion | Executes verification gates, test suites, and regression checks before marking a task complete. |
+| **`/run`** | Execution | Multi-target application runner | Dispatches execution drivers for CLI apps, web servers, TUIs, Electron binaries, and Playwright tests. |
+| **`/run-skill-generator`** | Automation | Generate project run drivers | Inspects repository toolchains and synthesizes customized `.kerberosec/skills/run/` drivers. |
+| **`/update-config`** | Configuration | Non-destructive settings & hooks | Safely updates configuration settings, permission rule allowlists, and lifecycle hooks. |
+| **`/fork`** | Session | Create a named session branch | Creates an isolated branch of the current conversation history at the active turn, allowing alternative implementation experiments. |
 | **`/undo`** | Rollback | Restore files to previous checkpoint | Restores workspace files to the exact in-memory shadow snapshot taken before the last file modification turn. |
 | **`/clear`** | Session | Start a clean new session | Clears the active chat buffer and initializes a fresh conversation state while preserving workspace index caches. |
 | **`/history`** | History | View session history and transcripts | Opens the session history browser to search, inspect, or resume previous coding conversations. |
+| **`/doctor`** | Diagnostics | Diagnose environment and health | Checks CLI health, binary dependencies, permissions, Ollama connectivity, and package states. |
 | **`/help`** | Documentation | Display interactive help dialog | Renders a full help modal with keybindings, slash commands reference, and usage tips. |
 | **`/quit`** | Lifecycle | Exit KerberoSec CLI | Terminates active background workers and cleanly exits the CLI back to your terminal prompt. |
 
@@ -415,16 +454,45 @@ KerberoSec CLI provides a complete suite of built-in slash commands that can be 
 
 ## Keyboard Shortcuts Reference
 
+KerberoSec CLI provides fine-grained keyboard navigation and shortcut controls across all terminal contexts:
+
+### Global Shortcuts
+
 | Shortcut | Action | Scope and Behavior |
 | :--- | :--- | :--- |
 | **<kbd>Tab</kbd>** | Toggle Plan vs Act Mode | Seamlessly toggles the agent between **Plan Mode** (read-only architectural planning) and **Act Mode** (autonomous write and execution). |
 | **<kbd>Shift</kbd>+<kbd>Tab</kbd>** | Toggle Auto-Approve Policy | Switches between manual human-in-the-loop approval and automatic tool execution for fast, uninterrupted workflows. |
-| **<kbd>Ctrl</kbd>+<kbd>P</kbd>** | Open Command Palette | Launches the fuzzy-searchable Command Palette modal to quickly search actions, switch models, or configure settings. |
+| **<kbd>Ctrl</kbd>+<kbd>P</kbd>** / **<kbd>Meta</kbd>+<kbd>P</kbd>** | Open Command Palette | Launches the fuzzy-searchable Command Palette modal to quickly search actions, switch models, or configure settings. |
 | **<kbd>Ctrl</kbd>+<kbd>C</kbd> (1x)** | Copy Text / Preserve Input | Preserves terminal clipboard copying without halting active model thinking streams or clearing typed text. Shows notification: *Press Ctrl+C again to exit*. |
 | **<kbd>Ctrl</kbd>+<kbd>C</kbd> (2x)** | Double-Tap Clean Exit | Pressing <kbd>Ctrl</kbd>+<kbd>C</kbd> twice within 2000ms triggers immediate clean exit from the CLI. |
-| **<kbd>Esc</kbd>** | Cancel / Abort Turn | Aborts active LLM stream generation, cancels long-running background tool processes, or closes open modals. |
-| **<kbd>Up</kbd> / <kbd>Down</kbd>** | Input History Navigation | Cycles through previously submitted prompt history in the input textarea. |
+| **<kbd>Ctrl</kbd>+<kbd>D</kbd>** | Exit When Empty | Cleanly exits the CLI when the input textarea is empty and no task is actively executing. |
+| **<kbd>Ctrl</kbd>+<kbd>L</kbd>** | Clear Conversation Screen | Clears conversation entries from the active screen view. |
+| **<kbd>Ctrl</kbd>+<kbd>S</kbd>** | Steer Running Session | Submits steer input while a task is running to redirect execution without aborting. |
+| **<kbd>Esc</kbd>** | Cancel / Abort Turn | Aborts active LLM stream generation, cancels long-running background tool processes, or closes open modals. Double-tap within 300ms triggers checkpoint rollback. |
 | **<kbd>Ctrl</kbd>+<kbd>V</kbd>** | Multi-Modal Image Paste | Pastes image from system clipboard directly into the prompt context buffer for vision-capable models. |
+| **<kbd>Ctrl</kbd>+<kbd>R</kbd>** | Search Command History | Opens interactive fuzzy history search. |
+
+### Transcript Navigation & Scrolling
+
+| Shortcut | Action | Behavior |
+| :--- | :--- | :--- |
+| **<kbd>PageUp</kbd>** / **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>B</kbd>** | Page Up | Scrolls the transcript view up by one full page. |
+| **<kbd>PageDown</kbd>** / **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>F</kbd>** | Page Down | Scrolls the transcript view down by one full page. |
+| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>U</kbd>** | Half Page Up | Scrolls transcript up by half a page. |
+| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>D</kbd>** | Half Page Down | Scrolls transcript down by half a page. |
+| **<kbd>Ctrl</kbd>+<kbd>G</kbd>** / **<kbd>Home</kbd>** | Scroll to Top | Jumps immediately to the top of the transcript. |
+| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>G</kbd>** / **<kbd>End</kbd>** | Scroll to Bottom | Jumps to the latest turn in the transcript. |
+
+### Input Textarea & Autocomplete
+
+| Shortcut | Action | Behavior |
+| :--- | :--- | :--- |
+| **<kbd>Enter</kbd>** | Submit Prompt | Submits the current prompt for agentic planning and execution. |
+| **<kbd>Shift</kbd>+<kbd>Enter</kbd>** / **<kbd>Ctrl</kbd>+<kbd>J</kbd>** | Newline Insertion | Inserts a literal newline character in the prompt textarea without submitting. |
+| **<kbd>Up</kbd> / <kbd>Down</kbd>** | History Navigation | Cycles through previously submitted prompt history. |
+| **<kbd>Ctrl</kbd>+<kbd>P</kbd>** / **<kbd>Ctrl</kbd>+<kbd>N</kbd>** | Move Up / Down | Moves selection up/down in autocomplete menus and option selectors. |
+| **<kbd>Tab</kbd>** (in Autocomplete) | Accept Suggestion | Selects and inserts the highlighted slash command, file mention, or tool argument. |
+| **<kbd>Esc</kbd>** (in Autocomplete) | Dismiss Autocomplete | Closes the autocomplete popup and returns focus to text editing. |
 
 ---
 
@@ -683,82 +751,565 @@ kerberosec "the WebSocket connection drops after 30 seconds during test runs. di
 
 ---
 
-## Context Window Management and Token Optimization
+## Context Window Management, Compaction Engine, and Memory Architecture
 
-KerberoSec CLI implements intelligent context window optimization to reduce token overhead, minimize latency, and prevent context exhaustion:
+KerberoSec CLI implements an enterprise-grade, two-tier context window compaction and memory preservation engine in `@kerberosec/core` (`sdk/packages/core/src/extensions/context/`). This architecture allows developers and security teams to execute multi-hour autonomous sessions without token exhaustion, context overflow errors, or loss of critical architectural intent.
 
-### 1. File Pinning (`@file.ts`)
-Typing `@` in the prompt textarea opens an interactive fuzzy file scanner. Selecting a file injects only the essential AST outline and file content into the active turn buffer, avoiding unnecessary workspace bloat.
+```mermaid
+graph TB
+    subgraph Monitor ["Real-Time Context Monitor"]
+        Turn["Active Conversation Turn"] --> Estimator["Token Headroom Estimator"]
+        Estimator --> Gate{"Context Ceiling Exceeded?<br>(>= 90% Max Tokens or Manual /compact)"}
+    end
 
-### 2. Autonomous Context Compaction (`/compact`)
-When conversation history approaches 80% of the active model context headroom:
-- The Compaction Coordinator summarizes earlier turns into structured checkpoint summaries.
-- Ephemeral tool outputs and test logs are compressed into single-line status records.
-- Critical architectural decisions and unresolved goals are preserved intact.
+    subgraph Pipeline ["Two-Tier Compaction Coordinator"]
+        Gate -- "Yes (Trigger)" --> Decider{"Summarizer Model Configured?"}
+        
+        Decider -- "Yes" --> Agentic["Tier 2: Agentic Compaction<br>(LLM Context Summarizer)"]
+        Decider -- "No / Local Offline" --> Basic["Tier 1: Basic Compaction<br>(Deterministic Pruning)"]
+        
+        Agentic -- "Failure / Abort" --> Basic
+        Agentic -- "Success" --> Projection["Structured Checkpoint Projection"]
+        Basic --> Projection
+    end
 
-### 3. Native Prompt Caching
-When using cloud models with prompt caching support (Anthropic Claude, OpenAI GPT-4o), KerberoSec CLI structures context blocks with fixed prefix anchors, reducing token input costs by up to 90% and accelerating turn responses.
+    subgraph Preservation ["Protected Invariants Engine"]
+        Projection --> Filter["Sanitize Ephemeral Artifacts"]
+        Filter --> Atomicity["Enforce Atomic Tool Pair Integrity<br>(Tool Use + Tool Result)"]
+        Atomicity --> Tail["Protect Tail Invariants<br>(Latest User Prompt + Active Assistant Turn)"]
+        Tail --> ResumedTurn["Resumed Execution Buffer"]
+    end
+```
+
+### 1. Basic Compaction vs Agentic Compaction Pipeline
+
+KerberoSec CLI provides two complementary compaction strategies to balance speed, resource usage, and semantic density:
+
+#### Tier 1: Deterministic Basic Compaction
+- **Zero Model Overhead**: Operates entirely in memory with no additional LLM inference calls or token consumption. Ideal for fast local offline models (`qwen2.5-coder`) and rate-limited environments.
+- **Atomic Tool Pair Removal**: In standard conversational memory, naive truncation often cuts across tool call boundaries, creating invalid conversation structures. KerberoSec's Basic Compactor enforces **strict atomic tool pair dropping**: when an older turn is pruned, both the assistant's `tool_use` declaration and the corresponding `tool_result` observation block are removed together.
+- **Image Sanitization**: Large binary base64 image blocks from older vision turns are automatically purged, retaining concise text descriptions to reclaim immediate token headroom.
+- **Proportional Budgeting**: Targets pruning to 50% of the active token budget for extended conversations, ensuring the model does not repeatedly oscillate across the compaction boundary.
+
+#### Tier 2: Agentic Summarization Compaction
+- **Semantic Continuity**: Employs a lightweight summarizer model to compress earlier multi-turn exploration loops, code readings, and investigative outputs into an executive architectural state block.
+- **Protected Boundaries**: Never places the compaction split within an active tool execution sequence.
+- **Graceful Degradation**: If an agentic compaction request fails, times out, or produces invalid reasoning output, the system automatically falls back to deterministic Basic Compaction with zero user disruption.
+- **Telemetry Events**: Emits telemetry records (`task.compaction_executed`, `task.compaction_skipped`) with exact token unit metrics and strategy tags (`basic`, `custom`, or `agentic`).
+
+### 2. Token Budgeting and Trigger Thresholds
+
+- **Automatic Trigger Gate**: Compaction triggers automatically when conversational context reaches **90% of max input tokens** (or **81%** when only total context window is reported).
+- **Manual Trigger (`/compact`)**: Operators can trigger immediate on-demand compaction at any time during long sessions. In manual mode, preservation thresholds are dynamically adjusted to maximize available workspace headroom.
+- **Protected Tail Allocation**: The newest user prompt and the immediate assistant turn are permanently protected from compaction, ensuring immediate instructions are never summarized or clipped.
+
+### 3. File Pinning (`@file.ts`) and AST Injection
+Typing `@` in the prompt input opens an interactive fuzzy file navigator. Selecting a file injects its precise AST outline and content directly into the active prompt context without requiring the model to consume exploration turns reading the file manually.
+
+### 4. Native Multi-Provider Prompt Caching
+When utilizing frontier cloud models with prompt caching support (Anthropic Claude, OpenAI, Google Gemini), KerberoSec CLI structures system instructions, repository rules, and MCP tool schemas with deterministic prefix anchors. This yields up to **90% token cost reduction** and near-instantaneous response times on recurring turns.
 
 ---
 
 ## Multi-Modal Vision and UI Screenshot Debugging
 
-KerberoSec CLI supports multi-modal vision inputs directly inside the terminal:
+KerberoSec CLI provides native multi-modal image ingestion directly from the terminal buffer:
 
 1. **Clipboard Image Paste (<kbd>Ctrl</kbd>+<kbd>V</kbd>)**:
-   - Take a screenshot of a UI bug, design mockup, or database schema diagram.
+   - Capture a screenshot of an application UI bug, browser layout mismatch, or architectural diagram.
    - Press <kbd>Ctrl</kbd>+<kbd>V</kbd> inside the prompt input.
-   - KerberoSec CLI detects the image format (`PNG`, `JPEG`, `WebP`), reads the buffer via native clipboard utilities (`xclip`, `wl-paste`, `pbpaste`), downsamples the image if necessary, and injects the base64 data URI into the vision model payload.
-2. **Use Cases**:
-   - Converting UI mockups into Tailwind CSS and React components.
-   - Debugging broken layout alignments from browser screenshots.
-   - Analyzing architectural diagram images and translating them into code schemas.
+   - The runtime inspects system clipboard buffers (`xclip`, `wl-paste`, `pbpaste`), normalizes the image format (`PNG`, `JPEG`, `WebP`), applies resolution scaling if necessary, and injects the payload directly into the active vision context.
+2. **Security & Red Teaming Use Cases**:
+   - Visual verification of Stored and Reflected XSS execution (DOM modification proofs).
+   - UI Clickjacking / Framing vulnerability audits.
+   - Authentication bypass and CAPTCHA flow analysis.
+   - Rapid conversion of Figma wireframes into secure React, Tailwind, or HTML5 code.
 
 ---
 
-## Custom Repository Rules Engine (`.kerberosecrules`)
+## Custom Repository Rules & Multi-Agent Dispatch Protocols
 
-KerberoSec CLI automatically loads project-specific architecture rules, coding standards, and security constraints from a `.kerberosecrules` file or `.kerberosecrules/` directory located in your repository root.
+### Repository Rules Engine (`.kerberosecrules`)
 
-### Example `.kerberosecrules` Configuration
+KerberoSec CLI automatically loads project-specific architecture constraints, coding standards, and security policies from `.kerberosecrules` or `.kerberosecrules/` in the workspace root.
 
 ```markdown
-# Repository Guidelines for KerberoSec
+# Repository Architecture Guidelines for KerberoSec
 
-## Coding Standards
+## Code Standards
 - Use TypeScript strict mode with explicit return types on exported functions.
-- Do not use 'any'; use 'unknown' and narrow with type guards.
-- Prefer immutability and pure functions where possible.
+- Avoid 'any'; use 'unknown' and narrow with type guards.
+- Prefer pure functions and immutability where feasible.
 
-## Testing Rules
-- Every new function in 'src/utils/' must have an accompanying '.test.ts' file.
-- Run tests using 'bun test' before concluding any turn.
+## Security Constraints
+- All database queries in 'src/db/' must strictly use parameterized queries.
+- Raw shell execution in 'scripts/' must use execFile or quoted arguments.
+- Never write hardcoded credentials or API tokens into source files.
 
-## Architecture Boundaries
-- The UI layer ('src/tui/') must never import directly from database packages.
-- Always use the Checkpoint Engine before modifying configuration files.
+## Testing & Quality Gates
+- Every functional change must include an accompanying unit test.
+- Run 'bun test' before concluding any turn.
+```
+
+### Subagent Enclaves and Dispatch Topology
+
+For large-scale codebases and complex security assessments, KerberoSec CLI implements an isolated multi-agent delegation topology:
+
+```mermaid
+graph TB
+    subgraph Coordinator ["KerberoSec Coordinator Agent"]
+        User["User Prompt"] --> Planner["Master ReAct Planner"]
+        Planner --> Dispatcher["Subagent Dispatch Manager"]
+    end
+
+    subgraph Enclaves ["Isolated Subagent Enclaves"]
+        Dispatcher -->|Read-Only Contract| Explore["Research & Recon Subagent<br>(grep, find, read, web fetch)"]
+        Dispatcher -->|Sandboxed Workspace| Editor["Code Editor Subagent<br>(write, replace, git patch)"]
+        Dispatcher -->|Verification Gate| Verifier["Verification Subagent<br>(bun test, lint, compile)"]
+    end
+
+    subgraph Storage ["Context & State Protection"]
+        Explore --> ContextFilter["Context Pruning & AST Distillation"]
+        Editor --> ShadowSnap["Shadow Checkpoint Snapshots"]
+        Verifier --> GateResult["Exit Code & Assertion Assert"]
+    end
+
+    ContextFilter --> Planner
+    ShadowSnap --> Planner
+    GateResult --> Planner
+```
+
+1. **Read-Only Reconnaissance Enclave (`research`)**:
+   - Equipped exclusively with read-only tools (`grep_search`, `find_by_name`, `read_file`, `read_url_content`).
+   - Prevented by runtime permissions from modifying files on disk or executing destructive commands.
+   - Conducts broad codebase surveys and gathers evidence without cluttering the coordinator's primary context window.
+2. **Sandboxed Modification Enclave (`code-editor`)**:
+   - Dispatched to execute targeted multi-file edits inside isolated Git branches or worktree sandboxes.
+   - Performs granular chunk replacements with shadow snapshot rollback protection.
+3. **Verification Enclave (`verifier`)**:
+   - Executes build tools, test suites, and regression checks.
+   - Confirms that all modified files compile cleanly and satisfy the project's acceptance criteria before concluding a task.
+
+### Delegation Contracts and Asynchronous Message Passing
+- Subagents execute asynchronously without blocking the coordinator's terminal UI.
+- The coordinator receives reactive message updates upon subagent completion, eliminating inefficient polling loops.
+- Every delegation follows a strict **Delegation Contract**: defining task scope, permitted tools, target files, and explicit deliverables.
+
+---
+
+## Autonomous Skills and Security Automation Reference (`.kerberosec/skills/`)
+
+KerberoSec CLI includes **32 production-grade skills** stored in `.kerberosec/skills/`. Each skill provides specialized prompts, deterministic execution harnesses, bundled scripts, and safety constraints.
+
+Skills are dynamically discovered and loaded into the agent runtime using the three-tier scope hierarchy:
+`User (~/.kerberosec/skills/) -> Project (.kerberosec/skills/) -> Local (.kerberosec/skills.local/)`.
+
+```mermaid
+graph TB
+    subgraph S1 ["Supervision & Monitoring"]
+        S_loop["/loop<br>Autonomous Loop"]
+        S_sched["/schedule<br>Cron Engine"]
+        S_run["/run<br>App Harness"]
+        S_gen["/run-skill-generator<br>Driver Generator"]
+        S_cfg["/update-config<br>Config & Hooks"]
+    end
+
+    subgraph S2 ["Security & Red Teaming"]
+        S_deep["/deep-research<br>Threat Intel"]
+        S_sec["/security-review<br>Security Audit"]
+        S_chrome["/chrome-automation<br>Browser Testing"]
+        S_comp["/computer-use<br>Desktop GUI"]
+        S_batch["/batch<br>Multi-Target"]
+    end
+
+    subgraph S3 ["Stylometry & Reporting"]
+        S_voice["/setup-writing-style<br>Voice Profiler"]
+        S_docx["/docx<br>Executive Docx"]
+        S_pdf["/pdf<br>Vector PDF"]
+        S_pdfread["/pdf-reading<br>Doc Extraction"]
+    end
+
+    subgraph S4 ["Artifacts & Analytics"]
+        S_dataviz["/dataviz<br>Security Charts"]
+        S_artdes["/artifact-design<br>Tokens & Theme"]
+        S_diag["/artifact-diagramming<br>Attack Topologies"]
+        S_caps["/artifact-capabilities<br>Runtime Contracts"]
+        S_keys["/keybindings-help<br>Terminal Keybinds"]
+    end
+
+    subgraph S5 ["Verification & Delivery"]
+        S_init["/init<br>Workspace Recon"]
+        S_ver["/verify<br>Test Gates"]
+        S_rev["/code-review<br>Diff Audit"]
+        S_simp["/simplify<br>Refactoring"]
+        S_tui["/tuistory<br>TUI Testing"]
+        S_pub["/publish-*<br>CLI/UI/Desktop/Ext"]
+        S_wf["/workflow-authoring<br>Skill Synthesis"]
+        S_perm["/fewer-permission-prompts<br>Rule Tuning"]
+        S_doc["/doctor<br>CLI Diagnostics"]
+        S_dbg["/debug<br>Root Cause Analysis"]
+    end
 ```
 
 ---
 
-## Custom Skills and Workflow Automation (`.kerberosec/skills/`)
+### Category 1: Autonomous Supervision & Continuous Monitoring
 
-Skills extend KerberoSec CLI with domain-specific workflows, custom prompts, and structured tool procedures. Each skill is stored in `.kerberosec/skills/<skill-name>/SKILL.md` and can be invoked using `/skills` or typing `/<skill-name>`.
+#### 1. `/loop` - Autonomous Monitoring & Stewardship Engine
+- **What it does**: Provides a resilient, self-pacing autonomous loop for supervising long-running tasks: security scans (Nuclei, Nmap, ZAP), build pipelines, test suites, and remote CI runs.
+- **How to use**:
+  ```bash
+  /loop "monitor the nuclei vulnerability scan on staging and alert on critical findings"
+  ```
+- **How it is implemented**:
+  - Implements **Dynamic Pacing & Adaptive Backoff**: Starts with rapid status checks (10-30s), dynamically expanding to a quiet heartbeat interval (1200-1800s) when waiting on external processes.
+  - **Reversibility Calculus**: Automatically distinguishes between reversible local actions (running diagnostic reads, status checks) and irreversible mutations (modifying databases, killing production processes).
+  - **Quiet Hold Termination**: Detects stalled or idle conditions across 3 consecutive observation passes and shuts down cleanly to conserve compute.
 
-### Example Skill: `security-audit/SKILL.md`
+#### 2. `/schedule` - Persistent Hub & Cron Routine Engine
+- **What it does**: Schedules recurring background operations, daily security sweeps, and interval penetration testing tasks managed by the KerberoSec Hub cron engine.
+- **How to use**:
+  ```bash
+  /schedule "run daily dependency vulnerability audit at 03:00 UTC"
+  ```
+- **How it is implemented**:
+  - Normalizes schedules to UTC standard.
+  - Supports standard 5-field cron syntax (`*/30 * * * *`) and natural language recurring schedules.
+  - Manages delivery options: direct terminal alerts, background log output, or notification dispatch.
 
-```markdown
+#### 3. `/run` - Multi-Target Application Execution Harness
+- **What it does**: Provides a unified execution and verification harness for running and testing any project type: CLI binaries, HTTP web servers, interactive TUIs, Electron applications, Playwright test suites, and backend libraries.
+- **How to use**:
+  ```bash
+  /run "start the backend API server and verify the health check endpoint"
+  ```
+- **How it is implemented**:
+  - Ships 6 specialized reference execution patterns in `.kerberosec/skills/run/examples/` (cli, server, tui, electron, playwright, library).
+  - Automates port binding detection, process lifecycle monitoring, and health check validation before returning success.
+
+#### 4. `/run-skill-generator` - Project-Specific Run Driver Generator
+- **What it does**: Scans the active repository's package manifests, configuration files, and build scripts, synthesizing a tailored `.kerberosec/skills/run/SKILL.md` driver customized for the exact project.
+- **How to use**:
+  ```bash
+  /run-skill-generator
+  ```
+- **How it is implemented**:
+  - Employs a structured template (`template.md`) to generate non-derivable startup commands, port definitions, and verification commands matching the target codebase.
+
+#### 5. `/update-config` - Safe Settings, Hooks, and Permissions Engine
+- **What it does**: Programmatically updates KerberoSec CLI settings, lifecycle hooks, and permission rules with strict safety invariants and zero clobbering.
+- **How to use**:
+  ```bash
+  /update-config "allow bun test and git status without confirmation prompts"
+  ```
+- **How it is implemented**:
+  - Enforces the three-tier scope hierarchy: User (`~/.kerberosec/settings.json`) -> Project (`.kerberosec/settings.json`, committed) -> Local (`.kerberosec/settings.local.json`, gitignored).
+  - Arrays (permissions, lifecycle hooks) are strictly appended rather than overwritten.
+  - Supports `PreToolUse` and `PostToolUse` deterministic command hooks.
+
 ---
-name: security-audit
-description: Scans the codebase for hardcoded secrets, SQL injection, and insecure dependencies
+
+### Category 2: Web Security Assessment, Red Teaming & Threat Intelligence
+
+#### 6. `/deep-research` - 5-Phase Adversarial Threat Intelligence Engine
+- **What it does**: Conducts multi-pass security research, CVE deep dives, zero-day threat analysis, and exploit verification.
+- **How to use**:
+  ```bash
+  /deep-research "investigate CVE-2024-3094 xz backdoor techniques, affected versions, and detection signatures"
+  ```
+- **How it is implemented**:
+  - Structured into 5 rigorous phases:
+    1. **Scope**: Formalizes research boundaries, target CVEs, and hypothesis definitions.
+    2. **Search**: Executes parallel web queries across official security advisories, NVD, Exploit-DB, and GitHub advisories.
+    3. **URL Deduplication, Fetch & Extraction**: Normalizes URLs, fetches clean content, and sanitizes dangerous shell characters.
+    4. **3-Vote Adversarial Verification**: Employs an adversarial review quorum where findings require consensus before acceptance.
+    5. **Synthesis**: Produces comprehensive intelligence reports with verified reproduction steps and remediation guides.
+
+#### 7. `/security-review` - Codebase Security Posture & Vulnerability Audit
+- **What it does**: Performs deep static analysis and threat modeling across repository source code to identify OWASP Top 10 vulnerabilities, authentication bypasses, and authorization flaws.
+- **How to use**:
+  ```bash
+  /security-review "audit authentication middleware and session management in src/auth/"
+  ```
+- **How it is implemented**:
+  - Maps trust boundaries and untrusted user input sources.
+  - Scans for SQL injection, command injection, SSRF, IDOR, and insecure cryptographic primitives.
+  - Delivers parameterized code fixes with regression test cases.
+
+#### 8. `/chrome-automation` - DOM-Aware Browser Automation & PoC Verification
+- **What it does**: Automates Chrome or Chromium to interact with web targets, verify DOM states, test authentication flows, record exploit PoCs, and inspect network requests.
+- **How to use**:
+  ```bash
+  /chrome-automation "navigate to login portal, test CSRF token renewal, and inspect cookie security flags"
+  ```
+- **How it is implemented**:
+  - Single-pass deferred tool loading (`ToolSearch`) for maximum speed.
+  - **Non-Blocking PoC Execution**: Strictly avoids triggering native modal dialogs (`window.alert`, `window.confirm`) that freeze browser automation; uses DOM modification and console verification instead.
+  - Inspects network traffic (`Cookie`, `Authorization`, `CSP`, `CORS`) to confirm security controls.
+
+#### 9. `/computer-use` - Native Desktop & GUI Application Control
+- **What it does**: Controls native desktop software (Burp Suite, Wireshark, Ghidra, terminal emulators, network proxies) via visual screen inspection, keyboard input, and mouse clicks.
+- **How to use**:
+  ```bash
+  /computer-use "inspect the Burp Suite HTTP history tab and search for requests containing authorization headers"
+  ```
+- **How it is implemented**:
+  - Selects the right automation tier (Direct API -> Browser DOM -> Native GUI).
+  - Employs empirical visual inspection: takes fresh screenshots before asserting state.
+  - Confirms sensitive destructive operations before execution.
+
+#### 10. `/batch` - Parallel Multi-Target Security Operations
+- **What it does**: Coordinates batched operations across multiple repositories, target endpoints, or microservice directories.
+- **How to use**:
+  ```bash
+  /batch "audit package.json dependencies across all 12 microservices in services/ for CVE-2024-XXXX"
+  ```
+- **How it is implemented**:
+  - Spawns parallel worker processes with isolated output tracking and aggregated reporting.
+
 ---
 
-When invoked, perform the following security audit steps:
-1. Scan all files in 'src/' for hardcoded API keys, JWT secrets, or passwords using ripgrep.
-2. Verify all database queries use parameterized SQL inputs.
-3. Check dependencies in 'package.json' for deprecated or vulnerable packages.
-4. Generate a concise diagnostic markdown table with recommendations.
-```
+### Category 3: Stylometric Voice Calibration & Executive Reporting
+
+#### 11. `/setup-writing-style` - Personal Voice Calibration & Anti-Slop Engine
+- **What it does**: Learns how the operator naturally writes from real past reports, advisories, and messages, producing a tailored voice profile in `.kerberosec/skills/my-writing-style/SKILL.md`. Eliminates robotic, generic AI phrasing.
+- **How to use**:
+  ```bash
+  /setup-writing-style
+  ```
+- **How it is implemented**:
+  - Powered by a standalone standard-library Python stylometry engine: [`stylometry.py`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/.kerberosec/skills/setup-writing-style/scripts/stylometry.py).
+  - **TF-IDF Exemplar Extraction**: Selects representative, diverse writing exemplars from real sent samples across surfaces (email, chat, docs).
+  - **Metric Profiling**: Measures sentence rhythm (mean, median, stdev), contraction frequency, punctuation habits, and lowercase start rates.
+  - **AI Cliché Elimination**: Detects and bans generic corporate AI words ("delve", "leverage", "robust", "streamline", "crucial", "holistic", "landscape", "ecosystem").
+  - Built-in self-test verified: `python3 stylometry.py --selftest` ensures zero corruption.
+
+#### 12. `/docx` - Executive Assessment Documentation Generator
+- **What it does**: Generates styled Word (`.docx`) reports with formal typography, executive summaries, finding severity tables, and remediation roadmaps.
+- **How to use**:
+  ```bash
+  /docx "generate formal penetration testing executive report for Q3 web assessment"
+  ```
+- **How it is implemented**:
+  - Employs XML document generation pipelines with standardized enterprise headings, callout boxes, and formatted code blocks.
+
+#### 13. `/pdf` - High-Contrast Vector PDF Report Generator
+- **What it does**: Compiles penetration test findings, vulnerability tables, and compliance scorecards into print-ready vector PDF documents.
+- **How to use**:
+  ```bash
+  /pdf "compile security assessment findings into a vector PDF report"
+  ```
+- **How it is implemented**:
+  - Generates HTML/CSS print layouts and converts them to vector PDFs using headless Chromium or Playwright with zero visual clipping.
+
+#### 14. `/pdf-reading` - Structured Security Document & Advisory Extractor
+- **What it does**: Parses complex security documentation, whitepapers, regulatory compliance standards, and PDF advisories into structured text and data tables.
+- **How to use**:
+  ```bash
+  /pdf-reading "extract compliance requirements from SOC2-Type2-Report.pdf"
+  ```
+- **How it is implemented**:
+  - Extracts text streams, table structures, and metadata while preserving technical hierarchy.
+
+---
+
+### Category 4: Artifact Visualization, Dashboards & Design Tokens
+
+#### 15. `/dataviz` - Computable Charts & Security Analytics Dashboards
+- **What it does**: Creates accessible, computable data visualizations, security metric graphs, and vulnerability distribution charts.
+- **How to use**:
+  ```bash
+  /dataviz "render a severity distribution chart comparing vulnerabilities across Q1 vs Q2"
+  ```
+- **How it is implemented**:
+  - Bundles automated color validation scripts (`validate_palette.py`, `validate_palette.js`).
+  - Enforces **6 automated contrast checks**: WCAG AA 4.5:1 text contrast, non-adjacent duplicate hues, dark/light theme luminance verification, and non-reliance on color alone.
+
+#### 16. `/artifact-design` - Enterprise Design Tokens & Theme Engine
+- **What it does**: Defines dual-theme design tokens, typography ramps, and tabular number formatting for all terminal and web artifacts.
+- **How to use**:
+  ```bash
+  /artifact-design "generate dark-mode dashboard tokens for finding severity levels"
+  ```
+- **How it is implemented**:
+  - Standardizes the security severity color encoding: Critical (`#DC2626`), High (`#EA580C`), Medium (`#F59E0B`), Low (`#3B82F6`), and Info (`#10B981`).
+  - Enforces `font-variant-numeric: tabular-nums` for alignment of CVSS scores, line numbers, and token counts.
+
+#### 17. `/artifact-diagramming` - Attack Topology & Network Architecture Diagrams
+- **What it does**: Authors inline SVG architecture diagrams, attack paths, trust boundaries, and network topology maps.
+- **How to use**:
+  ```bash
+  /artifact-diagramming "draw an SVG attack path diagram showing SSRF leading to AWS metadata access"
+  ```
+- **How it is implemented**:
+  - Produces pure inline SVG elements without external dependencies.
+  - Uses dual-theme CSS variables for seamless dark/light terminal rendering.
+
+#### 18. `/artifact-capabilities` - Runtime Capability Contracts & Types
+- **What it does**: Provides runtime capability contracts and TypeScript declarations (`@types/artifact.d.ts`) for interactive HTML/JS artifacts.
+- **How to use**:
+  ```bash
+  /artifact-capabilities "inspect active artifact runtime contracts and permissions"
+  ```
+- **How it is implemented**:
+  - Defines strict postMessage protocols, download permissions, and MCP proxy endpoints for sandboxed artifact iframes.
+
+#### 19. `/keybindings-help` - Terminal Keybinding Customization & Conflict Prevention
+- **What it does**: Guides operators in configuring `~/.kerberosec/keybindings.json`, adding chord shortcuts, and unbinding default keys.
+- **How to use**:
+  ```bash
+  /keybindings-help "how do I add a chord shortcut ctrl+k ctrl+t for toggling todos?"
+  ```
+- **How it is implemented**:
+  - Documents all KerberoSec CLI contexts (`Global`, `Chat`, `Autocomplete`, `Confirmation`, `Help`, `Transcript`, `DiffPanel`, `Scroll`).
+  - Proactively warns against reserved terminal collisions (`ctrl+c`, `ctrl+d`, `ctrl+z`, `ctrl+\`, tmux `ctrl+b`, screen `ctrl+a`).
+
+---
+
+### Category 5: Code Quality, Verification & Delivery Pipelines
+
+#### 20. `/init` - 8-Phase Workspace Reconnaissance & AGENTS.md Architecture
+- **What it does**: Analyzes the active repository to architect a concise, high-signal `AGENTS.md` (and optional personal `AGENTS.local.md`, skills, and hooks).
+- **How to use**:
+  ```bash
+  /init
+  ```
+- **How it is implemented**:
+  - Executes an 8-phase pipeline: Check Existing -> Scope Intent -> Codebase Discovery -> Gap Interview -> AGENTS.md Synthesis -> Personal Preferences -> Project Skills -> Verification.
+  - Applies the **Derivability Test**: cuts generic platitudes and obvious idioms, preserving only critical build commands, architecture maps, and security boundaries.
+
+#### 21. `/verify` - Pre-Completion Testing & Assertion Gates
+- **What it does**: Enforces rigorous testing and regression gates before declaring any task complete.
+- **How to use**:
+  ```bash
+  /verify "run all unit and integration tests and confirm zero regressions"
+  ```
+- **How it is implemented**:
+  - Identifies relevant test runners, linters, and type checkers.
+  - Requires live terminal execution and exit code verification before handoff.
+
+#### 22. `/code-review` - Differential Vulnerability & Logic Review
+- **What it does**: Conducts structured differential code reviews on Git branches, uncommitted diffs, and pull requests.
+- **How to use**:
+  ```bash
+  /code-review "review changes between main and current branch for security risks"
+  ```
+- **How it is implemented**:
+  - Focuses on changed lines and their blast radius in neighboring files.
+  - Classifies findings by severity: Critical (exploits/crashes), Warning (logic bugs), and Suggestion (cleanliness).
+
+#### 23. `/simplify` - Code Refactoring & Dead Code Minimization
+- **What it does**: Refactors complex code blocks to reduce cognitive complexity, eliminate redundant layers, and purge dead code.
+- **How to use**:
+  ```bash
+  /simplify "refactor src/services/auth.ts to reduce nesting and simplify error handling"
+  ```
+- **How it is implemented**:
+  - Verifies behavior preservation with live test runs before and after refactoring.
+
+#### 24. `/tuistory` - Terminal UI Component Snapshot Testing
+- **What it does**: Renders, inspects, and snapshot-tests terminal UI components in virtual ANSI space.
+- **How to use**:
+  ```bash
+  /tuistory "test the StatusBar component rendering across 80x24 and 120x40 terminal dimensions"
+  ```
+- **How it is implemented**:
+  - Employs OpenTUI virtual screen buffers to verify layout rendering and ANSI color accuracy.
+
+#### 25. `/publish-cli` - CLI Package Publishing Pipeline
+- **What it does**: Builds, tests, and publishes npm/bun CLI packages with semantic versioning and changelog generation.
+- **How to use**:
+  ```bash
+  /publish-cli "prepare release v1.4.0 with updated changelog"
+  ```
+
+#### 26. `/publish-desktop` - Electron & Desktop Binary Distribution
+- **What it does**: Builds and packages cross-platform desktop releases (Linux AppImage/deb, macOS dmg, Windows exe) with code signing.
+- **How to use**:
+  ```bash
+  /publish-desktop "package desktop release for Linux x64"
+  ```
+
+#### 27. `/publish-extension` - VSCode & Browser Extension Packager
+- **What it does**: Validates and packages VSCode and browser extensions with manifest verification.
+- **How to use**:
+  ```bash
+  /publish-extension "package VSCode extension vsix bundle"
+  ```
+
+#### 28. `/publish-ui` - Web Application & UI Asset Distribution
+- **What it does**: Compiles and bundles static web interfaces, single-page apps, and asset distribution artifacts.
+- **How to use**:
+  ```bash
+  /publish-ui "build production web UI bundle and verify asset hashing"
+  ```
+
+#### 29. `/workflow-authoring` - Custom Skill & Workflow Synthesis
+- **What it does**: Synthesizes new reusable custom skills inside `.kerberosec/skills/<name>/SKILL.md` for project-specific automation.
+- **How to use**:
+  ```bash
+  /workflow-authoring "create a new custom skill for staging database migrations"
+  ```
+
+#### 30. `/fewer-permission-prompts` - Least-Privilege Permission Rule Tuning
+- **What it does**: Analyzes recurring permission prompts in the operator session and constructs least-privilege allowlist rules in `.kerberosec/settings.json`.
+- **How to use**:
+  ```bash
+  /fewer-permission-prompts
+  ```
+
+#### 31. `/doctor` - Complete System Health & Dependency Diagnostics
+- **What it does**: Diagnoses the health of KerberoSec CLI, installed binary packages, Ollama daemon status, GPU acceleration, and workspace file permissions.
+- **How to use**:
+  ```bash
+  /doctor
+  ```
+
+#### 32. `/debug` - Autonomous Root-Cause Analysis & Fix Engine
+- **What it does**: Systematically investigates bug reports, test failures, and unhandled runtime exceptions to isolate root causes and apply verified fixes.
+- **How to use**:
+  ```bash
+  /debug "tests are failing with connection refused on port 8080. diagnose and fix"
+  ```
+
+---
+
+### Comprehensive 32-Skill Matrix
+
+| Skill | Category | Primary Invocation | Key Invariants & Artifacts |
+| :--- | :--- | :--- | :--- |
+| **`loop`** | Supervision | `/loop <task>` | Dynamic pacing, adaptive backoff (1200-1800s), 3-pass quiet hold |
+| **`schedule`** | Supervision | `/schedule <cron/interval>` | Persistent Hub engine, UTC normalization, routine triggers |
+| **`run`** | Supervision | `/run <target>` | Multi-target app harness (CLI, server, TUI, Electron, Playwright) |
+| **`run-skill-generator`** | Supervision | `/run-skill-generator` | Toolchain reconnaissance, customized project `run` driver |
+| **`update-config`** | Supervision | `/update-config <setting>` | Non-destructive JSON merge, lifecycle hooks, permission allowlists |
+| **`deep-research`** | Security & Recon | `/deep-research <query>` | 5-phase threat intel: scope, search, dedup/extract, 3-vote quorum, report |
+| **`security-review`** | Security & Recon | `/security-review [path]` | OWASP Top 10 audit, trust boundary mapping, remediation gates |
+| **`chrome-automation`** | Security & Recon | `/chrome-automation <url>` | DOM-aware browser testing, non-blocking PoCs, network inspection |
+| **`computer-use`** | Security & Recon | `/computer-use <task>` | Native desktop GUI automation (Burp Suite, Wireshark, Ghidra) |
+| **`batch`** | Security & Recon | `/batch <command>` | Parallel multi-target scan and audit batching across endpoints |
+| **`setup-writing-style`** | Voice & Reporting | `/setup-writing-style` | Stylometric engine (`stylometry.py`), TF-IDF exemplars, anti-slop |
+| **`docx`** | Voice & Reporting | `/docx <brief>` | Styled executive Word reports, finding tables, remediation roadmaps |
+| **`pdf`** | Voice & Reporting | `/pdf <brief>` | Vector PDF reports, vulnerability matrices, print styling |
+| **`pdf-reading`** | Voice & Reporting | `/pdf-reading <file.pdf>` | Structured optical and text extraction from security whitepapers |
+| **`dataviz`** | Artifacts & Visuals | `/dataviz <prompt>` | Computable charts, 6-check color contrast validation scripts |
+| **`artifact-design`** | Artifacts & Visuals | `/artifact-design [type]` | Dual-theme design tokens, severity status encoding, tabular numbers |
+| **`artifact-diagramming`**| Artifacts & Visuals | `/artifact-diagramming [prompt]`| Inline SVG attack paths, network topologies, trust boundaries |
+| **`artifact-capabilities`**| Artifacts & Visuals | `/artifact-capabilities` | Runtime capability contracts, postMessage interfaces, TS types |
+| **`keybindings-help`** | Artifacts & Visuals | `/keybindings-help` | Terminal keyboard customization, chords, unbinding syntax |
+| **`init`** | Quality & Delivery | `/init` | 8-phase workspace discovery, non-derivable `AGENTS.md` synthesis |
+| **`verify`** | Quality & Delivery | `/verify [command]` | Pre-completion testing, regression gates, assertion checks |
+| **`code-review`** | Quality & Delivery | `/code-review [branch]` | Differential security and logic review for PRs and patches |
+| **`simplify`** | Quality & Delivery | `/simplify [file]` | Refactoring, dead code reduction, cognitive complexity minimization |
+| **`tuistory`** | Quality & Delivery | `/tuistory [component]` | Terminal UI component rendering and ANSI snapshot verification |
+| **`publish-cli`** | Quality & Delivery | `/publish-cli` | Release packaging, semantic versioning, npm/bun publishing |
+| **`publish-desktop`** | Quality & Delivery | `/publish-desktop` | Cross-platform Electron desktop distribution (AppImage, deb, dmg) |
+| **`publish-extension`** | Quality & Delivery | `/publish-extension` | VSCode and browser extension packaging |
+| **`publish-ui`** | Quality & Delivery | `/publish-ui` | Web application bundling and static asset distribution |
+| **`workflow-authoring`** | Quality & Delivery | `/workflow-authoring` | Custom reusable skill synthesis and prompt packaging |
+| **`fewer-permission-prompts`** | Quality & Delivery | `/fewer-permission-prompts` | Least-privilege permission rule tuning for uninterrupted work |
+| **`doctor`** | Quality & Delivery | `/doctor` | CLI diagnostics, Ollama status, dependencies, permissions |
+| **`debug`** | Quality & Delivery | `/debug <error>` | Autonomous root-cause analysis and verified bug remediation |
 
 ---
 
@@ -1375,18 +1926,21 @@ graph TD
     Router -- "Provider: openai" --> OpenAIAdapter["OpenAI Chat Completions Adapter"]
     Router -- "Provider: google" --> GeminiAdapter["Google Gemini Content API Adapter"]
     Router -- "Provider: groq" --> GroqAdapter["Groq OpenAI-Compatible Adapter"]
+    Router -- "Provider: agent-router" --> AgentRouterAdapter["AgentRouter Multi-Model Gateway"]
 
     OllamaAdapter --> LocalPort["http://127.0.0.1:11434 (Local Engine)"]
     AnthropicAdapter --> CloudAnthropic["api.anthropic.com (Cloud)"]
     OpenAIAdapter --> CloudOpenAI["api.openai.com (Cloud)"]
     GeminiAdapter --> CloudGemini["generativelanguage.googleapis.com (Cloud)"]
     GroqAdapter --> CloudGroq["api.groq.com (Cloud)"]
+    AgentRouterAdapter --> CloudAgentRouter["agentrouter.org (Cloud Gateway)"]
 
     LocalPort --> StreamUnified["Unified Token Stream Parser"]
     CloudAnthropic --> StreamUnified
     CloudOpenAI --> StreamUnified
     CloudGemini --> StreamUnified
     CloudGroq --> StreamUnified
+    CloudAgentRouter --> StreamUnified
     StreamUnified --> Output["Normalized Chunks to Session Runtime"]
 ```
 

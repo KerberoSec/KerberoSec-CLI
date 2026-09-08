@@ -11,11 +11,13 @@ import {
 	getIndividualPlanFeatures,
 	getKerberoSecOrgIndividualInferenceSubscriptionMessage,
 	getKerberoSecPassLimitDetailMessage,
+	isContentBlockedErrorMessage,
 	isKerberoSecFreeModelLimitErrorMessage,
 	isKerberoSecFreePromotionEndedErrorMessage,
 	isKerberoSecOrgIndividualInferenceSubscriptionErrorMessage,
 	isKerberoSecPassLimitErrorMessage,
 	isKerberoSecPassSubscriptionError,
+	isWafBlockedErrorMessage,
 } from "../../utils/kerberosec-pass-errors";
 import {
 	isKerberoSecAccountCreditsErrorMessage,
@@ -45,6 +47,33 @@ function trimLeading(text: string): string {
 	return text.replace(/^\n+/, "");
 }
 
+export function sanitizeAssistantText(text: string): string {
+	if (!text) return "";
+	let sanitized = text;
+	sanitized = sanitized.replace(
+		/<calling\b[^>]*>[\s\S]*?(?:<\/calling>|$)/gi,
+		"",
+	);
+	sanitized = sanitized.replace(
+		/<invoke\b[^>]*>[\s\S]*?(?:<\/invoke>|$)/gi,
+		"",
+	);
+	sanitized = sanitized.replace(
+		/<(?:tool_call|function_call)\b[^>]*>[\s\S]*?(?:<\/(?:tool_call|function_call)>|$)/gi,
+		"",
+	);
+	sanitized = sanitized.replace(
+		/<(?:parameter|param)\b[^>]*>[\s\S]*?(?:<\/(?:parameter|param)>|$)/gi,
+		"",
+	);
+	sanitized = sanitized.replace(
+		/<\/?(?:calling|invoke|tool_call|function_call|parameter|param)\b[^>]*>/gi,
+		"",
+	);
+	sanitized = sanitized.replace(/```(?:xml|json)?\s*```/g, "");
+	return sanitized;
+}
+
 function formatMediaSize(byteLength: number): string {
 	if (byteLength <= 0) return "unknown size";
 	if (byteLength < 1024) return `${byteLength} B`;
@@ -58,7 +87,6 @@ function formatReasoningContent(text: string): string {
 
 function ReasoningBlock(props: { text: string; streaming: boolean }) {
 	const [expanded, setExpanded] = useState(false);
-	const { width } = useTerminalDimensions();
 	const content = formatReasoningContent(trimLeading(props.text));
 	if (!content.trim()) {
 		if (props.streaming) {
@@ -638,6 +666,80 @@ function KerberoSecFreePromotionEndedErrorView(props: {
 	);
 }
 
+function WafBlockedErrorView(props: {
+	defaultFg?: string;
+	theme: ResolvedTheme;
+}) {
+	const accent = props.theme.accents.error;
+	return (
+		<box flexDirection="row">
+			<text fg={accent} content="* " />
+			<box
+				flexDirection="column"
+				border
+				borderStyle="rounded"
+				borderColor={accent}
+				paddingX={1}
+			>
+				<text fg={props.theme.accents.error}>
+					Provider Firewall / WAF Block (HTTP 405/403)
+				</text>
+				<text
+					fg={props.defaultFg}
+					selectable
+					content="The upstream provider Web Application Firewall (WAF) blocked this request."
+				/>
+				<text
+					fg={props.defaultFg}
+					selectable
+					content="This happens when shell command pipelines, redirections, or security payloads match firewall inspection rules."
+				/>
+				<text fg="gray">Suggestions:</text>
+				<text fg="gray">1. Keep commands concise and unchained (avoid '||', '&&', or subshell pipes).</text>
+				<text fg="gray">2. Start a fresh session with /new if an earlier turn contained flagged payloads.</text>
+				<text fg="gray">3. For local or offline security operations without remote filters, switch to local models via Ollama (/model).</text>
+			</box>
+		</box>
+	);
+}
+
+function ContentBlockedErrorView(props: {
+	defaultFg?: string;
+	theme: ResolvedTheme;
+}) {
+	const accent = props.theme.accents.error;
+	return (
+		<box flexDirection="row">
+			<text fg={accent} content="* " />
+			<box
+				flexDirection="column"
+				border
+				borderStyle="rounded"
+				borderColor={accent}
+				paddingX={1}
+			>
+				<text fg={props.theme.accents.error}>
+					Provider Content Filter Blocked
+				</text>
+				<text
+					fg={props.defaultFg}
+					selectable
+					content="The upstream provider automated content filter rejected this request (content-blocked)."
+				/>
+				<text
+					fg={props.defaultFg}
+					selectable
+					content="This occurs when prompts, commands, or context trigger provider-side moderation keywords."
+				/>
+				<text fg="gray">Suggestions:</text>
+				<text fg="gray">1. Rephrase your prompt (some remote gateways restrict direct execution phrasing or security terms).</text>
+				<text fg="gray">2. Start a fresh session with /new to clear previous turn context.</text>
+				<text fg="gray">3. For local or offline security operations without remote filters, switch to local models via Ollama (/model).</text>
+			</box>
+		</box>
+	);
+}
+
 export function ChatEntryView(props: {
 	entry: ChatEntry;
 	accent?: string;
@@ -691,7 +793,7 @@ export function ChatEntryView(props: {
 			);
 
 		case "assistant_text": {
-			const content = trimLeading(entry.text);
+			const content = sanitizeAssistantText(trimLeading(entry.text));
 			if (!content.trim()) return null;
 			return (
 				<box flexDirection="row">
@@ -808,6 +910,14 @@ export function ChatEntryView(props: {
 						defaultFg={defaultFg}
 						theme={theme}
 					/>
+				);
+			}
+			if (isWafBlockedErrorMessage(entry.text)) {
+				return <WafBlockedErrorView defaultFg={defaultFg} theme={theme} />;
+			}
+			if (isContentBlockedErrorMessage(entry.text)) {
+				return (
+					<ContentBlockedErrorView defaultFg={defaultFg} theme={theme} />
 				);
 			}
 			return (

@@ -55,8 +55,18 @@ export function extractModelIdsFromPayload(
 export async function fetchModelIdsFromSource(
 	url: string,
 	providerId: string,
+	options?: { headers?: Record<string, string>; apiKey?: string },
 ): Promise<string[]> {
-	const response = await fetch(url, { method: "GET" });
+	const headers: Record<string, string> = {
+		...(options?.headers ?? {}),
+	};
+	if (options?.apiKey && !headers.Authorization && !headers.authorization) {
+		headers.Authorization = `Bearer ${options.apiKey}`;
+	}
+	const response = await fetch(url, {
+		method: "GET",
+		headers: Object.keys(headers).length > 0 ? headers : undefined,
+	});
 	if (!response.ok) {
 		throw new Error(
 			`failed to fetch models from ${url}: HTTP ${response.status}`,

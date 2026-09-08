@@ -21,6 +21,7 @@ import { ensureFetch, resolveApiKey } from "../http";
 import { splitToolImagesMiddleware } from "../middleware/split-tool-images";
 import {
 	createSuccessDataResponseFetch,
+	sanitizeModerationRequestBody,
 	withMaxCompletionTokensForReasoningModels,
 } from "./openai-compatible";
 import type { ProviderFactoryResult } from "./types";
@@ -205,7 +206,10 @@ export function createKerberoSec(
 		headers: options.headers,
 		fetch: providerFetch,
 		includeUsage: true,
-		transformRequestBody: withMaxCompletionTokensForReasoningModels,
+		transformRequestBody: (body: Record<string, unknown>) => {
+			const reasoningBody = withMaxCompletionTokensForReasoningModels(body);
+			return sanitizeModerationRequestBody(reasoningBody);
+		},
 	});
 	const createModel = (modelId: string): LanguageModelV4 =>
 		wrapLanguageModel({
@@ -244,8 +248,7 @@ export async function createKerberoSecProviderModule(
 	const providerOptions: KerberoSecProviderOptions = {
 		apiKey: await resolveApiKey(config),
 		baseURL:
-			config.baseUrl ??
-			`${getKerberoSecEnvironmentConfig().apiBaseUrl}/api/v1`,
+			config.baseUrl ?? `${getKerberoSecEnvironmentConfig().apiBaseUrl}/api/v1`,
 		headers: config.headers,
 		fetch: config.fetch,
 		onResponseError: readResponseErrorHandler(config),

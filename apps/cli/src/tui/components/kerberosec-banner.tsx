@@ -1,4 +1,5 @@
 import { homedir } from "node:os";
+import { useTerminalDimensions } from "@opentui/react";
 import { useTheme } from "../hooks/use-theme";
 
 export const KERBEROSEC_BANNER_LINES = [
@@ -24,10 +25,47 @@ function formatTildePath(dir: string): string {
 	return dir;
 }
 
-export function KerberoSecBanner(props?: { color?: string }) {
+export function KerberoSecBanner(props?: {
+	color?: string;
+	compact?: boolean;
+	hideDetails?: boolean;
+}) {
+	const { width, height } = useTerminalDimensions();
 	const defaultFg = useTheme().defaultForeground;
 	const fg = props?.color ?? defaultFg;
 	const displayCwd = formatTildePath(process.cwd());
+
+	if (height < 12) {
+		return null;
+	}
+
+	const showAsciiBanner = !props?.compact && width >= 81 && height >= 14;
+
+	if (!showAsciiBanner) {
+		const showSubtitle = height >= 16 && width >= 48 && !props?.hideDetails;
+		const showPath = height >= 14 && !props?.hideDetails;
+		return (
+			<box flexDirection="column" alignItems="center" flexShrink={0}>
+				<text fg={fg}>
+					<strong>=== KerberoSec CLI ===</strong>
+				</text>
+				{showSubtitle && (
+					<text fg="gray">
+						{KERBEROSEC_SUBTITLE}
+					</text>
+				)}
+				{showPath && (
+					<box flexDirection="row" alignItems="center">
+						<text fg="cyan">
+							<strong>KerberoSec CLI</strong>
+						</text>
+						<text fg="gray"> | </text>
+						<text fg="gray">{displayCwd}</text>
+					</box>
+				)}
+			</box>
+		);
+	}
 
 	return (
 		<box flexDirection="column" alignItems="center" flexShrink={0}>
@@ -42,13 +80,15 @@ export function KerberoSecBanner(props?: { color?: string }) {
 			<text fg={fg} marginTop={1}>
 				{KERBEROSEC_SUBTITLE}
 			</text>
-			<box marginTop={1} flexDirection="row" alignItems="center">
-				<text fg="cyan">
-					<strong>KerberoSec CLI</strong>
-				</text>
-				<text fg="gray"> | </text>
-				<text fg="gray">{displayCwd}</text>
-			</box>
+			{!props?.hideDetails && (
+				<box marginTop={1} flexDirection="row" alignItems="center">
+					<text fg="cyan">
+						<strong>KerberoSec CLI</strong>
+					</text>
+					<text fg="gray"> | </text>
+					<text fg="gray">{displayCwd}</text>
+				</box>
+			)}
 		</box>
 	);
 }

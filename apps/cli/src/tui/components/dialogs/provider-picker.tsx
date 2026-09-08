@@ -507,7 +507,7 @@ export function ProviderConfigInputContent(
 
 	const existingSettings =
 		providerSettingsManager.getProviderSettings(providerId);
-	const [values, setValues] = useState<ProviderConfigValues>(() => {
+	const initialValues = useMemo<ProviderConfigValues>(() => {
 		const initial: ProviderConfigValues = {};
 		if (config.fields.baseUrl) {
 			initial.baseUrl =
@@ -549,13 +549,36 @@ export function ProviderConfigInputContent(
 			initial.sapDeploymentId =
 				existingSettings?.sap?.deploymentId?.trim() ?? "";
 		return initial;
-	});
+	}, [config.fields, existingSettings]);
 
-	const [focusedField, setFocusedField] = useState<ProviderConfigFieldKey>(
-		() => fieldKeys[0] ?? "apiKey",
-	);
+	const [values, setValues] = useState<ProviderConfigValues>(initialValues);
+
+	const [focusedField, setFocusedField] = useState<ProviderConfigFieldKey>(() => {
+		const emptyField = fieldKeys.find((k) => !initialValues[k]?.trim());
+		return emptyField ?? fieldKeys[0] ?? "apiKey";
+	});
+	const [error, setError] = useState("");
 
 	const submit = () => {
+		const currentIdx = fieldKeys.indexOf(focusedField);
+		if (fieldKeys.length > 1 && currentIdx >= 0 && currentIdx < fieldKeys.length - 1) {
+			setFocusedField(fieldKeys[currentIdx + 1] as ProviderConfigFieldKey);
+			return;
+		}
+
+		if (config.fields.apiKey && !config.fields.apiKey.optional && !values.apiKey?.trim()) {
+			setFocusedField("apiKey");
+			setError("Please enter your API key");
+			return;
+		}
+
+		if (config.fields.baseUrl && !config.fields.baseUrl.optional && !values.baseUrl?.trim()) {
+			setFocusedField("baseUrl");
+			setError("Please enter Base URL");
+			return;
+		}
+
+		setError("");
 		const apiKey = values.apiKey?.trim();
 		const awsProfile = values.awsProfile?.trim();
 		const hasAzureFields = config.fields.azureApiVersion;
@@ -628,14 +651,21 @@ export function ProviderConfigInputContent(
 						<box
 							border
 							borderStyle="rounded"
-							borderColor={focusedField === key ? palette.act : "gray"}
+							borderColor={
+								focusedField === key
+									? error
+										? "red"
+										: palette.act
+									: "gray"
+							}
 							paddingX={1}
 						>
 							<input
 								value={values[key] ?? ""}
-								onInput={(v: string) =>
-									setValues((prev) => updateProviderConfigValue(prev, key, v))
-								}
+								onInput={(v: string) => {
+									setError("");
+									setValues((prev) => updateProviderConfigValue(prev, key, v));
+								}}
 								placeholder={placeholder}
 								flexGrow={1}
 								focused={focusedField === key}
@@ -645,10 +675,12 @@ export function ProviderConfigInputContent(
 				);
 			})}
 
+			{error && <text fg="red">{error}</text>}
+
 			<text fg="gray">
 				<em>
 					{fieldKeys.length > 1
-						? "Tab to switch fields, Enter to save, Esc to go back"
+						? "Tab/Enter to switch fields, Enter on last field to save, Esc to go back"
 						: "Enter to save, Esc to go back"}
 				</em>
 			</text>
@@ -958,7 +990,7 @@ export function OAuthLoginContent(
 }
 
 /**
- * Manual API key entry for OAuth-capable providers — the escape hatch for
+ * Manual API key entry for OAuth-capable providers - the escape hatch for
  * when OAuth login isn't working. Saving clears any stored OAuth tokens so
  * the manual key takes effect (see saveManualProviderApiKey).
  */

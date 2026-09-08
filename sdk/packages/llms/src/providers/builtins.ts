@@ -94,7 +94,7 @@ const OPENROUTER_STICKY_SESSION_METADATA: GatewayProviderMetadata = {
  * Context window requested from Ollama when neither the resolved model nor
  * the user's configuration supplies one. Matches the pre-SDK-migration
  * handler default; deliberately larger than Ollama's 4096 server default,
- * which cannot fit KerberoSec's agentic prompts. Single source of truth — the
+ * which cannot fit KerberoSec's agentic prompts. Single source of truth - the
  * vendor, the VS Code session factory, and the settings UI all import this.
  */
 export const OLLAMA_DEFAULT_CONTEXT_WINDOW = 65536;
@@ -399,7 +399,7 @@ function generatedModels(providerId: string): Record<string, ModelInfo> {
 function firstGeneratedModelId(providerId: string): string {
 	// Use the catalog's authored order, not release-date order. The kerberosec-pass
 	// block mirrors the recommended-models endpoint, which lists the intended
-	// default subscription model first — the newest model is not necessarily a
+	// default subscription model first - the newest model is not necessarily a
 	// safe default.
 	const generatedModelList = Object.keys(
 		getGeneratedModelsForProvider(providerId),
@@ -511,7 +511,7 @@ function buildVertexModels(): Record<string, ModelInfo> {
 	// the displayed and recorded cost. Omitting it degrades cost display to
 	// "unknown" instead of wrong.
 	if (vertexModels["claude-fable-5"]) {
-		// Upstream now carries the model — its record wins.
+		// Upstream now carries the model - its record wins.
 		return vertexModels;
 	}
 	const anthropicFable = generatedModels("anthropic")["claude-fable-5"];
@@ -1040,6 +1040,61 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		modelsSourceUrl: "http://localhost:11434/api/tags",
 	},
 	{
+		id: "agent-router",
+		name: "AgentRouter",
+		description:
+			"Multi-model AI gateway: Claude, GPT, DeepSeek, Gemini via one API key",
+		family: "openai-compatible",
+		popular: 2,
+		capabilities: ["tools", "reasoning", "vision"],
+		defaultModelId: "gpt-5.6-sol",
+		apiKeyEnv: ["AGENT_ROUTER_API_KEY"],
+		modelsFactory: () => ({
+			"gpt-5.6-sol": {
+				id: "gpt-5.6-sol",
+				name: "GPT 5.6 Sol",
+				providerId: "agent-router",
+				description: "OpenAI Flagship Model on AgentRouter",
+				capabilities: ["tools", "reasoning", "images"],
+			},
+			"glm-5.3": {
+				id: "glm-5.3",
+				name: "GLM 5.3",
+				providerId: "agent-router",
+				description: "Zhipu AI Flagship Model on AgentRouter",
+				capabilities: ["tools", "reasoning", "images"],
+			},
+			"deepseek-v4-flash": {
+				id: "deepseek-v4-flash",
+				name: "DeepSeek V4 Flash",
+				providerId: "agent-router",
+				description: "DeepSeek Flagship Model on AgentRouter",
+				capabilities: ["tools", "reasoning"],
+			},
+			"claude-opus-4-8": {
+				id: "claude-opus-4-8",
+				name: "Claude Opus 4.8",
+				providerId: "agent-router",
+				description: "Anthropic Claude Opus 4.8 on AgentRouter",
+				capabilities: ["tools", "reasoning", "images"],
+			},
+			"claude-opus-5": {
+				id: "claude-opus-5",
+				name: "Claude Opus 5",
+				providerId: "agent-router",
+				description: "Anthropic Claude Opus 5 on AgentRouter",
+				capabilities: ["tools", "reasoning", "images"],
+			},
+		}),
+		defaults: {
+			baseUrl: "https://agentrouter.org/v1",
+			headers: {
+				"User-Agent": "codex_cli_rs/0.1.0",
+			},
+		},
+		modelsSourceUrl: "https://agentrouter.org/v1/models",
+	},
+	{
 		id: "lmstudio",
 		name: "LM Studio",
 		description: "Local model inference with LM Studio",
@@ -1156,7 +1211,7 @@ const BUILTIN_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		// (Read/Write/Bash/...) inside the spawned agent session and cannot
 		// bridge externally-executed AI SDK tools. Without this capability the
 		// gateway sends KerberoSec's tool definitions (which the provider drops)
-		// while the CLI's own tools stay enabled with no approval plumbing —
+		// while the CLI's own tools stay enabled with no approval plumbing -
 		// every write is refused and no prompt can appear (#13146).
 		capabilities: ["reasoning", "provider-tools"],
 		defaultModelId: "sonnet",

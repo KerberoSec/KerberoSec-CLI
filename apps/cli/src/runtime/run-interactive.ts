@@ -67,7 +67,7 @@ import {
 } from "./interactive/mode";
 import { assertInteractivePreflight } from "./interactive/preflight";
 import { createInteractiveSessionRuntime } from "./interactive/session-runtime";
-import { buildUserInputMessage } from "./prompt";
+import { buildUserInputMessage, resolveSystemPrompt } from "./prompt";
 import { getUIEventEmitter } from "./session-events";
 
 type ModelChangeReasoningConfig = {
@@ -127,6 +127,12 @@ export async function applyInteractiveModelChange(input: {
 		...existing,
 		model: config.modelId,
 		...(reasoning === undefined ? {} : { reasoning }),
+	});
+
+	config.systemPrompt = await resolveSystemPrompt({
+		cwd: config.cwd,
+		providerId: config.providerId,
+		mode: config.mode,
 	});
 
 	// Provider changes affect more than the model connection: startup resolves

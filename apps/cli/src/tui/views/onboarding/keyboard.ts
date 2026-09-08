@@ -13,6 +13,7 @@ import {
 	type KerberoSecPassSubscriptionStatus,
 	type MenuOption,
 	type OnboardingStep,
+	shouldUseFeaturedKerberoSecModelPicker,
 	THINKING_LEVELS,
 	type ThinkingLevel,
 } from "./model";
@@ -97,7 +98,12 @@ export function useOnboardingKeyboard(input: {
 			}
 			if (input.step === "byo_apikey") {
 				input.resetByoFields();
-				input.setStep("byo_provider");
+				if (input.activeProviderId === "agent-router") {
+					input.setStep("menu");
+					input.setMenuSelected(0);
+				} else {
+					input.setStep("byo_provider");
+				}
 				return;
 			}
 			if (input.step === "byo_provider") {
@@ -120,7 +126,7 @@ export function useOnboardingKeyboard(input: {
 				return;
 			}
 			if (input.step === "model_picker") {
-				if (input.activeProviderId === "kerberosec") {
+				if (shouldUseFeaturedKerberoSecModelPicker(input.activeProviderId)) {
 					input.setKerberoSecModelSelected(0);
 					input.setStep("kerberosec_model");
 				} else {
@@ -134,7 +140,7 @@ export function useOnboardingKeyboard(input: {
 				return;
 			}
 			if (input.step === "thinking_level") {
-				if (input.activeProviderId === "kerberosec") {
+				if (shouldUseFeaturedKerberoSecModelPicker(input.activeProviderId)) {
 					input.setKerberoSecModelSelected(0);
 					input.setStep("kerberosec_model");
 				} else {
@@ -211,6 +217,8 @@ export function useOnboardingKeyboard(input: {
 				if (!option) return;
 				if (isOnboardingOAuthProviderId(option.value)) {
 					input.startOAuthFlow(option.value);
+				} else if (option.value === "agent-router") {
+					input.selectProvider("agent-router");
 				} else {
 					input.setStep("byo_provider");
 				}
@@ -246,6 +254,10 @@ export function useOnboardingKeyboard(input: {
 		}
 
 		if (input.step === "byo_apikey") {
+			if (key.name === "return" || key.name === "enter") {
+				input.saveByoConfig();
+				return;
+			}
 			if (key.name === "tab") {
 				const visible = FIELD_ORDER.filter(
 					(k) => input.byoFields[k] !== undefined,

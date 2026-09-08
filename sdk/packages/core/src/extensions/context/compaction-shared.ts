@@ -319,7 +319,7 @@ export function findLatestSummaryIndex(
  * orphan half of a tool_use/tool_result pair. Typed user turns qualify,
  * and so do assistant messages: an assistant's tool_use keeps its results
  * in the user message that follows it, so both halves stay on the same
- * side of the cut. A tool_result-only user message is never safe — its
+ * side of the cut. A tool_result-only user message is never safe: its
  * matching tool_use sits in the preceding assistant message and would be
  * folded into the summary, leaving an orphaned tool_result the provider
  * rejects.
@@ -660,21 +660,27 @@ export function buildSummaryRequest(options: {
 	fileOps: FileOperationSummary;
 }): string {
 	const parts: string[] = [
-		`Summarize this session for continuation. Be concise and factual.
+		`Summarize this session for continuation. Be concise, factual, and preserve all critical context.
 
 ## Goal
-One sentence: what is being built or fixed.
+One sentence: what is being built, audited, or fixed, capturing user intent.
+
+## Constraints & Invariants (CRITICAL)
+Preserve verbatim any security-relevant constraints, testing boundaries, prohibited operations, or user formatting rules (e.g., zero em-dash policy, sensitive paths to avoid, credential handling). These MUST continue to apply after compaction.
 
 ## State
-- Done: completed steps
-- In Progress: current work
+- Done: completed steps and modifications
+- In Progress: current work immediately before this summary, with exact file names and anchors
 - Blocked: blockers or open questions
 
+## Errors & Fixes
+Errors encountered and how they were fixed, especially following user corrections.
+
 ## Highlights
-Key technical choices or notable findings (omit if none).
+Key technical choices, architectural decisions, or notable findings (omit if none).
 
 ## Next
-Immediate next steps.
+Immediate next steps directly aligned with the user's most recent explicit request.
 
 ## Files
 Read: ${options.fileOps.readFiles.join(", ") || "none"}

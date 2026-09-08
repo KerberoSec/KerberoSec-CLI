@@ -17,6 +17,38 @@ import {
 import { resolveCliLaunchSpec } from "./utils/internal-launch";
 import { writeErr } from "./utils/output";
 
+// Ensure standard I/O streams and environment enforce UTF-8 across all operating systems and shells
+if (!process.env.LANG || !process.env.LANG.toLowerCase().includes("utf")) {
+	process.env.LANG = "C.UTF-8";
+}
+if (!process.env.LC_ALL || !process.env.LC_ALL.toLowerCase().includes("utf")) {
+	process.env.LC_ALL = "C.UTF-8";
+}
+if (
+	process.stdout &&
+	typeof (
+		process.stdout as unknown as { setDefaultEncoding?: (enc: string) => void }
+	).setDefaultEncoding === "function"
+) {
+	try {
+		(
+			process.stdout as unknown as { setDefaultEncoding: (enc: string) => void }
+		).setDefaultEncoding("utf-8");
+	} catch {}
+}
+if (
+	process.stderr &&
+	typeof (
+		process.stderr as unknown as { setDefaultEncoding?: (enc: string) => void }
+	).setDefaultEncoding === "function"
+) {
+	try {
+		(
+			process.stderr as unknown as { setDefaultEncoding: (enc: string) => void }
+		).setDefaultEncoding("utf-8");
+	} catch {}
+}
+
 // Initialize VCR before any HTTP requests are made.
 // Set KERBEROSEC_VCR=record|playback and KERBEROSEC_VCR_CASSETTE=<path> to enable.
 initVcr(process.env.KERBEROSEC_VCR);

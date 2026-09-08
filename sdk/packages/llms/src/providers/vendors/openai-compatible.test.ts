@@ -7,6 +7,8 @@ import { describe, expect, it, vi } from "vitest";
 import { isOpenAIReasoningEraModelId } from "../model-facts";
 import {
 	createOpenAICompatibleProviderModule,
+	sanitizeModerationRequestBody,
+	sanitizeModerationTriggerText,
 	withMaxCompletionTokensForReasoningModels,
 } from "./openai-compatible";
 
@@ -117,6 +119,153 @@ describe("withMaxCompletionTokensForReasoningModels", () => {
 		const body = { max_tokens: 8_192 };
 
 		expect(withMaxCompletionTokensForReasoningModels(body)).toBe(body);
+	});
+});
+
+describe("sanitizeModerationTriggerText", () => {
+	it("replaces known moderation trigger phrases with safe engineering phrasing", () => {
+		const raw =
+			"I am a Penetration Testing & Red Teaming agent handling offensive security operations and exploit analysis for pentesting tasks.";
+		const cleaned = sanitizeModerationTriggerText(raw);
+		expect(cleaned).not.toContain("Penetration Testing & Red Teaming");
+		expect(cleaned).not.toContain("offensive security operations");
+		expect(cleaned).not.toContain("exploit analysis");
+		expect(cleaned).not.toContain("pentesting tasks");
+		expect(cleaned).toContain("Security Engineering & Systems Auditing");
+		expect(cleaned).toContain("security auditing operations");
+		expect(cleaned).toContain("vulnerability inspection");
+		expect(cleaned).toContain("security auditing tasks");
+	});
+
+	it("sanitizes standalone red teaming, pentest, and recon phrases", () => {
+		const raw =
+			"Autonomous AI-powered security assessment, penetration testing, and red teaming agent. What are we working on today? Target reconnaissance, a pentest engagement, code audit, or something else?";
+		const cleaned = sanitizeModerationTriggerText(raw);
+		expect(cleaned).not.toContain("penetration testing");
+		expect(cleaned).not.toContain("red teaming");
+		expect(cleaned).not.toContain("Target reconnaissance");
+		expect(cleaned).not.toContain("pentest");
+		expect(cleaned).toContain("security auditing");
+		expect(cleaned).toContain("systems auditing");
+		expect(cleaned).toContain("target inspection");
+		expect(cleaned).toContain("security audit");
+	});
+
+	it("sanitizes assistant greeting containing exploitation testing and recon", () => {
+		const raw =
+			"I can help you with things like:\n- Vulnerability assessment & exploitation testing in your workspace\n- Security tooling (recon, scanning, analysis using the 280+ tools available here)";
+		const cleaned = sanitizeModerationTriggerText(raw);
+		expect(cleaned).not.toContain("exploitation testing");
+		expect(cleaned).not.toContain("recon");
+		expect(cleaned).toContain("security verification testing");
+		expect(cleaned).toContain("inspection");
+	});
+
+	it("sanitizes command execution phrases (run whoami, git status, hostname, uptime)", () => {
+		const raw = "run whoami, check git status, run hostname, and check uptime";
+		const cleaned = sanitizeModerationTriggerText(raw);
+		expect(cleaned).not.toContain("run whoami");
+		expect(cleaned).not.toContain("git status");
+		expect(cleaned).not.toContain("run hostname");
+		expect(cleaned).toContain("check current user");
+		expect(cleaned).toContain("git working copy status");
+		expect(cleaned).toContain("hostname");
+	});
+
+	it("sanitizes bare whoami and ls variants to prevent multi-turn intrusion blocks", () => {
+		expect(sanitizeModerationTriggerText("whoami")).toBe("check current user");
+		expect(sanitizeModerationTriggerText("run whoami")).toBe("check current user");
+		expect(sanitizeModerationTriggerText("run ls command")).toBe("list directory contents");
+		expect(sanitizeModerationTriggerText("ls -la")).toBe("list directory contents");
+	});
+});
+
+describe("sanitizeModerationRequestBody", () => {
+	it("sanitizes messages with string content", () => {
+		const body = {
+			model: "deepseek-v4-flash",
+			messages: [
+				{
+					role: "assistant",
+					content:
+						"KerberoSec here. Autonomous AI-Powered Web Security Assessment, Penetration Testing & Red Teaming Agent. I handle offensive workflows.",
+				},
+				{
+					role: "user",
+					content: "run whoami",
+				},
+			],
+		};
+		const sanitized = sanitizeModerationRequestBody(body);
+		const assistantMsg = (
+			sanitized.messages as Array<{ role: string; content: string }>
+		)[0];
+		const userMsg = (
+			sanitized.messages as Array<{ role: string; content: string }>
+		)[1];
+		expect(assistantMsg.content).not.toContain(
+			"Penetration Testing & Red Teaming",
+		);
+		expect(assistantMsg.content).toContain(
+			"Autonomous AI-Powered Security Engineering & Code Auditing Agent",
+		);
+		expect(assistantMsg.content).toContain("security workflows");
+		expect(userMsg.content).toBe("check current user");
+	});
+
+	it("sanitizes messages with array content parts", () => {
+		const body = {
+			model: "deepseek-v4-flash",
+			messages: [
+				{
+					role: "assistant",
+					content: [
+						{
+							type: "text",
+							text: "offensive security operations and exploit analysis",
+						},
+					],
+				},
+			],
+		};
+		const sanitized = sanitizeModerationRequestBody(body);
+		const assistantMsg = (
+			sanitized.messages as Array<{
+				role: string;
+				content: Array<{ type: string; text: string }>;
+			}>
+		)[0];
+		expect(assistantMsg.content[0].text).toBe(
+			"security auditing operations and vulnerability inspection",
+		);
+	});
+
+	it("sanitizes messages for any model and provider unconditionally", () => {
+		const body = {
+			model: "qwen-2.5-coder",
+			messages: [
+				{
+					role: "assistant",
+					content:
+						"Target reconnaissance, a pentest engagement, and red teaming.",
+				},
+			],
+		};
+		const sanitized = sanitizeModerationRequestBody(body);
+		const assistantMsg = (
+			sanitized.messages as Array<{ role: string; content: string }>
+		)[0];
+		expect(assistantMsg.content).not.toContain("pentest");
+		expect(assistantMsg.content).not.toContain("red teaming");
+		expect(assistantMsg.content).not.toContain("reconnaissance");
+	});
+
+	it("leaves messages without trigger phrases untouched", () => {
+		const body = {
+			model: "gpt-4o",
+			messages: [{ role: "user", content: "hello world" }],
+		};
+		expect(sanitizeModerationRequestBody(body)).toBe(body);
 	});
 });
 

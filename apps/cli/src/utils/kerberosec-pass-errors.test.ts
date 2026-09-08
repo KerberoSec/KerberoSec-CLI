@@ -6,11 +6,14 @@ import {
 	getCliNotSubscribedMessage,
 	getKerberoSecOrgIndividualInferenceSubscriptionMessage,
 	getKerberoSecPassLimitDetailMessage,
+	isContentBlockedErrorMessage,
+	isGenericHtmlErrorMessage,
 	isKerberoSecFreeModelLimitErrorMessage,
 	isKerberoSecFreePromotionEndedErrorMessage,
 	isKerberoSecOrgIndividualInferenceSubscriptionErrorMessage,
 	isKerberoSecPassLimitErrorMessage,
 	isKerberoSecPassSubscriptionError,
+	isWafBlockedErrorMessage,
 } from "./kerberosec-pass-errors";
 
 describe("kerberosec-pass-errors", () => {
@@ -111,5 +114,45 @@ describe("kerberosec-pass-errors", () => {
 		expect(
 			formatCliErrorMessage(raw, { modelId: "vendor/retired-model" }),
 		).toBe(raw.message);
+	});
+
+	it("recognizes and formats upstream WAF / firewall HTML block pages", () => {
+		const alibabaWafHtml =
+			'<!doctypehtml><html lang="zh-cn"><head><meta charset="utf-8"><title>405</title></head><body><h1>Sorry, your request has been blocked as it may cause potential threats to the server\'s security.</h1><p>Powered by Alibaba Cloud</p></body></html>';
+
+		expect(isWafBlockedErrorMessage(alibabaWafHtml)).toBe(true);
+		expect(isWafBlockedErrorMessage(new Error(alibabaWafHtml))).toBe(true);
+
+		const formatted = formatCliErrorMessage(new Error(alibabaWafHtml));
+		expect(formatted).toContain("Provider Firewall / WAF Block (HTTP 405/403)");
+		expect(formatted).toContain("Web Application Firewall (WAF)");
+		expect(formatted).not.toContain("<!doctypehtml>");
+		expect(formatted).not.toContain("zh-cn");
+		expect(isWafBlockedErrorMessage(formatted)).toBe(true);
+	});
+
+	it("recognizes and formats content-blocked moderation responses", () => {
+		const rawJson =
+			'{"error":{"code":"content-blocked","message":"content-blocked (request id: 20260907202643936000273dzc56AdHWwbo6)","param":"","type":"agent_router_api_error"}}';
+
+		expect(isContentBlockedErrorMessage(rawJson)).toBe(true);
+		expect(isContentBlockedErrorMessage(new Error(rawJson))).toBe(true);
+
+		const formatted = formatCliErrorMessage(new Error(rawJson));
+		expect(formatted).toContain("Provider Content Filter Blocked");
+		expect(formatted).toContain("content-blocked");
+		expect(formatted).not.toContain("20260907202643936000273dzc56AdHWwbo6");
+		expect(isContentBlockedErrorMessage(formatted)).toBe(true);
+	});
+
+	it("recognizes and formats generic HTML gateway error pages cleanly", () => {
+		const html502 =
+			"<!DOCTYPE html><html><head><title>502 Bad Gateway</title></head><body><center><h1>502 Bad Gateway</h1></center></body></html>";
+
+		expect(isGenericHtmlErrorMessage(html502)).toBe(true);
+		const formatted = formatCliErrorMessage(new Error(html502));
+		expect(formatted).toContain("Provider Gateway Error");
+		expect(formatted).toContain("502 Bad Gateway");
+		expect(formatted).not.toContain("<center>");
 	});
 });

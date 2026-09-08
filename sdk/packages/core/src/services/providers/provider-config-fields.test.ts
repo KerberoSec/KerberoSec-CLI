@@ -16,12 +16,10 @@ describe("getProviderConfigFields", () => {
 		expect(result.fields.baseUrl).toBeUndefined();
 	});
 
-	it("returns api-key auth with apiKey + baseUrl for ollama", () => {
+	it("returns local config with baseUrl and without apiKey for ollama", () => {
 		const result = getProviderConfigFields("ollama");
 		expect(result.authMethod).toBe("api-key");
-		expect(result.fields.apiKey).toEqual({
-			note: "Keep empty if no API key for local inference.",
-		});
+		expect(result.fields.apiKey).toBeUndefined();
 		// The native-API vendor appends /api itself; the default is a bare host.
 		expect(result.fields.baseUrl?.defaultValue).toBe("http://localhost:11434");
 	});
@@ -41,6 +39,15 @@ describe("getProviderConfigFields", () => {
 		expect(result.fields.apiKey).toEqual({});
 		expect(result.fields.baseUrl?.defaultValue).toBe(
 			"http://localhost:4000/v1",
+		);
+	});
+
+	it("returns api-key auth with apiKey + baseUrl for agent-router", () => {
+		const result = getProviderConfigFields("agent-router");
+		expect(result.authMethod).toBe("api-key");
+		expect(result.fields.apiKey).toEqual({});
+		expect(result.fields.baseUrl?.defaultValue).toBe(
+			"https://agentrouter.org/v1",
 		);
 	});
 

@@ -163,7 +163,6 @@ export function StatusBar(props: StatusBarProps) {
 		autoApproveAll,
 		workspaceName,
 		gitBranch,
-		gitDiffStats,
 		onToggleMode,
 	} = props;
 

@@ -194,10 +194,138 @@ export function isKerberoSecFreeModelLimitErrorMessage(
 	);
 }
 
+function extractRawErrorMessage(error: unknown): string {
+	if (error instanceof Error) {
+		return error.message;
+	}
+	if (typeof error === "string") {
+		return error;
+	}
+	if (error && typeof error === "object") {
+		if (
+			"message" in error &&
+			typeof (error as { message: unknown }).message === "string"
+		) {
+			return (error as { message: string }).message;
+		}
+		try {
+			return JSON.stringify(error);
+		} catch {
+			return String(error);
+		}
+	}
+	return String(error);
+}
+
+export function isWafBlockedErrorMessage(error: unknown): boolean {
+	const text = extractRawErrorMessage(error).toLowerCase();
+	if (
+		text.includes("provider firewall / waf block") ||
+		text.includes("provider firewall") ||
+		text.includes("potential threats to the server's security") ||
+		text.includes("blocked as it may cause potential threats") ||
+		text.includes("errors.aliyun.com") ||
+		text.includes("aliyun") ||
+		text.includes("alibaba cloud") ||
+		text.includes("cloudflare ray id") ||
+		text.includes("attention required! | cloudflare") ||
+		text.includes("ray id:") ||
+		text.includes("request has been blocked")
+	) {
+		return true;
+	}
+
+	const hasHtmlWrapper =
+		text.includes("<!doctype") ||
+		text.includes("<html") ||
+		text.includes("<head>") ||
+		text.includes("<body>");
+
+	if (
+		hasHtmlWrapper &&
+		(text.includes("405") ||
+			text.includes("403") ||
+			text.includes("blocked") ||
+			text.includes("security") ||
+			text.includes("forbidden") ||
+			text.includes("waf") ||
+			text.includes("firewall"))
+	) {
+		return true;
+	}
+
+	return false;
+}
+
+export function getCliWafBlockedMessage(_error?: unknown): string {
+	return [
+		"Provider Firewall / WAF Block (HTTP 405/403)",
+		"The upstream provider Web Application Firewall (WAF) blocked the request.",
+		"This occurs when prompt text, shell commands, or transcript history match external firewall inspection rules (such as chained shell pipelines, redirections, or security testing payloads).",
+		"",
+		"Suggestions:",
+		"1. Keep commands concise and unchained (avoid '||', '&&', or subshell pipes).",
+		"2. Start a fresh session with /new if an earlier turn contained flagged payloads.",
+		"3. For local or offline security operations without remote filters, switch to local models via Ollama (/model).",
+	].join("\n");
+}
+
+export function isContentBlockedErrorMessage(error: unknown): boolean {
+	const text = extractRawErrorMessage(error).toLowerCase();
+	return (
+		text.includes("provider content filter blocked") ||
+		text.includes('"code":"content-blocked"') ||
+		text.includes('"code": "content-blocked"') ||
+		text.includes("content-blocked") ||
+		text.includes("content_blocked")
+	);
+}
+
+export function getCliContentBlockedMessage(_error?: unknown): string {
+	return [
+		"Provider Content Filter Blocked",
+		"The upstream provider automated content filter rejected this request (content-blocked).",
+		"This occurs when prompts, commands, or context trigger provider-side moderation keywords.",
+		"",
+		"Suggestions:",
+		"1. Rephrase your prompt (some remote gateways restrict direct execution phrasing like 'run whoami' or security assessment keywords).",
+		"2. Start a fresh session with /new to clear previous turn context.",
+		"3. For local or offline security operations without remote filters, switch to local models via Ollama (/model).",
+	].join("\n");
+}
+
+export function isGenericHtmlErrorMessage(error: unknown): boolean {
+	const text = extractRawErrorMessage(error).toLowerCase();
+	return text.includes("<!doctype") || text.includes("<html");
+}
+
+export function getCliGenericHtmlErrorMessage(error: unknown): string {
+	const raw = extractRawErrorMessage(error);
+	const titleMatch = raw.match(/<title[^>]*>([^<]+)<\/title>/i);
+	const h1Match = raw.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+	const summary =
+		titleMatch?.[1]?.trim() || h1Match?.[1]?.trim() || "HTTP Error Page";
+
+	return [
+		`Provider Gateway Error: Upstream service returned an HTML error page (${summary}).`,
+		"The remote endpoint did not return valid JSON.",
+		"Check your provider configuration, base URL, network connectivity, and proxy settings.",
+	].join("\n");
+}
+
 export function formatCliErrorMessage(
 	error: unknown,
 	options?: { modelId?: string },
 ): string {
+	if (isWafBlockedErrorMessage(error)) {
+		return getCliWafBlockedMessage(error);
+	}
+	if (isContentBlockedErrorMessage(error)) {
+		return getCliContentBlockedMessage(error);
+	}
+	if (isGenericHtmlErrorMessage(error)) {
+		return getCliGenericHtmlErrorMessage(error);
+	}
 	if (isKerberoSecPassSubscriptionError(error)) {
 		return getCliNotSubscribedMessage();
 	}

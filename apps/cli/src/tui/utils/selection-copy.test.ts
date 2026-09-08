@@ -14,7 +14,14 @@ interface PendingCopy {
 	resolve: (copied: boolean) => void;
 }
 
-function createTestDeps(options: { osc52Returns?: boolean } = {}) {
+function createTestDeps(
+	options: {
+		osc52Returns?: boolean;
+		autoCopyOnSelect?: boolean;
+		getSelectionText?: () => string;
+		clearSelection?: () => void;
+	} = {},
+) {
 	const showToast = vi.fn();
 	const copyToClipboardOSC52 = vi
 		.fn()
@@ -35,6 +42,9 @@ function createTestDeps(options: { osc52Returns?: boolean } = {}) {
 			copyToClipboardOSC52,
 			showToast,
 			copyTextToSystemClipboardImpl,
+			autoCopyOnSelect: options.autoCopyOnSelect,
+			getSelectionText: options.getSelectionText,
+			clearSelection: options.clearSelection,
 		},
 		pending,
 	};
@@ -44,9 +54,86 @@ afterEach(() => {
 	vi.restoreAllMocks();
 });
 
-describe("createSelectionCopyHandler", () => {
-	it("ignores empty selections (no toast, no copy attempt)", () => {
+describe("createSelectionCopyHandler (default mode: no auto copy)", () => {
+	it("does not automatically copy or toast when text is selected", () => {
 		const { deps, pending } = createTestDeps();
+		const handler = createSelectionCopyHandler(deps);
+
+		handler.handleSelection(makeSelection("hello"));
+
+		expect(deps.copyToClipboardOSC52).not.toHaveBeenCalled();
+		expect(deps.copyTextToSystemClipboardImpl).not.toHaveBeenCalled();
+		expect(deps.showToast).not.toHaveBeenCalled();
+		expect(pending).toHaveLength(0);
+		expect(handler.hasSelection()).toBe(true);
+	});
+
+	it("returns false from copyCurrentSelection() when there is no selection", () => {
+		const { deps } = createTestDeps();
+		const handler = createSelectionCopyHandler(deps);
+
+		const result = handler.copyCurrentSelection();
+
+		expect(result).toBe(false);
+		expect(deps.copyToClipboardOSC52).not.toHaveBeenCalled();
+		expect(deps.copyTextToSystemClipboardImpl).not.toHaveBeenCalled();
+		expect(deps.showToast).not.toHaveBeenCalled();
+	});
+
+	it("copies selection and toasts when copyCurrentSelection() is invoked", async () => {
+		const { deps, pending } = createTestDeps({ osc52Returns: true });
+		const handler = createSelectionCopyHandler(deps);
+
+		handler.handleSelection(makeSelection("selected text"));
+		expect(deps.copyToClipboardOSC52).not.toHaveBeenCalled();
+
+		const result = handler.copyCurrentSelection();
+		expect(result).toBe(true);
+		expect(deps.copyToClipboardOSC52).toHaveBeenCalledWith("selected text");
+
+		pending[0]?.resolve(true);
+		await Promise.resolve();
+		await Promise.resolve();
+
+		expect(deps.showToast).toHaveBeenCalledWith(
+			"Copied to clipboard",
+			"success",
+		);
+	});
+
+	it("resets selection after copyCurrentSelection() so subsequent call returns false", () => {
+		const { deps } = createTestDeps({ osc52Returns: true });
+		const handler = createSelectionCopyHandler(deps);
+
+		handler.handleSelection(makeSelection("once"));
+		expect(handler.copyCurrentSelection()).toBe(true);
+		expect(handler.copyCurrentSelection()).toBe(false);
+	});
+
+	it("uses getSelectionText and clearSelection callbacks if provided", () => {
+		let dynamicText = "from renderer";
+		const clearSelectionMock = vi.fn(() => {
+			dynamicText = "";
+		});
+		const { deps } = createTestDeps({
+			osc52Returns: true,
+			getSelectionText: () => dynamicText,
+			clearSelection: clearSelectionMock,
+		});
+		const handler = createSelectionCopyHandler(deps);
+
+		expect(handler.hasSelection()).toBe(true);
+		expect(handler.copyCurrentSelection()).toBe(true);
+		expect(deps.copyToClipboardOSC52).toHaveBeenCalledWith("from renderer");
+		expect(clearSelectionMock).toHaveBeenCalled();
+		expect(handler.hasSelection()).toBe(false);
+		expect(handler.copyCurrentSelection()).toBe(false);
+	});
+});
+
+describe("createSelectionCopyHandler (autoCopyOnSelect: true)", () => {
+	it("ignores empty selections (no toast, no copy attempt)", () => {
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection(""));
@@ -58,7 +145,10 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("still calls system clipboard when OSC52 succeeds", async () => {
-		const { deps, pending } = createTestDeps({ osc52Returns: true });
+		const { deps, pending } = createTestDeps({
+			osc52Returns: true,
+			autoCopyOnSelect: true,
+		});
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("hello"));
@@ -81,7 +171,10 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("reports success when OSC52 succeeds even if system clipboard fails", async () => {
-		const { deps, pending } = createTestDeps({ osc52Returns: true });
+		const { deps, pending } = createTestDeps({
+			osc52Returns: true,
+			autoCopyOnSelect: true,
+		});
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("hello"));
@@ -96,7 +189,7 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("calls fallback when OSC52 fails and toasts on success", async () => {
-		const { deps, pending } = createTestDeps();
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("text-A"));
@@ -113,7 +206,7 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("toasts an error when fallback returns false", async () => {
-		const { deps, pending } = createTestDeps();
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("text-A"));
@@ -128,7 +221,7 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("aborts the prior in-flight fallback when a new selection arrives", () => {
-		const { deps, pending } = createTestDeps();
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("text-A"));
@@ -153,7 +246,7 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("does not toast for a stale fallback result that resolves after a newer selection", async () => {
-		const { deps, pending } = createTestDeps();
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("text-A"));
@@ -176,7 +269,7 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("aborts in-flight fallback when the next selection starts", async () => {
-		const { deps, pending } = createTestDeps();
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("text-A"));
@@ -201,7 +294,7 @@ describe("createSelectionCopyHandler", () => {
 	});
 
 	it("dispose() aborts any in-flight fallback and suppresses later toasts", async () => {
-		const { deps, pending } = createTestDeps();
+		const { deps, pending } = createTestDeps({ autoCopyOnSelect: true });
 		const { handleSelection, dispose } = createSelectionCopyHandler(deps);
 
 		handleSelection(makeSelection("text-A"));

@@ -28,8 +28,11 @@ export function OnboardingView(props: OnboardingViewProps) {
 	const { width, height } = useTerminalDimensions();
 	const mouse = useMouseTracker();
 	const state = useOnboardingController(props);
-	const contentWidth = Math.max(20, Math.min(width - 2, 76));
-	const compact = height < 34 || width < 86;
+	const contentWidth = Math.min(
+		width - 4,
+		Math.max(68, Math.min(width - 4, 96)),
+	);
+	const compact = height < 24;
 
 	if (state.step === "done") {
 		return <OnboardingDoneScreen mouse={mouse} />;
@@ -184,7 +187,6 @@ export function OnboardingView(props: OnboardingViewProps) {
 
 	return (
 		<OnboardingMainMenuScreen
-			compact={compact}
 			contentWidth={contentWidth}
 			menuOptions={state.menuOptions}
 			menuSelected={state.menuSelected}

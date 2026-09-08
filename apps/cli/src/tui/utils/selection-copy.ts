@@ -7,10 +7,16 @@ export interface SelectionCopyDeps {
 	copyToClipboardOSC52: (text: string) => boolean;
 	showToast: (message: string, kind: ToastKind) => void;
 	copyTextToSystemClipboardImpl?: typeof copyTextToSystemClipboard;
+	getSelectionText?: () => string;
+	clearSelection?: () => void;
+	autoCopyOnSelect?: boolean;
 }
 
 export interface SelectionCopyHandle {
 	handleSelection: (selection: Selection) => void;
+	copyCurrentSelection: () => boolean;
+	hasSelection: () => boolean;
+	clearSelection: () => void;
 	dispose: () => void;
 }
 
@@ -22,13 +28,9 @@ export function createSelectionCopyHandler(
 	let mounted = true;
 	let inFlight: AbortController | undefined;
 	let generation = 0;
+	let currentSelectedText = "";
 
-	const handleSelection = (selection: Selection) => {
-		const text = selection.getSelectedText();
-		if (!text) {
-			return;
-		}
-
+	const performCopy = (text: string) => {
 		inFlight?.abort();
 		inFlight = undefined;
 
@@ -64,11 +66,56 @@ export function createSelectionCopyHandler(
 			.catch(() => finish(false));
 	};
 
+	const handleSelection = (selection: Selection) => {
+		const text = selection?.getSelectedText?.() ?? "";
+		currentSelectedText = text;
+		if (!text) {
+			return;
+		}
+
+		if (deps.autoCopyOnSelect) {
+			performCopy(text);
+		}
+	};
+
+	const copyCurrentSelection = (): boolean => {
+		const text = deps.getSelectionText
+			? deps.getSelectionText()
+			: currentSelectedText;
+		if (!text) {
+			return false;
+		}
+
+		performCopy(text);
+		currentSelectedText = "";
+		deps.clearSelection?.();
+		return true;
+	};
+
+	const hasSelection = (): boolean => {
+		const text = deps.getSelectionText
+			? deps.getSelectionText()
+			: currentSelectedText;
+		return Boolean(text && text.length > 0);
+	};
+
+	const clearSelection = () => {
+		currentSelectedText = "";
+		deps.clearSelection?.();
+	};
+
 	const dispose = () => {
 		mounted = false;
+		currentSelectedText = "";
 		inFlight?.abort();
 		inFlight = undefined;
 	};
 
-	return { handleSelection, dispose };
+	return {
+		handleSelection,
+		copyCurrentSelection,
+		hasSelection,
+		clearSelection,
+		dispose,
+	};
 }

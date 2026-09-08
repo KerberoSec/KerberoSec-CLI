@@ -192,14 +192,14 @@ if ! command -v ollama &>/dev/null; then
         echo -e "  * Ollama not found. Installing official Ollama runtime for ${DISTRO_NAME}..."
         case "$OS_NAME" in
             Linux*)
-                curl -fsSL https://ollama.com/install.sh | sh
+                curl -fsSL https://ollama.com/install.sh | sh || true
                 ;;
             Darwin*)
                 if command -v brew &>/dev/null; then
-                    brew install ollama
+                    brew install ollama || true
                 else
-                    curl -fsSL https://ollama.com/download/Ollama-darwin.zip -o /tmp/Ollama-darwin.zip
-                    unzip -q /tmp/Ollama-darwin.zip -d /Applications
+                    curl -fsSL https://ollama.com/download/Ollama-darwin.zip -o /tmp/Ollama-darwin.zip || true
+                    unzip -q /tmp/Ollama-darwin.zip -d /Applications 2>/dev/null || true
                 fi
                 ;;
             CYGWIN*|MINGW*|MSYS*|Windows_NT*)
@@ -212,6 +212,12 @@ if ! command -v ollama &>/dev/null; then
         esac
         export PATH="/usr/local/bin:/usr/bin:$HOME/.local/bin:$PATH"
     fi
+fi
+
+if ! command -v ollama &>/dev/null && [ "$DRY_RUN" = false ]; then
+    echo -e "  * ${YELLOW}[Notice] Ollama binary is not currently installed or in PATH.${NC}"
+    echo -e "  * Skipping local model calibration. KerberoSec CLI is fully installed and ready for cloud providers."
+    exit 0
 fi
 
 # ==============================================================================
@@ -475,25 +481,39 @@ echo -e "  * Baseline Minimum:  ${GREEN}${MINIMUM_BASELINE_MODEL}${NC}"
 echo -e "  * Calibrated Context:${GREEN}${GLOBAL_MAX_CTX} tokens${NC}"
 echo -e "  * Evaluation Batch:  ${GREEN}${NUM_BATCH}${NC}"
 
+# Persist hardware-calibrated context for KerberoSec CLI
+mkdir -p "$HOME/.kerberosec" 2>/dev/null || true
+echo "$GLOBAL_MAX_CTX" > "$HOME/.kerberosec/ollama_num_ctx" 2>/dev/null || true
+
 # ==============================================================================
 # SECTION 3: SYSTEM KERNEL, SERVICE & DAEMON ACCELERATION
 # ==============================================================================
 echo -e "\n${BLUE}${BOLD}[4/6] Configuring System Environment & Service Acceleration...${NC}"
 
-# Set Flash Attention according to hardware compatibility
+# Set Flash Attention and KV Cache according to hardware compatibility
+# llama-server requires flash_attn for KV cache quantization (q4_0).
+# If flash attention is not supported (CPU or older GPUs), setting OLLAMA_KV_CACHE_TYPE=q4_0
+# causes "llama_init_from_model: V cache quantization requires flash_attn" and crashes.
 if [ "$FLASH_ATTN_CAPABLE" = true ]; then
     FLASH_ATTN_VAL=1
+    export OLLAMA_FLASH_ATTENTION=1
+    export OLLAMA_KV_CACHE_TYPE=q4_0
+    KV_CACHE_SHELL_EXPORT="export OLLAMA_KV_CACHE_TYPE=q4_0"
+    KV_CACHE_SYSTEMD_LINE="Environment=\"OLLAMA_KV_CACHE_TYPE=q4_0\""
 else
     FLASH_ATTN_VAL=0
+    export OLLAMA_FLASH_ATTENTION=0
+    unset OLLAMA_KV_CACHE_TYPE 2>/dev/null || true
+    KV_CACHE_SHELL_EXPORT="# OLLAMA_KV_CACHE_TYPE unset (requires flash_attn)"
+    KV_CACHE_SYSTEMD_LINE="# OLLAMA_KV_CACHE_TYPE omitted (requires flash_attn)"
 fi
 
-export OLLAMA_FLASH_ATTENTION=$FLASH_ATTN_VAL
-export OLLAMA_KV_CACHE_TYPE=q4_0
 export OLLAMA_NUM_PARALLEL=1
 export OLLAMA_KEEP_ALIVE=24h
 export OLLAMA_GPU_OVERHEAD=0
 export OLLAMA_HOST="${OLLAMA_HOST:-127.0.0.1:11434}"
 export OLLAMA_ORIGINS="*"
+export OLLAMA_NUM_CTX=${GLOBAL_MAX_CTX}
 export OMP_NUM_THREADS=${PHYSICAL_CORES}
 export MKL_NUM_THREADS=${PHYSICAL_CORES}
 
@@ -511,17 +531,22 @@ fi
 persist_shell_env() {
     local target_rc="$1"
     if [ -f "$target_rc" ] && [ -w "$target_rc" ]; then
+        # If flash attention is not supported, clean up any previous buggy q4_0 exports
+        if [ "$FLASH_ATTN_CAPABLE" = false ]; then
+            sed -i '/OLLAMA_KV_CACHE_TYPE/d' "$target_rc" 2>/dev/null || true
+        fi
         if ! grep -q "OLLAMA_FLASH_ATTENTION" "$target_rc" 2>/dev/null; then
             cat << ENV_BLOCK >> "$target_rc"
 
 # --- KerberoSec Ollama Hardware Acceleration ---
 export OLLAMA_FLASH_ATTENTION=${FLASH_ATTN_VAL}
-export OLLAMA_KV_CACHE_TYPE=q4_0
+${KV_CACHE_SHELL_EXPORT}
 export OLLAMA_NUM_PARALLEL=1
 export OLLAMA_KEEP_ALIVE=24h
 export OLLAMA_GPU_OVERHEAD=0
 export OLLAMA_HOST="${OLLAMA_HOST:-127.0.0.1:11434}"
 export OLLAMA_ORIGINS="*"
+export OLLAMA_NUM_CTX=${GLOBAL_MAX_CTX}
 export OMP_NUM_THREADS=${PHYSICAL_CORES}
 export MKL_NUM_THREADS=${PHYSICAL_CORES}
 # -----------------------------------------------
@@ -542,12 +567,13 @@ if [ -d "/etc/systemd/system" ] && command -v systemctl &>/dev/null && [ "$CAN_S
     $SUDO_CMD tee "$SERVICE_DROPIN_DIR/override.conf" >/dev/null << SERVICE_EOF
 [Service]
 Environment="OLLAMA_FLASH_ATTENTION=${FLASH_ATTN_VAL}"
-Environment="OLLAMA_KV_CACHE_TYPE=q4_0"
+${KV_CACHE_SYSTEMD_LINE}
 Environment="OLLAMA_NUM_PARALLEL=1"
 Environment="OLLAMA_KEEP_ALIVE=24h"
 Environment="OLLAMA_GPU_OVERHEAD=0"
 Environment="OLLAMA_HOST=127.0.0.1:11434"
 Environment="OLLAMA_ORIGINS=*"
+Environment="OLLAMA_NUM_CTX=${GLOBAL_MAX_CTX}"
 Environment="OMP_NUM_THREADS=${PHYSICAL_CORES}"
 Environment="MKL_NUM_THREADS=${PHYSICAL_CORES}"
 SERVICE_EOF
@@ -733,8 +759,11 @@ echo -e "\n${BLUE}${BOLD}[6/6] Pre-Warming Primary Model into Memory/VRAM...${NC
 PRIMARY_ACTIVE=$(echo "$INSTALLED_MODELS" | grep -E "qwen3|qwen2.5|deepseek|llama3" | head -n 1 || echo "$INSTALLED_MODELS" | head -n 1)
 
 if [ -n "$PRIMARY_ACTIVE" ] && [ "$DRY_RUN" = false ]; then
-    echo -e "  * Pinning ${CYAN}${PRIMARY_ACTIVE}${NC} into memory (24h keep-alive)..."
-    PREWARM_HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 60 http://127.0.0.1:11434/api/generate -d "{\"model\": \"${PRIMARY_ACTIVE}\", \"keep_alive\": \"24h\"}" 2>/dev/null || echo "000")
+    echo -e "  * Pinning ${CYAN}${PRIMARY_ACTIVE}${NC} into memory (${GLOBAL_MAX_CTX} context, 24h keep-alive)..."
+    # Unload any previously loaded oversized context instance
+    curl -s http://127.0.0.1:11434/api/generate -d "{\"model\": \"${PRIMARY_ACTIVE}\", \"keep_alive\": 0}" >/dev/null 2>&1 || true
+    sleep 1
+    PREWARM_HTTP=$(curl -s -o /dev/null -w "%{http_code}" --max-time 60 http://127.0.0.1:11434/api/generate -d "{\"model\": \"${PRIMARY_ACTIVE}\", \"keep_alive\": \"24h\", \"options\": {\"num_ctx\": ${GLOBAL_MAX_CTX}}}" 2>/dev/null || echo "000")
     if [ "$PREWARM_HTTP" = "200" ]; then
         echo -e "    ${GREEN}✓${NC} Model pre-warmed successfully (0ms latency ready)."
     else

@@ -70,7 +70,10 @@ import { logoutKerberoSecAccount } from "./kerberosec-account";
 import type { AppView, TuiProps, TuiStartupTarget } from "./types";
 import { hydrateSessionMessages } from "./utils/hydrate-messages";
 import { isProviderConfigured } from "./utils/provider-configured";
-import { createSelectionCopyHandler } from "./utils/selection-copy";
+import {
+	createSelectionCopyHandler,
+	type SelectionCopyHandle,
+} from "./utils/selection-copy";
 import type { LocalSlashCommandInvocation } from "./utils/skill-command-input";
 import { deriveTerminalTitle } from "./utils/terminal-title";
 import { ChatView } from "./views/chat-view";
@@ -183,6 +186,7 @@ function App(props: TuiProps) {
 		(invocation: LocalSlashCommandInvocation) => void
 	>(() => {});
 	const transcriptScrollRef = useRef<TranscriptScrollHandle | null>(null);
+	const selectionCopyHandlerRef = useRef<SelectionCopyHandle | null>(null);
 	const initialNoticeShownRef = useRef(false);
 	const editingQueuedPrompt = useMemo(
 		() =>
@@ -480,15 +484,19 @@ function App(props: TuiProps) {
 	);
 
 	useEffect(() => {
-		const { handleSelection, dispose } = createSelectionCopyHandler({
+		const handler = createSelectionCopyHandler({
 			copyToClipboardOSC52: (text) => renderer.copyToClipboardOSC52(text),
 			showToast,
+			getSelectionText: () => renderer.getSelection()?.getSelectedText() ?? "",
+			clearSelection: () => renderer.clearSelection(),
 		});
+		selectionCopyHandlerRef.current = handler;
 
-		renderer.on("selection", handleSelection);
+		renderer.on("selection", handler.handleSelection);
 		return () => {
-			dispose();
-			renderer.off("selection", handleSelection);
+			handler.dispose();
+			renderer.off("selection", handler.handleSelection);
+			selectionCopyHandlerRef.current = null;
 		};
 	}, [renderer, showToast]);
 
@@ -946,6 +954,8 @@ function App(props: TuiProps) {
 		onOpenCommandPalette: openCommandPalette,
 		onCommandPaletteShortcut: runCommandPaletteShortcut,
 		showToast,
+		copyCurrentSelection: () =>
+			selectionCopyHandlerRef.current?.copyCurrentSelection() ?? false,
 	});
 
 	const acOptions = autocomplete.getFilteredOptions();

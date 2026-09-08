@@ -864,222 +864,82 @@ export function OnboardingThinkingLevelScreen(props: {
 }
 
 export function OnboardingMainMenuScreen(props: {
-	compact?: boolean;
 	contentWidth: number;
 	menuOptions: MenuOption[];
 	menuSelected: number;
 	mouse: MouseTrackerState;
 }) {
-	const { width, height } = useTerminalDimensions();
 	const defaultFg = useDefaultFg();
 	const colors = useOnboardingColors();
-
-	// Responsive threshold tiers:
-	// - Full: height >= 34 && width >= 86 (ASCII art banner, individual cards)
-	// - Medium: height >= 26 && height < 34 (compact header, individual cards)
-	// - Compact: height >= 18 && height < 26 (compact header, single card container)
-	// - Minimal: height < 18 (ultra-compact rows, minimal header)
-	const isFull = !props.compact && height >= 34 && width >= 86;
-	const isMedium = height >= 26 && height < 34;
-	const isCompact = height >= 18 && height < 26;
-
-	const selectedOption = props.menuOptions[props.menuSelected];
-	const effectiveWidth = Math.max(24, Math.min(props.contentWidth, width - 2));
-
 	return (
 		<box
 			flexDirection="column"
 			width="100%"
 			height="100%"
-			justifyContent={height >= 24 ? "center" : "flex-start"}
+			justifyContent="center"
 			alignItems="center"
-			paddingTop={height < 24 ? 1 : 0}
 			onMouseMove={props.mouse.onMouseMove}
 		>
-			{/* Banner */}
-			{height >= 12 && (
-				<KerberoSecBanner compact={!isFull} hideDetails={height < 24} />
-			)}
+			<KerberoSecBanner />
 
-			{/* Welcome title */}
-			{height >= 16 && (
-				<box
-					flexDirection="column"
-					width={effectiveWidth}
-					alignItems="center"
-					marginTop={isFull ? 1 : 0}
-				>
-					<text fg={defaultFg}>
-						<strong>Welcome to KerberoSec</strong>
-					</text>
-					{isFull && (
-						<text fg="gray" marginTop={1}>
-							Connect a model provider to get started.
-						</text>
-					)}
-				</box>
-			)}
-
-			{/* Menu Options */}
-			{isFull || isMedium ? (
-				/* Full / Medium: Individual rounded border cards */
-				<box
-					flexDirection="column"
-					width={effectiveWidth}
-					marginTop={isFull ? 1 : 0}
-					gap={0}
-				>
-					{props.menuOptions.map((option, i) => {
-						const isSel = i === props.menuSelected;
-						return (
-							<box
-								key={option.value}
-								flexDirection="row"
-								border
-								borderStyle="rounded"
-								borderColor={isSel ? colors.accent : colors.subtleBorder}
-								paddingX={1}
-								gap={1}
-								alignItems="center"
-							>
-								<text
-									fg={isSel ? colors.accent : colors.mutedDetail}
-									flexShrink={0}
-								>
-									{option.icon}
-								</text>
-								<box flexDirection="column" flexGrow={1}>
-									<text fg={isSel ? defaultFg : "gray"}>
-										<strong>{option.label}</strong>
-									</text>
-									<text fg={isSel ? "gray" : colors.mutedDetail}>
-										{option.detail}
-									</text>
-								</box>
-								{isSel && (
-									<text fg={colors.accent} flexShrink={0}>
-										{"\u2192"}
-									</text>
-								)}
-							</box>
-						);
-					})}
-				</box>
-			) : isCompact ? (
-				/* Compact (height 18-25): Single bordered container holding all 4 options */
-				<box flexDirection="column" width={effectiveWidth} marginTop={0}>
-					<box
-						flexDirection="column"
-						border
-						borderStyle="rounded"
-						borderColor={colors.accent}
-						paddingX={1}
-					>
-						{props.menuOptions.map((option, i) => {
-							const isSel = i === props.menuSelected;
-							return (
-								<box
-									key={option.value}
-									flexDirection="row"
-									gap={1}
-									alignItems="center"
-									backgroundColor={isSel ? colors.selection : undefined}
-								>
-									<text
-										fg={isSel ? colors.accent : colors.mutedDetail}
-										flexShrink={0}
-									>
-										{isSel ? "\u276f" : " "}
-									</text>
-									<text
-										fg={
-											isSel ? (colors.textOnSelection ?? defaultFg) : defaultFg
-										}
-										flexShrink={0}
-									>
-										<strong>{option.label}</strong>
-									</text>
-									{effectiveWidth >= 68 && (
-										<text
-											fg={
-												isSel
-													? (colors.textOnSelection ?? "gray")
-													: colors.mutedDetail
-											}
-											flexShrink={1}
-										>
-											: {option.detail}
-										</text>
-									)}
-								</box>
-							);
-						})}
-					</box>
-					{effectiveWidth < 68 && selectedOption && height >= 22 && (
-						<box marginTop={0} paddingX={1}>
-							<text fg="gray">{selectedOption.detail}</text>
-						</box>
-					)}
-				</box>
-			) : (
-				/* Minimal (height < 18): Sleek 1-line rows without card borders */
-				<box flexDirection="column" width={effectiveWidth} marginTop={0}>
-					{props.menuOptions.map((option, i) => {
-						const isSel = i === props.menuSelected;
-						return (
-							<box
-								key={option.value}
-								flexDirection="row"
-								paddingX={1}
-								gap={1}
-								alignItems="center"
-								backgroundColor={isSel ? colors.selection : undefined}
-							>
-								<text
-									fg={isSel ? colors.accent : colors.mutedDetail}
-									flexShrink={0}
-								>
-									{isSel ? "\u276f" : " "}
-								</text>
-								<text
-									fg={isSel ? (colors.textOnSelection ?? defaultFg) : defaultFg}
-									flexShrink={0}
-								>
-									<strong>{option.label}</strong>
-								</text>
-								{effectiveWidth >= 65 && (
-									<text
-										fg={
-											isSel
-												? (colors.textOnSelection ?? "gray")
-												: colors.mutedDetail
-										}
-										flexShrink={1}
-									>
-										: {option.detail}
-									</text>
-								)}
-							</box>
-						);
-					})}
-					{effectiveWidth < 65 && selectedOption && height >= 14 && (
-						<box marginTop={0} paddingX={1}>
-							<text fg="gray">{selectedOption.detail}</text>
-						</box>
-					)}
-				</box>
-			)}
-
-			{/* Navigation hints */}
-			{height >= 10 && (
-				<text fg="gray" marginTop={isFull ? 1 : 0}>
-					<em>
-						{height >= 16
-							? "↑/↓ navigate, Enter to select, Ctrl+C to exit"
-							: "↑/↓ select, Enter confirm"}
-					</em>
+			<box
+				flexDirection="column"
+				width={props.contentWidth}
+				alignItems="center"
+				marginTop={1}
+			>
+				<text fg={defaultFg}>
+					<strong>Welcome to KerberoSec</strong>
 				</text>
-			)}
+				<text fg="gray" marginTop={1}>
+					Connect a model provider to get started.
+				</text>
+			</box>
+
+			<box
+				flexDirection="column"
+				width={props.contentWidth}
+				marginTop={1}
+				gap={0}
+			>
+				{props.menuOptions.map((option, i) => {
+					const isSel = i === props.menuSelected;
+					return (
+						<box
+							key={option.value}
+							flexDirection="row"
+							border
+							borderStyle="rounded"
+							borderColor={isSel ? colors.accent : colors.subtleBorder}
+							paddingX={1}
+							gap={1}
+							alignItems="center"
+						>
+							<text
+								fg={isSel ? colors.accent : colors.mutedDetail}
+								flexShrink={0}
+							>
+								{option.icon}
+							</text>
+							<box flexDirection="column" flexGrow={1}>
+								<text fg={isSel ? defaultFg : "gray"}>{option.label}</text>
+								<text fg={isSel ? "gray" : colors.mutedDetail}>
+									{option.detail}
+								</text>
+							</box>
+							{isSel && (
+								<text fg={colors.accent} flexShrink={0}>
+									{"\u2192"}
+								</text>
+							)}
+						</box>
+					);
+				})}
+			</box>
+
+			<text fg="gray" marginTop={1}>
+				<em>↑/↓ navigate, Enter to select, Ctrl+C to exit</em>
+			</text>
 		</box>
 	);
 }

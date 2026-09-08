@@ -100,6 +100,9 @@ export function isProviderSettingsUsable(
 	if (normalizedProviderId === "azure") {
 		return hasAzureCredentials(settings);
 	}
+	if (fields.fields.apiKey && !fields.fields.apiKey.optional) {
+		return false;
+	}
 	if (!fields.fields.baseUrl) {
 		return false;
 	}

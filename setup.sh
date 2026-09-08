@@ -204,10 +204,10 @@ install_missing_prerequisites() {
         return 0
     fi
 
-    if [ "$EUID" -ne 0 ] && [ "$CAN_SUDO" = false ] && [ "$PKG_MANAGER" != "brew" ] && [ "$PKG_MANAGER" != "scoop" ]; then
-        echo -e "  * ${RED}[!] Administrative privileges required to install system packages.${NC}"
-        echo -e "  * Please install the following packages manually and rerun setup.sh: ${MISSING_TOOLS[*]}"
-        return 1
+    if [ "$EUID" -ne 0 ] && [ "$CAN_SUDO" = false ] && [ "$PKG_MANAGER" != "brew" ] && [ "$PKG_MANAGER" != "scoop" ] && [ "$PKG_MANAGER" != "winget" ] && [ "$PKG_MANAGER" != "choco" ]; then
+        echo -e "  * ${YELLOW}[!] Notice: Non-root user without sudo privileges. Skipping system package installation.${NC}"
+        echo -e "  * Proceeding with user-space runtime setup. Recommended manual packages if missing: ${MISSING_TOOLS[*]}"
+        return 0
     fi
 
     echo -e "  * Installing required foundational tools using ${CYAN}${PKG_MANAGER}${NC}..."
@@ -220,48 +220,48 @@ install_missing_prerequisites() {
                 curl wget git zip unzip tar gzip bzip2 xz-utils jq procps pciutils \
                 build-essential pkg-config \
                 python3 python3-pip python3-venv python3-dev \
-                golang-go ca-certificates gnupg
+                golang-go ca-certificates gnupg || true
             ;;
         pacman)
             $SUDO_CMD pacman -Sy --noconfirm --needed \
                 curl wget git zip unzip tar gzip bzip2 xz jq procps-ng pciutils \
-                base-devel pkgconf python python-pip go ca-certificates gnupg
+                base-devel pkgconf python python-pip go ca-certificates gnupg || true
             ;;
         dnf)
             $SUDO_CMD dnf install -y \
                 curl wget git zip unzip tar gzip bzip2 xz jq procps-ng pciutils \
                 gcc gcc-c++ make pkgconf-pkg-config python3 python3-pip python3-devel \
-                golang ca-certificates gnupg2
+                golang ca-certificates gnupg2 || true
             ;;
         yum)
             $SUDO_CMD yum install -y \
                 curl wget git zip unzip tar gzip bzip2 xz jq procps-ng pciutils \
                 gcc gcc-c++ make pkgconf-pkg-config python3 python3-pip python3-devel \
-                golang ca-certificates gnupg2
+                golang ca-certificates gnupg2 || true
             ;;
         zypper)
             $SUDO_CMD zypper --non-interactive install \
                 curl wget git zip unzip tar gzip bzip2 xz jq procps pciutils \
                 gcc gcc-c++ make pkg-config python3 python3-pip python3-devel \
-                go ca-certificates gpg2
+                go ca-certificates gpg2 || true
             ;;
         apk)
-            $SUDO_CMD apk update
+            $SUDO_CMD apk update || true
             $SUDO_CMD apk add --no-cache \
                 curl wget git zip unzip tar gzip bzip2 xz jq procps pciutils \
-                build-base pkgconfig python3 py3-pip python3-dev go ca-certificates gnupg bash
+                build-base pkgconfig python3 py3-pip python3-dev go ca-certificates gnupg bash || true
             ;;
         brew|brew_needed)
             if [ "$PKG_MANAGER" = "brew_needed" ]; then
                 echo -e "    Installing Homebrew for macOS..."
-                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-                eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)"
+                /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || true
+                eval "$(/opt/homebrew/bin/brew shellenv 2>/dev/null || /usr/local/bin/brew shellenv 2>/dev/null)" || true
             fi
-            brew install curl wget git gnu-tar gzip bzip2 xz zip unzip jq pkg-config python3 go gnupg
+            brew install curl wget git gnu-tar gzip bzip2 xz zip unzip jq pkg-config python3 go gnupg || true
             ;;
         pkg)
             $SUDO_CMD pkg install -y \
-                curl wget git gtar gzip bzip2 xz zip unzip jq gmake gcc pkgconf python3 py39-pip go ca_root_nss gnupg
+                curl wget git gtar gzip bzip2 xz zip unzip jq gmake gcc pkgconf python3 py39-pip go ca_root_nss gnupg || true
             ;;
         winget)
             winget install -e --id Git.Git --accept-source-agreements --accept-package-agreements || true
@@ -272,10 +272,10 @@ install_missing_prerequisites() {
             winget install -e --id GoLang.Go --accept-source-agreements --accept-package-agreements || true
             ;;
         choco)
-            choco install -y git curl wget zip unzip tar 7zip jq make python3 golang
+            choco install -y git curl wget zip unzip tar 7zip jq make python3 golang || true
             ;;
         scoop)
-            scoop install git curl wget 7zip jq python go
+            scoop install git curl wget 7zip jq python go || true
             ;;
         *)
             echo -e "  * ${YELLOW}[warn] Could not automatically install tools for package manager '$PKG_MANAGER'. Please manually ensure:${NC} ${MISSING_TOOLS[*]}"
@@ -306,6 +306,13 @@ if [ "$OS_NAME" = "Darwin" ]; then
 elif command -v lscpu &>/dev/null; then
     SETUP_LOGICAL_CORES=$(nproc 2>/dev/null || echo "4")
     SETUP_PHYSICAL_CORES=$(lscpu -p 2>/dev/null | grep -E -v '^#' | sort -u -t, -k 2,2 | wc -l 2>/dev/null || echo "$SETUP_LOGICAL_CORES")
+elif [ -n "$NUMBER_OF_PROCESSORS" ]; then
+    SETUP_LOGICAL_CORES="$NUMBER_OF_PROCESSORS"
+    SETUP_PHYSICAL_CORES="$NUMBER_OF_PROCESSORS"
+elif command -v powershell.exe &>/dev/null; then
+    WIN_CORES=$(powershell.exe -NoProfile -Command "(Get-CimInstance Win32_Processor | Select-Object -First 1).NumberOfCores" 2>/dev/null | tr -cd '0-9' || echo "4")
+    SETUP_PHYSICAL_CORES="${WIN_CORES:-4}"
+    SETUP_LOGICAL_CORES="${NUMBER_OF_PROCESSORS:-$SETUP_PHYSICAL_CORES}"
 else
     SETUP_LOGICAL_CORES=$(nproc 2>/dev/null || echo "4")
     SETUP_PHYSICAL_CORES="$SETUP_LOGICAL_CORES"
@@ -327,6 +334,12 @@ elif command -v free &>/dev/null; then
     SETUP_RAM_MB=$(free -m 2>/dev/null | awk '/^Mem:/{print $2}' || echo "8192")
 elif [ -f /proc/meminfo ]; then
     SETUP_RAM_MB=$(grep MemTotal /proc/meminfo 2>/dev/null | awk '{print int($2/1024)}' || echo "8192")
+elif command -v powershell.exe &>/dev/null; then
+    WIN_RAM=$(powershell.exe -NoProfile -Command "[math]::Round((Get-CimInstance Win32_ComputerSystem).TotalPhysicalMemory / 1MB)" 2>/dev/null | tr -cd '0-9' || echo "8192")
+    SETUP_RAM_MB="${WIN_RAM:-8192}"
+elif command -v wmic &>/dev/null; then
+    WIN_RAM=$(wmic OS get TotalVisibleMemorySize 2>/dev/null | tr -cd '0-9' | awk '{print int($1/1024)}' || echo "8192")
+    SETUP_RAM_MB="${WIN_RAM:-8192}"
 fi
 
 SETUP_RAM_MB=$(echo "$SETUP_RAM_MB" | tr -cd '0-9')
@@ -345,8 +358,8 @@ SETUP_CUDA_VER=""
 
 # Probe NVIDIA CUDA
 NVIDIA_SMI_BIN=""
-for cand in "nvidia-smi" "/usr/lib/wsl/lib/nvidia-smi" "/usr/bin/nvidia-smi" "/usr/local/cuda/bin/nvidia-smi" "/mnt/c/Windows/System32/nvidia-smi.exe"; do
-    if command -v "$cand" &>/dev/null; then
+for cand in "nvidia-smi" "nvidia-smi.exe" "/usr/lib/wsl/lib/nvidia-smi" "/usr/bin/nvidia-smi" "/usr/local/cuda/bin/nvidia-smi" "/mnt/c/Windows/System32/nvidia-smi.exe" "/c/Windows/System32/nvidia-smi.exe" "C:\\Windows\\System32\\nvidia-smi.exe"; do
+    if command -v "$cand" &>/dev/null || [ -f "$cand" ]; then
         NVIDIA_SMI_BIN="$cand"
         break
     fi
@@ -425,6 +438,21 @@ if [ "$SETUP_HAS_NVIDIA" = false ] && [ "$SETUP_HAS_APPLE" = false ] && [ "$SETU
         if echo "$INTEL_GPU" | grep -qiE "Arc|Meteor|Lunar|Xe"; then
             SETUP_HAS_INTEL_ARC=true
             SETUP_GPU_NAME="Intel Arc / Xe Graphics"
+        fi
+    fi
+fi
+
+# Fallback GPU probing for Windows via PowerShell if no GPU detected yet
+if [ "$SETUP_HAS_NVIDIA" = false ] && [ "$SETUP_HAS_APPLE" = false ] && [ "$SETUP_HAS_AMD" = false ] && [ "$SETUP_HAS_INTEL_ARC" = false ] && command -v powershell.exe &>/dev/null; then
+    WIN_GPU=$(powershell.exe -NoProfile -Command "(Get-CimInstance Win32_VideoController | Select-Object -First 1).Name" 2>/dev/null | tr -d '\r\n' | xargs || true)
+    if [ -n "$WIN_GPU" ]; then
+        SETUP_GPU_NAME="$WIN_GPU"
+        if echo "$WIN_GPU" | grep -qi "NVIDIA"; then
+            SETUP_HAS_NVIDIA=true
+        elif echo "$WIN_GPU" | grep -qiE "AMD|Radeon"; then
+            SETUP_HAS_AMD=true
+        elif echo "$WIN_GPU" | grep -qiE "Intel.*Arc|Intel.*Xe"; then
+            SETUP_HAS_INTEL_ARC=true
         fi
     fi
 fi
@@ -510,18 +538,39 @@ echo -e "\n${BLUE}${BOLD}[3/7] Checking Bun JavaScript & TypeScript Runtime...${
 BUN_DIR="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_DIR/bin:$HOME/.bun/bin:$PATH"
 
-if ! command -v bun &>/dev/null && [ ! -f "$BUN_DIR/bin/bun" ]; then
+if ! command -v bun &>/dev/null && [ ! -f "$BUN_DIR/bin/bun" ] && [ ! -f "$BUN_DIR/bin/bun.exe" ] && [ ! -f "$HOME/.bun/bin/bun.exe" ]; then
     if [ "$DRY_RUN" = true ]; then
         echo -e "  * ${YELLOW}[Dry-Run] Would install Bun runtime from https://bun.sh/install.${NC}"
     else
         echo -e "  * Downloading and installing Bun runtime..."
-        curl -fsSL https://bun.sh/install | bash
+        case "$OS_NAME" in
+            CYGWIN*|MINGW*|MSYS*|Windows_NT*)
+                if command -v powershell.exe &>/dev/null; then
+                    powershell.exe -NoProfile -ExecutionPolicy Bypass -Command "irm bun.sh/install.ps1 | iex" || curl -fsSL https://bun.sh/install | bash || true
+                elif command -v powershell &>/dev/null; then
+                    powershell -NoProfile -ExecutionPolicy Bypass -Command "irm bun.sh/install.ps1 | iex" || curl -fsSL https://bun.sh/install | bash || true
+                else
+                    curl -fsSL https://bun.sh/install | bash || true
+                fi
+                ;;
+            *)
+                curl -fsSL https://bun.sh/install | bash || true
+                ;;
+        esac
         export PATH="$BUN_DIR/bin:$HOME/.bun/bin:$PATH"
     fi
 fi
 
-BUN_BIN_PATH="$(command -v bun 2>/dev/null || echo "$BUN_DIR/bin/bun")"
-if [ -x "$BUN_BIN_PATH" ] || command -v bun &>/dev/null; then
+BUN_BIN_PATH=""
+for cand in "$(command -v bun 2>/dev/null)" "$BUN_DIR/bin/bun" "$BUN_DIR/bin/bun.exe" "$HOME/.bun/bin/bun" "$HOME/.bun/bin/bun.exe"; do
+    if [ -x "$cand" ] || [ -f "$cand" ]; then
+        BUN_BIN_PATH="$cand"
+        break
+    fi
+done
+
+if [ -n "$BUN_BIN_PATH" ]; then
+    export PATH="$(dirname "$BUN_BIN_PATH"):$PATH"
     BUN_VER="$(bun --version 2>/dev/null || echo "Installed")"
     echo -e "  * ${GREEN}[OK]${NC} Bun installed: ${WHITE}${BUN_VER}${NC} (${BUN_BIN_PATH})"
 else
@@ -566,19 +615,67 @@ BUN_BIN_DIR="$(dirname "$(command -v bun 2>/dev/null || echo "$BUN_DIR/bin/bun")
 if [ "$DRY_RUN" = false ]; then
     cat << WRAPPER_EOF > "$WRAPPER_PATH"
 #!/usr/bin/env bash
-export LANG="\${LANG:-C.UTF-8}"
-export LC_ALL="\${LC_ALL:-C.UTF-8}"
-export PATH="\$HOME/Tools/bin:\$HOME/go/bin:\$HOME/.local/bin:\$HOME/.bun/bin:${BUN_BIN_DIR}:\$PATH"
-
-# Prefer pre-compiled production binary if present for instant startup, fallback to source
-if [ -f "$REPO_DIR/apps/cli/dist/index.js" ]; then
-    exec bun "$REPO_DIR/apps/cli/dist/index.js" "\$@"
-else
-    exec bun run "$REPO_DIR/apps/cli/src/index.ts" "\$@"
+# If running inside WSL, switch Windows Console Host code page to UTF-8 (65001)
+if [ -t 1 ] && [ -x "/mnt/c/Windows/system32/cmd.exe" ]; then
+    /mnt/c/Windows/system32/cmd.exe /c chcp 65001 >/dev/null 2>&1 || true
 fi
+
+# Ensure locale is UTF-8 without using invalid C.UTF-8
+if [ -z "\$LANG" ] || [ "\$LANG" = "C" ] || [ "\$LANG" = "POSIX" ]; then
+    export LANG="en_US.UTF-8"
+fi
+if [ -n "\$LC_ALL" ] && { [ "\$LC_ALL" = "C" ] || [ "\$LC_ALL" = "POSIX" ] || [ "\$LC_ALL" = "C.UTF-8" ]; }; then
+    unset LC_ALL
+fi
+
+export PATH="$HOME/Tools/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.bun/bin:${BUN_BIN_DIR}:\$PATH"
+
+# Respect hardware-calibrated Ollama context
+if [ -z "\$OLLAMA_NUM_CTX" ] && [ -f "\$HOME/.kerberosec/ollama_num_ctx" ]; then
+    export OLLAMA_NUM_CTX="\$(cat "\$HOME/.kerberosec/ollama_num_ctx" 2>/dev/null)"
+fi
+export OLLAMA_NUM_CTX="\${OLLAMA_NUM_CTX:-4096}"
+
+exec bun run "$REPO_DIR/apps/cli/src/index.ts" "\$@"
 WRAPPER_EOF
 
     chmod +x "$WRAPPER_PATH"
+
+    WIN_REPO_DIR="$REPO_DIR"
+    if command -v cygpath &>/dev/null; then
+        WIN_REPO_DIR="$(cygpath -w "$REPO_DIR")"
+    fi
+
+    # Generate Windows Command Prompt Batch Wrapper
+    cat << CMD_EOF > "$BIN_DIR/kerberosec.cmd"
+@echo off
+setlocal
+chcp 65001 >nul 2>&1
+set "PATH=%USERPROFILE%\\Tools\\bin;%USERPROFILE%\\go\\bin;%USERPROFILE%\\.local\\bin;%USERPROFILE%\\.bun\\bin;%PATH%"
+if exist "%USERPROFILE%\\.kerberosec\\ollama_num_ctx" (
+    set /p OLLAMA_NUM_CTX=<"%USERPROFILE%\\.kerberosec\\ollama_num_ctx"
+)
+if "%OLLAMA_NUM_CTX%"=="" set OLLAMA_NUM_CTX=4096
+bun run "${WIN_REPO_DIR}\\apps\\cli\\src\\index.ts" %*
+CMD_EOF
+
+    # Generate Windows PowerShell Wrapper
+    cat << PS1_EOF > "$BIN_DIR/kerberosec.ps1"
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+\$env:PATH = "\$HOME\\Tools\\bin;\$HOME\\go\\bin;\$HOME\\.local\\bin;\$HOME\\.bun\\bin;\$env:PATH"
+if (Test-Path "\$HOME\\.kerberosec\\ollama_num_ctx") {
+    \$env:OLLAMA_NUM_CTX = (Get-Content "\$HOME\\.kerberosec\\ollama_num_ctx" -Raw).Trim()
+}
+if (-not \$env:OLLAMA_NUM_CTX) { \$env:OLLAMA_NUM_CTX = "4096" }
+bun run "${WIN_REPO_DIR}\\apps\\cli\\src\\index.ts" \$args
+PS1_EOF
+
+    # Also register wrappers in ~/.bun/bin for direct Windows PATH integration
+    if [ -d "$HOME/.bun/bin" ]; then
+        cp -f "$WRAPPER_PATH" "$HOME/.bun/bin/kerberosec" 2>/dev/null || true
+        cp -f "$BIN_DIR/kerberosec.cmd" "$HOME/.bun/bin/kerberosec.cmd" 2>/dev/null || true
+        cp -f "$BIN_DIR/kerberosec.ps1" "$HOME/.bun/bin/kerberosec.ps1" 2>/dev/null || true
+    fi
 fi
 
 ensure_shell_path() {
@@ -611,9 +708,11 @@ if [ "$SKIP_OLLAMA" = false ]; then
     if [ -f "$REPO_DIR/ollama.sh" ]; then
         chmod +x "$REPO_DIR/ollama.sh"
         if [ "$DRY_RUN" = true ]; then
-            bash "$REPO_DIR/ollama.sh" --dry-run
+            bash "$REPO_DIR/ollama.sh" --dry-run || true
         else
-            bash "$REPO_DIR/ollama.sh"
+            bash "$REPO_DIR/ollama.sh" || {
+                echo -e "  * ${YELLOW}[Notice] Ollama optimization completed with non-fatal status.${NC}"
+            }
         fi
     fi
 else

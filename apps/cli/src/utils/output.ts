@@ -70,11 +70,6 @@ export function isBrokenPipeError(error: unknown): boolean {
 
 export function installStreamErrorGuards(): void {
 	const stdout = process.stdout as GuardedStream;
-	if (typeof stdout.setDefaultEncoding === "function") {
-		try {
-			stdout.setDefaultEncoding("utf-8");
-		} catch {}
-	}
 	if (!stdout[STDOUT_ERROR_GUARD]) {
 		const onStdoutError = (error: unknown) => {
 			if (isBrokenPipeError(error)) {
@@ -94,11 +89,6 @@ export function installStreamErrorGuards(): void {
 	}
 
 	const stderr = process.stderr as GuardedStream;
-	if (typeof stderr.setDefaultEncoding === "function") {
-		try {
-			stderr.setDefaultEncoding("utf-8");
-		} catch {}
-	}
 	if (!stderr[STDERR_ERROR_GUARD]) {
 		const onStderrError = (error: unknown) => {
 			if (isBrokenPipeError(error)) {

@@ -58,13 +58,13 @@ function buildKerberoSecModelEntries(
 export const KERBEROSEC_PASS_FREE_SECTION_DESCRIPTION =
 	"Try with limited usage, separate from ClinePass quota.";
 
-// KerberoSecPass shows the subscription's models plus the KerberoSec free models — both
+// KerberoSecPass shows the subscription's models plus the KerberoSec free models -- both
 // providers hit the same KerberoSec API, so free models are selectable in place
 // (they ride usage billing at $0 instead of the subscription quota).
 // No "browse all" entry when the kerberosecPass bucket is populated: unlike kerberosec,
 // the KerberoSecPass catalog contains exactly these two buckets, so the sections
 // already list every selectable model. An empty kerberosecPass bucket means the
-// fetch fell back to the bundled list (which has no pass models) — without an
+// fetch fell back to the bundled list (which has no pass models) -- without an
 // escape into the full catalog a subscriber could only pick free models, so
 // browse-all comes back in that degraded mode.
 function buildKerberoSecPassModelEntries(

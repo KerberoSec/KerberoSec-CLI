@@ -1,5 +1,8 @@
 #!/usr/bin/env bun
 
+import { existsSync, readFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
 import { isMainThread } from "node:worker_threads";
 import {
 	claimHubDaemonProcess,
@@ -17,36 +20,21 @@ import {
 import { resolveCliLaunchSpec } from "./utils/internal-launch";
 import { writeErr } from "./utils/output";
 
-// Ensure standard I/O streams and environment enforce UTF-8 across all operating systems and shells
-if (!process.env.LANG || !process.env.LANG.toLowerCase().includes("utf")) {
-	process.env.LANG = "C.UTF-8";
-}
-if (!process.env.LC_ALL || !process.env.LC_ALL.toLowerCase().includes("utf")) {
-	process.env.LC_ALL = "C.UTF-8";
-}
-if (
-	process.stdout &&
-	typeof (
-		process.stdout as unknown as { setDefaultEncoding?: (enc: string) => void }
-	).setDefaultEncoding === "function"
-) {
+// Auto-configure Ollama context window based on hardware calibration if not explicitly set
+if (!process.env.OLLAMA_NUM_CTX) {
 	try {
-		(
-			process.stdout as unknown as { setDefaultEncoding: (enc: string) => void }
-		).setDefaultEncoding("utf-8");
-	} catch {}
-}
-if (
-	process.stderr &&
-	typeof (
-		process.stderr as unknown as { setDefaultEncoding?: (enc: string) => void }
-	).setDefaultEncoding === "function"
-) {
-	try {
-		(
-			process.stderr as unknown as { setDefaultEncoding: (enc: string) => void }
-		).setDefaultEncoding("utf-8");
-	} catch {}
+		const calibratedPath = join(homedir(), ".kerberosec", "ollama_num_ctx");
+		if (existsSync(calibratedPath)) {
+			const val = readFileSync(calibratedPath, "utf-8").trim();
+			if (val && !Number.isNaN(Number(val))) {
+				process.env.OLLAMA_NUM_CTX = val;
+			}
+		} else {
+			process.env.OLLAMA_NUM_CTX = "4096";
+		}
+	} catch {
+		process.env.OLLAMA_NUM_CTX = "4096";
+	}
 }
 
 // Initialize VCR before any HTTP requests are made.

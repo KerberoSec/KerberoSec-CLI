@@ -1048,7 +1048,7 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		popular: 2,
 		capabilities: ["tools", "reasoning", "vision"],
 		defaultModelId: "gpt-5.6-sol",
-		apiKeyEnv: ["AGENT_ROUTER_API_KEY"],
+		apiKeyEnv: ["AGENT_ROUTER_API_KEY", "AGENTIC_API_KEY"],
 		modelsFactory: () => ({
 			"gpt-5.6-sol": {
 				id: "gpt-5.6-sol",
@@ -1092,7 +1092,6 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 				"User-Agent": "codex_cli_rs/0.1.0",
 			},
 		},
-		modelsSourceUrl: "https://agentrouter.org/v1/models",
 	},
 	{
 		id: "lmstudio",

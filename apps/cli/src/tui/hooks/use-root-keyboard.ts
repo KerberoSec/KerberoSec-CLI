@@ -61,6 +61,7 @@ export function useRootKeyboard(input: {
 	onOpenCommandPalette: () => Promise<void>;
 	onCommandPaletteShortcut: (key: KeyEvent) => boolean;
 	showToast?: (message: string, type?: "info" | "success" | "error") => void;
+	copyCurrentSelection?: () => boolean;
 }) {
 	const session = useSession();
 	const lastEscapeRef = useRef(0);
@@ -86,7 +87,11 @@ export function useRootKeyboard(input: {
 			input.syncInputFromTextarea();
 		}
 
-		if (key.ctrl && key.name === "c") {
+		if (key.ctrl && (key.name === "c" || key.name === "C")) {
+			if (input.copyCurrentSelection?.()) {
+				key.preventDefault?.();
+				return;
+			}
 			const now = Date.now();
 			if (now - lastCtrlCRef.current < 2000) {
 				input.onExit();

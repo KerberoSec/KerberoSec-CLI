@@ -76,7 +76,8 @@ export function configureFastAutoScroll(
 
 /**
  * Globally patches ScrollBoxRenderable prototype to increase text-selection
- * drag auto-scroll speed by 10x across all scrollboxes.
+ * drag auto-scroll speed by 10x across all scrollboxes, and ensures auto-scrolling
+ * continues smoothly at 10x speed even when dragging into lower toolbars or below the terminal.
  */
 export function applyAutoScrollSpeedPatch(): void {
 	if (
@@ -89,6 +90,7 @@ export function applyAutoScrollSpeedPatch(): void {
 		).__autoScroll10xPatched = true;
 		const origGetAutoScrollSpeed =
 			ScrollBoxRenderable.prototype.getAutoScrollSpeed;
+		const origOnUpdate = ScrollBoxRenderable.prototype.onUpdate;
 
 		ScrollBoxRenderable.prototype.getAutoScrollSpeed = function (
 			mouseX: number,
@@ -114,6 +116,52 @@ export function applyAutoScrollSpeedPatch(): void {
 			}
 
 			return baseSpeed * factor;
+		};
+
+		ScrollBoxRenderable.prototype.onUpdate = function (
+			deltaTime: number,
+		): void {
+			const ctx = (
+				this as unknown as {
+					_ctx?: {
+						getSelection?: () => {
+							isDragging?: boolean;
+							anchor?: { x: number; y: number };
+							focus?: { x: number; y: number };
+						} | null;
+					};
+				}
+			)._ctx;
+			const selection = ctx?.getSelection?.();
+
+			if (selection?.isDragging && selection.focus && selection.anchor) {
+				const anchor = selection.anchor;
+				const isAnchorInThis =
+					anchor.x >= this.x &&
+					anchor.x <= this.x + this.width &&
+					anchor.y >= this.y &&
+					anchor.y <= this.y + this.height;
+
+				if (isAnchorInThis) {
+					const relativeY = selection.focus.y - this.y;
+					const distToBottom = this.height - relativeY;
+					const distToTop = relativeY;
+
+					// If selection cursor is near or outside the vertical bounds of the scrollbox,
+					// keep auto-scroll active and responsive to cursor position
+					if (distToBottom <= 3 || distToTop <= 3) {
+						this.updateAutoScroll(selection.focus.x, selection.focus.y);
+					}
+				}
+			}
+
+			if (origOnUpdate) {
+				origOnUpdate.call(this, deltaTime);
+			} else {
+				(
+					this as unknown as { handleAutoScroll: (dt: number) => void }
+				).handleAutoScroll(deltaTime);
+			}
 		};
 	}
 }

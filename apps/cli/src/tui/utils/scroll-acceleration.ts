@@ -1,4 +1,8 @@
-import { type ScrollAcceleration, ScrollBoxRenderable } from "@opentui/core";
+import {
+	type MouseEvent,
+	type ScrollAcceleration,
+	ScrollBoxRenderable,
+} from "@opentui/core";
 
 /**
  * 10x scroll acceleration for responsive terminal mouse wheel and trackpad scrolling.
@@ -51,12 +55,12 @@ export class FastScrollAccel implements ScrollAcceleration {
 export const fastScrollAccel = new FastScrollAccel(10);
 
 /**
- * Baseline 10x multiplier for text-selection drag auto-scrolling.
+ * High-speed multiplier for text-selection scrolling (30x baseline).
  */
-export const SELECTION_AUTO_SCROLL_MULTIPLIER = 10;
+export const SELECTION_AUTO_SCROLL_MULTIPLIER = 30;
 
 /**
- * Configures a ScrollBoxRenderable instance with 10x faster auto-scroll speeds
+ * Configures a ScrollBoxRenderable instance with ultra-fast auto-scroll speeds
  * when selecting text and dragging near or outside the container boundaries.
  */
 export function configureFastAutoScroll(
@@ -71,13 +75,15 @@ export function configureFastAutoScroll(
 	};
 	sb.autoScrollSpeedSlow = (sb.autoScrollSpeedSlow ?? 6) * multiplier;
 	sb.autoScrollSpeedMedium = (sb.autoScrollSpeedMedium ?? 36) * multiplier;
-	sb.autoScrollSpeedFast = (sb.autoScrollSpeedFast ?? 72) * multiplier;
+	sb.autoScrollSpeedFast = Math.max(
+		(sb.autoScrollSpeedFast ?? 72) * multiplier,
+		2160,
+	);
 }
 
 /**
- * Globally patches ScrollBoxRenderable prototype to increase text-selection
- * drag auto-scroll speed by 10x across all scrollboxes, and ensures auto-scrolling
- * continues smoothly at 10x speed even when dragging into lower toolbars or below the terminal.
+ * Globally patches ScrollBoxRenderable prototype to drastically increase
+ * scroll speed when text is selected (both for drag auto-scrolling and wheel scrolling).
  */
 export function applyAutoScrollSpeedPatch(): void {
 	if (
@@ -91,6 +97,7 @@ export function applyAutoScrollSpeedPatch(): void {
 		const origGetAutoScrollSpeed =
 			ScrollBoxRenderable.prototype.getAutoScrollSpeed;
 		const origOnUpdate = ScrollBoxRenderable.prototype.onUpdate;
+		const origOnMouseEvent = ScrollBoxRenderable.prototype.onMouseEvent;
 
 		ScrollBoxRenderable.prototype.getAutoScrollSpeed = function (
 			mouseX: number,
@@ -98,24 +105,32 @@ export function applyAutoScrollSpeedPatch(): void {
 		): number {
 			const relativeY = mouseY - this.y;
 			const distToBottom = this.height - relativeY;
+			const distToTop = relativeY;
+
+			// When dragged near or below the bottom border, fly at 2,160+ lines/sec
+			// with progressive overshoot acceleration when pulled further below the terminal
+			if (distToBottom <= 1) {
+				const overshoot = Math.max(0, -distToBottom);
+				return Math.max(
+					2160,
+					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 150,
+				);
+			}
+
+			if (distToTop <= 1) {
+				const overshoot = Math.max(0, -distToTop);
+				return Math.max(
+					2160,
+					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 150,
+				);
+			}
+
 			const baseSpeed = origGetAutoScrollSpeed
 				? origGetAutoScrollSpeed.call(this, mouseX, mouseY)
 				: ((this as unknown as { autoScrollSpeedFast?: number })
 						.autoScrollSpeedFast ?? 72);
 
-			// If the instance speeds were already scaled (e.g. >= 360), avoid multiplying twice
-			const alreadyScaled = baseSpeed >= 360;
-			const factor = alreadyScaled ? 1 : SELECTION_AUTO_SCROLL_MULTIPLIER;
-
-			// When dragged near or past the bottom border (below terminal), apply 10x boost
-			// with progressive acceleration when pulled further below the terminal boundary
-			if (distToBottom <= 1) {
-				const overshoot = Math.max(0, -distToBottom);
-				const extra = Math.min(5, Math.floor(overshoot / 2));
-				return baseSpeed * (factor + extra);
-			}
-
-			return baseSpeed * factor;
+			return Math.max(baseSpeed * SELECTION_AUTO_SCROLL_MULTIPLIER, 1080);
 		};
 
 		ScrollBoxRenderable.prototype.onUpdate = function (
@@ -134,24 +149,15 @@ export function applyAutoScrollSpeedPatch(): void {
 			)._ctx;
 			const selection = ctx?.getSelection?.();
 
-			if (selection?.isDragging && selection.focus && selection.anchor) {
-				const anchor = selection.anchor;
-				const isAnchorInThis =
-					anchor.x >= this.x &&
-					anchor.x <= this.x + this.width &&
-					anchor.y >= this.y &&
-					anchor.y <= this.y + this.height;
+			if (selection?.isDragging && selection.focus) {
+				const relativeY = selection.focus.y - this.y;
+				const distToBottom = this.height - relativeY;
+				const distToTop = relativeY;
 
-				if (isAnchorInThis) {
-					const relativeY = selection.focus.y - this.y;
-					const distToBottom = this.height - relativeY;
-					const distToTop = relativeY;
-
-					// If selection cursor is near or outside the vertical bounds of the scrollbox,
-					// keep auto-scroll active and responsive to cursor position
-					if (distToBottom <= 3 || distToTop <= 3) {
-						this.updateAutoScroll(selection.focus.x, selection.focus.y);
-					}
+				// If selection cursor is near or outside the vertical bounds of the scrollbox,
+				// drive auto-scroll at ultra-fast speed
+				if (distToBottom <= 3 || distToTop <= 3) {
+					this.updateAutoScroll(selection.focus.x, selection.focus.y);
 				}
 			}
 
@@ -163,8 +169,43 @@ export function applyAutoScrollSpeedPatch(): void {
 				).handleAutoScroll(deltaTime);
 			}
 		};
+
+		ScrollBoxRenderable.prototype.onMouseEvent = function (
+			event: MouseEvent,
+		): void {
+			// When text is selected and user scrolls wheel or trackpad, boost scroll velocity
+			if (event.type === "scroll") {
+				const ctx = (
+					this as unknown as {
+						_ctx?: {
+							getSelection?: () => {
+								isActive?: boolean;
+								isDragging?: boolean;
+							} | null;
+							requestSelectionUpdate?: () => void;
+						};
+					}
+				)._ctx;
+				const selection = ctx?.getSelection?.();
+				if (selection && (selection.isActive || selection.isDragging)) {
+					const dir = event.scroll?.direction;
+					const baseDelta = event.scroll?.delta ?? 1;
+					if (dir === "down" || dir === "up") {
+						const extraLines =
+							(dir === "down" ? 1 : -1) * Math.max(1, Math.abs(baseDelta)) * 30;
+						this.scrollTop += extraLines;
+						(
+							this as unknown as { syncManualScrollState: () => void }
+						).syncManualScrollState();
+						ctx?.requestSelectionUpdate?.();
+					}
+				}
+			}
+
+			origOnMouseEvent.call(this, event);
+		};
 	}
 }
 
-// Automatically apply auto-scroll 10x patch at load time
+// Automatically apply auto-scroll ultra-fast patch at load time
 applyAutoScrollSpeedPatch();

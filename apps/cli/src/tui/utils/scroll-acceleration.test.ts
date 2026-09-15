@@ -36,11 +36,11 @@ describe("FastScrollAccel", () => {
 });
 
 describe("Selection Auto-Scroll Acceleration", () => {
-	it("should define a 10x selection auto-scroll multiplier", () => {
-		expect(SELECTION_AUTO_SCROLL_MULTIPLIER).toBe(10);
+	it("should define a high-speed selection auto-scroll multiplier", () => {
+		expect(SELECTION_AUTO_SCROLL_MULTIPLIER).toBe(30);
 	});
 
-	it("configureFastAutoScroll should scale instance autoScroll speeds by 10x", () => {
+	it("configureFastAutoScroll should scale instance autoScroll speeds to ultra-fast levels", () => {
 		const mockScrollBox = {
 			autoScrollSpeedSlow: 6,
 			autoScrollSpeedMedium: 36,
@@ -54,12 +54,12 @@ describe("Selection Auto-Scroll Acceleration", () => {
 			autoScrollSpeedMedium: number;
 			autoScrollSpeedFast: number;
 		};
-		expect(sb.autoScrollSpeedSlow).toBe(60);
-		expect(sb.autoScrollSpeedMedium).toBe(360);
-		expect(sb.autoScrollSpeedFast).toBe(720);
+		expect(sb.autoScrollSpeedSlow).toBe(180);
+		expect(sb.autoScrollSpeedMedium).toBe(1080);
+		expect(sb.autoScrollSpeedFast).toBeGreaterThanOrEqual(2160);
 	});
 
-	it("getAutoScrollSpeed should scale by at least 10x when dragging below container", () => {
+	it("getAutoScrollSpeed should scale by at least 2160 when dragging below container", () => {
 		applyAutoScrollSpeedPatch();
 
 		const mockCtx = {
@@ -79,7 +79,7 @@ describe("Selection Auto-Scroll Acceleration", () => {
 			35,
 		);
 
-		// Baseline speed is 72, 10x is 720; with overshoot boost it should be >= 720
-		expect(speed).toBeGreaterThanOrEqual(720);
+		// High-speed auto-scroll should be >= 2160
+		expect(speed).toBeGreaterThanOrEqual(2160);
 	});
 });

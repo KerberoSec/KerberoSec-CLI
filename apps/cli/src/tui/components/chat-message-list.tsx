@@ -12,7 +12,10 @@ import type { TranscriptCommand } from "../hooks/transcript-keybinds";
 import { useTheme } from "../hooks/use-theme";
 import { getThemeModeAccent } from "../themes";
 import type { ChatEntry } from "../types";
-import { fastScrollAccel } from "../utils/scroll-acceleration";
+import {
+	configureFastAutoScroll,
+	fastScrollAccel,
+} from "../utils/scroll-acceleration";
 import { ChatEntryView } from "./chat-entry";
 
 export interface TranscriptScrollHandle {
@@ -90,6 +93,7 @@ export const ChatMessageList = forwardRef<
 	useEffect(() => {
 		if (scrollboxRef.current) {
 			scrollboxRef.current.scrollAcceleration = fastScrollAccel;
+			configureFastAutoScroll(scrollboxRef.current);
 		}
 	}, []);
 

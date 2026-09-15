@@ -1,5 +1,12 @@
 import { describe, expect, it } from "bun:test";
-import { FastScrollAccel, fastScrollAccel } from "./scroll-acceleration";
+import { ScrollBoxRenderable } from "@opentui/core";
+import {
+	applyAutoScrollSpeedPatch,
+	configureFastAutoScroll,
+	FastScrollAccel,
+	fastScrollAccel,
+	SELECTION_AUTO_SCROLL_MULTIPLIER,
+} from "./scroll-acceleration";
 
 describe("FastScrollAccel", () => {
 	it("should provide at least 10x multiplier on first tick", () => {
@@ -25,5 +32,54 @@ describe("FastScrollAccel", () => {
 
 	it("exported fastScrollAccel singleton should have baseline 10", () => {
 		expect(fastScrollAccel.tick(1000)).toBeGreaterThanOrEqual(10);
+	});
+});
+
+describe("Selection Auto-Scroll Acceleration", () => {
+	it("should define a 10x selection auto-scroll multiplier", () => {
+		expect(SELECTION_AUTO_SCROLL_MULTIPLIER).toBe(10);
+	});
+
+	it("configureFastAutoScroll should scale instance autoScroll speeds by 10x", () => {
+		const mockScrollBox = {
+			autoScrollSpeedSlow: 6,
+			autoScrollSpeedMedium: 36,
+			autoScrollSpeedFast: 72,
+		} as unknown as ScrollBoxRenderable;
+
+		configureFastAutoScroll(mockScrollBox);
+
+		const sb = mockScrollBox as unknown as {
+			autoScrollSpeedSlow: number;
+			autoScrollSpeedMedium: number;
+			autoScrollSpeedFast: number;
+		};
+		expect(sb.autoScrollSpeedSlow).toBe(60);
+		expect(sb.autoScrollSpeedMedium).toBe(360);
+		expect(sb.autoScrollSpeedFast).toBe(720);
+	});
+
+	it("getAutoScrollSpeed should scale by at least 10x when dragging below container", () => {
+		applyAutoScrollSpeedPatch();
+
+		const mockCtx = {
+			x: 0,
+			y: 0,
+			width: 100,
+			height: 30,
+			autoScrollSpeedSlow: 6,
+			autoScrollSpeedMedium: 36,
+			autoScrollSpeedFast: 72,
+		};
+
+		// Mouse dragged below container (height = 30, mouseY = 35 -> distToBottom = -5)
+		const speed = ScrollBoxRenderable.prototype.getAutoScrollSpeed.call(
+			mockCtx as unknown as ScrollBoxRenderable,
+			10,
+			35,
+		);
+
+		// Baseline speed is 72, 10x is 720; with overshoot boost it should be >= 720
+		expect(speed).toBeGreaterThanOrEqual(720);
 	});
 });

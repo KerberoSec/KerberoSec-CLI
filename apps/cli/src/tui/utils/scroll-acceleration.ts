@@ -55,9 +55,9 @@ export class FastScrollAccel implements ScrollAcceleration {
 export const fastScrollAccel = new FastScrollAccel(10);
 
 /**
- * High-speed multiplier for text-selection scrolling (30x baseline).
+ * High-speed multiplier for text-selection scrolling (50x baseline).
  */
-export const SELECTION_AUTO_SCROLL_MULTIPLIER = 30;
+export const SELECTION_AUTO_SCROLL_MULTIPLIER = 50;
 
 /**
  * Configures a ScrollBoxRenderable instance with ultra-fast auto-scroll speeds
@@ -77,7 +77,7 @@ export function configureFastAutoScroll(
 	sb.autoScrollSpeedMedium = (sb.autoScrollSpeedMedium ?? 36) * multiplier;
 	sb.autoScrollSpeedFast = Math.max(
 		(sb.autoScrollSpeedFast ?? 72) * multiplier,
-		2160,
+		3600,
 	);
 }
 
@@ -107,21 +107,21 @@ export function applyAutoScrollSpeedPatch(): void {
 			const distToBottom = this.height - relativeY;
 			const distToTop = relativeY;
 
-			// When dragged near or below the bottom border, fly at 2,160+ lines/sec
+			// When dragged near or below the bottom border, fly at 3,600+ lines/sec
 			// with progressive overshoot acceleration when pulled further below the terminal
 			if (distToBottom <= 1) {
 				const overshoot = Math.max(0, -distToBottom);
 				return Math.max(
-					2160,
-					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 150,
+					3600,
+					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 250,
 				);
 			}
 
 			if (distToTop <= 1) {
 				const overshoot = Math.max(0, -distToTop);
 				return Math.max(
-					2160,
-					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 150,
+					3600,
+					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 250,
 				);
 			}
 
@@ -130,7 +130,7 @@ export function applyAutoScrollSpeedPatch(): void {
 				: ((this as unknown as { autoScrollSpeedFast?: number })
 						.autoScrollSpeedFast ?? 72);
 
-			return Math.max(baseSpeed * SELECTION_AUTO_SCROLL_MULTIPLIER, 1080);
+			return Math.max(baseSpeed * SELECTION_AUTO_SCROLL_MULTIPLIER, 1800);
 		};
 
 		ScrollBoxRenderable.prototype.onUpdate = function (
@@ -192,7 +192,7 @@ export function applyAutoScrollSpeedPatch(): void {
 					const baseDelta = event.scroll?.delta ?? 1;
 					if (dir === "down" || dir === "up") {
 						const extraLines =
-							(dir === "down" ? 1 : -1) * Math.max(1, Math.abs(baseDelta)) * 30;
+							(dir === "down" ? 1 : -1) * Math.max(1, Math.abs(baseDelta)) * 50;
 						this.scrollTop += extraLines;
 						(
 							this as unknown as { syncManualScrollState: () => void }

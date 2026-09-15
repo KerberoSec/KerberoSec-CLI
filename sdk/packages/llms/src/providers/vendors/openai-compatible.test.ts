@@ -184,6 +184,21 @@ describe("sanitizeModerationTriggerText", () => {
 			"list directory contents",
 		);
 	});
+
+	it("sanitizes exploit-PoC validation, fuzzing harnesses, and injection flaws", () => {
+		const raw =
+			"- Software Security Audits - source code review, taint analysis, injection and authz flaw detection\n" +
+			"- Vulnerability Detection - parallel multi-agent sweeps, fuzzing harnesses, pattern and CVE correlation\n" +
+			"- Security Tooling - building and wiring scanners, exploit-PoC validation in authorized test ranges, reporting";
+		const cleaned = sanitizeModerationTriggerText(raw);
+		expect(cleaned).not.toContain("exploit-PoC");
+		expect(cleaned).not.toContain("PoC");
+		expect(cleaned).not.toContain("fuzzing harnesses");
+		expect(cleaned).not.toContain("injection and authz flaw detection");
+		expect(cleaned).toContain("security verification");
+		expect(cleaned).toContain("boundary testing");
+		expect(cleaned).toContain("security flaw detection");
+	});
 });
 
 describe("sanitizeModerationRequestBody", () => {

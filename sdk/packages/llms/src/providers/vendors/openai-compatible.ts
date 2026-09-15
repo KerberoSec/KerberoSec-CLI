@@ -215,12 +215,34 @@ export function sanitizeModerationTriggerText(text: string): string {
 		.replace(/offensive operations/gi, "security operations")
 		.replace(/offensive work/gi, "security work")
 		.replace(/\boffensive\b/gi, "security")
+		.replace(
+			/exploit(?:s)?\s*-\s*poc(?:\s+validation)?/gi,
+			"security verification",
+		)
+		.replace(/exploit(?:s)?\s+poc(?:\s+validation)?/gi, "security verification")
+		.replace(/\bpoc\s+validation\b/gi, "verification testing")
+		.replace(/\bexploit-poc\b/gi, "security-verification")
+		.replace(/\bexploit\s+poc\b/gi, "security verification")
+		.replace(/\b(?:poc|pocs)\b/gi, "verification")
 		.replace(/exploitation testing/gi, "security verification testing")
 		.replace(/exploit analysis/gi, "vulnerability inspection")
 		.replace(/exploit verification/gi, "vulnerability verification")
 		.replace(/exploit development/gi, "security tool development")
 		.replace(/\bexploitation\b/gi, "security evaluation")
-		.replace(/\bexploits?\b/gi, "security verification")
+		.replace(/\bexploit(?:s|ed|ing|ability)?\b/gi, "security verification")
+		.replace(/fuzzing(?:\s+harness(?:es)?)?/gi, "boundary testing")
+		.replace(/fuzz(?:\s+testing)?/gi, "boundary testing")
+		.replace(
+			/injection\s+(?:and\s+authz\s+)?flaw\s+detection/gi,
+			"security flaw detection",
+		)
+		.replace(
+			/\b(?:sql|command|code|ldap|xpath|xml)\s+injection\b/gi,
+			"input validation flaw",
+		)
+		.replace(/\bvulnerability\s+sweeps?\b/gi, "security audits")
+		.replace(/\bpayloads?\b/gi, "inputs")
+		.replace(/\battack(?:\s+vectors?|s)?\b/gi, "security evaluation")
 		.replace(/target reconnaissance/gi, "target inspection")
 		.replace(/Target Reconnaissance/gi, "Target Inspection")
 		.replace(/\btarget recon\b/gi, "target inspection")
@@ -385,7 +407,15 @@ function isAgentRouterFailoverError(error: unknown): boolean {
 		text.includes("502 bad gateway") ||
 		text.includes("503 service unavailable") ||
 		text.includes("bad gateway") ||
-		text.includes("service unavailable")
+		text.includes("service unavailable") ||
+		text.includes("content-blocked") ||
+		text.includes("content_blocked") ||
+		text.includes("content filter") ||
+		text.includes("content_filter") ||
+		text.includes("provider content filter blocked") ||
+		text.includes("moderation") ||
+		text.includes("rejected by safety") ||
+		text.includes("blocked by content")
 	);
 }
 

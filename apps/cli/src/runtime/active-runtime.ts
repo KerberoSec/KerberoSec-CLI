@@ -36,14 +36,14 @@ export function cleanupActiveRuntime(): void {
 // the streaming layer or hub capability teardown surface as
 // unhandledRejections and would otherwise crash the CLI.
 export function markAbortInProgress(): void {
-	if (abortInProgress) {
-		return;
-	}
-	abortInProgress = true;
 	if (abortGraceTimer) {
 		clearTimeout(abortGraceTimer);
 		abortGraceTimer = undefined;
 	}
+	if (abortInProgress) {
+		return;
+	}
+	abortInProgress = true;
 	// Temporarily replace all unhandledRejection listeners with a
 	// suppressing handler. AbortController.abort() causes orphan promise
 	// rejections in the LLM streaming layer that reach every registered
@@ -73,6 +73,7 @@ export function clearAbortInProgress(): void {
 			savedRejectionListeners = undefined;
 		}
 	}, 2000);
+	abortGraceTimer.unref?.();
 }
 
 export function isAbortInProgress(): boolean {

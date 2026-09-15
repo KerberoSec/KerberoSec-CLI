@@ -2,6 +2,7 @@
 import type { ChoiceContext } from "@opentui-ui/dialog";
 import { useDialogKeyboard } from "@opentui-ui/dialog/react";
 import { useDialogPalette } from "../../hooks/use-theme";
+import { fastScrollAccel } from "../../utils/scroll-acceleration";
 
 type HelpRow =
 	| { kind: "heading"; id: string; text: string }
@@ -270,7 +271,7 @@ export function HelpDialogContent(props: ChoiceContext<void>) {
 
 	return (
 		<box flexDirection="column" paddingX={1}>
-			<scrollbox flexGrow={1}>
+			<scrollbox flexGrow={1} scrollAcceleration={fastScrollAccel}>
 				<box flexDirection="column">
 					{HELP_ROWS.map((row) => {
 						if (row.kind === "spacer") {

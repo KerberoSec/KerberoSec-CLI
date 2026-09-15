@@ -128,6 +128,9 @@ export async function connectToHub(url: string): Promise<HubConnection> {
 			ws.addEventListener("open", () => {
 				resolve({
 					send(envelope) {
+						if (ws.readyState !== 1) {
+							return Promise.reject(new Error("Hub connection is not open"));
+						}
 						const requestId = envelope.requestId ?? `hub-client-${++counter}`;
 						return new Promise<HubReplyEnvelope>((res, rej) => {
 							pending.set(requestId, { resolve: res, reject: rej });
@@ -135,7 +138,12 @@ export async function connectToHub(url: string): Promise<HubConnection> {
 								kind: "command",
 								envelope: { ...envelope, requestId },
 							};
-							ws.send(JSON.stringify(frame));
+							try {
+								ws.send(JSON.stringify(frame));
+							} catch (err) {
+								pending.delete(requestId);
+								rej(err);
+							}
 						});
 					},
 					close() {
@@ -145,13 +153,17 @@ export async function connectToHub(url: string): Promise<HubConnection> {
 			});
 
 			ws.addEventListener("message", (event) => {
-				const frame = JSON.parse(String(event.data)) as HubTransportFrame;
-				if (frame.kind === "reply" && frame.envelope.requestId) {
-					const entry = pending.get(frame.envelope.requestId);
-					if (entry) {
-						pending.delete(frame.envelope.requestId);
-						entry.resolve(frame.envelope);
+				try {
+					const frame = JSON.parse(String(event.data)) as HubTransportFrame;
+					if (frame.kind === "reply" && frame.envelope?.requestId) {
+						const entry = pending.get(frame.envelope.requestId);
+						if (entry) {
+							pending.delete(frame.envelope.requestId);
+							entry.resolve(frame.envelope);
+						}
 					}
+				} catch {
+					// Ignore non-JSON or malformed transport messages
 				}
 			});
 

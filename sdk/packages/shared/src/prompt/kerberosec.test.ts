@@ -155,6 +155,19 @@ describe("buildKerberoSecSystemPrompt mode instructions", () => {
 		expect(prompt).toContain("team_spawn_teammate");
 	});
 
+	it("uses sanitized system prompt for agentrouter without moderation trigger words", () => {
+		const prompt = buildKerberoSecSystemPrompt({
+			...BASE_OPTIONS,
+			providerId: "agentrouter",
+		});
+		expect(prompt).toContain(
+			"Security Engineering, Code Auditing & Systems Assessment Agent",
+		);
+		expect(prompt).not.toContain("Penetration Testing & Red Teaming");
+		expect(prompt).not.toContain("offensive security operations");
+		expect(prompt).not.toContain("exploit analysis");
+	});
+
 	it("uses sanitized system prompt for all default models without moderation triggers", () => {
 		const prompt = buildKerberoSecSystemPrompt({
 			...BASE_OPTIONS,

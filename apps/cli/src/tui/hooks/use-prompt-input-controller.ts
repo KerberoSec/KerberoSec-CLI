@@ -362,6 +362,13 @@ export function usePromptInputController(input: {
 					});
 				}
 				if (result.queued) return;
+				if (result.finishReason === "aborted") {
+					session.appendEntry({
+						kind: "status",
+						text: "[Turn cancelled or interrupted before model response]",
+					});
+					return;
+				}
 				if (typeof result.currentContextSize === "number") {
 					session.setLastTotalTokens(result.currentContextSize);
 				}

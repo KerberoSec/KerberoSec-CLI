@@ -118,10 +118,12 @@ KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** a
 16. [Performance and Resource Footprint](#performance-and-resource-footprint)
 17. [Security and Privacy Guarantees](#security-and-privacy-guarantees)
 18. [Supported Languages and Tech Stacks](#supported-languages-and-tech-stacks)
-19. [Complete Installation and Setup Guide](#complete-installation-and-setup-guide)
-   - [Method 1: Automated 1-Step Setup (Recommended)](#method-1-automated-1-step-setup-recommended)
-   - [Method 2: Manual Step-by-Step Installation](#method-2-manual-step-by-step-installation)
-   - [Method 3: Docker and Docker Compose Container Run](#method-3-docker-and-docker-compose-container-run)
+19. [Complete Installation, Automation Scripts, and Container Guide](#complete-installation-automation-scripts-and-container-guide)
+   - [Autonomous Monorepo Setup (`setup.sh` & `setup.bat`)](#1-autonomous-monorepo-setup-setupsh--setupbat)
+   - [Autonomous Ollama GPU & Model Matrix Optimizer (`ollama.sh`)](#2-autonomous-ollama-gpu--model-matrix-optimizer-ollamash)
+   - [All-In-One Security Toolkit & Runtime Installer (`tools.sh`)](#3-all-in-one-security-toolkit--runtime-installer-toolssh)
+   - [Container Deployment with Docker and Docker Compose](#4-container-deployment-with-docker-and-docker-compose)
+   - [Manual Step-by-Step Installation](#method-2-manual-step-by-step-installation)
 20. [Deep-Dive Architecture and System Diagrams](#deep-dive-architecture-and-system-diagrams)
    - [Diagram 1: Monorepo Package Topology and Boundaries](#diagram-1-monorepo-package-topology-and-boundaries)
    - [Diagram 2: Terminal UI Component Hierarchy and Virtual DOM Tree](#diagram-2-terminal-ui-component-hierarchy-and-virtual-dom-tree)
@@ -472,14 +474,15 @@ KerberoSec CLI provides fine-grained keyboard navigation and shortcut controls a
 | **<kbd>Ctrl</kbd>+<kbd>V</kbd>** | Multi-Modal Image Paste | Pastes image from system clipboard directly into the prompt context buffer for vision-capable models. |
 | **<kbd>Ctrl</kbd>+<kbd>R</kbd>** | Search Command History | Opens interactive fuzzy history search. |
 
-### Transcript Navigation & Scrolling
+### Transcript Navigation & Scrolling (10x High-Speed Acceleration)
 
-| Shortcut | Action | Behavior |
+| Shortcut / Input | Action | Behavior |
 | :--- | :--- | :--- |
-| **<kbd>PageUp</kbd>** / **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>B</kbd>** | Page Up | Scrolls the transcript view up by one full page. |
-| **<kbd>PageDown</kbd>** / **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>F</kbd>** | Page Down | Scrolls the transcript view down by one full page. |
-| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>U</kbd>** | Half Page Up | Scrolls transcript up by half a page. |
-| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>D</kbd>** | Half Page Down | Scrolls transcript down by half a page. |
+| **Mouse Wheel / Trackpad** | 10x Smooth Scroll | High-speed 10x accelerated mouse scroll with continuous streak velocity multiplier across transcript and dialogs. |
+| **<kbd>PageUp</kbd>** / **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>B</kbd>** | 10x Page Up | Rapidly scrolls the transcript view up (10x page height jump). |
+| **<kbd>PageDown</kbd>** / **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>F</kbd>** | 10x Page Down | Rapidly scrolls the transcript view down (10x page height jump). |
+| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>U</kbd>** | 10x Half Page Up | Rapidly scrolls transcript up by half page (10x multiplier). |
+| **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>D</kbd>** | 10x Half Page Down | Rapidly scrolls transcript down by half page (10x multiplier). |
 | **<kbd>Ctrl</kbd>+<kbd>G</kbd>** / **<kbd>Home</kbd>** | Scroll to Top | Jumps immediately to the top of the transcript. |
 | **<kbd>Ctrl</kbd>+<kbd>Meta</kbd>+<kbd>G</kbd>** / **<kbd>End</kbd>** | Scroll to Bottom | Jumps to the latest turn in the transcript. |
 
@@ -1401,8 +1404,8 @@ exec bun run /tmp/kerberosec/apps/cli/src/index.ts "$@"' > ~/.local/bin/kerberos
   - Reset auth tokens, switch accounts, and return instantly to the onboarding login screen with `/logout`.
 - Extensible Model Context Protocol (MCP):
   - Connect external MCP servers over stdio or HTTP SSE to equip the agent with custom database tools, deployment scripts, and external APIs.
-- Automated 1-Step Setup (`setup.sh`):
-  - Automatically installs system packages, sets up Bun and Ollama, compiles all monorepo packages, and creates global terminal commands.
+- Automated Setup (`setup.sh` & `setup.bat`):
+  - Automatically installs system dependencies, configures the Bun runtime, compiles all monorepo packages, and registers global `kerberosec` terminal commands on Linux, macOS, and Windows. Local offline models can be set up and tuned separately via `ollama.sh`.
 
 ---
 
@@ -1455,21 +1458,30 @@ KerberoSec CLI provides fully automated bootstrap scripts, GPU model optimizers,
 
 ---
 
-### 1. Autonomous Monorepo Setup (`setup.sh`)
+### 1. Autonomous Monorepo Setup (`setup.sh` & `setup.bat`)
 
-[`setup.sh`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/setup.sh) is the single-command installer for bootstrapping KerberoSec CLI on fresh Linux or macOS machines.
+[`setup.sh`](setup.sh) (Linux/macOS) and [`setup.bat`](setup.bat) (Windows) are the automated bootstrap scripts for installing and configuring KerberoSec CLI on fresh workstations.
 
 #### What `setup.sh` Automates:
 1. **OS Package Management**: Detects the host package manager (`apt`, `dnf`, `pacman`, or `brew`) and installs missing build essentials (`curl`, `git`, `build-essential`, `procps`).
 2. **Bun Runtime Installation**: Downloads and configures the latest high-performance Bun runtime.
-3. **Autonomous Ollama Optimization**: Automatically triggers [`ollama.sh`](file:///home/Kali/Desktop/CLI/KerberoSec-CLI/ollama.sh) to detect hardware, enable GPU Flash Attention v2, 4-bit Quantized KV cache, and tune installed models.
-4. **Monorepo Compilation**: Resolves workspace dependencies with `bun install`, compiles all `@kerberosec/sdk` packages, and bundles the CLI binary (`bun -F @kerberosec/cli build`).
-5. **Global Executable Path**: Installs a global wrapper in `~/.local/bin/kerberosec` and updates your shell profile (`~/.bashrc` or `~/.zshrc`).
+3. **Monorepo Compilation**: Resolves workspace dependencies with `bun install`, compiles all `@kerberosec/sdk` packages, and bundles the CLI binary (`bun -F @kerberosec/cli build`).
+4. **Global Executable Path**: Installs a global wrapper in `~/.local/bin/kerberosec` and updates your shell profile (`~/.bashrc` or `~/.zshrc`).
+5. **Security Toolchain Verification**: Checks readiness of optional security tools via [`tools.sh`](tools.sh).
 
-#### How to Run:
+> [!NOTE]
+> **Focused CLI Setup**: `setup.sh` and `setup.bat` focus exclusively on setting up and compiling the KerberoSec CLI tool. Ollama is **not** downloaded or forced during setup, allowing you to use cloud providers or existing local endpoints immediately. If you want to install and optimize local Ollama models with GPU acceleration, run [`ollama.sh`](ollama.sh) separately.
+
+#### How to Run on Linux / macOS:
 ```bash
 chmod +x setup.sh
 ./setup.sh
+```
+
+#### How to Run on Windows:
+Run `setup.bat` from Command Prompt or PowerShell:
+```cmd
+setup.bat
 ```
 
 #### Troubleshooting `setup.sh`:

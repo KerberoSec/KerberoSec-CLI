@@ -20,6 +20,7 @@ import {
 import type { useMouseTracker } from "../../components/tracked-robot";
 import { useTheme } from "../../hooks/use-theme";
 import { getInputRuleColor, getUserMessageBackground } from "../../palette";
+import { fastScrollAccel } from "../../utils/scroll-acceleration";
 import { FIELD_ORDER } from "./fields";
 import {
 	type KerberoSecPassSubscriptionOption,
@@ -68,27 +69,43 @@ function OnboardingFrame({
 	contentWidth,
 	mouse,
 }: OnboardingFrameProps) {
-	const { height } = useTerminalDimensions();
+	const { width, height } = useTerminalDimensions();
+	const showFullBanner = !compact && height >= 32 && width >= 86;
+	const showCompactBanner = !showFullBanner && height >= 18;
 	return (
-		<box
-			flexDirection="column"
+		<scrollbox
 			width="100%"
 			height="100%"
-			justifyContent={height >= 26 ? "center" : "flex-start"}
-			alignItems="center"
-			paddingTop={height < 26 ? 1 : 0}
+			scrollAcceleration={fastScrollAccel}
 			onMouseMove={mouse.onMouseMove}
 		>
-			{!compact && <KerberoSecBanner />}
 			<box
 				flexDirection="column"
-				width={contentWidth}
-				marginTop={compact ? 0 : 1}
-				gap={1}
+				width="100%"
+				alignItems="center"
+				justifyContent={height >= 34 ? "center" : "flex-start"}
+				paddingTop={compact ? 0 : 1}
+				paddingBottom={1}
 			>
-				{children}
+				{showFullBanner && <KerberoSecBanner />}
+				{showCompactBanner && (
+					<box flexDirection="column" alignItems="center" marginBottom={1}>
+						<text fg="cyan">
+							<strong>KerberoSec CLI</strong>
+						</text>
+						<text fg="gray">Next-Gen Autonomous Agentic Terminal Assistant</text>
+					</box>
+				)}
+				<box
+					flexDirection="column"
+					width={contentWidth}
+					marginTop={compact ? 0 : 1}
+					gap={1}
+				>
+					{children}
+				</box>
 			</box>
-		</box>
+		</scrollbox>
 	);
 }
 
@@ -569,6 +586,7 @@ export function OnboardingKerberoSecPassSubscriptionScreen(props: {
 					height="100%"
 					scrollY
 					scrollX={false}
+					scrollAcceleration={fastScrollAccel}
 					viewportOptions={{ overflow: "hidden" }}
 					contentOptions={{ flexDirection: "column" }}
 				>
@@ -864,6 +882,7 @@ export function OnboardingThinkingLevelScreen(props: {
 }
 
 export function OnboardingMainMenuScreen(props: {
+	compact?: boolean;
 	contentWidth: number;
 	menuOptions: MenuOption[];
 	menuSelected: number;
@@ -871,75 +890,95 @@ export function OnboardingMainMenuScreen(props: {
 }) {
 	const defaultFg = useDefaultFg();
 	const colors = useOnboardingColors();
+	const { width, height } = useTerminalDimensions();
+	const isCompact = props.compact ?? (height < 32 || width < 86);
+	const showFullBanner = !isCompact && height >= 32 && width >= 86;
+	const showCompactBanner = !showFullBanner && height >= 18;
+
 	return (
-		<box
-			flexDirection="column"
+		<scrollbox
 			width="100%"
 			height="100%"
-			justifyContent="center"
-			alignItems="center"
+			scrollAcceleration={fastScrollAccel}
 			onMouseMove={props.mouse.onMouseMove}
 		>
-			<KerberoSecBanner />
-
 			<box
 				flexDirection="column"
-				width={props.contentWidth}
+				width="100%"
 				alignItems="center"
-				marginTop={1}
+				justifyContent={height >= 34 ? "center" : "flex-start"}
+				paddingTop={isCompact ? 0 : 1}
+				paddingBottom={1}
 			>
-				<text fg={defaultFg}>
-					<strong>Welcome to KerberoSec</strong>
-				</text>
-				<text fg="gray" marginTop={1}>
-					Connect a model provider to get started.
-				</text>
-			</box>
+				{showFullBanner && <KerberoSecBanner />}
+				{showCompactBanner && (
+					<box flexDirection="column" alignItems="center" marginBottom={1}>
+						<text fg="cyan">
+							<strong>KerberoSec CLI</strong>
+						</text>
+						<text fg="gray">Next-Gen Autonomous Agentic Terminal Assistant</text>
+					</box>
+				)}
 
-			<box
-				flexDirection="column"
-				width={props.contentWidth}
-				marginTop={1}
-				gap={0}
-			>
-				{props.menuOptions.map((option, i) => {
-					const isSel = i === props.menuSelected;
-					return (
-						<box
-							key={option.value}
-							flexDirection="row"
-							border
-							borderStyle="rounded"
-							borderColor={isSel ? colors.accent : colors.subtleBorder}
-							paddingX={1}
-							gap={1}
-							alignItems="center"
-						>
-							<text
-								fg={isSel ? colors.accent : colors.mutedDetail}
-								flexShrink={0}
+				<box
+					flexDirection="column"
+					width={props.contentWidth}
+					alignItems="center"
+					marginTop={isCompact ? 0 : 1}
+				>
+					<text fg={defaultFg}>
+						<strong>Welcome to KerberoSec</strong>
+					</text>
+					<text fg="gray" marginTop={isCompact ? 0 : 1}>
+						Connect a model provider to get started.
+					</text>
+				</box>
+
+				<box
+					flexDirection="column"
+					width={props.contentWidth}
+					marginTop={1}
+					gap={0}
+				>
+					{props.menuOptions.map((option, i) => {
+						const isSel = i === props.menuSelected;
+						return (
+							<box
+								key={option.value}
+								flexDirection="row"
+								border
+								borderStyle="rounded"
+								borderColor={isSel ? colors.accent : colors.subtleBorder}
+								paddingX={1}
+								gap={1}
+								alignItems="center"
 							>
-								{option.icon}
-							</text>
-							<box flexDirection="column" flexGrow={1}>
-								<text fg={isSel ? defaultFg : "gray"}>{option.label}</text>
-								<text fg={isSel ? "gray" : colors.mutedDetail}>
-									{option.detail}
+								<text
+									fg={isSel ? colors.accent : colors.mutedDetail}
+									flexShrink={0}
+								>
+									{option.icon}
 								</text>
+								<box flexDirection="column" flexGrow={1}>
+									<text fg={isSel ? defaultFg : "gray"}>{option.label}</text>
+									<text fg={isSel ? "gray" : colors.mutedDetail}>
+										{option.detail}
+									</text>
+								</box>
+								{isSel && (
+									<text fg={colors.accent} flexShrink={0}>
+										{"\u2192"}
+									</text>
+								)}
 							</box>
-							{isSel && (
-								<text fg={colors.accent} flexShrink={0}>
-									{"\u2192"}
-								</text>
-							)}
-						</box>
-					);
-				})}
-			</box>
+						);
+					})}
+				</box>
 
-			<text fg="gray" marginTop={1}>
-				<em>↑/↓ navigate, Enter to select, Ctrl+C to exit</em>
-			</text>
-		</box>
+				<text fg="gray" marginTop={1}>
+					<em>↑/↓ navigate, Enter to select, Ctrl+C to exit</em>
+				</text>
+			</box>
+		</scrollbox>
 	);
 }

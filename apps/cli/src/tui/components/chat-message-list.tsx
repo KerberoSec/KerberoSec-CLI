@@ -12,6 +12,7 @@ import type { TranscriptCommand } from "../hooks/transcript-keybinds";
 import { useTheme } from "../hooks/use-theme";
 import { getThemeModeAccent } from "../themes";
 import type { ChatEntry } from "../types";
+import { fastScrollAccel } from "../utils/scroll-acceleration";
 import { ChatEntryView } from "./chat-entry";
 
 export interface TranscriptScrollHandle {
@@ -42,16 +43,16 @@ export const ChatMessageList = forwardRef<
 
 		switch (command) {
 			case "messages_page_up":
-				scrollbox.scrollBy(-scrollbox.height * 3);
+				scrollbox.scrollBy(-scrollbox.height * 10);
 				return;
 			case "messages_page_down":
-				scrollbox.scrollBy(scrollbox.height * 3);
+				scrollbox.scrollBy(scrollbox.height * 10);
 				return;
 			case "messages_half_page_up":
-				scrollbox.scrollBy(-Math.floor((scrollbox.height * 3) / 2));
+				scrollbox.scrollBy(-Math.floor((scrollbox.height * 10) / 2));
 				return;
 			case "messages_half_page_down":
-				scrollbox.scrollBy(Math.floor((scrollbox.height * 3) / 2));
+				scrollbox.scrollBy(Math.floor((scrollbox.height * 10) / 2));
 				return;
 			case "messages_first":
 				scrollbox.scrollTo(0);
@@ -86,12 +87,19 @@ export const ChatMessageList = forwardRef<
 		return () => clearTimeout(timeout);
 	}, [userSubmissionScrollKey]);
 
+	useEffect(() => {
+		if (scrollboxRef.current) {
+			scrollboxRef.current.scrollAcceleration = fastScrollAccel;
+		}
+	}, []);
+
 	return (
 		<scrollbox
 			ref={scrollboxRef}
 			flexGrow={1}
 			stickyScroll
 			stickyStart="bottom"
+			scrollAcceleration={fastScrollAccel}
 		>
 			<box flexDirection="column" paddingX={1} paddingY={1} gap={1}>
 				{props.entries.map((entry, i) => {

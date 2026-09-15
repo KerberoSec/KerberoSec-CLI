@@ -66,11 +66,14 @@ export const GENERATED_PROVIDER_SPECS: readonly BuiltinSpec[] = [
 		family: "openai-compatible",
 		capabilities: ["tools", "reasoning"],
 		modelsProviderId: "agentrouter",
-		defaultModelId: "claude-opus-5",
-		apiKeyEnv: ["AGENTROUTER_API_KEY"],
+		defaultModelId: "glm-5.3",
+		apiKeyEnv: ["AGENTROUTER_API_KEY", "AGENT_ROUTER_API_KEY", "AGENTIC_API_KEY"],
 		docsUrl: "https://agentrouter.org/docs/opencode.html",
 		defaults: {
 			baseUrl: "https://agentrouter.org/v1",
+			headers: {
+				"User-Agent": "codex_cli_rs/0.1.0",
+			},
 		},
 	},
 	{

@@ -233,7 +233,7 @@ export function buildKerberoSecSystemPrompt(
 	}
 
 	const basePrompt =
-		providerId === "agent-router"
+		providerId === "agent-router" || providerId === "agentrouter"
 			? AGENT_ROUTER_SYSTEM_PROMPT
 			: mode === "yolo"
 				? YOLO_KERBEROSEC_SYSTEM_PROMPT

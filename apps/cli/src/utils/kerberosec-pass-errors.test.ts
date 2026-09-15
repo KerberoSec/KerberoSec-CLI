@@ -8,6 +8,8 @@ import {
 	getKerberoSecPassLimitDetailMessage,
 	isContentBlockedErrorMessage,
 	isGenericHtmlErrorMessage,
+	isBudgetPoolQuotaExhaustedError,
+	isUpstreamUnavailableOrTimeoutError,
 	isKerberoSecFreeModelLimitErrorMessage,
 	isKerberoSecFreePromotionEndedErrorMessage,
 	isKerberoSecOrgIndividualInferenceSubscriptionErrorMessage,
@@ -154,5 +156,30 @@ describe("kerberosec-pass-errors", () => {
 		expect(formatted).toContain("Provider Gateway Error");
 		expect(formatted).toContain("502 Bad Gateway");
 		expect(formatted).not.toContain("<center>");
+	});
+
+	it("recognizes and formats AgentRouter budget pool quota exhaustion error", () => {
+		const raw =
+			"Budget pool quota has been exhausted. Please ask an administrator to increase the limit or select another budget pool.";
+		expect(isBudgetPoolQuotaExhaustedError(raw)).toBe(true);
+		expect(isBudgetPoolQuotaExhaustedError(new Error(raw))).toBe(true);
+
+		const formatted = formatCliErrorMessage(new Error(raw));
+		expect(formatted).toContain("Agent Router Budget Pool Quota Exhausted");
+		expect(formatted).toContain("GLM 5.3");
+		expect(formatted).toContain("agentrouter.org");
+	});
+
+	it("recognizes and formats AgentRouter upstream service unavailable and timeout errors", () => {
+		const rawCluster =
+			'do request failed: client cancelled request before upstream response: Post "http://model-proxy-cp.model-proxy.svc.cluster.local:8089/v1/chat/completions": context canceled';
+		const rawUnavailable = "Upstream service unavailable [trace_id=87e29d5eb20b2a45366c6ad51facb933]";
+
+		expect(isUpstreamUnavailableOrTimeoutError(rawCluster)).toBe(true);
+		expect(isUpstreamUnavailableOrTimeoutError(rawUnavailable)).toBe(true);
+
+		const formatted = formatCliErrorMessage(new Error(rawCluster));
+		expect(formatted).toContain("Agent Router Upstream Service Unavailable");
+		expect(formatted).toContain("GLM 5.3");
 	});
 });

@@ -81,4 +81,5 @@ echo           KerberoSec CLI is Successfully Installed on Windows!
 echo ==============================================================================
 echo.
 echo Launch by typing: kerberosec
+echo Note: To set up local Ollama models separately, run: bash ollama.sh
 echo.

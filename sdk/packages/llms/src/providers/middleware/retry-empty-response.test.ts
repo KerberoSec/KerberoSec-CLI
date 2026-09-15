@@ -435,6 +435,18 @@ describe("network interruption retry", () => {
 				code: "UND_ERR_HEADERS_TIMEOUT",
 			}),
 		],
+		[
+			"network unreachable (ENETUNREACH)",
+			networkError("fetch failed: Network is unreachable", {
+				code: "ENETUNREACH",
+			}),
+		],
+		[
+			"connection refused (ECONNREFUSED)",
+			networkError("fetch failed: connect ECONNREFUSED 127.0.0.1:443", {
+				code: "ECONNREFUSED",
+			}),
+		],
 	])("retries a pre-content %s death and recovers", async (_label, failure) => {
 		const doStream = vi
 			.fn()

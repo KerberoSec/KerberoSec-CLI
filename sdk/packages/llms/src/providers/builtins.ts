@@ -1043,13 +1043,20 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		id: "agent-router",
 		name: "AgentRouter",
 		description:
-			"Multi-model AI gateway: Claude, GPT, DeepSeek, Gemini via one API key",
+			"Multi-model AI gateway: GLM, DeepSeek, Claude, GPT via one API key",
 		family: "openai-compatible",
 		popular: 2,
 		capabilities: ["tools", "reasoning", "vision"],
-		defaultModelId: "gpt-5.6-sol",
-		apiKeyEnv: ["AGENT_ROUTER_API_KEY", "AGENTIC_API_KEY"],
+		defaultModelId: "glm-5.3",
+		apiKeyEnv: ["AGENT_ROUTER_API_KEY", "AGENTIC_API_KEY", "AGENTROUTER_API_KEY"],
 		modelsFactory: () => ({
+			"glm-5.3": {
+				id: "glm-5.3",
+				name: "GLM 5.3",
+				providerId: "agent-router",
+				description: "Zhipu AI Flagship Model on AgentRouter (Active & High-Performance)",
+				capabilities: ["tools", "reasoning", "images"],
+			},
 			"gpt-5.6-sol": {
 				id: "gpt-5.6-sol",
 				name: "GPT 5.6 Sol",
@@ -1057,11 +1064,11 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 				description: "OpenAI Flagship Model on AgentRouter",
 				capabilities: ["tools", "reasoning", "images"],
 			},
-			"glm-5.3": {
-				id: "glm-5.3",
-				name: "GLM 5.3",
+			"gpt-6-astra": {
+				id: "gpt-6-astra",
+				name: "GPT 6 Astra",
 				providerId: "agent-router",
-				description: "Zhipu AI Flagship Model on AgentRouter",
+				description: "OpenAI Next-Gen Flagship Model on AgentRouter",
 				capabilities: ["tools", "reasoning", "images"],
 			},
 			"deepseek-v4-flash": {

@@ -313,6 +313,47 @@ export function getCliGenericHtmlErrorMessage(error: unknown): string {
 	].join("\n");
 }
 
+export function isBudgetPoolQuotaExhaustedError(error: unknown): boolean {
+	const text = extractRawErrorMessage(error).toLowerCase();
+	return (
+		text.includes("budget pool quota has been exhausted") ||
+		(text.includes("budget pool") && text.includes("quota"))
+	);
+}
+
+export function getCliBudgetPoolQuotaExhaustedMessage(_error?: unknown): string {
+	return [
+		"Agent Router Budget Pool Quota Exhausted",
+		"The selected model belongs to a budget pool whose quota is exhausted on AgentRouter.",
+		"",
+		"Suggestions:",
+		"1. Switch to an active model such as GLM 5.3 (`/model agent-router:glm-5.3` or `--model glm-5.3`).",
+		"2. Request a quota increase or add balance at https://agentrouter.org.",
+	].join("\n");
+}
+
+export function isUpstreamUnavailableOrTimeoutError(error: unknown): boolean {
+	const text = extractRawErrorMessage(error).toLowerCase();
+	return (
+		text.includes("upstream service unavailable") ||
+		text.includes("client cancelled request before upstream response") ||
+		(text.includes("model-proxy") && text.includes("context canceled")) ||
+		text.includes("upstream request timeout")
+	);
+}
+
+export function getCliUpstreamUnavailableMessage(_error?: unknown): string {
+	return [
+		"Agent Router Upstream Service Unavailable",
+		"The upstream model proxy at AgentRouter was unavailable, timed out, or canceled before responding.",
+		"",
+		"Suggestions:",
+		"1. The selected model's backend node may be offline or overloaded at AgentRouter.",
+		"2. Switch to an active, responsive model like GLM 5.3 (`/model agent-router:glm-5.3` or `--model glm-5.3`).",
+		"3. Retry your request in a moment if the gateway was temporarily restarting.",
+	].join("\n");
+}
+
 export function formatCliErrorMessage(
 	error: unknown,
 	options?: { modelId?: string },
@@ -322,6 +363,12 @@ export function formatCliErrorMessage(
 	}
 	if (isContentBlockedErrorMessage(error)) {
 		return getCliContentBlockedMessage(error);
+	}
+	if (isBudgetPoolQuotaExhaustedError(error)) {
+		return getCliBudgetPoolQuotaExhaustedMessage(error);
+	}
+	if (isUpstreamUnavailableOrTimeoutError(error)) {
+		return getCliUpstreamUnavailableMessage(error);
 	}
 	if (isGenericHtmlErrorMessage(error)) {
 		return getCliGenericHtmlErrorMessage(error);

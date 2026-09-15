@@ -3,6 +3,7 @@ import { useKeyboard, useTerminalDimensions } from "@opentui/react";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useTheme } from "../hooks/use-theme";
 import type { RuntimeToolInteraction } from "../types";
+import { fastScrollAccel } from "../utils/scroll-acceleration";
 import { formatApprovalParams } from "./dialogs/tool-approval";
 
 export interface InlineToolResponseProps {
@@ -421,6 +422,7 @@ function AskQuestionResponse(
 				width="100%"
 				scrollY
 				scrollX={false}
+				scrollAcceleration={fastScrollAccel}
 				viewportOptions={{ overflow: "hidden" }}
 				contentOptions={{ flexDirection: "column" }}
 			>

@@ -434,7 +434,13 @@ export class NodeHubClient {
 		});
 
 		socket.addEventListener("message", (data: unknown) => {
-			this.handleFrame(JSON.parse(decodeSocketData(data)) as HubTransportFrame);
+			try {
+				this.handleFrame(
+					JSON.parse(decodeSocketData(data)) as HubTransportFrame,
+				);
+			} catch {
+				// Ignore malformed or non-JSON transport frames
+			}
 		});
 		socket.addEventListener("close", (event: unknown) => {
 			if (this.socket !== socket) {

@@ -116,6 +116,16 @@ const TRANSIENT_NETWORK_ERROR_CODES = new Set([
 	"EPIPE",
 	"ETIMEDOUT",
 	"ConnectionClosed",
+	"ENETUNREACH",
+	"EHOSTUNREACH",
+	"ECONNREFUSED",
+	"ENOTFOUND",
+	"EAI_AGAIN",
+	"ERR_NETWORK_CHANGED",
+	"ERR_INTERNET_DISCONNECTED",
+	"ERR_CONNECTION_RESET",
+	"ERR_CONNECTION_REFUSED",
+	"ERR_CONNECTION_TIMED_OUT",
 ]);
 
 /**
@@ -164,12 +174,40 @@ export function isTransientNetworkError(error: unknown): boolean {
 		) {
 			aborted = true;
 		}
+		const msg =
+			typeof candidate.message === "string"
+				? candidate.message.toLowerCase()
+				: "";
+		const code = typeof candidate.code === "string" ? candidate.code : "";
 		if (
-			(current instanceof TypeError &&
-				typeof candidate.message === "string" &&
-				NETWORK_TYPE_ERROR_MESSAGES.has(candidate.message.toLowerCase())) ||
-			(typeof candidate.code === "string" &&
-				TRANSIENT_NETWORK_ERROR_CODES.has(candidate.code))
+			(code && TRANSIENT_NETWORK_ERROR_CODES.has(code)) ||
+			(current instanceof TypeError && NETWORK_TYPE_ERROR_MESSAGES.has(msg)) ||
+			msg === "fetch failed" ||
+			msg === "terminated" ||
+			msg.includes("fetch failed") ||
+			msg.includes("failed to fetch") ||
+			msg.includes("network error") ||
+			msg.includes("network request failed") ||
+			msg.includes("socket hang up") ||
+			msg.includes("network is unreachable") ||
+			msg.includes("no route to host") ||
+			msg.includes("connection reset") ||
+			msg.includes("connection refused") ||
+			msg.includes("enotfound") ||
+			msg.includes("eai_again") ||
+			msg.includes("econnreset") ||
+			msg.includes("enetunreach") ||
+			msg.includes("ehostunreach") ||
+			msg.includes("etimedout") ||
+			msg.includes("upstream service unavailable") ||
+			msg.includes("client cancelled request before upstream response") ||
+			msg.includes("context canceled") ||
+			msg.includes("upstream request timeout") ||
+			msg.includes("upstream timed out") ||
+			msg.includes("bad gateway") ||
+			msg.includes("502 bad gateway") ||
+			msg.includes("504 gateway") ||
+			msg.includes("gateway timeout")
 		) {
 			transient = true;
 		}
@@ -291,8 +329,41 @@ export function createRetryEmptyResponseMiddleware(
 		specificationVersion: "v4",
 		wrapStream: async ({ doStream, params, model }) => {
 			const abortSignal = params.abortSignal;
-			// Kick off the first attempt eagerly, matching normal doStream timing.
-			const firstResult = await doStream();
+			// Kick off the first attempt eagerly, with transient network retry if offline/reconnecting
+			let firstResult: LanguageModelV4StreamResult;
+			let initAttempts = 0;
+			while (true) {
+				try {
+					firstResult = await doStream();
+					break;
+				} catch (err) {
+					initAttempts++;
+					if (
+						initAttempts < maxAttempts &&
+						!abortSignal?.aborted &&
+						isTransientNetworkError(err)
+					) {
+						const delayMs = networkRetryDelayMs * 2 ** (initAttempts - 1);
+						logger?.log?.(
+							"Transient network interruption before request started; retrying when network reconnects...",
+							{
+								severity: "warn",
+								provider: model.provider,
+								modelId: model.modelId,
+								attempt: initAttempts,
+								maxAttempts,
+								retryDelayMs: delayMs,
+								error: err instanceof Error ? err.message : String(err),
+							},
+						);
+						await sleep(delayMs, abortSignal);
+						if (!abortSignal?.aborted) {
+							continue;
+						}
+					}
+					throw err;
+				}
+			}
 
 			const stream = new ReadableStream<LanguageModelV4StreamPart>({
 				async start(controller) {
@@ -326,6 +397,18 @@ export function createRetryEmptyResponseMiddleware(
 								}
 								if (!accepted) {
 									const kind = classifyModelStreamPart(value);
+									if (kind === "error") {
+										const errObj = (value as { error: unknown }).error;
+										if (
+											attempt < maxAttempts &&
+											!abortSignal?.aborted &&
+											isTransientNetworkError(errObj)
+										) {
+											streamFailed = true;
+											streamFailure = errObj;
+											break;
+										}
+									}
 									if (
 										kind === "converted-content" ||
 										kind === "unsupported-output" ||
@@ -394,10 +477,40 @@ export function createRetryEmptyResponseMiddleware(
 								controller.error(abortSignal.reason ?? streamFailure);
 								return;
 							}
-							try {
-								result = await doStream();
-							} catch (error) {
-								controller.error(error);
+							let reconnected = false;
+							while (attempt < maxAttempts && !abortSignal?.aborted) {
+								try {
+									result = await doStream();
+									reconnected = true;
+									break;
+								} catch (streamErr) {
+									if (!isTransientNetworkError(streamErr) || abortSignal?.aborted) {
+										controller.error(streamErr);
+										return;
+									}
+									attempt++;
+									const retryDelay = networkRetryDelayMs * 2 ** networkRetries;
+									networkRetries++;
+									logger?.log?.(
+										"Transient network interruption while reconnecting; retrying stream...",
+										{
+											severity: "warn",
+											provider: model.provider,
+											modelId: model.modelId,
+											attempt,
+											maxAttempts,
+											retryDelayMs: retryDelay,
+											error:
+												streamErr instanceof Error
+													? streamErr.message
+													: String(streamErr),
+										},
+									);
+									await sleep(retryDelay, abortSignal);
+								}
+							}
+							if (!reconnected && !abortSignal?.aborted) {
+								controller.error(streamFailure);
 								return;
 							}
 							continue;

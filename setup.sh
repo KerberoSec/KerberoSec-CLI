@@ -11,13 +11,12 @@
 #   1. Foundational prerequisites & build tools (curl, wget, git, tar, gzip,
 #      bzip2, xz, zip, unzip, jq, procps, pciutils, build-essential, pkg-config,
 #      python3, python3-pip, python3-venv, python3-dev, golang-go, gnupg)
-#   2. Autonomous laptop hardware probing & adaptive model matrix calibration
-#      (NVIDIA 2GB-24GB+, AMD Radeon/APU, Apple Silicon Metal, Intel Arc/Xe, CPU)
+#   2. System hardware architecture probing (CPU, RAM, GPU)
 #   3. Bun JavaScript & TypeScript high-performance runtime
 #   4. Monorepo dependency resolution & compilation (SDK packages + CLI binary)
 #   5. Global executable setup (`kerberosec`) in user PATH
-#   6. Autonomous Ollama hardware accelerator & model matrix optimization
-#   7. Security toolchain verification
+#   6. Security toolchain verification
+# Note: For local Ollama setup and GPU optimization, run ./ollama.sh separately.
 # ==============================================================================
 
 set -e
@@ -34,16 +33,12 @@ WHITE='\033[1;37m'
 NC='\033[0m' # No Color
 
 # Parse optional arguments
-SKIP_OLLAMA=false
 SKIP_BUILD=false
 WITH_TOOLS=false
 DRY_RUN=false
 
 for arg in "$@"; do
     case "$arg" in
-        --skip-ollama|--no-ollama)
-            SKIP_OLLAMA=true
-            ;;
         --skip-build)
             SKIP_BUILD=true
             ;;
@@ -54,15 +49,16 @@ for arg in "$@"; do
             DRY_RUN=true
             ;;
         --help|-h)
-            echo "KerberoSec CLI Automated System Setup & Optimizer"
+            echo "KerberoSec CLI Automated System Setup"
             echo "Usage: ./setup.sh [options]"
             echo ""
             echo "Options:"
-            echo "  --skip-ollama, --no-ollama   Skip Ollama installation and GPU optimization"
             echo "  --skip-build                 Skip compiling SDK and CLI binaries"
             echo "  --with-tools                 Install full suite of 280+ security tools (via tools.sh)"
             echo "  --dry-run                    Inspect prerequisites and print steps without modifying system"
             echo "  --help, -h                   Show this help message and exit"
+            echo ""
+            echo "Note: To install and optimize local Ollama models separately, run ./ollama.sh."
             exit 0
             ;;
     esac
@@ -100,7 +96,7 @@ fi
 # ------------------------------------------------------------------------------
 # 1. Detect OS, Package Manager, and Foundational Prerequisites
 # ------------------------------------------------------------------------------
-echo -e "\n${BLUE}${BOLD}[1/7] Probing Operating System & Foundational Prerequisites...${NC}"
+echo -e "\n${BLUE}${BOLD}[1/6] Probing Operating System & Foundational Prerequisites...${NC}"
 
 OS_NAME="$(uname -s 2>/dev/null || echo "Unknown")"
 ARCH_NAME="$(uname -m 2>/dev/null || echo "Unknown")"
@@ -292,9 +288,9 @@ else
 fi
 
 # ------------------------------------------------------------------------------
-# 2. Probe Laptop Hardware Architecture, GPU Cores & Adaptive Model Matrix
+# 2. Probe System Hardware Architecture & Accelerators
 # ------------------------------------------------------------------------------
-echo -e "\n${BLUE}${BOLD}[2/7] Probing Laptop Hardware Architecture & Calibrating Model Matrix...${NC}"
+echo -e "\n${BLUE}${BOLD}[2/6] Probing System Hardware Architecture (CPU, RAM, GPU)...${NC}"
 
 # CPU Topology
 SETUP_LOGICAL_CORES=4
@@ -457,67 +453,6 @@ if [ "$SETUP_HAS_NVIDIA" = false ] && [ "$SETUP_HAS_APPLE" = false ] && [ "$SETU
     fi
 fi
 
-# Detect locally installed models to preserve user baseline
-SETUP_BASELINE_MODEL="qwen2.5-coder:1.5b"
-if command -v ollama &>/dev/null && ollama list 2>/dev/null | grep -q "qwen3:1.7b"; then
-    SETUP_BASELINE_MODEL="qwen3:1.7b"
-fi
-
-# 12-Tier Hardware Matrix & Adaptive Model Calibration
-if [ "$SETUP_HAS_NVIDIA" = true ] || [ "$SETUP_HAS_APPLE" = true ] || [ "$SETUP_HAS_AMD" = true ]; then
-    if [ "$SETUP_VRAM_MB" -ge 30000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:32b"
-        SETUP_MAX_CTX=131072
-        SETUP_TIER="Tier 1 (32GB+ VRAM: 32B-70B Flagship, 128k Context)"
-    elif [ "$SETUP_VRAM_MB" -ge 22000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:32b"
-        SETUP_MAX_CTX=65536
-        SETUP_TIER="Tier 2 (24GB VRAM: 32B Flagship, 64k Context)"
-    elif [ "$SETUP_VRAM_MB" -ge 14000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:14b"
-        SETUP_MAX_CTX=65536
-        SETUP_TIER="Tier 3 (16GB VRAM: 14B Models, 64k Context)"
-    elif [ "$SETUP_VRAM_MB" -ge 10000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:14b"
-        SETUP_MAX_CTX=32768
-        SETUP_TIER="Tier 4 (12GB VRAM: 14B/7B Models, 32k Context)"
-    elif [ "$SETUP_VRAM_MB" -ge 7000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:7b"
-        SETUP_MAX_CTX=32768
-        SETUP_TIER="Tier 5 (8GB VRAM: 7B Models, 32k Context)"
-    elif [ "$SETUP_VRAM_MB" -ge 5000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:7b"
-        SETUP_MAX_CTX=16384
-        SETUP_TIER="Tier 6 (6GB VRAM: 7B Models, 16k Context)"
-    elif [ "$SETUP_VRAM_MB" -ge 3500 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:3b"
-        SETUP_MAX_CTX=8192
-        SETUP_TIER="Tier 7 (4GB VRAM: 3B Models, 8k Context)"
-    else
-        SETUP_RECOMMENDED_MODEL="$SETUP_BASELINE_MODEL"
-        SETUP_MAX_CTX=4096
-        SETUP_TIER="Tier 8 (2GB VRAM: 1.5B/1.7B Baseline, 4k Context for 100% GPU Offload)"
-    fi
-else
-    if [ "$SETUP_RAM_MB" -ge 32000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:14b"
-        SETUP_MAX_CTX=16384
-        SETUP_TIER="Tier 9 (CPU Workstation: 32GB+ RAM, 14B/7B Models, 16k Context)"
-    elif [ "$SETUP_RAM_MB" -ge 15000 ]; then
-        SETUP_RECOMMENDED_MODEL="qwen2.5-coder:7b"
-        SETUP_MAX_CTX=8192
-        SETUP_TIER="Tier 10 (CPU Laptop: 16GB RAM, 7B Models, 8k Context)"
-    elif [ "$SETUP_RAM_MB" -ge 7000 ]; then
-        SETUP_RECOMMENDED_MODEL="$SETUP_BASELINE_MODEL"
-        SETUP_MAX_CTX=4096
-        SETUP_TIER="Tier 11 (CPU Everyday: 8GB-12GB RAM, 1.5B/1.7B Baseline, 4k Context)"
-    else
-        SETUP_RECOMMENDED_MODEL="$SETUP_BASELINE_MODEL"
-        SETUP_MAX_CTX=2048
-        SETUP_TIER="Tier 12 (Low-Spec / SBC: <8GB RAM, 1.5B/0.5B Baseline, 2k Context)"
-    fi
-fi
-
 echo -e "  * CPU Architecture:  ${WHITE}${SETUP_PHYSICAL_CORES} Physical Cores${NC} (${SETUP_LOGICAL_CORES} Logical Threads)"
 echo -e "  * System Host RAM:   ${WHITE}${SETUP_RAM_MB} MB (${SETUP_RAM_GB} GB)${NC}"
 if [ "$SETUP_HAS_NVIDIA" = true ] || [ "$SETUP_HAS_APPLE" = true ] || [ "$SETUP_HAS_AMD" = true ] || [ "$SETUP_HAS_INTEL_ARC" = true ]; then
@@ -525,15 +460,11 @@ if [ "$SETUP_HAS_NVIDIA" = true ] || [ "$SETUP_HAS_APPLE" = true ] || [ "$SETUP_
 else
     echo -e "  * GPU Accelerator:   ${YELLOW}Integrated CPU (Multi-threaded Acceleration)${NC}"
 fi
-echo -e "  * Hardware Profile:  ${MAGENTA}${SETUP_TIER}${NC}"
-echo -e "  * Calibrated Model:  ${GREEN}${SETUP_RECOMMENDED_MODEL}${NC}"
-echo -e "  * Baseline Active:   ${GREEN}${SETUP_BASELINE_MODEL}${NC}"
-echo -e "  * Max Context Window:${GREEN}${SETUP_MAX_CTX} tokens${NC}"
 
 # ------------------------------------------------------------------------------
 # 3. Check and Install Bun Runtime
 # ------------------------------------------------------------------------------
-echo -e "\n${BLUE}${BOLD}[3/7] Checking Bun JavaScript & TypeScript Runtime...${NC}"
+echo -e "\n${BLUE}${BOLD}[3/6] Checking Bun JavaScript & TypeScript Runtime...${NC}"
 
 BUN_DIR="${BUN_INSTALL:-$HOME/.bun}"
 export PATH="$BUN_DIR/bin:$HOME/.bun/bin:$PATH"
@@ -583,7 +514,7 @@ fi
 # ------------------------------------------------------------------------------
 # 4. Install Monorepo Dependencies & Compile SDK + CLI
 # ------------------------------------------------------------------------------
-echo -e "\n${BLUE}${BOLD}[4/7] Building KerberoSec Monorepo (SDK & CLI Bundles)...${NC}"
+echo -e "\n${BLUE}${BOLD}[4/6] Building KerberoSec Monorepo (SDK & CLI Bundles)...${NC}"
 cd "$REPO_DIR"
 
 if [ "$SKIP_BUILD" = false ] && [ "$DRY_RUN" = false ]; then
@@ -605,7 +536,7 @@ fi
 # ------------------------------------------------------------------------------
 # 5. Set up Global Executable (`kerberosec`)
 # ------------------------------------------------------------------------------
-echo -e "\n${BLUE}${BOLD}[5/7] Configuring Global Executable in PATH...${NC}"
+echo -e "\n${BLUE}${BOLD}[5/6] Configuring Global Executable in PATH...${NC}"
 BIN_DIR="$HOME/.local/bin"
 mkdir -p "$BIN_DIR"
 
@@ -630,7 +561,7 @@ fi
 
 export PATH="$HOME/Tools/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.bun/bin:${BUN_BIN_DIR}:\$PATH"
 
-# Respect hardware-calibrated Ollama context
+# Respect hardware-calibrated Ollama context if previously configured
 if [ -z "\$OLLAMA_NUM_CTX" ] && [ -f "\$HOME/.kerberosec/ollama_num_ctx" ]; then
     export OLLAMA_NUM_CTX="\$(cat "\$HOME/.kerberosec/ollama_num_ctx" 2>/dev/null)"
 fi
@@ -701,28 +632,9 @@ export PATH="$HOME/.bun/bin:$BIN_DIR:$PATH"
 echo -e "  * ${GREEN}[OK]${NC} Global command registered: ${WHITE}${WRAPPER_PATH}${NC}"
 
 # ------------------------------------------------------------------------------
-# 6. Setup, Optimize, and Tune Ollama with Maximum GPU Performance
+# 6. Security Toolchain Verification (tools.sh)
 # ------------------------------------------------------------------------------
-if [ "$SKIP_OLLAMA" = false ]; then
-    echo -e "\n${BLUE}${BOLD}[6/7] Running Autonomous Ollama Hardware & Model Matrix Optimizer...${NC}"
-    if [ -f "$REPO_DIR/ollama.sh" ]; then
-        chmod +x "$REPO_DIR/ollama.sh"
-        if [ "$DRY_RUN" = true ]; then
-            bash "$REPO_DIR/ollama.sh" --dry-run || true
-        else
-            bash "$REPO_DIR/ollama.sh" || {
-                echo -e "  * ${YELLOW}[Notice] Ollama optimization completed with non-fatal status.${NC}"
-            }
-        fi
-    fi
-else
-    echo -e "\n${YELLOW}${BOLD}[6/7] Skipped Ollama GPU optimization (--skip-ollama passed).${NC}"
-fi
-
-# ------------------------------------------------------------------------------
-# 7. Security Toolchain Verification (tools.sh)
-# ------------------------------------------------------------------------------
-echo -e "\n${BLUE}${BOLD}[7/7] Verifying Security Toolchain Readiness...${NC}"
+echo -e "\n${BLUE}${BOLD}[6/6] Verifying Security Toolchain Readiness...${NC}"
 if [ -f "$REPO_DIR/tools.sh" ]; then
     chmod +x "$REPO_DIR/tools.sh"
     if [ "$WITH_TOOLS" = true ] && [ "$DRY_RUN" = false ]; then
@@ -740,15 +652,15 @@ echo -e "\n${GREEN}${BOLD}╔═════════════════
 echo "║          KerberoSec CLI is Successfully Installed & Ready!                   ║"
 echo -e "╚══════════════════════════════════════════════════════════════════════════════╝${NC}"
 echo -e "\n${BOLD}Quick Start:${NC}"
-echo -e "  1. Reload your shell:      ${CYAN}source ~/.bashrc${NC} (or ${CYAN}source ~/.zshrc${NC})"
-echo -e "  2. Launch Interactive TUI:  ${GREEN}kerberosec${NC}"
-echo -e "  3. Single Prompt Mode:      ${GREEN}kerberosec \"explain my project\"${NC}"
-echo -e "  4. Local Ollama Execution:  ${GREEN}kerberosec -P ollama \"explain my project\"${NC}"
+echo -e "  1. Reload your shell:        ${CYAN}source ~/.bashrc${NC} (or ${CYAN}source ~/.zshrc${NC})"
+echo -e "  2. Launch Interactive TUI:    ${GREEN}kerberosec${NC}"
+echo -e "  3. Single Prompt Mode:        ${GREEN}kerberosec \"explain my project\"${NC}"
+echo -e "  4. Setup Local Ollama Models: ${CYAN}./ollama.sh${NC} (run separately if you want local models & GPU acceleration)"
 echo ""
 echo -e "${BOLD}Key Shortcuts in TUI:${NC}"
-echo -e "  * ${CYAN}/model${NC}            - Switch LLM providers and models (Ollama, Claude, DeepSeek, OpenAI)"
+echo -e "  * ${CYAN}/model${NC}            - Switch LLM providers and models (AgentRouter, Ollama, Claude, DeepSeek, OpenAI)"
 echo -e "  * ${CYAN}/settings${NC}         - Open configuration panel"
 echo -e "  * ${CYAN}Tab${NC}               - Toggle between Plan Mode and Act Mode"
-echo -e "  * ${CYAN}PageUp / PageDown${NC} - Scroll transcript (3x high-speed scroll)"
+echo -e "  * ${CYAN}PageUp / PageDown${NC} - Scroll transcript (10x high-speed scroll)"
 echo -e "  * ${CYAN}Ctrl + C (x2)${NC}     - Cleanly exit CLI"
 echo ""

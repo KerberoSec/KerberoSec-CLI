@@ -1,6 +1,11 @@
 import { createGateway } from "@ai-sdk/gateway";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import type { LanguageModelV4 } from "@ai-sdk/provider";
+import type {
+	LanguageModelV4,
+	LanguageModelV4Middleware,
+	LanguageModelV4StreamPart,
+	LanguageModelV4StreamResult,
+} from "@ai-sdk/provider";
 import type {
 	GatewayProviderContext,
 	GatewayResolvedProviderConfig,
@@ -9,6 +14,7 @@ import { modelProducesImages } from "@kerberosec/shared";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { wrapLanguageModel } from "ai";
 import { ensureFetch, resolveApiKey } from "../http";
+import { isTransientNetworkError } from "../middleware/retry-empty-response";
 import { splitToolImagesMiddleware } from "../middleware/split-tool-images";
 import { isOpenAIReasoningEraModelId } from "../model-facts";
 import type { ProviderFactoryResult } from "./types";
@@ -354,6 +360,235 @@ export function createSuccessDataResponseFetch(
 	return responseEnvelopeFetch;
 }
 
+function isAgentRouterFailoverError(error: unknown): boolean {
+	const text = String(
+		error instanceof Error
+			? `${error.message} ${error.name} ${JSON.stringify((error as { cause?: unknown }).cause ?? "")}`
+			: typeof error === "object" && error !== null
+				? JSON.stringify(error)
+				: error,
+	).toLowerCase();
+	return (
+		text.includes("budget pool quota has been exhausted") ||
+		(text.includes("budget pool") && text.includes("quota")) ||
+		text.includes("upstream service unavailable") ||
+		text.includes("client cancelled request before upstream response") ||
+		text.includes("model-proxy") ||
+		text.includes("context canceled") ||
+		text.includes("bad_response_status_code") ||
+		text.includes("upstream request timeout") ||
+		text.includes("upstream timed out") ||
+		text.includes("timed out waiting") ||
+		text.includes("timed out before responding") ||
+		text.includes("gateway timeout") ||
+		text.includes("504 gateway") ||
+		text.includes("502 bad gateway") ||
+		text.includes("503 service unavailable") ||
+		text.includes("bad gateway") ||
+		text.includes("service unavailable")
+	);
+}
+
+function createAgentRouterFallbackMiddleware(
+	provider: (modelId: string) => LanguageModelV4,
+	originalModelId: string,
+): LanguageModelV4Middleware {
+	return {
+		specificationVersion: "v4",
+		wrapStream: async ({ doStream, params }) => {
+			if (originalModelId === "glm-5.3") {
+				return await doStream();
+			}
+
+			const startFallbackStream = async (): Promise<LanguageModelV4StreamResult> => {
+				const fallback = provider("glm-5.3");
+				return await fallback.doStream(params);
+			};
+
+			let primaryResult: LanguageModelV4StreamResult;
+			try {
+				let timer: ReturnType<typeof setTimeout> | undefined;
+				const timeoutPromise = new Promise<never>((_, reject) => {
+					timer = setTimeout(
+						() =>
+							reject(
+								new Error(
+									`AgentRouter model ${originalModelId} upstream timed out before responding`,
+								),
+							),
+						8_000,
+					);
+				});
+				const streamPromise = (async () => {
+					try {
+						return await doStream();
+					} finally {
+						if (timer) clearTimeout(timer);
+					}
+				})();
+				primaryResult = await Promise.race([streamPromise, timeoutPromise]);
+			} catch (err) {
+				if (isAgentRouterFailoverError(err) || isTransientNetworkError(err)) {
+					return await startFallbackStream();
+				}
+				throw err;
+			}
+
+			type StreamPartResult =
+				| { done: false; value: LanguageModelV4StreamPart }
+				| { done: true; value?: undefined };
+			type StreamPartReader = {
+				read(): Promise<StreamPartResult>;
+				cancel(reason?: unknown): Promise<unknown>;
+			};
+
+			const primaryStream = primaryResult.stream;
+			const wrappedStream = new ReadableStream<LanguageModelV4StreamPart>({
+				async start(controller) {
+					let activeReader: StreamPartReader =
+						primaryStream.getReader() as unknown as StreamPartReader;
+					let contentStarted = false;
+
+					const switchToFallback = async () => {
+						try {
+							await activeReader.cancel();
+						} catch {}
+						const fallbackResult = await startFallbackStream();
+						activeReader =
+							fallbackResult.stream.getReader() as unknown as StreamPartReader;
+					};
+
+					try {
+						let firstChunkTimer: ReturnType<typeof setTimeout> | undefined;
+						const firstChunkTimeout = new Promise<{ isTimeout: true }>((resolve) => {
+							firstChunkTimer = setTimeout(
+								() => resolve({ isTimeout: true }),
+								8_000,
+							);
+						});
+						const firstChunkPromise = activeReader.read().then((res) => ({
+							isTimeout: false as const,
+							res,
+						}));
+						const firstResult = await Promise.race([
+							firstChunkPromise,
+							firstChunkTimeout,
+						]);
+						if (firstChunkTimer) clearTimeout(firstChunkTimer);
+
+						if (firstResult.isTimeout) {
+							await switchToFallback();
+						} else {
+							const { done, value } = firstResult.res;
+							if (done) {
+								controller.close();
+								return;
+							}
+							if (
+								value.type === "error" &&
+								isAgentRouterFailoverError((value as { error: unknown }).error)
+							) {
+								await switchToFallback();
+							} else {
+								if (
+									value.type === "text-delta" ||
+									value.type === "tool-call" ||
+									value.type === "reasoning-delta"
+								) {
+									contentStarted = true;
+								}
+								controller.enqueue(value);
+							}
+						}
+					} catch (firstErr) {
+						if (
+							isAgentRouterFailoverError(firstErr) ||
+							isTransientNetworkError(firstErr)
+						) {
+							try {
+								await switchToFallback();
+							} catch (fallbackErr) {
+								controller.error(fallbackErr);
+								return;
+							}
+						} else {
+							controller.error(firstErr);
+							return;
+						}
+					}
+
+					try {
+						while (true) {
+							const { done, value } = await activeReader.read();
+							if (done) {
+								controller.close();
+								return;
+							}
+							if (
+								!contentStarted &&
+								value.type === "error" &&
+								isAgentRouterFailoverError((value as { error: unknown }).error)
+							) {
+								await switchToFallback();
+								continue;
+							}
+							if (
+								value.type === "text-delta" ||
+								value.type === "tool-call" ||
+								value.type === "reasoning-delta"
+							) {
+								contentStarted = true;
+							}
+							controller.enqueue(value);
+						}
+					} catch (streamErr) {
+						if (
+							!contentStarted &&
+							(isAgentRouterFailoverError(streamErr) ||
+								isTransientNetworkError(streamErr))
+						) {
+							try {
+								await switchToFallback();
+								while (true) {
+									const { done, value } = await activeReader.read();
+									if (done) {
+										controller.close();
+										return;
+									}
+									controller.enqueue(value);
+								}
+							} catch (fallbackErr) {
+								controller.error(fallbackErr);
+								return;
+							}
+						}
+						controller.error(streamErr);
+					}
+				},
+			});
+
+			return {
+				...primaryResult,
+				stream: wrappedStream,
+			};
+		},
+		wrapGenerate: async ({ doGenerate, params }) => {
+			if (originalModelId === "glm-5.3") {
+				return await doGenerate();
+			}
+			try {
+				return await doGenerate();
+			} catch (err) {
+				if (isAgentRouterFailoverError(err) || isTransientNetworkError(err)) {
+					const fallback = provider("glm-5.3");
+					return await fallback.doGenerate(params);
+				}
+				throw err;
+			}
+		},
+	};
+}
+
 export async function createOpenAICompatibleProviderModule(
 	config: GatewayResolvedProviderConfig,
 	context: GatewayProviderContext,
@@ -371,11 +606,29 @@ export async function createOpenAICompatibleProviderModule(
 				onResponseError,
 			})
 		: fetch;
+	const headers: Record<string, string> = {
+		...(config.headers as Record<string, string> | undefined),
+	};
+	const isAgentRouter =
+		context.provider.id === "agent-router" ||
+		context.provider.id === "agentrouter" ||
+		(typeof config.baseUrl === "string" &&
+			config.baseUrl.includes("agentrouter.org"));
+	if (isAgentRouter && !headers["User-Agent"]) {
+		headers["User-Agent"] = "codex_cli_rs/0.1.0";
+	}
+	if (isAgentRouter) {
+		try {
+			(globalThis.fetch as FetchWithOptionalPreconnect).preconnect?.(
+				"https://agentrouter.org",
+			);
+		} catch {}
+	}
 	const provider = createOpenAICompatible({
 		name: context.provider.id,
 		apiKey,
 		...(config.baseUrl ? { baseURL: config.baseUrl } : {}),
-		...(config.headers ? { headers: config.headers } : {}),
+		...(Object.keys(headers).length > 0 ? { headers } : {}),
 		...(providerFetch ? { fetch: providerFetch } : {}),
 		includeUsage: true,
 		transformRequestBody: (body: Record<string, unknown>) => {
@@ -424,12 +677,23 @@ export async function createOpenAICompatibleProviderModule(
 		// `convertToOpenAiMessages` in `src/core/api/transform/openai-format.ts`
 		// on origin/main).
 		operations: {
-			language: (modelId) =>
-				wrapLanguageModel({
-					model: (openRouterImageProvider?.chat(modelId) ??
-						provider(modelId)) as LanguageModelV4,
-					middleware: splitToolImagesMiddleware,
-				}),
+			language: (modelId) => {
+				const baseModel = (openRouterImageProvider?.chat(modelId) ??
+					provider(modelId)) as LanguageModelV4;
+				const middlewares: LanguageModelV4Middleware[] = [splitToolImagesMiddleware];
+				if (isAgentRouter && modelId !== "glm-5.3") {
+					middlewares.push(
+						createAgentRouterFallbackMiddleware(
+							provider as unknown as (id: string) => LanguageModelV4,
+							modelId,
+						),
+					);
+				}
+				return wrapLanguageModel({
+					model: baseModel,
+					middleware: middlewares,
+				});
+			},
 			imageGeneration: (modelId) =>
 				vercelGateway
 					? vercelGateway.imageModel(modelId)

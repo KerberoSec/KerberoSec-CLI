@@ -1048,13 +1048,18 @@ const OPENAI_COMPATIBLE_SPEC_OVERRIDES: BuiltinSpecOverride[] = [
 		popular: 2,
 		capabilities: ["tools", "reasoning", "vision"],
 		defaultModelId: "glm-5.3",
-		apiKeyEnv: ["AGENT_ROUTER_API_KEY", "AGENTIC_API_KEY", "AGENTROUTER_API_KEY"],
+		apiKeyEnv: [
+			"AGENT_ROUTER_API_KEY",
+			"AGENTIC_API_KEY",
+			"AGENTROUTER_API_KEY",
+		],
 		modelsFactory: () => ({
 			"glm-5.3": {
 				id: "glm-5.3",
 				name: "GLM 5.3",
 				providerId: "agent-router",
-				description: "Zhipu AI Flagship Model on AgentRouter (Active & High-Performance)",
+				description:
+					"Zhipu AI Flagship Model on AgentRouter (Active & High-Performance)",
 				capabilities: ["tools", "reasoning", "images"],
 			},
 			"gpt-5.6-sol": {

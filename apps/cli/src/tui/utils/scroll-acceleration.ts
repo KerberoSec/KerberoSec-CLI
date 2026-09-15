@@ -35,7 +35,8 @@ export class FastScrollAccel implements ScrollAcceleration {
 		}
 
 		const avgInterval =
-			this.velocityHistory.reduce((a, b) => a + b, 0) / this.velocityHistory.length;
+			this.velocityHistory.reduce((a, b) => a + b, 0) /
+			this.velocityHistory.length;
 		const velocity = 100 / avgInterval;
 		const additional = Math.min(20, Math.floor(velocity * 2));
 		return this.baseMultiplier + additional;

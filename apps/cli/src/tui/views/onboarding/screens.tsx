@@ -93,7 +93,9 @@ function OnboardingFrame({
 						<text fg="cyan">
 							<strong>KerberoSec CLI</strong>
 						</text>
-						<text fg="gray">Next-Gen Autonomous Agentic Terminal Assistant</text>
+						<text fg="gray">
+							Next-Gen Autonomous Agentic Terminal Assistant
+						</text>
 					</box>
 				)}
 				<box
@@ -916,7 +918,9 @@ export function OnboardingMainMenuScreen(props: {
 						<text fg="cyan">
 							<strong>KerberoSec CLI</strong>
 						</text>
-						<text fg="gray">Next-Gen Autonomous Agentic Terminal Assistant</text>
+						<text fg="gray">
+							Next-Gen Autonomous Agentic Terminal Assistant
+						</text>
 					</box>
 				)}
 

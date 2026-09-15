@@ -484,7 +484,10 @@ export function createRetryEmptyResponseMiddleware(
 									reconnected = true;
 									break;
 								} catch (streamErr) {
-									if (!isTransientNetworkError(streamErr) || abortSignal?.aborted) {
+									if (
+										!isTransientNetworkError(streamErr) ||
+										abortSignal?.aborted
+									) {
 										controller.error(streamErr);
 										return;
 									}

@@ -321,7 +321,9 @@ export function isBudgetPoolQuotaExhaustedError(error: unknown): boolean {
 	);
 }
 
-export function getCliBudgetPoolQuotaExhaustedMessage(_error?: unknown): string {
+export function getCliBudgetPoolQuotaExhaustedMessage(
+	_error?: unknown,
+): string {
 	return [
 		"Agent Router Budget Pool Quota Exhausted",
 		"The selected model belongs to a budget pool whose quota is exhausted on AgentRouter.",

@@ -400,10 +400,11 @@ function createAgentRouterFallbackMiddleware(
 				return await doStream();
 			}
 
-			const startFallbackStream = async (): Promise<LanguageModelV4StreamResult> => {
-				const fallback = provider("glm-5.3");
-				return await fallback.doStream(params);
-			};
+			const startFallbackStream =
+				async (): Promise<LanguageModelV4StreamResult> => {
+					const fallback = provider("glm-5.3");
+					return await fallback.doStream(params);
+				};
 
 			let primaryResult: LanguageModelV4StreamResult;
 			try {
@@ -460,12 +461,14 @@ function createAgentRouterFallbackMiddleware(
 
 					try {
 						let firstChunkTimer: ReturnType<typeof setTimeout> | undefined;
-						const firstChunkTimeout = new Promise<{ isTimeout: true }>((resolve) => {
-							firstChunkTimer = setTimeout(
-								() => resolve({ isTimeout: true }),
-								8_000,
-							);
-						});
+						const firstChunkTimeout = new Promise<{ isTimeout: true }>(
+							(resolve) => {
+								firstChunkTimer = setTimeout(
+									() => resolve({ isTimeout: true }),
+									8_000,
+								);
+							},
+						);
 						const firstChunkPromise = activeReader.read().then((res) => ({
 							isTimeout: false as const,
 							res,
@@ -680,7 +683,9 @@ export async function createOpenAICompatibleProviderModule(
 			language: (modelId) => {
 				const baseModel = (openRouterImageProvider?.chat(modelId) ??
 					provider(modelId)) as LanguageModelV4;
-				const middlewares: LanguageModelV4Middleware[] = [splitToolImagesMiddleware];
+				const middlewares: LanguageModelV4Middleware[] = [
+					splitToolImagesMiddleware,
+				];
 				if (isAgentRouter && modelId !== "glm-5.3") {
 					middlewares.push(
 						createAgentRouterFallbackMiddleware(

@@ -67,7 +67,11 @@ export const GENERATED_PROVIDER_SPECS: readonly BuiltinSpec[] = [
 		capabilities: ["tools", "reasoning"],
 		modelsProviderId: "agentrouter",
 		defaultModelId: "glm-5.3",
-		apiKeyEnv: ["AGENTROUTER_API_KEY", "AGENT_ROUTER_API_KEY", "AGENTIC_API_KEY"],
+		apiKeyEnv: [
+			"AGENTROUTER_API_KEY",
+			"AGENT_ROUTER_API_KEY",
+			"AGENTIC_API_KEY",
+		],
 		docsUrl: "https://agentrouter.org/docs/opencode.html",
 		defaults: {
 			baseUrl: "https://agentrouter.org/v1",

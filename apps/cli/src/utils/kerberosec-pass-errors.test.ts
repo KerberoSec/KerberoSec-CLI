@@ -6,15 +6,15 @@ import {
 	getCliNotSubscribedMessage,
 	getKerberoSecOrgIndividualInferenceSubscriptionMessage,
 	getKerberoSecPassLimitDetailMessage,
+	isBudgetPoolQuotaExhaustedError,
 	isContentBlockedErrorMessage,
 	isGenericHtmlErrorMessage,
-	isBudgetPoolQuotaExhaustedError,
-	isUpstreamUnavailableOrTimeoutError,
 	isKerberoSecFreeModelLimitErrorMessage,
 	isKerberoSecFreePromotionEndedErrorMessage,
 	isKerberoSecOrgIndividualInferenceSubscriptionErrorMessage,
 	isKerberoSecPassLimitErrorMessage,
 	isKerberoSecPassSubscriptionError,
+	isUpstreamUnavailableOrTimeoutError,
 	isWafBlockedErrorMessage,
 } from "./kerberosec-pass-errors";
 
@@ -173,7 +173,8 @@ describe("kerberosec-pass-errors", () => {
 	it("recognizes and formats AgentRouter upstream service unavailable and timeout errors", () => {
 		const rawCluster =
 			'do request failed: client cancelled request before upstream response: Post "http://model-proxy-cp.model-proxy.svc.cluster.local:8089/v1/chat/completions": context canceled';
-		const rawUnavailable = "Upstream service unavailable [trace_id=87e29d5eb20b2a45366c6ad51facb933]";
+		const rawUnavailable =
+			"Upstream service unavailable [trace_id=87e29d5eb20b2a45366c6ad51facb933]";
 
 		expect(isUpstreamUnavailableOrTimeoutError(rawCluster)).toBe(true);
 		expect(isUpstreamUnavailableOrTimeoutError(rawUnavailable)).toBe(true);

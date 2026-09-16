@@ -1,4 +1,5 @@
 import {
+	CliRenderer,
 	type MouseEvent,
 	type ScrollAcceleration,
 	ScrollBoxRenderable,
@@ -60,6 +61,94 @@ export const fastScrollAccel = new FastScrollAccel(10);
 export const SELECTION_AUTO_SCROLL_MULTIPLIER = 50;
 
 /**
+ * Active timers managing continuous auto-scroll during selection drag.
+ */
+const activeScrollBoxTimers = new WeakMap<
+	ScrollBoxRenderable,
+	ReturnType<typeof setInterval>
+>();
+
+export function startTimerForScrollbox(scrollbox: ScrollBoxRenderable): void {
+	if (!scrollbox || activeScrollBoxTimers.has(scrollbox)) return;
+
+	const timer = setInterval(() => {
+		const sb = scrollbox as unknown as {
+			isAutoScrolling?: boolean;
+			_activeTimerAutoScrolling?: boolean;
+			viewport?: { height: number };
+			height: number;
+			scrollHeight?: number;
+			scrollTop: number;
+			autoScrollMouseY?: number;
+			cachedAutoScrollSpeed?: number;
+			getAutoScrollDirectionY?: (y: number) => number;
+			syncManualScrollState?: () => void;
+			stopAutoScroll?: () => void;
+			_ctx?: {
+				requestSelectionUpdate?: () => void;
+				requestRender?: () => void;
+			};
+		};
+
+		if (!sb.isAutoScrolling && !sb._activeTimerAutoScrolling) {
+			stopTimerForScrollbox(scrollbox);
+			return;
+		}
+
+		const viewportHeight = sb.viewport?.height ?? sb.height;
+		const maxScrollTop = Math.max(0, (sb.scrollHeight ?? 0) - viewportHeight);
+		const dirY = sb.getAutoScrollDirectionY?.(sb.autoScrollMouseY ?? 0) ?? 0;
+		const speed = sb.cachedAutoScrollSpeed || 3600;
+		const step = Math.max(25, Math.floor(speed * 0.016));
+
+		let scrolled = false;
+		if (dirY > 0 && sb.scrollTop < maxScrollTop) {
+			sb.scrollTop = Math.min(maxScrollTop, sb.scrollTop + step);
+			sb.syncManualScrollState?.();
+			scrolled = true;
+		} else if (dirY < 0 && sb.scrollTop > 0) {
+			sb.scrollTop = Math.max(0, sb.scrollTop - step);
+			sb.syncManualScrollState?.();
+			scrolled = true;
+		}
+
+		if (scrolled) {
+			sb._ctx?.requestSelectionUpdate?.();
+			sb._ctx?.requestRender?.();
+		} else if (dirY === 0) {
+			stopTimerForScrollbox(scrollbox);
+		}
+	}, 16);
+
+	activeScrollBoxTimers.set(scrollbox, timer);
+}
+
+export function stopTimerForScrollbox(scrollbox: ScrollBoxRenderable): void {
+	if (!scrollbox) return;
+	const timer = activeScrollBoxTimers.get(scrollbox);
+	if (timer) {
+		clearInterval(timer);
+		activeScrollBoxTimers.delete(scrollbox);
+	}
+	(
+		scrollbox as unknown as { _activeTimerAutoScrolling?: boolean }
+	)._activeTimerAutoScrolling = false;
+}
+
+function findEnclosingScrollBox(
+	renderable: unknown,
+): ScrollBoxRenderable | null {
+	let curr = renderable as { parent?: unknown } | null | undefined;
+	while (curr) {
+		if (curr instanceof ScrollBoxRenderable) {
+			return curr;
+		}
+		curr = curr.parent as { parent?: unknown } | null | undefined;
+	}
+	return null;
+}
+
+/**
  * Configures a ScrollBoxRenderable instance with ultra-fast auto-scroll speeds
  * when selecting text and dragging near or outside the container boundaries.
  */
@@ -82,7 +171,7 @@ export function configureFastAutoScroll(
 }
 
 /**
- * Globally patches ScrollBoxRenderable prototype to drastically increase
+ * Globally patches ScrollBoxRenderable and CliRenderer prototypes to drastically increase
  * scroll speed when text is selected (both for drag auto-scrolling and wheel scrolling).
  */
 export function applyAutoScrollSpeedPatch(): void {
@@ -96,8 +185,23 @@ export function applyAutoScrollSpeedPatch(): void {
 		).__autoScroll10xPatched = true;
 		const origGetAutoScrollSpeed =
 			ScrollBoxRenderable.prototype.getAutoScrollSpeed;
+		const origStartAutoScroll = ScrollBoxRenderable.prototype.startAutoScroll;
+		const origStopAutoScroll = ScrollBoxRenderable.prototype.stopAutoScroll;
 		const origOnUpdate = ScrollBoxRenderable.prototype.onUpdate;
 		const origOnMouseEvent = ScrollBoxRenderable.prototype.onMouseEvent;
+
+		ScrollBoxRenderable.prototype.startAutoScroll = function (
+			mouseX: number,
+			mouseY: number,
+		): void {
+			origStartAutoScroll.call(this, mouseX, mouseY);
+			startTimerForScrollbox(this);
+		};
+
+		ScrollBoxRenderable.prototype.stopAutoScroll = function (): void {
+			stopTimerForScrollbox(this);
+			origStopAutoScroll.call(this);
+		};
 
 		ScrollBoxRenderable.prototype.getAutoScrollSpeed = function (
 			mouseX: number,
@@ -158,6 +262,7 @@ export function applyAutoScrollSpeedPatch(): void {
 				// drive auto-scroll at ultra-fast speed
 				if (distToBottom <= 3 || distToTop <= 3) {
 					this.updateAutoScroll(selection.focus.x, selection.focus.y);
+					startTimerForScrollbox(this);
 				}
 			}
 
@@ -203,6 +308,102 @@ export function applyAutoScrollSpeedPatch(): void {
 			}
 
 			origOnMouseEvent.call(this, event);
+		};
+	}
+
+	// Also patch CliRenderer to drive selection drag auto-scroll even when the cursor is outside the scrollbox
+	if (
+		CliRenderer?.prototype &&
+		!(CliRenderer.prototype as Record<string, unknown>).__selectionDragPatched
+	) {
+		(CliRenderer.prototype as Record<string, unknown>).__selectionDragPatched =
+			true;
+
+		const origStartSelection = CliRenderer.prototype.startSelection;
+		const origUpdateSelection = CliRenderer.prototype.updateSelection;
+		const origFinishSelection = CliRenderer.prototype.finishSelection;
+		const origClearSelection = CliRenderer.prototype.clearSelection;
+
+		CliRenderer.prototype.startSelection = function (
+			renderable: unknown,
+			x: number,
+			y: number,
+		): void {
+			origStartSelection.call(this, renderable as never, x, y);
+			const scrollbox = findEnclosingScrollBox(renderable);
+			(
+				this as unknown as {
+					_activeSelectionScrollBox?: ScrollBoxRenderable | null;
+				}
+			)._activeSelectionScrollBox = scrollbox;
+		};
+
+		CliRenderer.prototype.updateSelection = function (
+			currentRenderable: unknown,
+			x: number,
+			y: number,
+			options?: unknown,
+		): void {
+			origUpdateSelection.call(
+				this,
+				currentRenderable as never,
+				x,
+				y,
+				options as never,
+			);
+			const state = this as unknown as {
+				_activeSelectionScrollBox?: ScrollBoxRenderable | null;
+			};
+			let scrollbox = state._activeSelectionScrollBox;
+			if (!scrollbox && currentRenderable) {
+				scrollbox = findEnclosingScrollBox(currentRenderable);
+				state._activeSelectionScrollBox = scrollbox;
+			}
+			if (scrollbox) {
+				const relativeY = y - scrollbox.y;
+				const distToBottom = scrollbox.height - relativeY;
+				const distToTop = relativeY;
+
+				if (distToBottom <= 3 || distToTop <= 3) {
+					scrollbox.autoScrollMouseX = x;
+					scrollbox.autoScrollMouseY = y;
+					scrollbox.cachedAutoScrollSpeed = scrollbox.getAutoScrollSpeed(x, y);
+					scrollbox.isAutoScrolling = true;
+					(
+						scrollbox as unknown as { _activeTimerAutoScrolling?: boolean }
+					)._activeTimerAutoScrolling = true;
+					startTimerForScrollbox(scrollbox);
+				} else {
+					stopTimerForScrollbox(scrollbox);
+					scrollbox.stopAutoScroll?.();
+				}
+			}
+		};
+
+		CliRenderer.prototype.finishSelection = function (): void {
+			const state = this as unknown as {
+				_activeSelectionScrollBox?: ScrollBoxRenderable | null;
+			};
+			const scrollbox = state._activeSelectionScrollBox;
+			if (scrollbox) {
+				stopTimerForScrollbox(scrollbox);
+				scrollbox.stopAutoScroll?.();
+				state._activeSelectionScrollBox = null;
+			}
+			origFinishSelection.call(this);
+		};
+
+		CliRenderer.prototype.clearSelection = function (): void {
+			const state = this as unknown as {
+				_activeSelectionScrollBox?: ScrollBoxRenderable | null;
+			};
+			const scrollbox = state._activeSelectionScrollBox;
+			if (scrollbox) {
+				stopTimerForScrollbox(scrollbox);
+				scrollbox.stopAutoScroll?.();
+				state._activeSelectionScrollBox = null;
+			}
+			origClearSelection.call(this);
 		};
 	}
 }

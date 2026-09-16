@@ -130,19 +130,32 @@ export function hydrateSessionMessages(
 				if (msg.role === "user") {
 					userTextParts.push(block.text);
 				} else {
-					entries.push({
-						kind: "assistant_text",
-						text: block.text,
-						streaming: false,
-						mode,
-					});
+					const last = entries[entries.length - 1];
+					if (
+						last &&
+						last.kind === "assistant_text" &&
+						(last.mode === mode || !last.mode || !mode)
+					) {
+						last.text = `${last.text}${block.text}`;
+					} else {
+						entries.push({
+							kind: "assistant_text",
+							text: block.text,
+							streaming: false,
+							mode,
+						});
+					}
 				}
 				continue;
 			}
 
 			if (block.type === "thinking") {
 				const last = entries[entries.length - 1];
-				if (last && last.kind === "reasoning" && last.mode === mode) {
+				if (
+					last &&
+					last.kind === "reasoning" &&
+					(last.mode === mode || !last.mode || !mode)
+				) {
 					last.text = last.text
 						? `${last.text}\n${block.thinking}`
 						: block.thinking;

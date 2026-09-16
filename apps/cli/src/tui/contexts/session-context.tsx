@@ -132,6 +132,9 @@ export function SessionProvider(props: {
 	const setIsRunning = useCallback(
 		(v: boolean) => {
 			_setIsRunning(v);
+			if (!v) {
+				setIsStreaming(false);
+			}
 			setAbortRequested(false);
 			onRunningChange(v);
 		},
@@ -141,16 +144,37 @@ export function SessionProvider(props: {
 	const appendEntry = useCallback((entry: ChatEntry) => {
 		const stamped = entry.mode ? entry : { ...entry, mode: uiModeRef.current };
 		setEntries((prev) => {
-			if (stamped.kind === "reasoning" && prev.length > 0) {
+			if (prev.length > 0) {
 				const last = prev[prev.length - 1];
-				if (last && last.kind === "reasoning" && last.mode === stamped.mode) {
+				if (
+					stamped.kind === "reasoning" &&
+					last &&
+					last.kind === "reasoning" &&
+					(last.mode === stamped.mode || !last.mode || !stamped.mode)
+				) {
 					const next = [...prev];
-					const mergedText = [last.text, stamped.text]
-						.filter(Boolean)
-						.join("\n");
+					const separator = last.streaming || stamped.streaming ? "" : "\n";
+					const mergedText =
+						last.text && stamped.text
+							? `${last.text}${separator}${stamped.text}`
+							: last.text || stamped.text;
 					next[next.length - 1] = {
 						...last,
 						text: mergedText,
+						streaming: stamped.streaming,
+					};
+					return next;
+				}
+				if (
+					stamped.kind === "assistant_text" &&
+					last &&
+					last.kind === "assistant_text" &&
+					(last.mode === stamped.mode || !last.mode || !stamped.mode)
+				) {
+					const next = [...prev];
+					next[next.length - 1] = {
+						...last,
+						text: `${last.text}${stamped.text}`,
 						streaming: stamped.streaming,
 					};
 					return next;
@@ -267,7 +291,7 @@ export function SessionProvider(props: {
 	const value: SessionContextValue = {
 		entries,
 		isRunning,
-		isStreaming,
+		isStreaming: isRunning && isStreaming,
 		abortRequested,
 		hasSubmitted,
 		uiMode,

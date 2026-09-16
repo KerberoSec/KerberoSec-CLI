@@ -103,7 +103,6 @@ function ReasoningBlock(props: { text: string; streaming: boolean }) {
 	}
 
 	if (props.streaming) {
-		const lines = content.split("\n");
 		return (
 			<box flexDirection="column">
 				<box flexDirection="row" gap={1}>
@@ -113,29 +112,24 @@ function ReasoningBlock(props: { text: string; streaming: boolean }) {
 					</text>
 				</box>
 				<box flexDirection="column" paddingLeft={2}>
-					{lines.map((line) => (
-						<text key={line} fg="gray" selectable>
-							<em>{line || " "}</em>
-						</text>
-					))}
+					<text fg="gray" selectable>
+						<em>{content}</em>
+					</text>
 				</box>
 			</box>
 		);
 	}
 
 	if (expanded) {
-		const lines = content.split("\n");
 		return (
 			<box flexDirection="column" onMouseDown={() => setExpanded(false)}>
 				<text fg="gray">
 					{"\u25bc"} <em>Thought:</em>
 				</text>
 				<box flexDirection="column" paddingLeft={2}>
-					{lines.map((line) => (
-						<text key={line} fg="gray" selectable>
-							<em>{line || " "}</em>
-						</text>
-					))}
+					<text fg="gray" selectable>
+						<em>{content}</em>
+					</text>
 				</box>
 			</box>
 		);
@@ -811,7 +805,18 @@ export function ChatEntryView(props: {
 
 		case "assistant_text": {
 			const content = sanitizeAssistantText(trimLeading(entry.text));
-			if (!content.trim()) return null;
+			if (!content.trim()) {
+				if (entry.streaming) {
+					return (
+						<box flexDirection="row">
+							<box width={2}>
+								<spinner name="dots" color={accent} />
+							</box>
+						</box>
+					);
+				}
+				return null;
+			}
 			return (
 				<box flexDirection="row">
 					<box width={2}>

@@ -50,30 +50,34 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 		modelId,
 	} = deps;
 
-	// Compaction dividers that arrived while an assistant message was still
-	// streaming. Appending them immediately would split the message in two, so
-	// they are held until the active content block closes (or the turn ends).
-	const pendingCompactionEntriesRef = useRef<
-		Extract<ChatEntry, { kind: "compaction" }>[]
-	>([]);
+	// Side entries (compaction dividers, team events, status notices, recoverable errors)
+	// that arrived while an inline stream (reasoning or assistant text) was still
+	// active. Appending them immediately would split the streaming message,
+	// fragmenting thoughts and responses into multiple disconnected blocks.
+	// They are held until the active inline content block ends (or the turn ends).
+	const pendingSideEntriesRef = useRef<ChatEntry[]>([]);
 
-	const flushPendingCompactionEntries = useCallback(() => {
-		const pending = pendingCompactionEntriesRef.current;
+	const flushPendingSideEntries = useCallback(() => {
+		const pending = pendingSideEntriesRef.current;
 		if (pending.length === 0) return;
-		pendingCompactionEntriesRef.current = [];
+		pendingSideEntriesRef.current = [];
 		for (const entry of pending) {
-			if (entry.status !== "started" && openCompactionEntryRef.current) {
-				updateEntry((current) =>
-					current.kind === "compaction" && current.status === "started"
-						? { ...current, ...entry }
-						: current,
-				);
-				openCompactionEntryRef.current = false;
+			if (entry.kind === "compaction") {
+				if (entry.status !== "started" && openCompactionEntryRef.current) {
+					updateEntry((current) =>
+						current.kind === "compaction" && current.status === "started"
+							? { ...current, ...entry }
+							: current,
+					);
+					openCompactionEntryRef.current = false;
+				} else {
+					appendEntry(entry);
+					if (entry.status === "started") {
+						openCompactionEntryRef.current = true;
+					}
+				}
 			} else {
 				appendEntry(entry);
-				if (entry.status === "started") {
-					openCompactionEntryRef.current = true;
-				}
 			}
 		}
 	}, [appendEntry, updateEntry]);
@@ -111,13 +115,17 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					return { ...entry, streaming: false, result };
 				});
 			} else {
-				updateLastEntry((prev) => {
-					if (prev.kind !== "tool_call") return prev;
-					return { ...prev, streaming: false, result };
+				let matched = false;
+				updateEntry((entry) => {
+					if (!matched && entry.kind === "tool_call" && entry.streaming) {
+						matched = true;
+						return { ...entry, streaming: false, result };
+					}
+					return entry;
 				});
 			}
 		},
-		[updateEntry, updateLastEntry],
+		[updateEntry],
 	);
 
 	const turnErrorReportedRef = useRef(false);
@@ -130,30 +138,32 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					setIsRunning(true);
 					setIsStreaming(true);
 					closeInlineStream();
-					flushPendingCompactionEntries();
+					flushPendingSideEntries();
 					break;
 				case "iteration_end":
+					setIsStreaming(false);
 					closeInlineStream();
-					flushPendingCompactionEntries();
+					flushPendingSideEntries();
 					break;
 				case "content_start": {
 					setIsStreaming(false);
 					switch (event.contentType) {
 						case "text": {
-							if (activeInlineStreamRef.current !== "text") {
+							if (activeInlineStreamRef.current === "text") {
+								updateLastEntry((prev) =>
+									prev.kind === "assistant_text"
+										? { ...prev, text: prev.text + (event.text ?? "") }
+										: prev,
+								);
+							} else {
 								closeInlineStream();
+								flushPendingSideEntries();
 								activeInlineStreamRef.current = "text";
 								appendEntry({
 									kind: "assistant_text",
 									text: event.text ?? "",
 									streaming: true,
 								});
-							} else {
-								updateLastEntry((prev) =>
-									prev.kind === "assistant_text"
-										? { ...prev, text: prev.text + (event.text ?? "") }
-										: prev,
-								);
 							}
 							break;
 						}
@@ -162,25 +172,27 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 								event.redacted && !event.reasoning
 									? "[redacted]"
 									: (event.reasoning ?? "");
-							if (activeInlineStreamRef.current !== "reasoning") {
+							if (activeInlineStreamRef.current === "reasoning") {
+								updateLastEntry((prev) =>
+									prev.kind === "reasoning"
+										? { ...prev, text: prev.text + chunk }
+										: prev,
+								);
+							} else {
 								closeInlineStream();
+								flushPendingSideEntries();
 								activeInlineStreamRef.current = "reasoning";
 								appendEntry({
 									kind: "reasoning",
 									text: chunk,
 									streaming: true,
 								});
-							} else {
-								updateLastEntry((prev) =>
-									prev.kind === "reasoning"
-										? { ...prev, text: prev.text + chunk }
-										: prev,
-								);
 							}
 							break;
 						}
 						case "tool": {
 							closeInlineStream();
+							flushPendingSideEntries();
 							const toolName = event.toolName ?? "unknown_tool";
 							appendEntry({
 								kind: "tool_call",
@@ -206,6 +218,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 										: prev,
 								);
 							}
+							flushPendingSideEntries();
 							break;
 						}
 						case "reasoning":
@@ -217,30 +230,34 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 										: prev,
 								);
 							}
+							flushPendingSideEntries();
 							break;
 						case "tool": {
 							closeInlineStream();
 							closeToolEntry(event);
+							flushPendingSideEntries();
 							break;
 						}
 						case "media": {
 							closeInlineStream();
 							const media = event.media;
-							if (!media) break;
-							const saved = materializeGeneratedMedia(media);
-							appendEntry({
-								kind: "assistant_media",
-								modality: media.modality,
-								mediaType: media.mediaType,
-								byteLength: saved?.byteLength ?? media.sizeBytes ?? 0,
-								location:
-									saved?.path ??
-									(media.source.type === "url"
-										? media.source.url
-										: media.source.type === "artifact"
-											? `artifact:${media.source.artifactId}`
-											: undefined),
-							});
+							if (media) {
+								const saved = materializeGeneratedMedia(media);
+								appendEntry({
+									kind: "assistant_media",
+									modality: media.modality,
+									mediaType: media.mediaType,
+									byteLength: saved?.byteLength ?? media.sizeBytes ?? 0,
+									location:
+										saved?.path ??
+										(media.source.type === "url"
+											? media.source.url
+											: media.source.type === "artifact"
+												? `artifact:${media.source.artifactId}`
+												: undefined),
+								});
+							}
+							flushPendingSideEntries();
 							break;
 						}
 					}
@@ -250,7 +267,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					setIsRunning(false);
 					setIsStreaming(false);
 					closeInlineStream();
-					flushPendingCompactionEntries();
+					flushPendingSideEntries();
 					finalizeDanglingCompactionEntry("cancelled");
 					break;
 				case "error":
@@ -261,17 +278,22 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					// to idle mid-run. Surface them only in verbose mode.
 					if (event.recoverable) {
 						if (verbose) {
-							appendEntry({
+							const errorEntry: ChatEntry = {
 								kind: "error",
 								text: formatCliErrorMessage(event.error, { modelId }),
-							});
+							};
+							if (activeInlineStreamRef.current) {
+								pendingSideEntriesRef.current.push(errorEntry);
+							} else {
+								appendEntry(errorEntry);
+							}
 						}
 						break;
 					}
 					setIsRunning(false);
 					setIsStreaming(false);
 					closeInlineStream();
-					flushPendingCompactionEntries();
+					flushPendingSideEntries();
 					finalizeDanglingCompactionEntry("failed");
 					turnErrorReportedRef.current = true;
 					onTurnErrorReported(true);
@@ -283,16 +305,12 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "notice":
 					if (event.displayRole === "status") {
 						const compaction = parseCompactionNoticeMetadata(event.metadata);
-						if (!compaction) {
-							closeInlineStream();
-						}
 						if (compaction) {
 							if (activeInlineStreamRef.current) {
 								// An assistant message is still streaming; appending now
-								// would split it around the divider. Hold the divider (final
-								// state until the content block closes, then reconcile it
-								// with the same open divider atomically.
-								pendingCompactionEntriesRef.current.push({
+								// would split it around the divider. Hold the divider until
+								// the content block closes, then reconcile it atomically.
+								pendingSideEntriesRef.current.push({
 									kind: "compaction",
 									...compaction,
 								});
@@ -317,7 +335,12 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 						}
 						const label = resolveNonCompactionStatusLabel(event);
 						if (label) {
-							appendEntry({ kind: "status", text: label });
+							const statusEntry: ChatEntry = { kind: "status", text: label };
+							if (activeInlineStreamRef.current) {
+								pendingSideEntriesRef.current.push(statusEntry);
+							} else {
+								appendEntry(statusEntry);
+							}
 						}
 					}
 					break;
@@ -344,15 +367,19 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 			modelId,
 			closeToolEntry,
 			finalizeDanglingCompactionEntry,
-			flushPendingCompactionEntries,
+			flushPendingSideEntries,
 		],
 	);
 
 	const handleTeamEvent = useCallback(
 		(event: TeamEvent) => {
 			const team = (text: string) => {
-				closeInlineStream();
-				appendEntry({ kind: "team", text });
+				const teamEntry: ChatEntry = { kind: "team", text };
+				if (activeInlineStreamRef.current) {
+					pendingSideEntriesRef.current.push(teamEntry);
+				} else {
+					appendEntry(teamEntry);
+				}
 			};
 			switch (event.type) {
 				case "teammate_spawned":
@@ -424,7 +451,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					break;
 			}
 		},
-		[appendEntry, closeInlineStream],
+		[appendEntry, activeInlineStreamRef],
 	);
 
 	const handlePendingPrompts = useCallback((event: PendingPromptSnapshot) => {
@@ -437,12 +464,17 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 			// Display boundary: formatDisplayUserInput strips runtime-generated
 			// notice elements (e.g. mode_notice) that normalizeUserInput must
 			// preserve, since the latter also sanitizes model-bound prompts.
-			appendEntry({
+			const userEntry: ChatEntry = {
 				kind: "user_submitted",
 				text: formatDisplayUserInput(event.prompt),
-			});
+			};
+			if (activeInlineStreamRef.current) {
+				pendingSideEntriesRef.current.push(userEntry);
+			} else {
+				appendEntry(userEntry);
+			}
 		},
-		[appendEntry],
+		[appendEntry, activeInlineStreamRef],
 	);
 
 	return {

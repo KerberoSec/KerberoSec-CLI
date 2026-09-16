@@ -328,4 +328,26 @@ describe("hydrateSessionMessages", () => {
 			},
 		]);
 	});
+
+	it("merges consecutive text blocks into a single assistant_text entry", () => {
+		const messages: MessageWithMetadata[] = [
+			{
+				role: "assistant",
+				content: [
+					{ type: "text", text: "Hello " },
+					{ type: "text", text: "world!" },
+				],
+			},
+		];
+
+		const entries = hydrateSessionMessages(messages);
+		expect(entries).toEqual([
+			{
+				kind: "assistant_text",
+				text: "Hello world!",
+				streaming: false,
+				mode: undefined,
+			},
+		]);
+	});
 });

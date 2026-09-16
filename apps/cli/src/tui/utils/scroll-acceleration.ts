@@ -56,9 +56,9 @@ export class FastScrollAccel implements ScrollAcceleration {
 export const fastScrollAccel = new FastScrollAccel(10);
 
 /**
- * High-speed multiplier for text-selection scrolling (50x baseline).
+ * Calibrated multiplier for text-selection scrolling (10x baseline, reduced by 80% from peak).
  */
-export const SELECTION_AUTO_SCROLL_MULTIPLIER = 50;
+export const SELECTION_AUTO_SCROLL_MULTIPLIER = 10;
 
 /**
  * Active timers managing continuous auto-scroll during selection drag.
@@ -98,8 +98,8 @@ export function startTimerForScrollbox(scrollbox: ScrollBoxRenderable): void {
 		const viewportHeight = sb.viewport?.height ?? sb.height;
 		const maxScrollTop = Math.max(0, (sb.scrollHeight ?? 0) - viewportHeight);
 		const dirY = sb.getAutoScrollDirectionY?.(sb.autoScrollMouseY ?? 0) ?? 0;
-		const speed = sb.cachedAutoScrollSpeed || 3600;
-		const step = Math.max(25, Math.floor(speed * 0.016));
+		const speed = sb.cachedAutoScrollSpeed || 720;
+		const step = Math.max(5, Math.floor(speed * 0.016));
 
 		let scrolled = false;
 		if (dirY > 0 && sb.scrollTop < maxScrollTop) {
@@ -149,7 +149,7 @@ function findEnclosingScrollBox(
 }
 
 /**
- * Configures a ScrollBoxRenderable instance with ultra-fast auto-scroll speeds
+ * Configures a ScrollBoxRenderable instance with calibrated auto-scroll speeds
  * when selecting text and dragging near or outside the container boundaries.
  */
 export function configureFastAutoScroll(
@@ -166,13 +166,13 @@ export function configureFastAutoScroll(
 	sb.autoScrollSpeedMedium = (sb.autoScrollSpeedMedium ?? 36) * multiplier;
 	sb.autoScrollSpeedFast = Math.max(
 		(sb.autoScrollSpeedFast ?? 72) * multiplier,
-		3600,
+		720,
 	);
 }
 
 /**
- * Globally patches ScrollBoxRenderable and CliRenderer prototypes to drastically increase
- * scroll speed when text is selected (both for drag auto-scrolling and wheel scrolling).
+ * Globally patches ScrollBoxRenderable and CliRenderer prototypes to handle
+ * continuous auto-scrolling at calibrated speeds when text is selected.
  */
 export function applyAutoScrollSpeedPatch(): void {
 	if (
@@ -211,21 +211,20 @@ export function applyAutoScrollSpeedPatch(): void {
 			const distToBottom = this.height - relativeY;
 			const distToTop = relativeY;
 
-			// When dragged near or below the bottom border, fly at 3,600+ lines/sec
-			// with progressive overshoot acceleration when pulled further below the terminal
+			// Calibrated rate: 720 lines/sec baseline when pulled near/below terminal border
 			if (distToBottom <= 1) {
 				const overshoot = Math.max(0, -distToBottom);
 				return Math.max(
-					3600,
-					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 250,
+					720,
+					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 50,
 				);
 			}
 
 			if (distToTop <= 1) {
 				const overshoot = Math.max(0, -distToTop);
 				return Math.max(
-					3600,
-					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 250,
+					720,
+					72 * SELECTION_AUTO_SCROLL_MULTIPLIER + overshoot * 50,
 				);
 			}
 
@@ -234,7 +233,7 @@ export function applyAutoScrollSpeedPatch(): void {
 				: ((this as unknown as { autoScrollSpeedFast?: number })
 						.autoScrollSpeedFast ?? 72);
 
-			return Math.max(baseSpeed * SELECTION_AUTO_SCROLL_MULTIPLIER, 1800);
+			return Math.max(baseSpeed * SELECTION_AUTO_SCROLL_MULTIPLIER, 360);
 		};
 
 		ScrollBoxRenderable.prototype.onUpdate = function (
@@ -259,7 +258,7 @@ export function applyAutoScrollSpeedPatch(): void {
 				const distToTop = relativeY;
 
 				// If selection cursor is near or outside the vertical bounds of the scrollbox,
-				// drive auto-scroll at ultra-fast speed
+				// drive auto-scroll at calibrated speed
 				if (distToBottom <= 3 || distToTop <= 3) {
 					this.updateAutoScroll(selection.focus.x, selection.focus.y);
 					startTimerForScrollbox(this);
@@ -297,7 +296,7 @@ export function applyAutoScrollSpeedPatch(): void {
 					const baseDelta = event.scroll?.delta ?? 1;
 					if (dir === "down" || dir === "up") {
 						const extraLines =
-							(dir === "down" ? 1 : -1) * Math.max(1, Math.abs(baseDelta)) * 50;
+							(dir === "down" ? 1 : -1) * Math.max(1, Math.abs(baseDelta)) * 10;
 						this.scrollTop += extraLines;
 						(
 							this as unknown as { syncManualScrollState: () => void }
@@ -408,5 +407,5 @@ export function applyAutoScrollSpeedPatch(): void {
 	}
 }
 
-// Automatically apply auto-scroll ultra-fast patch at load time
+// Automatically apply auto-scroll calibrated patch at load time
 applyAutoScrollSpeedPatch();

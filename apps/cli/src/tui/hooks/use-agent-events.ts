@@ -210,6 +210,13 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 						}
 						case "reasoning":
 							closeInlineStream();
+							if (event.reasoning !== undefined) {
+								updateLastEntry((prev) =>
+									prev.kind === "reasoning"
+										? { ...prev, text: event.reasoning ?? "", streaming: false }
+										: prev,
+								);
+							}
 							break;
 						case "tool": {
 							closeInlineStream();

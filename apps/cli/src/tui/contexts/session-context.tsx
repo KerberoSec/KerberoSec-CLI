@@ -141,6 +141,21 @@ export function SessionProvider(props: {
 	const appendEntry = useCallback((entry: ChatEntry) => {
 		const stamped = entry.mode ? entry : { ...entry, mode: uiModeRef.current };
 		setEntries((prev) => {
+			if (stamped.kind === "reasoning" && prev.length > 0) {
+				const last = prev[prev.length - 1];
+				if (last && last.kind === "reasoning" && last.mode === stamped.mode) {
+					const next = [...prev];
+					const mergedText = [last.text, stamped.text]
+						.filter(Boolean)
+						.join("\n");
+					next[next.length - 1] = {
+						...last,
+						text: mergedText,
+						streaming: stamped.streaming,
+					};
+					return next;
+				}
+			}
 			const next = [...prev, stamped];
 			return next.length <= MAX_BUFFERED_LINES
 				? next
@@ -179,19 +194,20 @@ export function SessionProvider(props: {
 		activeInlineStreamRef.current = undefined;
 		setEntries((prev) => {
 			if (prev.length === 0) return prev;
-			const last = prev[prev.length - 1];
-			if (
-				last &&
-				(last.kind === "assistant_text" ||
-					last.kind === "reasoning" ||
-					last.kind === "tool_call") &&
-				last.streaming
-			) {
-				const next = [...prev];
-				next[next.length - 1] = { ...last, streaming: false } as ChatEntry;
-				return next;
-			}
-			return prev;
+			let changed = false;
+			const next = prev.map((entry) => {
+				if (
+					(entry.kind === "assistant_text" ||
+						entry.kind === "reasoning" ||
+						entry.kind === "tool_call") &&
+					entry.streaming
+				) {
+					changed = true;
+					return { ...entry, streaming: false } as ChatEntry;
+				}
+				return entry;
+			});
+			return changed ? next : prev;
 		});
 	}, []);
 

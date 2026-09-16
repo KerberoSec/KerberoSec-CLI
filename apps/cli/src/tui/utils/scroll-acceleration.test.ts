@@ -1,5 +1,5 @@
-import { describe, expect, it } from "bun:test";
 import { ScrollBoxRenderable } from "@opentui/core";
+import { describe, expect, it } from "vitest";
 import {
 	applyAutoScrollSpeedPatch,
 	configureFastAutoScroll,
@@ -73,7 +73,14 @@ describe("Selection Auto-Scroll Acceleration", () => {
 		};
 
 		// Mouse dragged below container (height = 30, mouseY = 35 -> distToBottom = -5)
-		const speed = ScrollBoxRenderable.prototype.getAutoScrollSpeed.call(
+		const sbProto = ScrollBoxRenderable.prototype as unknown as {
+			getAutoScrollSpeed: (
+				this: ScrollBoxRenderable,
+				x: number,
+				y: number,
+			) => number;
+		};
+		const speed = sbProto.getAutoScrollSpeed.call(
 			mockCtx as unknown as ScrollBoxRenderable,
 			10,
 			35,

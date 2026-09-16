@@ -141,12 +141,19 @@ export function hydrateSessionMessages(
 			}
 
 			if (block.type === "thinking") {
-				entries.push({
-					kind: "reasoning",
-					text: block.thinking,
-					streaming: false,
-					mode,
-				});
+				const last = entries[entries.length - 1];
+				if (last && last.kind === "reasoning" && last.mode === mode) {
+					last.text = last.text
+						? `${last.text}\n${block.thinking}`
+						: block.thinking;
+				} else {
+					entries.push({
+						kind: "reasoning",
+						text: block.thinking,
+						streaming: false,
+						mode,
+					});
+				}
 				continue;
 			}
 

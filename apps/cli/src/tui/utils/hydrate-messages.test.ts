@@ -299,4 +299,33 @@ describe("hydrateSessionMessages", () => {
 			},
 		});
 	});
+
+	it("merges consecutive thinking blocks into a single reasoning entry", () => {
+		const messages: MessageWithMetadata[] = [
+			{
+				role: "assistant",
+				content: [
+					{ type: "thinking", thinking: "first thought" },
+					{ type: "thinking", thinking: "second thought" },
+					{ type: "text", text: "Final answer." },
+				],
+			},
+		];
+
+		const entries = hydrateSessionMessages(messages);
+		expect(entries).toEqual([
+			{
+				kind: "reasoning",
+				text: "first thought\nsecond thought",
+				streaming: false,
+				mode: undefined,
+			},
+			{
+				kind: "assistant_text",
+				text: "Final answer.",
+				streaming: false,
+				mode: undefined,
+			},
+		]);
+	});
 });

@@ -182,25 +182,43 @@ export function configureFastAutoScroll(
 	);
 }
 
+type ScrollBoxWithInternals = {
+	__autoScroll10xPatched?: boolean;
+	y: number;
+	height: number;
+	scrollTop: number;
+	autoScrollMouseX: number;
+	autoScrollMouseY: number;
+	cachedAutoScrollSpeed: number;
+	isAutoScrolling: boolean;
+	_activeTimerAutoScrolling?: boolean;
+	updateAutoScroll: (x: number, y: number) => void;
+	getAutoScrollSpeed: (x: number, y: number) => number;
+	startAutoScroll: (x: number, y: number) => void;
+	stopAutoScroll: () => void;
+	onUpdate?: (dt: number) => void;
+	onMouseEvent?: (event: MouseEvent) => void;
+};
+
+type CliRendererWithInternals = {
+	__selectionDragPatched?: boolean;
+	finishSelection: () => void;
+};
+
 /**
  * Globally patches ScrollBoxRenderable and CliRenderer prototypes to handle
  * continuous auto-scrolling at calibrated speeds when text is selected.
  */
 export function applyAutoScrollSpeedPatch(): void {
-	if (
-		ScrollBoxRenderable?.prototype &&
-		!(ScrollBoxRenderable.prototype as Record<string, unknown>)
-			.__autoScroll10xPatched
-	) {
-		(
-			ScrollBoxRenderable.prototype as Record<string, unknown>
-		).__autoScroll10xPatched = true;
-		const origGetAutoScrollSpeed =
-			ScrollBoxRenderable.prototype.getAutoScrollSpeed;
+	const sbProto =
+		ScrollBoxRenderable.prototype as unknown as ScrollBoxWithInternals;
+	if (ScrollBoxRenderable?.prototype && !sbProto.__autoScroll10xPatched) {
+		sbProto.__autoScroll10xPatched = true;
+		const origGetAutoScrollSpeed = sbProto.getAutoScrollSpeed;
 		const origStartAutoScroll = ScrollBoxRenderable.prototype.startAutoScroll;
 		const origStopAutoScroll = ScrollBoxRenderable.prototype.stopAutoScroll;
-		const origOnUpdate = ScrollBoxRenderable.prototype.onUpdate;
-		const origOnMouseEvent = ScrollBoxRenderable.prototype.onMouseEvent;
+		const origOnUpdate = sbProto.onUpdate;
+		const origOnMouseEvent = sbProto.onMouseEvent;
 
 		ScrollBoxRenderable.prototype.startAutoScroll = function (
 			mouseX: number,
@@ -215,7 +233,7 @@ export function applyAutoScrollSpeedPatch(): void {
 			origStopAutoScroll.call(this);
 		};
 
-		ScrollBoxRenderable.prototype.getAutoScrollSpeed = function (
+		sbProto.getAutoScrollSpeed = function (
 			mouseX: number,
 			mouseY: number,
 		): number {
@@ -248,9 +266,7 @@ export function applyAutoScrollSpeedPatch(): void {
 			return Math.max(baseSpeed * SELECTION_AUTO_SCROLL_MULTIPLIER, 103.275);
 		};
 
-		ScrollBoxRenderable.prototype.onUpdate = function (
-			deltaTime: number,
-		): void {
+		sbProto.onUpdate = function (deltaTime: number): void {
 			const ctx = (
 				this as unknown as {
 					_ctx?: {
@@ -273,7 +289,7 @@ export function applyAutoScrollSpeedPatch(): void {
 				// drive auto-scroll at calibrated speed
 				if (distToBottom <= 3 || distToTop <= 3) {
 					this.updateAutoScroll(selection.focus.x, selection.focus.y);
-					startTimerForScrollbox(this);
+					startTimerForScrollbox(this as unknown as ScrollBoxRenderable);
 				}
 			}
 
@@ -286,9 +302,7 @@ export function applyAutoScrollSpeedPatch(): void {
 			}
 		};
 
-		ScrollBoxRenderable.prototype.onMouseEvent = function (
-			event: MouseEvent,
-		): void {
+		sbProto.onMouseEvent = function (event: MouseEvent): void {
 			// When text is selected and user scrolls wheel or trackpad, boost scroll velocity
 			if (event.type === "scroll") {
 				const ctx = (
@@ -318,21 +332,20 @@ export function applyAutoScrollSpeedPatch(): void {
 				}
 			}
 
-			origOnMouseEvent.call(this, event);
+			origOnMouseEvent?.call(this, event);
 		};
 	}
 
 	// Also patch CliRenderer to drive selection drag auto-scroll even when the cursor is outside the scrollbox
-	if (
-		CliRenderer?.prototype &&
-		!(CliRenderer.prototype as Record<string, unknown>).__selectionDragPatched
-	) {
-		(CliRenderer.prototype as Record<string, unknown>).__selectionDragPatched =
-			true;
+	const cliProto = CliRenderer?.prototype as unknown as
+		| CliRendererWithInternals
+		| undefined;
+	if (cliProto && !cliProto.__selectionDragPatched) {
+		cliProto.__selectionDragPatched = true;
 
 		const origStartSelection = CliRenderer.prototype.startSelection;
 		const origUpdateSelection = CliRenderer.prototype.updateSelection;
-		const origFinishSelection = CliRenderer.prototype.finishSelection;
+		const origFinishSelection = cliProto.finishSelection;
 		const origClearSelection = CliRenderer.prototype.clearSelection;
 
 		CliRenderer.prototype.startSelection = function (
@@ -376,13 +389,12 @@ export function applyAutoScrollSpeedPatch(): void {
 				const distToTop = relativeY;
 
 				if (distToBottom <= 3 || distToTop <= 3) {
-					scrollbox.autoScrollMouseX = x;
-					scrollbox.autoScrollMouseY = y;
-					scrollbox.cachedAutoScrollSpeed = scrollbox.getAutoScrollSpeed(x, y);
-					scrollbox.isAutoScrolling = true;
-					(
-						scrollbox as unknown as { _activeTimerAutoScrolling?: boolean }
-					)._activeTimerAutoScrolling = true;
+					const sb = scrollbox as unknown as ScrollBoxWithInternals;
+					sb.autoScrollMouseX = x;
+					sb.autoScrollMouseY = y;
+					sb.cachedAutoScrollSpeed = sb.getAutoScrollSpeed(x, y);
+					sb.isAutoScrolling = true;
+					sb._activeTimerAutoScrolling = true;
 					startTimerForScrollbox(scrollbox);
 				} else {
 					stopTimerForScrollbox(scrollbox);
@@ -391,7 +403,7 @@ export function applyAutoScrollSpeedPatch(): void {
 			}
 		};
 
-		CliRenderer.prototype.finishSelection = function (): void {
+		cliProto.finishSelection = function (): void {
 			const state = this as unknown as {
 				_activeSelectionScrollBox?: ScrollBoxRenderable | null;
 			};

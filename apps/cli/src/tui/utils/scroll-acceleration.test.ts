@@ -37,7 +37,7 @@ describe("FastScrollAccel", () => {
 
 describe("Selection Auto-Scroll Acceleration", () => {
 	it("should define a calibrated selection auto-scroll multiplier", () => {
-		expect(SELECTION_AUTO_SCROLL_MULTIPLIER).toBe(5);
+		expect(SELECTION_AUTO_SCROLL_MULTIPLIER).toBe(2.5);
 	});
 
 	it("configureFastAutoScroll should scale instance autoScroll speeds to calibrated levels", () => {
@@ -54,12 +54,12 @@ describe("Selection Auto-Scroll Acceleration", () => {
 			autoScrollSpeedMedium: number;
 			autoScrollSpeedFast: number;
 		};
-		expect(sb.autoScrollSpeedSlow).toBe(30);
-		expect(sb.autoScrollSpeedMedium).toBe(180);
-		expect(sb.autoScrollSpeedFast).toBeGreaterThanOrEqual(360);
+		expect(sb.autoScrollSpeedSlow).toBe(15);
+		expect(sb.autoScrollSpeedMedium).toBe(90);
+		expect(sb.autoScrollSpeedFast).toBeGreaterThanOrEqual(180);
 	});
 
-	it("getAutoScrollSpeed should scale by at least 360 when dragging below container", () => {
+	it("getAutoScrollSpeed should scale by at least 180 when dragging below container", () => {
 		applyAutoScrollSpeedPatch();
 
 		const mockCtx = {
@@ -79,7 +79,7 @@ describe("Selection Auto-Scroll Acceleration", () => {
 			35,
 		);
 
-		// Calibrated auto-scroll should be >= 360
-		expect(speed).toBeGreaterThanOrEqual(360);
+		// Calibrated auto-scroll should be >= 180
+		expect(speed).toBeGreaterThanOrEqual(180);
 	});
 });

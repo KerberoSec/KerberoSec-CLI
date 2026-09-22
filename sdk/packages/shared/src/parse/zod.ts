@@ -5,6 +5,7 @@
  */
 
 import { z } from "zod";
+import { sanitizeToolInputSchema } from "./json-schema";
 
 /**
  * Validate input using a Zod schema
@@ -18,15 +19,17 @@ export function validateWithZod<T>(schema: z.ZodType<T>, input: unknown): T {
 	return result.data;
 }
 
+/**
+ * Convert a Zod schema into a provider-safe JSON Schema.
+ *
+ * `z.toJSONSchema()` omits `required` for objects whose properties are all
+ * optional, and stamps the output with a draft-2020-12 `$schema` meta-key.
+ * Strict providers reject the missing `required` ("null is not of type
+ * \"array\"") and do not need the meta-key, so the result is deep-normalized at
+ * every depth before it becomes a tool's `inputSchema`.
+ */
 export function zodToJsonSchema(schema: z.ZodTypeAny): Record<string, unknown> {
-	const json = z.toJSONSchema(schema) as Record<string, unknown>;
-	if (json && typeof json === "object" && json.type === "object") {
-		if (!json.properties || typeof json.properties !== "object") {
-			json.properties = {};
-		}
-		if (!Array.isArray(json.required)) {
-			json.required = [];
-		}
-	}
-	return json;
+	return sanitizeToolInputSchema(
+		z.toJSONSchema(schema) as Record<string, unknown>,
+	);
 }

@@ -1,14 +1,20 @@
 import { z } from "zod";
 import type { AgentTool, AgentToolContext } from "../agent";
+import { sanitizeToolInputSchema } from "../parse/json-schema";
 import { zodToJsonSchema } from "../parse/zod";
 
-function normalizeToolInputSchema(
+/**
+ * Resolve the top-level shape of a hand-written tool input schema.
+ *
+ * Object-shaped schemas are made explicit (`type: "object"`) while unions are
+ * rejected loudly: a tool whose top-level schema can be a string or array is not
+ * a valid tool `parameters` value for any major provider, and failing at
+ * registration surfaces the bug immediately instead of at inference time.
+ */
+function resolveToolInputSchemaShape(
 	inputSchema: Record<string, unknown>,
 ): Record<string, unknown> {
-	// Zod v4's z.toJSONSchema() always emits a "$schema" meta-key that is not
-	// needed in LLM tool definitions and can confuse strict validators.
-	// Strip it here so all downstream consumers get a clean schema.
-	const { $schema: _ignored, ...schema } = inputSchema;
+	const schema = inputSchema;
 
 	if (typeof schema.type === "string") {
 		return schema;
@@ -111,10 +117,12 @@ export function createTool<TInput, TOutput>(config: {
 	retryable?: boolean;
 	maxRetries?: number;
 }): AgentTool<TInput, TOutput> {
-	const inputSchema = normalizeToolInputSchema(
-		config.inputSchema instanceof z.ZodType
-			? zodToJsonSchema(config.inputSchema)
-			: config.inputSchema,
+	const inputSchema = sanitizeToolInputSchema(
+		resolveToolInputSchemaShape(
+			config.inputSchema instanceof z.ZodType
+				? zodToJsonSchema(config.inputSchema)
+				: config.inputSchema,
+		),
 	);
 
 	return {

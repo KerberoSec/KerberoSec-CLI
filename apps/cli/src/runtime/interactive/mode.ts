@@ -41,6 +41,7 @@ export function createInteractiveModeSwitchTool(input: {
 		inputSchema: {
 			type: "object",
 			properties: {},
+			required: [],
 		},
 		timeoutMs: 5000,
 		retryable: false,

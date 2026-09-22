@@ -128,10 +128,17 @@ describe("createTool", () => {
 			execute: async () => ({ ok: true }),
 		});
 
+		// Branches that own their `properties` are normalized so strict
+		// providers see `required` as an array; the composition itself is not
+		// flattened.
 		expect(tool.inputSchema).toEqual({
 			type: "object",
 			allOf: [
-				{ type: "object", properties: { commands: { type: "array" } } },
+				{
+					type: "object",
+					properties: { commands: { type: "array", items: {} } },
+					required: [],
+				},
 				{ required: ["commands"] },
 			],
 		});
@@ -154,14 +161,38 @@ describe("createTool", () => {
 			execute: async () => ({ ok: true }),
 		});
 
+		// A branch that only declares constraints keeps them; it does not gain an
+		// empty `properties`/`required` pair that would contradict them.
 		expect(tool.inputSchema).toEqual({
 			type: "object",
 			allOf: [
-				{ type: "object" },
+				{ type: "object", properties: {}, required: [] },
 				{ required: ["commands"] },
 				{ required: ["foo", "commands"] },
 			],
 		});
+	});
+
+	it("normalizes nested object schemas that have no required properties", () => {
+		// Providers reject requests whose tool schema lacks `required` on any
+		// object node ("null is not of type \"array\""), including nested ones.
+		const tool = createTool({
+			name: "nested_optional_tool",
+			description: "Tool with a nested all-optional object",
+			inputSchema: z.object({
+				options: z.object({ verbose: z.boolean().optional() }),
+			}),
+			execute: async () => ({ ok: true }),
+		});
+
+		const properties = tool.inputSchema.properties as Record<
+			string,
+			Record<string, unknown>
+		>;
+		expect(tool.inputSchema).not.toHaveProperty("$schema");
+		expect(tool.inputSchema.required).toEqual(["options"]);
+		expect(properties.options.required).toEqual([]);
+		expect(properties.options).toHaveProperty("properties");
 	});
 
 	it("throws when allOf has no branch with type:object", () => {

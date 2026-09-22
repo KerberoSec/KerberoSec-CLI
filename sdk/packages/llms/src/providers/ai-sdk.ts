@@ -25,6 +25,7 @@ import {
 	generatedMediaModalityFromMediaType,
 	modelProducesImages,
 	modelSupportsToolCalling,
+	normalizeProviderToolInputSchema,
 	parseJsonStream,
 	sanitizeSurrogates,
 	usesImageGenerationOperation,
@@ -900,20 +901,13 @@ export async function repairMalformedToolCall<T extends RepairableToolCall>({
 function normalizeAiSdkToolInputSchema(
 	inputSchema: Record<string, unknown>,
 ): Record<string, unknown> {
-	const schema =
-		inputSchema.type === "object"
-			? inputSchema
-			: { type: "object", ...inputSchema };
-
-	// Some OpenAI-compatible providers (e.g. DeepSeek) require `required`
-	// to be an array even when empty. Zod's `z.toJSONSchema()` omits it
-	// entirely for objects with no required properties, which those
-	// providers interpret as `null` → "null is not of type 'array'".
-	if (!Array.isArray(schema.required)) {
-		schema.required = schema.required ?? [];
-	}
-
-	return schema;
+	// Some OpenAI-compatible providers (e.g. DeepSeek, AgentRouter's routing to
+	// a strict validator) require `required` to be an array on every object
+	// schema and reject the request with "null is not of type \"array\"" when it
+	// is absent. Zod's `z.toJSONSchema()` omits it for objects with no required
+	// properties, so the whole schema is deep-normalized here -- the last point
+	// before it becomes a provider tool definition.
+	return normalizeProviderToolInputSchema(inputSchema);
 }
 
 function providerDisablesExternalToolExecution(

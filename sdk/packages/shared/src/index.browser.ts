@@ -261,6 +261,10 @@ export {
 	safeJsonParse,
 	safeJsonStringify,
 } from "./parse/json";
+export {
+	normalizeProviderToolInputSchema,
+	sanitizeToolInputSchema,
+} from "./parse/json-schema";
 export { decodeJwtPayload } from "./parse/jwt";
 export { type OmitUndefinedValues, omitUndefinedValues } from "./parse/object";
 export {

@@ -179,6 +179,55 @@ describe("sanitizeToolInputSchema", () => {
 		).toEqual({});
 	});
 
+	it("drops null values on array keywords but keeps const and default null", () => {
+		// `enum: null` / `examples: null` are array keywords holding null, i.e.
+		// exactly the "null is not of type \"array\"" rejection. `const: null`
+		// and `default: null` are legitimate and must survive.
+		const sanitized = sanitizeToolInputSchema({
+			type: "object",
+			properties: {
+				a: { type: "string", enum: null as unknown as string[] },
+				b: { type: "string", examples: null as unknown as string[] },
+				c: { type: "string", const: null as unknown as string },
+				d: { type: "string", default: null as unknown as string },
+			},
+			required: [],
+		});
+
+		const properties = sanitized.properties as Record<
+			string,
+			Record<string, unknown>
+		>;
+		expect(properties.a).not.toHaveProperty("enum");
+		expect(properties.b).not.toHaveProperty("examples");
+		expect(properties.c).toHaveProperty("const");
+		expect(properties.c.const).toBeNull();
+		expect(properties.d).toHaveProperty("default");
+		expect(properties.d.default).toBeNull();
+	});
+
+	it("replaces null subschemas with an empty schema", () => {
+		// A null where a subschema belongs (broken MCP/plugin schemas do this)
+		// would reach the provider as "null is not of type \"object\"".
+		const sanitized = sanitizeToolInputSchema({
+			type: "object",
+			properties: {
+				broken: null as unknown as Record<string, unknown>,
+				list: { type: "array", items: [null] },
+				choice: { anyOf: [null, { type: "string" }] },
+			},
+			required: [],
+		});
+
+		const properties = sanitized.properties as Record<
+			string,
+			Record<string, unknown>
+		>;
+		expect(properties.broken).toEqual({});
+		expect((properties.list.items as unknown[])[0]).toEqual({});
+		expect((properties.choice.anyOf as unknown[])[0]).toEqual({});
+	});
+
 	it("never mutates the caller's schema", () => {
 		const original = { type: "object", properties: { a: { type: "string" } } };
 		const snapshot = structuredClone(original);

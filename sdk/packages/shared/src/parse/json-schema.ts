@@ -21,7 +21,9 @@
  *   - an empty `required: []` is preserved, never dropped: `[]` means "no
  *     required properties" while a missing key means `null` to strict validators
  *   - `$schema` meta-keys are stripped (LLM tool APIs do not need them)
- *   - `null` keyword values and `null` branch types are dropped
+ *   - `null` keyword values are dropped, and a `null` subschema (e.g. a broken
+ *     `properties` entry from an MCP server) becomes an empty schema `{}` so no
+ *     keyword can end up `null` where a provider expects an object or array
  *   - arrays always carry `items`
  *
  * `normalizeProviderToolInputSchema()` additionally guarantees the root is a
@@ -76,14 +78,28 @@ const COMPOSITION_KEYS = [
 	"$ref",
 ] as const;
 
-/** Keywords where `null` is a legitimate value rather than a broken schema. */
-const NULL_TOLERANT_KEYS = new Set(["enum", "const", "default", "examples"]);
+/**
+ * Keywords where `null` is a legitimate value: `const: null` constrains the
+ * instance to null and `default: null` is an annotation.
+ *
+ * `enum` and `examples` are deliberately absent: both are array keywords, so a
+ * null there is precisely the "null is not of type \"array\"" rejection we are
+ * removing. They are dropped instead of forwarded.
+ */
+const NULL_TOLERANT_KEYS = new Set(["const", "default"]);
 
 function isPlainObject(value: unknown): value is Record<string, unknown> {
 	return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
 function sanitizeSchemaValue(value: unknown): unknown {
+	if (value === null) {
+		// A null where a subschema is expected (`properties: {a: null}`,
+		// `items: [null]`, a null branch) would reach the provider as
+		// `null is not of type "object"`. An empty schema keeps the shape
+		// valid while constraining nothing, which matches what null meant here.
+		return {};
+	}
 	if (Array.isArray(value)) {
 		return value.map((entry) => sanitizeSchemaValue(entry));
 	}
@@ -202,6 +218,9 @@ function emptyObjectSchema(): Record<string, unknown> {
 export function sanitizeToolInputSchema(
 	schema: Record<string, unknown> | null | undefined,
 ): Record<string, unknown> {
+	if (schema === null || schema === undefined) {
+		return emptyObjectSchema();
+	}
 	const sanitized = sanitizeSchemaValue(schema);
 	return isPlainObject(sanitized) ? sanitized : emptyObjectSchema();
 }

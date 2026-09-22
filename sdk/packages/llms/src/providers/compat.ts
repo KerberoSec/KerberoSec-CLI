@@ -410,11 +410,25 @@ export function toGatewayRequestMessages(
 function toGatewayTools(
 	tools: ToolDefinition[] | undefined,
 ): GatewayStreamRequest["tools"] {
-	return tools?.map((tool) => ({
-		name: tool.name,
-		description: tool.description,
-		inputSchema: tool.inputSchema,
-	}));
+	return tools?.map((tool) => {
+		const schema = (tool.inputSchema ?? { type: "object" }) as Record<
+			string,
+			unknown
+		>;
+		const normalized: Record<string, unknown> =
+			schema.type === "object" ? { ...schema } : { type: "object", ...schema };
+		if (!normalized.properties || typeof normalized.properties !== "object") {
+			normalized.properties = {};
+		}
+		if (!Array.isArray(normalized.required)) {
+			normalized.required = [];
+		}
+		return {
+			name: tool.name,
+			description: tool.description,
+			inputSchema: normalized,
+		};
+	});
 }
 
 function buildGatewayRequest(

@@ -19,5 +19,14 @@ export function validateWithZod<T>(schema: z.ZodType<T>, input: unknown): T {
 }
 
 export function zodToJsonSchema(schema: z.ZodTypeAny): Record<string, unknown> {
-	return z.toJSONSchema(schema);
+	const json = z.toJSONSchema(schema) as Record<string, unknown>;
+	if (json && typeof json === "object" && json.type === "object") {
+		if (!json.properties || typeof json.properties !== "object") {
+			json.properties = {};
+		}
+		if (!Array.isArray(json.required)) {
+			json.required = [];
+		}
+	}
+	return json;
 }

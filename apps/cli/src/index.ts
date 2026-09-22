@@ -100,6 +100,19 @@ if (!isMainThread) {
 			promise.catch(() => {});
 			return;
 		}
+		// Validation errors (e.g. ZodError from an empty provider after
+		// logout or token expiry) are recoverable — log them but do not
+		// kill the process so the interactive session stays alive.
+		if (
+			reason != null &&
+			typeof reason === "object" &&
+			"name" in reason &&
+			(reason as { name?: string }).name === "ZodError"
+		) {
+			logCliProcessError("unhandledRejection", reason);
+			promise.catch(() => {});
+			return;
+		}
 		handleFatalProcessError("unhandledRejection", reason);
 	});
 

@@ -307,7 +307,12 @@ function App(props: TuiProps) {
 		props.config.providerId = "";
 		session.clearEntries();
 		session.setHasSubmitted(false);
-		await props.onAccountChange?.();
+		try {
+			await props.onAccountChange?.();
+		} catch {
+			// Session restart may fail after logout (provider is now empty);
+			// swallow since we are navigating to the onboarding screen.
+		}
 		showToast("Logged out successfully", "success");
 		setAppView("onboarding");
 	}, [props.config, props.onAccountChange, session, showToast]);

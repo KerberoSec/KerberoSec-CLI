@@ -669,7 +669,10 @@ export function createInteractiveSessionRuntime(input: {
 		}
 		const messages = await loadInteractiveResumeMessages(manager, sessionId);
 		if (!messages || messages.length === 0) {
-			throw new Error(`Session ${sessionId} has no messages to resume.`);
+			// Empty session — start fresh instead of crashing.
+			await stopCurrentSession();
+			await startFreshSession([]);
+			return [];
 		}
 		await stopCurrentSession();
 		await startResumedSession(sessionId, messages);

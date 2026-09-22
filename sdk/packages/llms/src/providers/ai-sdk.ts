@@ -900,14 +900,20 @@ export async function repairMalformedToolCall<T extends RepairableToolCall>({
 function normalizeAiSdkToolInputSchema(
 	inputSchema: Record<string, unknown>,
 ): Record<string, unknown> {
-	if (inputSchema.type === "object") {
-		return inputSchema;
+	const schema =
+		inputSchema.type === "object"
+			? inputSchema
+			: { type: "object", ...inputSchema };
+
+	// Some OpenAI-compatible providers (e.g. DeepSeek) require `required`
+	// to be an array even when empty. Zod's `z.toJSONSchema()` omits it
+	// entirely for objects with no required properties, which those
+	// providers interpret as `null` → "null is not of type 'array'".
+	if (!Array.isArray(schema.required)) {
+		schema.required = schema.required ?? [];
 	}
 
-	return {
-		type: "object",
-		...inputSchema,
-	};
+	return schema;
 }
 
 function providerDisablesExternalToolExecution(

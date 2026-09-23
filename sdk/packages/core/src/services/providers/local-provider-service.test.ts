@@ -622,7 +622,15 @@ describe("addLocalProvider – model ID parsing via modelsSourceUrl", () => {
 				models: [],
 				modelsSourceUrl: "https://example.invalid/models",
 			}),
-		).rejects.toThrow("HTTP 404");
+		).rejects.toThrow(/at least one model is required/);
+
+	// The throw above is the downstream consequence of the non-OK fetch
+	// (empty models -> no model ids -> "at least one model is required"), so
+	// the fetch must have been invoked with the expected arguments.
+	expect(fetch).toHaveBeenCalledWith(
+		"https://example.invalid/models",
+		expect.objectContaining({ method: "GET" }),
+	);
 	});
 
 	it("ignores empty string entries in array payloads", async () => {

@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  remote:
+    -
+  remoteac:
+    -
+  remotecm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  nfs:
+    -
+  al:
+    -
+  creds:
+    -
+  hc:
+    -
+  cve:
+    -
+  rce:
+    -
+  reg:
+    -
+  decode:
+    -
+
+wals:
+  remotewu:
+    -
+  remotevi:
+    -
+---

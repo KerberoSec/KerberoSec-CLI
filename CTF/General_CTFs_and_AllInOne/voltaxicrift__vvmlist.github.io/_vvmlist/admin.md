@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  admin:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  creds:
+    -
+
+wals:
+  adminwu:
+    -
+---

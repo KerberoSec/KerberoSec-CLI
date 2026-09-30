@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  leet:
+    -
+  leetac:
+    -
+  leetcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  bf:
+    -
+  rce:
+    -
+  logical:
+    -
+  sudo:
+    -
+  creds:
+    -
+
+wals:
+  leetwu:
+    -
+---

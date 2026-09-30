@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  zurrak:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  jwt:
+    -
+  hc:
+    -
+  steg:
+    -
+  rev:
+    -
+  decode:
+    -
+  mbck:
+    -
+  sql:
+    -
+  rce:
+    -
+  magsh:
+    -
+
+wals:
+  zurrakwu:
+    -
+---

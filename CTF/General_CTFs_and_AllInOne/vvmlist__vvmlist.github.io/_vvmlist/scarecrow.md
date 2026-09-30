@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  scarecrow:
+    -
+  scarecrowac:
+    -
+  scarecrowcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  ci:
+    -
+  rce:
+    -
+  steg:
+    -
+  hc:
+    -
+  creds:
+    -
+  cron:
+    -
+  pspy:
+    -
+  rwp:
+    -
+
+wals:
+  scarecrowwu:
+    -
+---

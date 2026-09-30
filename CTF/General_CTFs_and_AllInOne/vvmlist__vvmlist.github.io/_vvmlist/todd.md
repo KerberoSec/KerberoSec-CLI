@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  todd:
+    -
+  toddac:
+    -
+  toddcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  ssh:
+    -
+  ci:
+    -
+  sudo:
+    -
+
+wals:
+  toddwu:
+    -
+---

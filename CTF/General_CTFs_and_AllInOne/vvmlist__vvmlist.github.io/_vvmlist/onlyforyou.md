@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  onlyforyou:
+    -
+  onlyforyouac:
+    -
+  onlyforyoucm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  source:
+    -
+  pathtr:
+    -
+  ci:
+    -
+  tunnel:
+    -
+  cyj:
+    -
+  hc:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  onlyforyouwu:
+    -
+  onlyforyouvi:
+    -
+---

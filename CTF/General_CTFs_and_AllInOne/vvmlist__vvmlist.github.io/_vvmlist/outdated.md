@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  outdated:
+    -
+  outdatedac:
+    -
+  outdatedcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  cve:
+    -
+  groups:
+    -
+  bhakc:
+    -
+  wsus:
+    -
+  be:
+    -
+
+wals:
+  outdatedwu:
+    -
+  outdatedvi:
+    -
+---

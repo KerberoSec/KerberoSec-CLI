@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  sahu:
+    -
+  sahuac:
+    -
+  sahucm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  creds:
+    -
+  hc:
+    -
+  smb:
+    -
+  rwp:
+    -
+
+wals:
+  sahuwu:
+    -
+---

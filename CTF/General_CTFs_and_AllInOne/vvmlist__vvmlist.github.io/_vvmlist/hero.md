@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hero:
+    -
+  heroac:
+    -
+  herocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  logical:
+    -
+  rce:
+    -
+  ssh:
+    -
+
+wals:
+  herowu:
+    -
+---

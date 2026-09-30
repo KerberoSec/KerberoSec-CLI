@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ouija:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  source:
+    -
+  pathtr:
+    -
+  api:
+    -
+  hle:
+    -
+  tunnel:
+    -
+  logical:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  ouijawu:
+    -
+  ouijavi:
+    -
+---

@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  friendly3:
+    -
+  friendly3ac:
+    -
+  friendly3cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+  cron:
+    -
+
+wals:
+  friendly3wu:
+    -
+---

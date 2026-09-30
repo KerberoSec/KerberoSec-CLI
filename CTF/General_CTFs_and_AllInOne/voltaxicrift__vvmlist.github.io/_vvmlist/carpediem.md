@@ -1,0 +1,54 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  carpediem:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  hfm:
+    -
+  rce:
+    -
+  bre:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  logical:
+    -
+  api:
+    -
+  creds:
+    -
+  voip:
+    -
+  cap:
+    -
+  sniff:
+    -
+  cve:
+    -
+  cron:
+    -
+  kern:
+    -
+
+wals:
+  carpediemwu:
+    -
+  carpediemvi:
+    -
+---

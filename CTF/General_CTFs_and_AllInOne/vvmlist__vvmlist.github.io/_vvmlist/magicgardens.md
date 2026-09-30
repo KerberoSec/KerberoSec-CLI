@@ -1,0 +1,54 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  magicgardens:
+    -
+  magicgardensac:
+    -
+  magicgardenscm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  xss:
+    -
+  coot:
+    -
+  hc:
+    -
+  ssh:
+    -
+  rev:
+    -
+  bof:
+    -
+  decode:
+    -
+  ser:
+    -
+  docker:
+    -
+  kernmod:
+    -
+  bre:
+    -
+
+wals:
+  magicgardenswu:
+    -
+  magicgardensvi:
+    -
+---

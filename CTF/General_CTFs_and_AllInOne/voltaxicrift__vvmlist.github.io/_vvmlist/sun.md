@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  sun:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  bf:
+    -
+  smb:
+    -
+  rce:
+    -
+  creds:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  sunwu:
+    -
+---

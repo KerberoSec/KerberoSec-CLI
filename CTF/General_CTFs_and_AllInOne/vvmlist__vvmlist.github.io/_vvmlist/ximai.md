@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  ximai:
+    -
+  ximaiac:
+    -
+  ximaicm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  creds:
+    -
+  rbash:
+    -
+  sudo:
+    -
+
+wals:
+  ximaiwu:
+    -
+---

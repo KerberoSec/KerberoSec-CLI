@@ -1,0 +1,52 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  era:
+    -
+  eraac:
+    -
+  eracm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  idor:
+    -
+  source:
+    -
+  sql:
+    -
+  hc:
+    -
+  ftp:
+    -
+  rce:
+    -
+  ssrf:
+    -
+  groups:
+    -
+  pspy:
+    -
+  cron:
+    -
+  logical:
+    -
+
+wals:
+  erawu:
+    -
+  eravi:
+    -
+---

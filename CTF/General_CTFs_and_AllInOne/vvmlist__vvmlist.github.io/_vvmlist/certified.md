@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  certified:
+    -
+  certifiedac:
+    -
+  certifiedcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  bhwo:
+    -
+  bhgw:
+    -
+  bhga:
+    -
+  bhsc:
+    -
+  adcs:
+    -
+
+wals:
+  certifiedwu:
+    -
+  certifiedvi:
+    -
+---

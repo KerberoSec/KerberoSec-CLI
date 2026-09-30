@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  overflow:
+    -
+  overflowac:
+    -
+  overflowcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  pado:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+  creds:
+    -
+  cron:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  overflowwu:
+    -
+  overflowvi:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  printer:
+    -
+  printerac:
+    -
+  printercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  nfs:
+    -
+  logical:
+    -
+  creds:
+    -
+  cron:
+    -
+
+wals:
+  printerwu:
+    -
+---

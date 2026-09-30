@@ -1,0 +1,26 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  eternal:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  cve:
+    -
+  kern:
+    -
+
+wals:
+  eternalwu:
+    -
+---

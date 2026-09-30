@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  symfonos:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  wp:
+    -
+  cve:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  symfonoswu:
+    -
+---

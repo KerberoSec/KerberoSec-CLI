@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ten:
+    -
+  tenac:
+    -
+  tencm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ftp:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+  newj:
+    -
+  source:
+    -
+  logical:
+    -
+
+wals:
+  tenwu:
+    -
+---

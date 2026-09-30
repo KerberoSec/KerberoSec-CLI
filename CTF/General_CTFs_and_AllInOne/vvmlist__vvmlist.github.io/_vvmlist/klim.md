@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  klim:
+    -
+  klimac:
+    -
+  klimcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  steg:
+    -
+  bf:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+  ssh:
+    -
+
+wals:
+  klimwu:
+    -
+---

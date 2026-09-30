@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  encoding:
+    -
+  encodingac:
+    -
+  encodingcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  pathtr:
+    -
+  git:
+    -
+  ssrf:
+    -
+  lfi:
+    -
+  rce:
+    -
+  fj:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  encodingwu:
+    -
+  encodingvi:
+    -
+---

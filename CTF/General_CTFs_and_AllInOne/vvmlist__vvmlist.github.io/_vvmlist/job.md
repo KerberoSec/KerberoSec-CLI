@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  job:
+    -
+  jobac:
+    -
+  jobcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  phish:
+    -
+  tsi:
+    -
+
+wals:
+  jobwu:
+    -
+  jobvi:
+    -
+---

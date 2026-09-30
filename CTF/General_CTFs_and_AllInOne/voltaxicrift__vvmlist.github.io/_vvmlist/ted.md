@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  ted:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  tedwu:
+    -
+---

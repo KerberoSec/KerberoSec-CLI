@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  curling:
+    -
+  curlingac:
+    -
+  curlingcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  curlingwu:
+    -
+  curlingvi:
+    -
+---

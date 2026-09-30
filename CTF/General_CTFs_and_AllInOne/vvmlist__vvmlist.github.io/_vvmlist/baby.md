@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  baby:
+    -
+  babyac:
+    -
+  babycm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  groups:
+    -
+  shc:
+    -
+  ntds:
+    -
+  logical:
+    -
+
+wals:
+  babywu:
+    -
+  babyvi:
+    -
+---

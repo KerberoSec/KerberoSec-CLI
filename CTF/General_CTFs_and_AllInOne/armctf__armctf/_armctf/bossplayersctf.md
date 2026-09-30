@@ -1,0 +1,13 @@
+---
+curls:
+  bossplayersctf:
+    -
+  bossplayersctfcm:
+    -
+functions:
+  bossplayersctf:
+    -
+wals:
+  bossplayersctf:
+    -
+---

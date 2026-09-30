@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  firstblood:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  firstbloodwu:
+    -
+---

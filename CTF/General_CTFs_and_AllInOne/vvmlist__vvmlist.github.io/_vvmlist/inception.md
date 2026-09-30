@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  inception:
+    -
+  inceptionac:
+    -
+  inceptioncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  proxy:
+    -
+  cve:
+    -
+  lfi:
+    -
+  creds:
+    -
+  hc:
+    -
+  webdav:
+    -
+  bre:
+    -
+  ftp:
+    -
+  al:
+    -
+  logical:
+    -
+
+wals:
+  inceptionwu:
+    -
+  inceptionvi:
+    -
+---

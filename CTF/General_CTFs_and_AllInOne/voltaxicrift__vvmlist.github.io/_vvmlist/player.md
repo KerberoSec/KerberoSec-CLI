@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  player:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  source:
+    -
+  creds:
+    -
+  hwt:
+    -
+  ssrf:
+    -
+  logical:
+    -
+  cve:
+    -
+  ci:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  deser:
+    -
+
+wals:
+  playerwu:
+    -
+  playervi:
+    -
+---

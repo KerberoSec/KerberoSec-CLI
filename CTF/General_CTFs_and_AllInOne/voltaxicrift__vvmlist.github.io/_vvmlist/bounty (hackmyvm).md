@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  bountyh:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  logical:
+    -
+  cron:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cve:
+    -
+
+wals:
+  bountyhwu:
+    -
+---

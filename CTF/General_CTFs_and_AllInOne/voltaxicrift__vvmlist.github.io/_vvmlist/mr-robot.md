@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  mr-robot:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  hc:
+    -
+  suid:
+    -
+
+wals:
+  mr-robotwu:
+    -
+---

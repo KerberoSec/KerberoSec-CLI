@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tornado:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sqlt:
+    -
+  rce:
+    -
+  sudo:
+    -
+  decode:
+    -
+
+wals:
+  tornadowu:
+    -
+---

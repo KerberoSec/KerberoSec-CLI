@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  sunset:
+    -
+  sunsetac:
+    -
+  sunsetcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  sunsetwu:
+    -
+---

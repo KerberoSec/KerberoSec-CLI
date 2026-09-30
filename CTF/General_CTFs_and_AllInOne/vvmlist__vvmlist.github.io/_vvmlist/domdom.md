@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  domdom:
+    -
+  domdomac:
+    -
+  domdomcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  cap:
+    -
+
+wals:
+  domdomwu:
+    -
+---

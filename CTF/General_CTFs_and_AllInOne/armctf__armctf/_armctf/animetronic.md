@@ -1,0 +1,13 @@
+---
+curls:
+  animetronic:
+    -
+  animetroniccm:
+    -
+functions:
+  animetronic:
+    -
+wals:
+  animetronic:
+    -
+---

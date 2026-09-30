@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  codeshield:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  creds:
+    -
+  keepass:
+    -
+  hc:
+    -
+
+wals:
+  codeshieldwu:
+    -
+---

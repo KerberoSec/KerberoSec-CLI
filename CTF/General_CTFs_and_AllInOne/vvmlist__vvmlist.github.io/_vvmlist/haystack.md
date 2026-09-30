@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  haystack:
+    -
+  haystackac:
+    -
+  haystackcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  decode:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  api:
+    -
+  cve:
+    -
+  lfi:
+    -
+  logical:
+    -
+
+wals:
+  haystackwu:
+    -
+  haystackvi:
+    -
+---

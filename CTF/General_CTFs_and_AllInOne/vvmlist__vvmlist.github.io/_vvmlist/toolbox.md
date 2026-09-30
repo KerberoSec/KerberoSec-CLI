@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  toolbox:
+    -
+  toolboxac:
+    -
+  toolboxcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  sqli:
+    -
+  rce:
+    -
+  docker:
+    -
+  ssh:
+    -
+
+wals:
+  toolboxwu:
+    -
+  toolboxvi:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  kuya:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  pcap:
+    -
+  hc:
+    -
+  ssh:
+    -
+  creds:
+    -
+  cap:
+    -
+
+wals:
+  kuyawu:
+    -
+---

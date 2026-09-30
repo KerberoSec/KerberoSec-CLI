@@ -1,0 +1,72 @@
+<p align="center">
+  *[Image: Logo]*
+</p>
+
+<h2 align="center"><b>CTFHub</b></h2>
+<h3 align="center">Where CTFs happen</h3>
+
+<p align="center">
+  <a href="https://github.com/psf/black"><img alt="Code style: black" src="https://img.shields.io/badge/code%20style-black-000000.svg"></a>
+  <a href="https://github.com/hugsy/ctfhub/blob/master/LICENSE"><img alt="Licence MIT" src="https://img.shields.io/packagist/l/doctrine/orm.svg?maxAge=2592000?style=plastic"></a>
+  <img alt="Python-Version 3.10" src="https://img.shields.io/badge/Python-3.10-brightgreen">
+  <a href="https://discord.gg/fYsAjvsdQT"><img alt="CTFHub on Discord" src="https://img.shields.io/badge/Discord-CTFHub-purple"></a>
+</p>
+
+## What is it?
+
+A collaborative environment for teams playing [CTFs](https://en.wikipedia.org/wiki/Wargame_(hacking)). It provides out-of-the-box everything to manage and collaborate on the CTFs and challenges you and your team are working on.
+
+_Note_: If you're looking for a platform for hosting CTFs use [CTFd](https://github.com/ctfd/ctfd).
+
+## Features
+
+A non-exhaustive list of features:
+
+ - Django 4 running on Python 3.10, with a clean Bootstrap 5 interface
+ - Key-in-hands setup via [`docker-compose`](https://docs.docker.com/compose)
+ - Fully integrated around [HedgeDoc](https://github.com/hedgedoc/hedgedoc): smart markdown note mechanism, with [tons of features](https://demo.hedgedoc.org/features)
+ - Possibility to create and play private CTFs for one player only, making it easy to track your progress on learning platforms like [Root-Me](https://www.root-me.org/), [PicoCTF](https://picoctf.com/), [PentesterLab](https://pentesterlab.com/) and others.
+ - Add "guests" to specific CTFs, allowing non team members to have a limited view of the context
+ - View CTF stats, and track members' involment through a cool podium ranking
+ - CTFTime API integration:  CTF information from CTFTime in one click
+ - CTFd/rCTF challenge(s) can optionally be pre-populated locally
+ - Basic search engine
+ - Easily export your challenge notes to create a blog post on Github Pages
+ - [Jitsi](https://meet.jit.si) integration: instantly jump on video chat with your team mate
+ - Public & Self-hosted [Excalidraw](https://github.com/excalidraw/excalidraw) integration: draw & share ideas with your team mates
+ - [Discord](https://discord.gg) notifications on events (CTF registration, challenge scoring, etc.)
+  - and of course, a Dark mode to save your eyes during those painful sleepless nights
+
+## Build
+
+For most people, this will suffice:
+
+```bash
+$ git clone https://github.com/hugsy/ctfhub && cd ctfhub
+$ cp .env.example .env
+### CHANGE THE CREDENTIALS IN .env ###
+$ nano .env
+### BUILD EXCALIDRAW USING .env VARIABLES ###
+$ docker compose up -d --build
+```
+
+For more advanced building cases, refer to the [Build page](docs/build.md) in the documentation.
+
+## Gallery
+
+Check out the [docs](docs/gallery.md)
+
+## Contribution
+
+`CTFHub` was created and maintained by [`@_hugsy_`](https://twitter.com/_hugsy_), but kept fresh thanks to [all the contributors](https://github.com/hugsy/ctfhub/graphs/contributors).
+
+[ ![contributors-img](https://contrib.rocks/image?repo=hugsy/ctfhub) ](https://github.com/hugsy/ctfhub/graphs/contributors)
+
+If you just like the tool, consider dropping on Discord (or Twitter or other) a simple *"thanks"*, it is always very appreciated.
+
+And if you can, consider [sponsoring me](https://github.com/hugsy/sponsors): it really helps dedicating time and resources to the projects!
+
+## Credits and Links
+
+- The world flag images are downloaded from https://flagpedia.net/
+- [CTFPad](https://github.com/StratumAuhuur/CTFPad): NodeJS project that is based on [`etherpad-lite`](https://yopad.eu) (no MarkDown support).

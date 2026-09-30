@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pandora:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  snmp:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  pandorawu:
+    -
+  pandoravi:
+    -
+---

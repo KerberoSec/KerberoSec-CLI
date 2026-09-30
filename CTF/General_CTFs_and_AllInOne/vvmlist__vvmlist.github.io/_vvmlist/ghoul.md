@@ -1,0 +1,52 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ghoul:
+    -
+  ghoulac:
+    -
+  ghoulcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  zz:
+    -
+  rce:
+    -
+  bre:
+    -
+  ssh:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  cve:
+    -
+  git:
+    -
+  aj:
+    -
+  pspy:
+    -
+
+wals:
+  ghoulwu:
+    -
+  ghoulvi:
+    -
+---

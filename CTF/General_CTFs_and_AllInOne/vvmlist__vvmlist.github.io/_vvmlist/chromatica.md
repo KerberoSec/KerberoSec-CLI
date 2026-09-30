@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  chromatica:
+    -
+  chromaticaac:
+    -
+  chromaticacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  bf:
+    -
+  cron:
+    -
+  sudo:
+    -
+
+wals:
+  chromaticawu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  christmas:
+    -
+  christmasac:
+    -
+  christmascm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+  vpn:
+    -
+  logical:
+    -
+  creds:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  christmaswu:
+    -
+---

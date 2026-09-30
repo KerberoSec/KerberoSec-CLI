@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  waldo:
+    -
+  waldoac:
+    -
+  waldocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+  rbash:
+    -
+  cap:
+    -
+
+wals:
+  waldowu:
+    -
+  waldovi:
+    -
+---

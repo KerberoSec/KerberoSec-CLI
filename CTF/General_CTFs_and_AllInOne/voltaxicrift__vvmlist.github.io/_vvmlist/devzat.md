@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  devzat:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  source:
+    -
+  api:
+    -
+  pathtr:
+    -
+  ci:
+    -
+  jwt:
+    -
+  cve:
+    -
+  creds:
+    -
+  ssh:
+    -
+
+wals:
+  devzatwu:
+    -
+  devzatvi:
+    -
+---

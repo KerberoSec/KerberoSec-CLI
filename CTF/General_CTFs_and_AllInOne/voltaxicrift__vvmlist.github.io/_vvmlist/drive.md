@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  drive:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  logical:
+    -
+  tunnel:
+    -
+  git:
+    -
+  sql:
+    -
+  hc:
+    -
+  suid:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  drivewu:
+    -
+  drivevi:
+    -
+---

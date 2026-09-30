@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blunder:
+    -
+  blunderac:
+    -
+  blundercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  bf:
+    -
+  logical:
+    -
+  creds:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  blunderwu:
+    -
+  blundervi:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  hackme:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  hackmewu:
+    -
+---

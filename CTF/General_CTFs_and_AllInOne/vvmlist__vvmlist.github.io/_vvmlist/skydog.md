@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  skydog:
+    -
+  skydogac:
+    -
+  skydogcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  steg:
+    -
+  hc:
+    -
+  bf:
+    -
+  osint:
+    -
+  fuzz:
+    -
+  pcap:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  skydogwu:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  robot:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  steg:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sql:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  robotwu:
+    -
+---

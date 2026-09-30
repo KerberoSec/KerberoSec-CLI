@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  postman:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  al:
+    -
+  redis:
+    -
+  logical:
+    -
+  hc:
+    -
+  passre:
+    -
+  cve:
+    -
+  rce:
+    -
+
+wals:
+  postmanwu:
+    -
+  postmanvi:
+    -
+---

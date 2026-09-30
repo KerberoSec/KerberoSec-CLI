@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  keys:
+    -
+  keysac:
+    -
+  keyscm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  ssh:
+    -
+  pgp:
+    -
+  decode:
+    -
+
+wals:
+  keyswu:
+    -
+---

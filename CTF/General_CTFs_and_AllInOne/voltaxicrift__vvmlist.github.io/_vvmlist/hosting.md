@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  hosting:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  smb:
+    -
+  creds:
+    -
+  tsb:
+    -
+
+wals:
+  hostingwu:
+    -
+---

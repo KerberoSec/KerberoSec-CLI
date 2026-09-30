@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  breachvu:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  creds:
+    -
+  pcap:
+    -
+  rce:
+    -
+  steg:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  breachvuwu:
+    -
+---

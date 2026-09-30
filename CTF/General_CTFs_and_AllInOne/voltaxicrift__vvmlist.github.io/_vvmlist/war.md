@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  war:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  dcr:
+    -
+  rce:
+    -
+  tsi:
+    -
+
+wals:
+  warwu:
+    -
+---

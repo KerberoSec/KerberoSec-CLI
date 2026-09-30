@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  breach:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  ufa:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  krb:
+    -
+  silver:
+    -
+  xpc:
+    -
+  tsi:
+    -
+
+wals:
+  breachwu:
+    -
+---

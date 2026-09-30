@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  buster:
+    -
+  busterac:
+    -
+  bustercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  busterwu:
+    -
+---

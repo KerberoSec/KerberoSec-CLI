@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  lock:
+    -
+  lockac:
+    -
+  lockcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  git:
+    -
+  api:
+    -
+  decode:
+    -
+  creds:
+    -
+  cve:
+    -
+
+wals:
+  lockwu:
+    -
+  lockvi:
+    -
+---

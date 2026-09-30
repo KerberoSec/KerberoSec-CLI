@@ -1,0 +1,26 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  unit:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  unitwu:
+    -
+---

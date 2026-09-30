@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  hackathonctf:
+    -
+  hackathonctfac:
+    -
+  hackathonctfcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  cve:
+    -
+  sudo:
+    -
+
+wals:
+  hackathonctfwu:
+    -
+---

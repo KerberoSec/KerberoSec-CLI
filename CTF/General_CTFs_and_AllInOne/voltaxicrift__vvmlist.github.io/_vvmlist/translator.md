@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  translator:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  translatorwu:
+    -
+---

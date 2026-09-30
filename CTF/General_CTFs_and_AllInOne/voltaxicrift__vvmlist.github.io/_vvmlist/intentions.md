@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  intentions:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  rce:
+    -
+  ssrf:
+    -
+  aoi:
+    -
+  git:
+    -
+  creds:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+
+wals:
+  intentionswu:
+    -
+  intentionsvi:
+    -
+---

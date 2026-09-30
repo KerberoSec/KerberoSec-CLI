@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  admirertoo:
+    -
+  admirertooac:
+    -
+  admirertoocm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  ssrf:
+    -
+  rce:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  logical:
+    -
+
+wals:
+  admirertoowu:
+    -
+  admirertoovi:
+    -
+---

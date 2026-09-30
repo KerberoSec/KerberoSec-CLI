@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  feedback:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  fuzz:
+    -
+  log4j:
+    -
+  creds:
+    -
+
+wals:
+  feedbackwu:
+    -
+---

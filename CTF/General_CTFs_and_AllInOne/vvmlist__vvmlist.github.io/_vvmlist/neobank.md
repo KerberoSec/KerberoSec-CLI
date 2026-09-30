@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  neobank:
+    -
+  neobankac:
+    -
+  neobankcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  neobankwu:
+    -
+---

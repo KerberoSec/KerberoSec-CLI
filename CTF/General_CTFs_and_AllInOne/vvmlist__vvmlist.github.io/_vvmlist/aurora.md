@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  aurora:
+    -
+  auroraac:
+    -
+  auroracm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  jwt:
+    -
+  bf:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cve:
+    -
+
+wals:
+  aurorawu:
+    -
+---

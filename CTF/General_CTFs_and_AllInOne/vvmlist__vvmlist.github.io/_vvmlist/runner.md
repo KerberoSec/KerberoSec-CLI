@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  runner:
+    -
+  runnerac:
+    -
+  runnercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  logical:
+    -
+  sql:
+    -
+  ssh:
+    -
+  bre:
+    -
+  hc:
+    -
+
+wals:
+  runnerwu:
+    -
+  runnervi:
+    -
+---

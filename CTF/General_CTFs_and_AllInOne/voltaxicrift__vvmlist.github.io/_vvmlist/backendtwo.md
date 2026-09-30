@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  backendtwo:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  mass:
+    -
+  jwt:
+    -
+  logical:
+    -
+  rce:
+    -
+  source:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  backendtwowu:
+    -
+  backendtwovi:
+    -
+---

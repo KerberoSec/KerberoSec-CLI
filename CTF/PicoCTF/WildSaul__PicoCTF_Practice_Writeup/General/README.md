@@ -1,0 +1,3 @@
+> General Skill, kỹ năng phổ biến, sẽ có trong phần này chủ yếu tập trung và các kỹ năng cơ bản như chạy phần mềm, đọc hiểu code, tạo chương trình,...
+
+#### *Vì những skill khá cơ bản nên mình sẽ chỉ tập trung vào các bài điểm cao hoặc series.*

@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  bunny:
+    -
+  bunnyac:
+    -
+  bunnycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sudo:
+    -
+  pspy:
+    -
+  cron:
+    -
+  libj:
+    -
+
+wals:
+  bunnywu:
+    -
+---

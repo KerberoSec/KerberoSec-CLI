@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mailroom:
+    -
+  mailroomac:
+    -
+  mailroomcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  xss:
+    -
+  nosqli:
+    -
+  bf:
+    -
+  tunnel:
+    -
+  ci:
+    -
+  creds:
+    -
+  bre:
+    -
+  logical:
+    -
+  keepass:
+    -
+
+wals:
+  mailroomwu:
+    -
+  mailroomvi:
+    -
+---

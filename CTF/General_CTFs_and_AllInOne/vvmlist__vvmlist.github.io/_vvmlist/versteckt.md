@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  versteckt:
+    -
+  verstecktac:
+    -
+  verstecktcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  steg:
+    -
+  bf:
+    -
+  sql:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  verstecktwu:
+    -
+---

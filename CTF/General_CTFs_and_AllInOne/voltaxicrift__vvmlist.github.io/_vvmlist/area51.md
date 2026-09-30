@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  area51:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  log4j:
+    -
+  creds:
+    -
+  cron:
+    -
+  pspy:
+    -
+  bj:
+    -
+
+wals:
+  area51wu:
+    -
+---

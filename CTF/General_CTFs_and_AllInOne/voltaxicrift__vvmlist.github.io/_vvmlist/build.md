@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  build:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  git:
+    -
+  rsync:
+    -
+  decode:
+    -
+  tunnel:
+    -
+  bre:
+    -
+  sql:
+    -
+  hc:
+    -
+
+wals:
+  buildwu:
+    -
+---

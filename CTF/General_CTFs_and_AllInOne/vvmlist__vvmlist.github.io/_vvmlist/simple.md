@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  simple:
+    -
+  simpleac:
+    -
+  simplecm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+  smb:
+    -
+  creds:
+    -
+  tsi:
+    -
+
+wals:
+  simplewu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nunchucks:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ssti:
+    -
+  rce:
+    -
+  logical:
+    -
+  cap:
+    -
+  apparmor:
+    -
+
+wals:
+  nunchuckswu:
+    -
+  nunchucksvi:
+    -
+---

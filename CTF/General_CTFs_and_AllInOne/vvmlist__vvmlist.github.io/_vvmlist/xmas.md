@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  xmas:
+    -
+  xmasac:
+    -
+  xmascm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cron:
+    -
+  sudo:
+    -
+
+wals:
+  xmaswu:
+    -
+---

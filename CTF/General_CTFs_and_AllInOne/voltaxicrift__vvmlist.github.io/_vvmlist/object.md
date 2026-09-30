@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  object:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  logical:
+    -
+  creds:
+    -
+  decode:
+    -
+  bhfcp:
+    -
+  bhwo:
+    -
+
+wals:
+  objectwu:
+    -
+  objectvi:
+    -
+---

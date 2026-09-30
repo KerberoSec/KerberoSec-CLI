@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  breach 2.1:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+  css:
+    -
+  rce:
+    -
+  osint:
+    -
+  dcr:
+    -
+  sudo:
+    -
+
+wals:
+  breach 2.1wu:
+    -
+---

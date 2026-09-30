@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pov:
+    -
+  povac:
+    -
+  povcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  viewstate:
+    -
+  deser:
+    -
+  rce:
+    -
+  creds:
+    -
+  decode:
+    -
+  tsd:
+    -
+
+wals:
+  povwu:
+    -
+  povvi:
+    -
+---

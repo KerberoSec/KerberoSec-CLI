@@ -1,0 +1,42 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  stacked:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xss:
+    -
+  aws:
+    -
+  cve:
+    -
+  rce:
+    -
+  bre:
+    -
+  pspy:
+    -
+  ci:
+    -
+  docker:
+    -
+
+wals:
+  stackedwu:
+    -
+  stackedvi:
+    -
+---

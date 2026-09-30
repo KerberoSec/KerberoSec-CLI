@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  rootthis:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  sql:
+    -
+  rce:
+    -
+  bf:
+    -
+
+wals:
+  rootthiswu:
+    -
+---

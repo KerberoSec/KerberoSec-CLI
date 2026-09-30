@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  responder:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  ssh:
+    -
+  hc:
+    -
+  sudo:
+    -
+  suid:
+    -
+  cve:
+    -
+
+wals:
+  responderwu:
+    -
+---

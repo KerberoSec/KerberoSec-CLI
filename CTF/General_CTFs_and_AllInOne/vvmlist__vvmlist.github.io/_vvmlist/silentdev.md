@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  silentdev:
+    -
+  silentdevac:
+    -
+  silentdevcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  ep:
+    -
+  pspy:
+    -
+  cron:
+    -
+  sudo:
+    -
+
+wals:
+  silentdevwu:
+    -
+---

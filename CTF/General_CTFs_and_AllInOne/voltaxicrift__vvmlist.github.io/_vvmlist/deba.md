@@ -1,0 +1,28 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  deba:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  deser:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  debawu:
+    -
+---

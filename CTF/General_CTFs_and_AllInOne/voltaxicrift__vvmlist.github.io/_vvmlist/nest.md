@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nest:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  telnet:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  cource:
+    -
+  decode:
+    -
+  ads:
+    -
+
+wals:
+  nestwu:
+    -
+  nestvi:
+    -
+---

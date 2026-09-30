@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  homage:
+    -
+  homageac:
+    -
+  homagecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  strcmp:
+    -
+  rce:
+    -
+  hc:
+    -
+  creds:
+    -
+  sql:
+    -
+  sudo:
+    -
+  decode:
+    -
+
+wals:
+  homagewu:
+    -
+---

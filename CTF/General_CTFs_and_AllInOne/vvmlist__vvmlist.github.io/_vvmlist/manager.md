@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  manager:
+    -
+  managerac:
+    -
+  managercm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  logical:
+    -
+  smb:
+    -
+  sql:
+    -
+  creds:
+    -
+  adcs:
+    -
+
+wals:
+  managerwu:
+    -
+  managervi:
+    -
+---

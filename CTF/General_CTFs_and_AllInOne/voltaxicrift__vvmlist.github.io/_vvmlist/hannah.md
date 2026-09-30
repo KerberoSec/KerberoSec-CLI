@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hannah:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+  cron:
+    -
+  pathj:
+    -
+
+wals:
+  hannahwu:
+    -
+---

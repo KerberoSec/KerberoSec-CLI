@@ -1,0 +1,30 @@
+# BDSEC CTF 2023
+CTF writeup for The BDSEC CTF 2023. I took part in this CTF competition with the HCS team and secured the 1st place out of 719 teams
+
+| Category | Challenge |
+| --- | --- |
+| Forensics | [SYSTEM CHECK](/2023/BDSec%20CTF%202023/SYSTEM%20CHECK/)
+| Forensics | [Maintain shedule](/2023/BDSec%20CTF%202023/Maintain%20shedule/)
+| Forensics | [Hacker destination file](/2023/BDSec%20CTF%202023/Hacker%20destination%20file/)
+| Forensics | [Hackers username and email](/2023/BDSec%20CTF%202023/Hackers%20username%20and%20email/)
+| Forensics | [Find Values](/2023/BDSec%20CTF%202023/Find%20Values/)
+| Networking | [Compromised Account](/2023/BDSec%20CTF%202023/Compromised%20Account/)
+| Networking | [Compromised Admin Account](/2023/BDSec%20CTF%202023/Compromised%20Admin%20Account/)
+| Networking | [Compromised Database](/2023/BDSec%20CTF%202023/Compromised%20Database/)
+| Networking | [Crackable](/2023/BDSec%20CTF%202023/Crackable/)
+| Networking | [Database Flag](/2023/BDSec%20CTF%202023/Database%20Flag/)
+| Networking | [Follow the Path](/2023/BDSec%20CTF%202023/Follow%20the%20Path/)
+| Networking | [Hidden Path](/2023/BDSec%20CTF%202023/Hidden%20Path)
+| Networking | [HostName](/2023/BDSec%20CTF%202023/HostName/)
+| Networking | [IP Addr](/2023/BDSec%20CTF%202023/IP%20Addr/)
+| Networking | [Port](/2023/BDSec%20CTF%202023/Port/)
+| Networking | [Root Access](/2023/BDSec%20CTF%202023/Root%20Access)
+| Networking | [Root Flag](/2023/BDSec%20CTF%202023/Root%20Flag/)
+| Networking | [Root Permission](/2023/BDSec%20CTF%202023/Root%20Permission/)
+| Networking | [Shell](/2023/BDSec%20CTF%202023/Shell/)
+| Networking | [Users](/2023/BDSec%20CTF%202023/Users/)
+| Networking | [Version](/2023/BDSec%20CTF%202023/Version/)
+| Networking | [Was it Vulnerable](/2023/BDSec%20CTF%202023/Was%20it%20Vulnerable/)
+| PWN | [Ghost](/2023/BDSec%20CTF%202023/Ghost/)
+| PWN | [anyaForger](/2023/BDSec%20CTF%202023/anyaForger/)
+| PWN | [callme](/2023/BDSec%20CTF%202023/callme/)

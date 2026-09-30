@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pam:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  rwp:
+    -
+  rce:
+    -
+  steg:
+    -
+  sudo:
+    -
+
+wals:
+  pamwu:
+    -
+---

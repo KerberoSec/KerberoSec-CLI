@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  dpwwn:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  dcr:
+    -
+  sql:
+    -
+  creds:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  dpwwnwu:
+    -
+---

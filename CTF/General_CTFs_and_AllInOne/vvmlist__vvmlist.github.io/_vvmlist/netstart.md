@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  netstart:
+    -
+  netstartac:
+    -
+  netstartcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  rev:
+    -
+  bof:
+    -
+  sudo:
+    -
+
+wals:
+  netstartwu:
+    -
+---

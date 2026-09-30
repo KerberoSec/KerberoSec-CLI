@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  health:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  pspy:
+    -
+  logical:
+    -
+
+wals:
+  healthwu:
+    -
+  healthvi:
+    -
+---

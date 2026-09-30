@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  sysadmin:
+    -
+  sysadminac:
+    -
+  sysadmincm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  sudo:
+    -
+  rce:
+    -
+
+wals:
+  sysadminwu:
+    -
+---

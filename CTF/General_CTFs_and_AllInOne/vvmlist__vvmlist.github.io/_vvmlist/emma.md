@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  emma:
+    -
+  emmaac:
+    -
+  emmacm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  creds:
+    -
+  source:
+    -
+  pathj:
+    -
+
+wals:
+  emmawu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  networked:
+    -
+  networkedac:
+    -
+  networkedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  source:
+    -
+  rce:
+    -
+  cron:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  networkedwu:
+    -
+  networkedvi:
+    -
+---

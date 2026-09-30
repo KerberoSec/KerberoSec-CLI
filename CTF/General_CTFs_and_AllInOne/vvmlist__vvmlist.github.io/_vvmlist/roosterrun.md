@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  roosterrun:
+    -
+  roosterrunac:
+    -
+  roosterruncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  sqli:
+    -
+  hc:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  pathj:
+    -
+
+wals:
+  roosterrunwu:
+    -
+---

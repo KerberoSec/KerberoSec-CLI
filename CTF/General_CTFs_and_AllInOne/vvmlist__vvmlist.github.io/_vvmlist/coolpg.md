@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  coolpg:
+    -
+  coolpgac:
+    -
+  coolpgcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  creds:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  coolpgwu:
+    -
+---

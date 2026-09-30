@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  satori:
+    -
+  satoriac:
+    -
+  satoricm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  lfi:
+    -
+  bf:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  debugfs:
+    -
+
+wals:
+  satoriwu:
+    -
+---

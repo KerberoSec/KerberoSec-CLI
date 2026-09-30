@@ -1,0 +1,18 @@
+# Docker Web
+> A container that contains a web page (http) service. All answers will appear only after you look at the page.
+
+## About the Challenge
+We are given a zip code that contain linux directories
+
+*[Image: preview]*
+
+## How to Solve?
+Open the `index.html` file on `/var/www/html` directories and you will notice there is a base64 encoded msg in line `21`
+
+*[Image: base64]*
+
+And if you decode it, you will get the flag
+
+```
+vu-cyberthon-23
+```

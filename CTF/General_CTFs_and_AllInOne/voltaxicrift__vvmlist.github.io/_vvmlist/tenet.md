@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  tenet:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  deser:
+    -
+  creds:
+    -
+  sudo:
+    -
+  ssh:
+    -
+
+wals:
+  tenetwu:
+    -
+  tenetvi:
+    -
+---

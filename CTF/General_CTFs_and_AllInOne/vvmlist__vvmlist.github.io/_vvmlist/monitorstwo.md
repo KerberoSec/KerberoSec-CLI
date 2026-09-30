@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  monitorstwo:
+    -
+  monitorstwoac:
+    -
+  monitorstwocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ci:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  docker:
+    -
+  cve:
+    -
+  suid:
+    -
+
+wals:
+  monitorstwowu:
+    -
+  monitorstwovi:
+    -
+---

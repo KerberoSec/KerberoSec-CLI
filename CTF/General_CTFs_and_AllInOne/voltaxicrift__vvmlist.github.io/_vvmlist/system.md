@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  system:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  xxe:
+    -
+  pspy:
+    -
+  cron:
+    -
+  suid:
+    -
+
+wals:
+  systemwu:
+    -
+---

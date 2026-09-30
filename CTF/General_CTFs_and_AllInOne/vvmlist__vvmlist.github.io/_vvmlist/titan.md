@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  titan:
+    -
+  titanac:
+    -
+  titancm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  suid:
+    -
+  rev:
+    -
+  bof:
+    -
+  sudo:
+    -
+
+wals:
+  titanwu:
+    -
+---

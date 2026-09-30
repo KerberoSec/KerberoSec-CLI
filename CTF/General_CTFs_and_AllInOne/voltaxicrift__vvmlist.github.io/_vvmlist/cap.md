@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cap:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  pcap:
+    -
+  fuzz:
+    -
+  idor:
+    -
+  passre:
+    -
+  source:
+    -
+  cap:
+    -
+
+wals:
+  capwu:
+    -
+  capvi:
+    -
+---

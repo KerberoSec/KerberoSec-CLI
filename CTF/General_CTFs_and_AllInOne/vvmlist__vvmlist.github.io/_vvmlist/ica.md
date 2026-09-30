@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  ica:
+    -
+  icaac:
+    -
+  icacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  decode:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  icawu:
+    -
+---

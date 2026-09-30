@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pycrt:
+    -
+  pycrtac:
+    -
+  pycrtcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  source:
+    -
+  creds:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  pycrtwu:
+    -
+---

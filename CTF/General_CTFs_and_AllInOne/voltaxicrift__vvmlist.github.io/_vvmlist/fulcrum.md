@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fulcrum:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  ssrf:
+    -
+  rce:
+    -
+  api:
+    -
+  decode:
+    -
+  tunnel:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  fulcrumwu:
+    -
+  fulcrumvi:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  hms:
+    -
+  hmsac:
+    -
+  hmscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  sqli:
+    -
+  rce:
+    -
+  suid:
+    -
+  cron:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  hmswu:
+    -
+---

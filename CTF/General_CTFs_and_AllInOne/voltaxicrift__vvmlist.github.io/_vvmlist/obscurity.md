@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  obscurity:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  source:
+    -
+  rce:
+    -
+  decode:
+    -
+  sudo:
+    -
+  logical:
+    -
+  hc:
+    -
+
+wals:
+  obscuritywu:
+    -
+  obscurityvi:
+    -
+---

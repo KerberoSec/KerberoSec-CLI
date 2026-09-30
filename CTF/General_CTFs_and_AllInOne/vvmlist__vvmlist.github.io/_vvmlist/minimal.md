@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  minimal:
+    -
+  minimalac:
+    -
+  minimalcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  source:
+    -
+  logical:
+    -
+  bf:
+    -
+  rce:
+    -
+  sudo:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  minimalwu:
+    -
+---

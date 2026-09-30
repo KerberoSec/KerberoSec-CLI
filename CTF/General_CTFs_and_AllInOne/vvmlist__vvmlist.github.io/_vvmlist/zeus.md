@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  zeus:
+    -
+  zeusac:
+    -
+  zeuscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  suid:
+    -
+
+wals:
+  zeuswu:
+    -
+---

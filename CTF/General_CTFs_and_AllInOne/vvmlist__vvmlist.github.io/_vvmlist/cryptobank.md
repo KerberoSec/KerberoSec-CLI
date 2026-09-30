@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cryptobank:
+    -
+  cryptobankac:
+    -
+  cryptobankcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  bf:
+    -
+  git:
+    -
+  rce:
+    -
+  cve:
+    -
+  sudo:
+    -
+
+wals:
+  cryptobankwu:
+    -
+---

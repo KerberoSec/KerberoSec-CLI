@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  unattended:
+    -
+  unattendedac:
+    -
+  unattendedcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  rce:
+    -
+  logical:
+    -
+  sql:
+    -
+  groups:
+    -
+
+wals:
+  unattendedwu:
+    -
+  unattendedvi:
+    -
+---

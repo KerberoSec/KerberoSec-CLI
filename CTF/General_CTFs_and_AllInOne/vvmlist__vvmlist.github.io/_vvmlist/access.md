@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  access:
+    -
+  accessac:
+    -
+  accesscm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  al:
+    -
+  ftp:
+    -
+  logical:
+    -
+  creds:
+    -
+  runas:
+    -
+
+wals:
+  accesswu:
+    -
+  accessvi:
+    -
+---

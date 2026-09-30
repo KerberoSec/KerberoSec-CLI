@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  blackhat2:
+    -
+  blackhat2ac:
+    -
+  blackhat2cm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  rev:
+    -
+  logical:
+    -
+
+wals:
+  blackhat2wu:
+    -
+---

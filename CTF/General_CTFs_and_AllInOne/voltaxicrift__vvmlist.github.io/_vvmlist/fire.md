@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  fire:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  ftp:
+    -
+  al:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  firewu:
+    -
+---

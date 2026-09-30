@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  beloved:
+    -
+  belovedac:
+    -
+  belovedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+  wildcard:
+    -
+wals:
+  belovedwu:
+    -
+
+---

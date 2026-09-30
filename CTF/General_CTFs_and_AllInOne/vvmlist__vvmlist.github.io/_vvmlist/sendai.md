@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sendai:
+    -
+  sendaiac:
+    -
+  sendaicm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  bf:
+    -
+  bhga:
+    -
+  gmsa:
+    -
+  creds:
+    -
+  adcs:
+    -
+
+wals:
+  sendaiwu:
+    -
+  sendaivi:
+    -
+---

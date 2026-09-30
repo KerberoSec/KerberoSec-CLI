@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  medusa:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  hc:
+    -
+  lsass:
+    -
+  groups:
+    -
+  debugfs:
+    -
+
+wals:
+  medusawu:
+    -
+---

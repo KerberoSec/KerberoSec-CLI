@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  oreo:
+    -
+  oreoac:
+    -
+  oreocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  gogal:
+    -
+  dcr:
+    -
+  rev:
+    -
+  source:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  adb:
+    -
+
+wals:
+  oreowu:
+    -
+---

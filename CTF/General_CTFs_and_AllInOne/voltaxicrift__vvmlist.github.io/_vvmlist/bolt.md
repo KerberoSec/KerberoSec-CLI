@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bolt:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  docker:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  source:
+    -
+  ssti:
+    -
+  rce:
+    -
+
+wals:
+  boltwu:
+    -
+  boltvi:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  shibuya:
+    -
+  shibuyaac:
+    -
+  shibuyacm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  bf:
+    -
+  smb:
+    -
+  creds:
+    -
+  mbck:
+    -
+  hc:
+    -
+  adcs:
+    -
+
+wals:
+  shibuyawu:
+    -
+---

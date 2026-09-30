@@ -1,0 +1,68 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  infiltrator:
+    -
+  infiltratorac:
+    -
+  infiltratorcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  asrep:
+    -
+  hc:
+    -
+  bf:
+    -
+  bhga:
+    -
+  bhsc:
+    -
+  bhas:
+    -
+  bhfcp:
+    -
+  pivot:
+    -
+  passre:
+    -
+  creds:
+    -
+  rev:
+    -
+  decode:
+    -
+  groups:
+    -
+  api:
+    -
+  pcap:
+    -
+  mbck:
+    -
+  ntds:
+    -
+  gmsa:
+    -
+  adcs:
+    -
+
+wals:
+  infiltratorwu:
+    -
+  infiltratorvi:
+    -
+---

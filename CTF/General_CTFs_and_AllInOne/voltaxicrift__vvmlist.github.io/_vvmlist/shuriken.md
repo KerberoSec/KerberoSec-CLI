@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  shuriken:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  hc:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+  pspy:
+    -
+  cron:
+    -
+  wildcard:
+    -
+
+wals:
+  shurikenwu:
+    -
+---

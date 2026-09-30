@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  ripper:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  creds:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  ripperwu:
+    -
+---

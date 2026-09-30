@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  zeug:
+    -
+  zeugac:
+    -
+  zeugcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  ssti:
+    -
+  sudo:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  zeugwu:
+    -
+---

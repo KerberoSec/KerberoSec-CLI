@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  zico2:
+    -
+  zico2ac:
+    -
+  zico2cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  lfi:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  cve:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  zico2wu:
+    -
+---

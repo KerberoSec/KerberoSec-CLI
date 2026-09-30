@@ -1,0 +1,13 @@
+---
+curls:
+  azer:
+    -
+  azercm:
+    -
+functions:
+  azer:
+    -
+wals:
+  azer:
+    -
+---

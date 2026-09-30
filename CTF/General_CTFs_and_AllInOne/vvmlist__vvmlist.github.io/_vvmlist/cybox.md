@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cybox:
+    -
+  cyboxac:
+    -
+  cyboxcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ato:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  suid:
+    -
+  sudo:
+    -
+
+wals:
+  cyboxwu:
+    -
+---

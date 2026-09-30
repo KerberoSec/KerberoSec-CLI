@@ -1,0 +1,30 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  wrapp:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  wrappwu:
+    -
+---

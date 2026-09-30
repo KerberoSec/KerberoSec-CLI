@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bruno:
+    -
+  brunoac:
+    -
+  brunocm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  ftp:
+    -
+  al:
+    -
+  asrep:
+    -
+  hc:
+    -
+  smb:
+    -
+  dllj:
+    -
+  source:
+    -
+  krbr:
+    -
+  rbcd:
+    -
+
+wals:
+  brunowu:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  singdancerap:
+    -
+  singdancerapac:
+    -
+  singdancerapcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  sqli:
+    -
+  rce:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  singdancerapwu:
+    -
+---

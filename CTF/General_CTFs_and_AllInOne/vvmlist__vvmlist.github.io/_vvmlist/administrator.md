@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  administrator:
+    -
+  administratorac:
+    -
+  administratorcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  bhfcp:
+    -
+  ftp:
+    -
+  hc:
+    -
+  creds:
+    -
+  bhgw:
+    -
+  krb:
+    -
+  dcsync:
+    -
+
+wals:
+  administratorwu:
+    -
+  administratorvi:
+    -
+---

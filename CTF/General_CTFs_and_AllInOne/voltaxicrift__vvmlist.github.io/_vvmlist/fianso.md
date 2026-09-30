@@ -1,0 +1,28 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  fianso:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  ssti:
+    -
+  sudo:
+    -
+  bf:
+    -
+
+wals:
+  fiansowu:
+    -
+---

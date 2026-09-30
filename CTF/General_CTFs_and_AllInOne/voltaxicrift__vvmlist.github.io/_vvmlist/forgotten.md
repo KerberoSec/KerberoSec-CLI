@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  forgotten:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  bre:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  forgottenwu:
+    -
+---

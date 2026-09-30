@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  absolute:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  asrep:
+    -
+  hc:
+    -
+  smb:
+    -
+  creds:
+    -
+  sniff:
+    -
+  bhgw:
+    -
+  bhsc:
+    -
+  krbr:
+    -
+  dcsync:
+    -
+
+wals:
+  absolutewu:
+    -
+  absolutevi:
+    -
+---

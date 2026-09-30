@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  hacknet:
+    -
+  hacknetac:
+    -
+  hacknetcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ssti:
+    -
+  creds:
+    -
+  ssh:
+    -
+  source:
+    -
+  deser:
+    -
+  pgp:
+    -
+  hc:
+    -
+  mbck:
+    -
+
+wals:
+  hacknetwu:
+    -
+  hacknetvi:
+    -
+---

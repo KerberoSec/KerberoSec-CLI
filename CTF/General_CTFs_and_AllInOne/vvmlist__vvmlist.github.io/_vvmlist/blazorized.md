@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blazorized:
+    -
+  blazorizedac:
+    -
+  blazorizedcm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  source:
+    -
+  jwt:
+    -
+  sqli:
+    -
+  rce:
+    -
+  krb:
+    -
+  hc:
+    -
+  groups:
+    -
+  auto:
+    -
+  dcsync:
+    -
+
+wals:
+  blazorizedwu:
+    -
+  blazorizedvi:
+    -
+---

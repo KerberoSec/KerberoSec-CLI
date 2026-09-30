@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  strutted:
+    -
+  struttedac:
+    -
+  struttedcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ep:
+    -
+  rce:
+    -
+  creds:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  struttedwu:
+    -
+  struttedvi:
+    -
+---

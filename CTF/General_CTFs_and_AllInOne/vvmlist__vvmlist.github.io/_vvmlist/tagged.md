@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tagged:
+    -
+  taggedac:
+    -
+  taggedcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  taggedwu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  evm:
+    -
+  evmac:
+    -
+  evmcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  creds:
+    -
+
+wals:
+  evmwu:
+    -
+---

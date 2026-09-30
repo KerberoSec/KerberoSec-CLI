@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  vivifytech:
+    -
+  vivifytechac:
+    -
+  vivifytechcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  vivifytechwu:
+    -
+---

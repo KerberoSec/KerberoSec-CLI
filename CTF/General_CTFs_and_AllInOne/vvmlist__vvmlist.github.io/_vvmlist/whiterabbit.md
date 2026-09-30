@@ -1,0 +1,50 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  whiterabbit:
+    -
+  whiterabbitac:
+    -
+  whiterabbitcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  authb:
+    -
+  logical:
+    -
+  sqli:
+    -
+  mbck:
+    -
+  hc:
+    -
+  ssh:
+    -
+  bre:
+    -
+  sudo:
+    -
+  rev:
+    -
+  bf:
+    -
+
+wals:
+  whiterabbitwu:
+    -
+  whiterabbitvi:
+    -
+---

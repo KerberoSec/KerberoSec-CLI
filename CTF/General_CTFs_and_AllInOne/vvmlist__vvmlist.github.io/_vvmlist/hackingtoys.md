@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hackingtoys:
+    -
+  hackingtoysac:
+    -
+  hackingtoyscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  ssti:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  hackingtoyswu:
+    -
+---

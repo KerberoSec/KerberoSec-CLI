@@ -1,0 +1,58 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  toby:
+    -
+  tobyac:
+    -
+  tobycm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  decode:
+    -
+  wp:
+    -
+  bre:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  hc:
+    -
+  sniff:
+    -
+  pspy:
+    -
+  cron:
+    -
+  rev:
+    -
+  logical:
+    -
+  bf:
+    -
+
+wals:
+  tobywu:
+    -
+  tobyvi:
+    -
+---

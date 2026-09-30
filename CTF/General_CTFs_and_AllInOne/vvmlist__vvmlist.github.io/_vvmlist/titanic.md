@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  titanic:
+    -
+  titanicac:
+    -
+  titaniccm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  pathtr:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+
+wals:
+  titanicwu:
+    -
+  titanicvi:
+    -
+---

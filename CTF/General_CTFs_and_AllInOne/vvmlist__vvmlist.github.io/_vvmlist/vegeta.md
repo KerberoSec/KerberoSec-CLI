@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  vegeta:
+    -
+  vegetaac:
+    -
+  vegetacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  steg:
+    -
+  creds:
+    -
+  rwp:
+    -
+
+wals:
+  vegetawu:
+    -
+---

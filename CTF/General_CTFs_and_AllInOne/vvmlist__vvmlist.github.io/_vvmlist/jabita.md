@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  jabita:
+    -
+  jabitaac:
+    -
+  jabitacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  hc:
+    -
+  sudo:
+    -
+  libj:
+    -
+
+wals:
+  jabitawu:
+    -
+---

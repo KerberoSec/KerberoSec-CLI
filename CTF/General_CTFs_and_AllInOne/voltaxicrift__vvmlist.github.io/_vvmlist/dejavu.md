@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  dejavu:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sudo:
+    -
+  cve:
+    -
+  be:
+    -
+
+wals:
+  dejavuwu:
+    -
+---

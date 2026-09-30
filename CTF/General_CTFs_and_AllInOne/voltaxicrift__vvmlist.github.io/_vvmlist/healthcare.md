@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  healthcare:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  hc:
+    -
+  rce:
+    -
+  suid:
+    -
+  rev:
+    -
+  pathj:
+    -
+
+wals:
+  healthcarewu:
+    -
+---

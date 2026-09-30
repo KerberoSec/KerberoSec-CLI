@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  scriptkiddie:
+    -
+  scriptkiddieac:
+    -
+  scriptkiddiecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  scriptkiddiewu:
+    -
+  scriptkiddievi:
+    -
+---

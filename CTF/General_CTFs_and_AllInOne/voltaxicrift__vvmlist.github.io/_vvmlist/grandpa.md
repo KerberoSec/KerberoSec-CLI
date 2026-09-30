@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  grandpa:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  tsi:
+    -
+
+wals:
+  grandpawu:
+    -
+  grandpavi:
+    -
+---

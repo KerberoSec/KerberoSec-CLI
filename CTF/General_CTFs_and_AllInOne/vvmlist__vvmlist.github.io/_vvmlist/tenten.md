@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  tenten:
+    -
+  tentenac:
+    -
+  tentencm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  steg:
+    -
+  ssh:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  tentenwu:
+    -
+  tentenvi:
+    -
+---

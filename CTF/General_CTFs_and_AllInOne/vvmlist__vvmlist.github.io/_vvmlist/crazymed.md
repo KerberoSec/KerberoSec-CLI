@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  crazymed:
+    -
+  crazymedac:
+    -
+  crazymedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  creds:
+    -
+  logical:
+    -
+  cron:
+    -
+  pathj:
+    -
+
+wals:
+  crazymedwu:
+    -
+---

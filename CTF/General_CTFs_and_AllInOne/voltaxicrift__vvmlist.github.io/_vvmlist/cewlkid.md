@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cewlkid:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  cewlkidwu:
+    -
+---

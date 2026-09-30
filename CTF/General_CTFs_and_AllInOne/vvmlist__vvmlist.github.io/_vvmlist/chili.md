@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  chili:
+    -
+  chiliac:
+    -
+  chilicm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  ftp:
+    -
+  rce:
+    -
+  rwp:
+    -
+
+wals:
+  chiliwu:
+    -
+---

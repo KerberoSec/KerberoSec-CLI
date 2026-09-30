@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  traverxec:
+    -
+  traverxecac:
+    -
+  traverxeccm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  hc:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  traverxecwu:
+    -
+  traverxecvi:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  external:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  creds:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  externalwu:
+    -
+---

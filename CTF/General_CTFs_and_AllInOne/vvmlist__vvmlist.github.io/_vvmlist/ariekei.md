@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ariekei:
+    -
+  ariekeiac:
+    -
+  ariekeicm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  bre:
+    -
+  ssh:
+    -
+  hc:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  ariekeiwu:
+    -
+  ariekeivi:
+    -
+---

@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cache:
+    -
+  cacheac:
+    -
+  cachecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  rce:
+    -
+  memc:
+    -
+  docker:
+    -
+
+wals:
+  cachewu:
+    -
+  cachevi:
+    -
+---

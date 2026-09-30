@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  thirteen:
+    -
+  thirteenac:
+    -
+  thirteencm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  decode:
+    -
+  pathtr:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  ftp:
+    -
+  rce:
+    -
+
+wals:
+  thirteenwu:
+    -
+---

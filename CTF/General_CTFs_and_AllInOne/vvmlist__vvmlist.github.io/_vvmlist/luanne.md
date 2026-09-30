@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  luanne:
+    -
+  luanneac:
+    -
+  luannecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  luaj:
+    -
+  api:
+    -
+  creds:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  luannewu:
+    -
+  luannevi:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  narcos:
+    -
+  narcosac:
+    -
+  narcoscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  rce:
+    -
+  bf:
+    -
+
+wals:
+  narcoswu:
+    -
+---

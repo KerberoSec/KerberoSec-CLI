@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  sendai:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  bhga:
+    -
+  gmsa:
+    -
+  pspy:
+    -
+  groups:
+    -
+  adcs:
+    -
+  silver:
+    -
+  tsi:
+    -
+
+wals:
+  sendaiwu:
+    -
+---

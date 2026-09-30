@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  zon:
+    -
+  zonac:
+    -
+  zoncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  zonwu:
+    -
+---

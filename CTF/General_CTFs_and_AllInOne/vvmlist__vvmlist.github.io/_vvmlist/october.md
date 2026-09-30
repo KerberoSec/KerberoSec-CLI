@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  october:
+    -
+  octoberac:
+    -
+  octobercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  ep:
+    -
+  rce:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  octoberwu:
+    -
+  octobervi:
+    -
+---

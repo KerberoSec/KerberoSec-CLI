@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  murph:
+    -
+  murphac:
+    -
+  murphcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  suid:
+    -
+  sudo:
+    -
+
+wals:
+  murphwu:
+    -
+---

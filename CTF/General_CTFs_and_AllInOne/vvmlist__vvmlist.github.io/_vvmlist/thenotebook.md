@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  thenotebook:
+    -
+  thenotebookac:
+    -
+  thenotebookcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  jwt:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cve:
+    -
+  be:
+    -
+
+wals:
+  thenotebookwu:
+    -
+  thenotebookvi:
+    -
+---

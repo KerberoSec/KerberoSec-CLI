@@ -1,0 +1,52 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pikatwoo:
+    -
+  pikatwooac:
+    -
+  pikatwoocm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  api:
+    -
+  bf:
+    -
+  apk:
+    -
+  source:
+    -
+  sqli:
+    -
+  logical:
+    -
+  lfi:
+    -
+  rce:
+    -
+  kube:
+    -
+  bre:
+    -
+
+wals:
+  pikatwoowu:
+    -
+  pikatwoovi:
+    -
+---

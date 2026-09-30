@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  craft:
+    -
+  craftac:
+    -
+  craftcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  creds:
+    -
+  api:
+    -
+  sql:
+    -
+  ssh:
+    -
+  logical:
+    -
+
+wals:
+  craftwu:
+    -
+  craftvi:
+    -
+---

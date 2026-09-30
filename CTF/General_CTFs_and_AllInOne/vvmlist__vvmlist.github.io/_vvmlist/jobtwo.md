@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  jobtwo:
+    -
+  jobtwoac:
+    -
+  jobtwocm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  phish:
+    -
+  decode:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+
+wals:
+  jobtwowu:
+    -
+---

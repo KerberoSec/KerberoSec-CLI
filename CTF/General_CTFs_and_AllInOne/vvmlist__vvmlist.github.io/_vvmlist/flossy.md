@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  flossy:
+    -
+  flossyac:
+    -
+  flossycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  api:
+    -
+  creds:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  flossywu:
+    -
+---

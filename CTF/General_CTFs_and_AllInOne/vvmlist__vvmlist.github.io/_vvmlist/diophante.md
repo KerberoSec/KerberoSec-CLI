@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  diophante:
+    -
+  diophanteac:
+    -
+  diophantecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  knock:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  diophantewu:
+    -
+---

@@ -1,0 +1,26 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  blacklight:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  ci:
+    -
+  rce:
+    -
+
+wals:
+  blacklightwu:
+    -
+---

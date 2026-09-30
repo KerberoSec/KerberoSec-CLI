@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  netmon:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  creds:
+    -
+  ci:
+    -
+
+wals:
+  netmonwu:
+    -
+  netmonvi:
+    -
+---

@@ -1,0 +1,52 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bigbang:
+    -
+  bigbangac:
+    -
+  bigbangcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  wp:
+    -
+  ssrf:
+    -
+  cve:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  ssh:
+    -
+  passre:
+    -
+  source:
+    -
+  tunnel:
+    -
+  ci:
+    -
+  newj:
+    -
+
+wals:
+  bigbangwu:
+    -
+  bigbangvi:
+    -
+---

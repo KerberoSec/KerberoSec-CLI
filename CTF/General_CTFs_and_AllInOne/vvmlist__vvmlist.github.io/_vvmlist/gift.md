@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  gift:
+    -
+  giftac:
+    -
+  giftcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+
+wals:
+  giftwu:
+    -
+---

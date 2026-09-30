@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  dropzone:
+    -
+  dropzoneac:
+    -
+  dropzonecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  ftp:
+    -
+  cve:
+    -
+  mof:
+    -
+  ads:
+    -
+
+wals:
+  dropzonewu:
+    -
+  dropzonevi:
+    -
+---

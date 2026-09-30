@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mango:
+    -
+  mangoac:
+    -
+  mangocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  nosqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  suid:
+    -
+
+wals:
+  mangowu:
+    -
+  mangovi:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  choc:
+    -
+  chocac:
+    -
+  choccm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  cron:
+    -
+  wildcard:
+    -
+  sudo:
+    -
+  cve:
+    -
+
+wals:
+  chocwu:
+    -
+---

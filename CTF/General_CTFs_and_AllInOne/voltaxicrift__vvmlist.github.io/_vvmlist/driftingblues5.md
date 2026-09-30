@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  driftingblues5:
+    -
+  driftingblues5hmv:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  wp:
+    -
+  bf:
+    -
+  steg:
+    -
+  creds:
+    -
+  keepass:
+    -
+  hc:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  driftingblues5wu:
+    -
+---

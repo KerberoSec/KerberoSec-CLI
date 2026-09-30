@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  tenderfoot:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  creds:
+    -
+  hc:
+    -
+  suid:
+    -
+  sudo:
+    -
+
+wals:
+  tenderfootwu:
+    -
+---

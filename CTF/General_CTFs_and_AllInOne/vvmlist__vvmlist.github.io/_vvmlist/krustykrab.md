@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  krustykrab:
+    -
+  krustykrabac:
+    -
+  krustykrabcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  bf:
+    -
+  authb:
+    -
+  rce:
+    -
+  sudo:
+    -
+  logical:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  krustykrabwu:
+    -
+---

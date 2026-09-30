@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  tartarsauce:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  rfi:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  tartarsaucewu:
+    -
+  tartarsaucevi:
+    -
+---

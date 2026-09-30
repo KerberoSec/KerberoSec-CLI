@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  slonik:
+    -
+  slonikac:
+    -
+  slonikcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  nfs:
+    -
+  al:
+    -
+  hc:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  slonikwu:
+    -
+---

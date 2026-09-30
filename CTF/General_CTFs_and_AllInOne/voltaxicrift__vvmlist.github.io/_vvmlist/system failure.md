@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  system failure:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  hc:
+    -
+  ftp:
+    -
+  decode:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sudo:
+    -
+  suid:
+    -
+
+wals:
+  system failurewu:
+    -
+---

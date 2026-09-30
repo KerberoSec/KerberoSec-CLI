@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  toppo:
+    -
+  toppoac:
+    -
+  toppocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  suid:
+    -
+
+wals:
+  toppowu:
+    -
+---

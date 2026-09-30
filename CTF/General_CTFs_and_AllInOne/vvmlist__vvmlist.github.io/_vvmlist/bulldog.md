@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  bulldog:
+    -
+  bulldogac:
+    -
+  bulldogcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  rce:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  bulldogwu:
+    -
+---

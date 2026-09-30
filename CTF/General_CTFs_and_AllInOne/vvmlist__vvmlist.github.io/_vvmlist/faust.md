@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  faust:
+    -
+  faustac:
+    -
+  faustcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  bf:
+    -
+  sudo:
+    -
+  decode:
+    -
+  creds:
+    -
+  steg:
+    -
+
+wals:
+  faustwu:
+    -
+---

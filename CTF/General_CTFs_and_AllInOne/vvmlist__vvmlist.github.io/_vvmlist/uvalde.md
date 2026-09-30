@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  uvalde:
+    -
+  uvaldeac:
+    -
+  uvaldecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  passre:
+    -
+  sudo:
+    -
+
+wals:
+  uvaldewu:
+    -
+---

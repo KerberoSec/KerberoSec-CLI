@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  moee:
+    -
+  moeeac:
+    -
+  moeecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  wp:
+    -
+  bf:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  cron:
+    -
+  pspy:
+    -
+  rwp:
+    -
+  be:
+    -
+
+wals:
+  moeewu:
+    -
+---

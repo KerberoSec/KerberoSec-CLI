@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  bunker:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  dcr:
+    -
+  rce:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  creds:
+    -
+
+wals:
+  bunkerwu:
+    -
+---

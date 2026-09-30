@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  blog:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  blogwu:
+    -
+---

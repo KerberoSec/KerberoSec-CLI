@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  real:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  cve:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  realwu:
+    -
+---

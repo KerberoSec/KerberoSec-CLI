@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  systemvx:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  sql:
+    -
+  bf:
+    -
+  ftp:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  cve:
+    -
+  redis:
+    -
+
+wals:
+  systemvxwu:
+    -
+---

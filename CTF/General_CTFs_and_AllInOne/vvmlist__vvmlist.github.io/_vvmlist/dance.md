@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  dance:
+    -
+  danceac:
+    -
+  dancecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  source:
+    -
+  bf:
+    -
+  sudo:
+    -
+  kern:
+    -
+
+wals:
+  dancewu:
+    -
+---

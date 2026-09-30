@@ -1,0 +1,38 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  minion:
+    -
+  minionac:
+    -
+  minioncm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  cron:
+    -
+  ads:
+    -
+  hc:
+    -
+
+wals:
+  minionwu:
+    -
+  minionvi:
+    -
+---

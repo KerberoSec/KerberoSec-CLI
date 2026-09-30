@@ -1,0 +1,26 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  horse:
+    -
+  horseac:
+    -
+  horsecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+
+wals:
+  horsewu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nightmare:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  sqli:
+    -
+  creds:
+    -
+  sql:
+    -
+  cve:
+    -
+  ftp:
+    -
+  groups:
+    -
+  sgid:
+    -
+  rev:
+    -
+  ci:
+    -
+  kern:
+    -
+
+wals:
+  nightmarewu:
+    -
+  nightmarevi:
+    -
+---

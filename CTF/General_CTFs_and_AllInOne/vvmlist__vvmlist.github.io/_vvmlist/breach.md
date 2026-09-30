@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  breach:
+    -
+  breachac:
+    -
+  breachcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  krb:
+    -
+  silver:
+    -
+  tsi:
+    -
+
+wals:
+  breachwu:
+    -
+  breachvi:
+    -
+---

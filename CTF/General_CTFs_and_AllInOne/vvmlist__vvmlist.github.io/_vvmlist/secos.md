@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  secos:
+    -
+  secosac:
+    -
+  secoscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  csrf:
+    -
+  creds:
+    -
+  pspy:
+    -
+  ci:
+    -
+
+wals:
+  secoswu:
+    -
+---

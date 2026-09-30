@@ -1,0 +1,50 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fatty:
+    -
+  fattyac:
+    -
+  fattycm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+  logical:
+    -
+  pathtr:
+    -
+  rev:
+    -
+  sqli:
+    -
+  deser:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  fattywu:
+    -
+  fattyvi:
+    -
+---

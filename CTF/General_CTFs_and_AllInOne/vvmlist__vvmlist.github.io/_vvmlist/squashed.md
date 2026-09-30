@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  squashed:
+    -
+  squashedac:
+    -
+  squashedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  nfs:
+    -
+  al:
+    -
+  rce:
+    -
+  x11:
+    -
+  magcoo:
+    -
+  creds:
+    -
+
+wals:
+  squashedwu:
+    -
+  squashedvi:
+    -
+---

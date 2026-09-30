@@ -1,0 +1,58 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mist:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  hc:
+    -
+  rce:
+    -
+  amsi:
+    -
+  sym:
+    -
+  cron:
+    -
+  logical:
+    -
+  tunnel:
+    -
+  petit:
+    -
+  ntlmrel:
+    -
+  keepass:
+    -
+  hc:
+    -
+  gmsa:
+    -
+  bhsc:
+    -
+  adcs:
+    -
+
+wals:
+  mistwu:
+    -
+  mistvi:
+    -
+---

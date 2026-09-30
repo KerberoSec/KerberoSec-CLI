@@ -1,0 +1,13 @@
+---
+curls:
+  alzheimer:
+    -
+  alzheimercm:
+    -
+functions:
+  alzheimer:
+    -
+wals:
+  alzheimer:
+    -
+---

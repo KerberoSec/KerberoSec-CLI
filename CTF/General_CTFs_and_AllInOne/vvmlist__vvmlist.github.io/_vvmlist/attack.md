@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  attack:
+    -
+  attackac:
+    -
+  attackcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  pcap:
+    -
+  creds:
+    -
+  ftp:
+    -
+  logical:
+    -
+  sudo:
+    -
+wals:
+  attackwu:
+    -
+
+---

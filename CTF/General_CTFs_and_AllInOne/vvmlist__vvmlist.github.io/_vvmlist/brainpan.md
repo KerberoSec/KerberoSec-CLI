@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  brainpan:
+    -
+  brainpanac:
+    -
+  brainpancm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bof:
+    -
+  suid:
+    -
+
+wals:
+  brainpanwu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  gigachad:
+    -
+  gigachadhmv:
+    -
+  gigachadac:
+    -
+  gigachadcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  osint:
+    -
+  cve:
+    -
+
+wals:
+  gigachadwu:
+    -
+---

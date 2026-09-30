@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  run:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  git:
+    -
+  jwt:
+    -
+  rce:
+    -
+  sudo:
+    -
+  bre:
+    -
+  kern:
+    -
+
+wals:
+  runwu:
+    -
+---

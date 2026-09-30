@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  aqua:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  git:
+    -
+  knock:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+
+wals:
+  aquawu:
+    -
+---

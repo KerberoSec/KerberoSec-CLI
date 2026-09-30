@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  unobtainium:
+    -
+  unobtainiumac:
+    -
+  unobtainiumcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  source:
+    -
+  creds:
+    -
+  lfi:
+    -
+  ci:
+    -
+  pp:
+    -
+  kube:
+    -
+  bre:
+    -
+  logical:
+    -
+
+wals:
+  unobtainiumwu:
+    -
+  unobtainiumvi:
+    -
+---

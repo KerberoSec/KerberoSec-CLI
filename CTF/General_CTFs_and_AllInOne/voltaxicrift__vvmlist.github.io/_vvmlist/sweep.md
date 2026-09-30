@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  sweep:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  bf:
+    -
+  al:
+    -
+  sniff:
+    -
+  groups:
+    -
+  bhga:
+    -
+  logical:
+    -
+
+wals:
+  sweepwu:
+    -
+---

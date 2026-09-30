@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  listenvx:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  sniff:
+    -
+  ssh:
+    -
+  hc:
+    -
+  cve:
+    -
+  pspy:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  listenvxwu:
+    -
+---

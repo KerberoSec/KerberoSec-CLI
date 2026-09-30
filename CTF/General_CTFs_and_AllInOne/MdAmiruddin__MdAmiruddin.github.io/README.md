@@ -1,0 +1,2 @@
+## BLOG ##
+<picture></picture>

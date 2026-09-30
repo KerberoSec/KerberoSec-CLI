@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ransom:
+    -
+  ransomac:
+    -
+  ransomcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  authb:
+    -
+  decode:
+    -
+  creds:
+    -
+
+wals:
+  ransomwu:
+    -
+  ransomvi:
+    -
+---

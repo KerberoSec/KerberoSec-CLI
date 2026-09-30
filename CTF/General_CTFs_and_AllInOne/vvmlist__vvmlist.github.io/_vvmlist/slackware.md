@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  slackware:
+    -
+  slackwareac:
+    -
+  slackwarecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  bf:
+    -
+  creds:
+    -
+  groups:
+    -
+
+wals:
+  slackwarewu:
+    -
+---

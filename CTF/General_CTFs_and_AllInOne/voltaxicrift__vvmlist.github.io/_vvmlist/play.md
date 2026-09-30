@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  play:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  creds:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  playwu:
+    -
+---

@@ -1,0 +1,29 @@
+---
+
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  h.a.s.t.e:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ssti:
+    -
+  rce:
+    -
+
+wals:
+  h.a.s.t.ewu:
+    -
+---

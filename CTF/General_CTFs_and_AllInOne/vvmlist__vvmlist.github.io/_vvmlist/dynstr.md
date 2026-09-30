@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  dynstr:
+    -
+  dynstrac:
+    -
+  dynstrcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  ci:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  dynstrwu:
+    -
+  dynstrvi:
+    -
+---

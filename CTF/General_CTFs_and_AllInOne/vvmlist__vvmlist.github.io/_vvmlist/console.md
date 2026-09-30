@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  console:
+    -
+  consoleac:
+    -
+  consolecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  rce:
+    -
+  fuzz:
+    -
+  pivot:
+    -
+  sudo:
+    -
+
+wals:
+  consolewu:
+    -
+---

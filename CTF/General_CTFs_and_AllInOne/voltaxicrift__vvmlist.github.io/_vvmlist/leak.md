@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  leak:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  lfi:
+    -
+  creds:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+  ssh:
+    -
+
+wals:
+  leakwu:
+    -
+---

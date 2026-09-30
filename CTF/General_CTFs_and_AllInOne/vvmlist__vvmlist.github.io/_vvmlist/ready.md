@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ready:
+    -
+  readyac:
+    -
+  readycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ssrf:
+    -
+  crlfj:
+    -
+  rce:
+    -
+  bre:
+    -
+  docker:
+    -
+
+wals:
+  readywu:
+    -
+  readyvi:
+    -
+---

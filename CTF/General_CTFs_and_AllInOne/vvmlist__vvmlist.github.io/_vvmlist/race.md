@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  race:
+    -
+  raceac:
+    -
+  racecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  creds:
+    -
+  mbck:
+    -
+  source:
+    -
+  passre:
+    -
+  rce:
+    -
+  pspy:
+    -
+  cron:
+    -
+  toctou:
+    -
+
+wals:
+  racewu:
+    -
+  racevi:
+    -
+---

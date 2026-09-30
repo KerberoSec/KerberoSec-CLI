@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  ua literally vulnerable:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  suid:
+    -
+  decode:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  ua literally vulnerablewu:
+    -
+---

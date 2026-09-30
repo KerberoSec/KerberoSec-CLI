@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  comet:
+    -
+  cometac:
+    -
+  cometcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  rev:
+    -
+  sudo:
+    -
+
+wals:
+  cometwu:
+    -
+---

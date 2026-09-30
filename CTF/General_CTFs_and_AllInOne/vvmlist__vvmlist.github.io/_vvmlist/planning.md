@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  planning:
+    -
+  planningac:
+    -
+  planningcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  bre:
+    -
+  creds:
+    -
+  cron:
+    -
+
+wals:
+  planningwu:
+    -
+  planningvi:
+    -
+---

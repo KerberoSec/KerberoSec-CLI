@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  lookup:
+    -
+  lookupac:
+    -
+  lookupcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  cve:
+    -
+  ci:
+    -
+  suid:
+    -
+  sudo:
+    -
+
+wals:
+  lookupwu:
+    -
+---

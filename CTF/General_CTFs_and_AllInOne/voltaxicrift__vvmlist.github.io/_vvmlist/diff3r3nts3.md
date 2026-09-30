@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  diff3r3nts3:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  diff3r3nts3wu:
+    -
+---

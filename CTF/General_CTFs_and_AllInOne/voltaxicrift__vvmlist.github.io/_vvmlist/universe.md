@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  universe:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  cj:
+    -
+  lfi:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  universewu:
+    -
+---

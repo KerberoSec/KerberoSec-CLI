@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  flick:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  creds:
+    -
+  bf:
+    -
+  lfi:
+    -
+  sql:
+    -
+  suid:
+    -
+  docker:
+    -
+
+wals:
+  flickwu:
+    -
+---

@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  w1r3s:
+    -
+  w1r3sac:
+    -
+  w1r3scm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  w1r3swu:
+    -
+---

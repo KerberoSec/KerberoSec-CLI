@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  developervx:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  lfi:
+    -
+  creds:
+    -
+  rsync:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+  rwp:
+    -
+
+wals:
+  developervxwu:
+    -
+---

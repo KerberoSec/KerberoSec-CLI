@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  surveillance:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  surveillancewu:
+    -
+  surveillancevi:
+    -
+---

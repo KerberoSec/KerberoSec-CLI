@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  insomnia:
+    -
+  insomniavu:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  insomniawu:
+    -
+---

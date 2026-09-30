@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  slowman:
+    -
+  slowmanac:
+    -
+  slowmancm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  bf:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  cap:
+    -
+
+wals:
+  slowmanwu:
+    -
+---

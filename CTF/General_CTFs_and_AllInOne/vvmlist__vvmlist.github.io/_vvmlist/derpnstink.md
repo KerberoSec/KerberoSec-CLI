@@ -1,0 +1,52 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  derpnstink:
+    -
+  derpnstinkac:
+    -
+  derpnstinkcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  dcr:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  pcap:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  derpnstinkwu:
+    -
+---

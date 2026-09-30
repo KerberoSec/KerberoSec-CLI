@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  crimestoppers:
+    -
+  crimestoppersac:
+    -
+  crimestopperscm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  lfi:
+    -
+  source:
+    -
+  rce:
+    -
+  daly:
+    -
+  creds:
+    -
+  rev:
+    -
+
+wals:
+  crimestopperswu:
+    -
+  crimestoppersvi:
+    -
+---

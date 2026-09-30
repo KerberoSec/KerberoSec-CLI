@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  birdeye:
+    -
+  birdeyeac:
+    -
+  birdeyecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  birdeyewu:
+    -
+---

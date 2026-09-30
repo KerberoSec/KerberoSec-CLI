@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  victim:
+    -
+  victimac:
+    -
+  victimcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  pcap:
+    -
+  hc:
+    -
+  rwp:
+    -
+  suid:
+    -
+
+wals:
+  victimwu:
+    -
+---

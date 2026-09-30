@@ -1,0 +1,13 @@
+---
+curls:
+  fristileaks:
+    -
+  fristileakscm:
+    -
+functions:
+  fristileaks:
+    -
+wals:
+  fristileaks:
+    -
+---

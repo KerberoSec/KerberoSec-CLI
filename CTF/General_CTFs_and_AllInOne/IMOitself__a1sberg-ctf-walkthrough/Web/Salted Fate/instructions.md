@@ -1,0 +1,3 @@
+Welcome to Salted Fate, a seemingly secure authentication system that prides itself on "enterprise-grade security." The system generates random 8-digit passwords for users and stores them with salt and bcrypt hashing. But something seems off... The developers implemented a "security feature" that introduces a delay based on password matching. They thought adding a sleep timer would prevent brute force attacks, but did they accidentally create a vulnerability?
+
+http://178.128.110.55:7019/

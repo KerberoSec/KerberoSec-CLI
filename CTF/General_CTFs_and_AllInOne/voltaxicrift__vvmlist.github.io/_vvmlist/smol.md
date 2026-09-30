@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  smol:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  lfi:
+    -
+  creds:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  groups:
+    -
+  sudo:
+    -
+
+wals:
+  smolwu:
+    -
+---

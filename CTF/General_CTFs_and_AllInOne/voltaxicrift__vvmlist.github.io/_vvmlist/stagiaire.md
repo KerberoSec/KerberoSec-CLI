@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  stagiaire:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  phish:
+    -
+  cron:
+    -
+  pspy:
+    -
+  sym:
+    -
+  sudo:
+    -
+  tunnel:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  ci:
+    -
+
+wals:
+  stagiairewu:
+    -
+---

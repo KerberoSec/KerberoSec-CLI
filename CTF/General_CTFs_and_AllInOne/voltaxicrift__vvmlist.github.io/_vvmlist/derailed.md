@@ -1,0 +1,52 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  derailed:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  bof:
+    -
+  xss:
+    -
+  cors:
+    -
+  idor:
+    -
+  ci:
+    -
+  ssh:
+    -
+  groups:
+    -
+  pspy:
+    -
+  sql:
+    -
+  git:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  cron:
+    -
+
+wals:
+  derailedwu:
+    -
+  derailedvi:
+    -
+---

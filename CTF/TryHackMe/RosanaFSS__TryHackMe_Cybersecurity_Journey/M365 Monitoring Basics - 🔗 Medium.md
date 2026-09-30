@@ -1,0 +1,848 @@
+<h1 align="center"><a href="https://tryhackme.com/room/m365monitoringbasics">M365 Monitoring Basics</a></h1>
+<p align="center"><img width="1200px" src="https://github.com/user-attachments/assets/5688ea0c-3ccd-4732-81de-8c3052498f1f"><br>
+If you find it helpful, consider coming back for research.<br><p align="center"><a href="https://githubhttps://github.com/user-attachments/assets/f9d56f26-bf87-4309-b5d8-f98cbb0302b0com/RosanaFSS"><img src="https://img.shields.io/github/followers/RosanaFSS?label=Follow&style=for-the-badge&logo=github&color=24292e" alt="Follow Rosana on GitHub"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://img.shields.io/badge/COMPLETED-2026%2C%20MAR%2010-444444?style=for-the-badge&logo=calendar-check" alt="Completion Date"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.linkedin.com/in/rosanafssantos/"><img src="https://img.shields.io/badge/Connect-LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Connect on LinkedIn"></a></p
+
+<br>
+<h2>Task 1 &nbsp;・&nbsp; Introduction</h2> 
+<p>During a routine SOC shift, you, a L2 SOC Analyst at FineGalo, received an alert about multiple failed authentication attempts against a cloud account, followed by a successful login. Shortly after, suspicious behavior is observed in the user’s Microsoft 365 services. On their own, each event might seem explainable, but together, they tell a more concerning story.<br>
+
+The organization relies entirely on Microsoft Entra ID for authentication and Microsoft 365 (M365) for collaboration and email. There are no endpoint alerts and no network indicators to rely on. Every clue lives in the logs of these cloud solutions.</p>
+
+<h6 align="center"><img width="550px" src="https://github.com/user-attachments/assets/755acf2a-0dff-4b5d-bc2a-5212cbfa4cbf"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>In this room, you’ll step into that investigation and learn the role of Entra ID and M365 in modern company environments by analyzing their logs!</p>
+
+<h3>Learning Objectives</h3>
+<p>
+  
+- Understand the risks of identities and why attackers target them in modern environments.<br>
+- Understand Entra ID and M365 as critical log sources for modern SOC investigations.<br>
+- Understand Entra ID and M365 log types and core structure.<br>
+- Basic understanding of how to use logs to identify attacks with Entra ID and M365 logs.</p>
+
+<h3>Learning Prerequisites</h3>
+<p>
+  
+- <a href="https://tryhackme.com/room/splunkexploringspl">Splunk: Exploring SPL</a><br>
+- <a href="https://tryhackme.com/room/introtologanalysis">Intro to Log Analysis</a></p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the question below}}$$ </h3>
+
+> <em>Let´s start</em><br><a id='1.1'></a>
+>> <code>No answer needed</code></strong><br>
+
+<br>
+<h2>Task 2 &nbsp;・&nbsp; What are Identity Providers</h2> 
+<h3>Why Companies Moved Identities to the Cloud?</h3>
+<p>Before cloud identity providers, organizations like FineGalo managed identity separately for each platform. Security controls were tied to individual systems, meaning protections like MFA, strong password policies, and access restrictions were available only if the platform supported them, for example:</p>
+
+<h6 align="center"><img width="9000px" src="https://github.com/user-attachments/assets/d3a6c5f3-d689-43b3-a3d0-7dfc6fefc804"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>As companies moved to SaaS platforms and remote work, this fragmented model became hard to manage and even harder to secure. Platforms like Microsoft Entra ID solve this by centralizing authentication</strong> (who the user is) and authorization</strong> (what the user is allowed to do) into a single control plane.<br>
+
+This leads to the classic question: "Identities are only user (person) access credentials?"</p>
+
+<h3>What Is an Identity?</h3>
+<p>A <strong>digital identity</strong> is a set of attributes that uniquely represent an entity within a computer system. That entity can be a person, a device, or a software component. Identities are used to <strong>authenticate</strong> entities, <strong>authorize</strong> their access to resources, enable communication, and support actions such as accessing services or performing transactions.<br>
+
+At a high level, identities can be grouped into three categories:<br>
+
+- <strong>Human identities</strong>: Represent people, such as employees, contractors, partners, or customers.<br>
+- <strong>Workload identities</strong>: Represent software components, including applications, services, scripts, or containers, that need to authenticate to other systems.<br>
+- <strong>Device identities</strong>: Represent physical devices like desktops, laptops, mobile phones, and IoT devices. These identities are separate from the humans who use them.</p>
+
+<h6 align="center"><img width="550px" src="https://github.com/user-attachments/assets/eccdbf02-fe8f-4444-84fb-8281f04588fa"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>An <strong>Identity Provider</strong> (IdP) is the system responsible for creating and managing these identities. It handles authentication (verifying identity), authorization (controlling access), and auditing by recording identity-related activity across connected services.</p>
+
+<h6 align="center"><img width="550px" src="https://github.com/user-attachments/assets/ade9735b-5fe3-4fa9-8dfa-04e83fb59f61"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>Microsoft Entra ID is an example of a cloud-based identity provider. Other examples include Twitter, Google, Amazon, LinkedIn, and Apple.<br>
+  
+<em>Example: You can use your Google account credentials to log in to Spotify. Here, your Google Sign-In is the IdP, and Spotify is the service provider (SP).</em></p>
+
+<h3>Benefits of an IdP</h3>
+<p>
+
+- <strong>Centralized authentication and management</strong>: All user sign-ins are handled in a single location, making it easier to manage access and investigate suspicious activity.<br>
+- <strong>Single Sign-On (SSO)</strong>: One successful authentication grants access to multiple cloud services, improving usability while reducing password sprawl.<br>
+- <strong>Stronger authentication</strong>: Features such as MFA and Conditional Access can be enforced uniformly across users and applications, rather than configured per system.<br>
+- <strong>Better visibility and logging</strong>: Every authentication attempt generates rich identity logs, giving analysts the context needed to detect and investigate threats.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What type of application is Entra ID?</em><br><a id='2.1'></a>
+>> <strong><code>Identity Provider</code></strong><br>
+<br>
+
+> <em>What type of identity is a server account?</em><br><a id='2.2'></a>
+>> <strong><code>device</code></strong><br>
+<br>
+
+<h2>Task 3 &nbsp;・&nbsp;Identities as the Target</h2> 
+<p>Now that you understand what an Identity Provider (IdP) is, it becomes clear why attackers target it. In a cloud-first organization like FineGalo, Entra ID is the gateway to everything. It authenticates users and authorizes access to services like Outlook, Teams, SharePoint, and internal applications. That means a single compromised account, especially a privileged one, can give an attacker legitimate access without needing malware, local system access, or a foothold inside the network.<br>
+
+Before you dig into the alert, we’ll cover the attacker goals behind cloud identity attacks and the most common risks in identity platforms that enable them.</p>
+
+<h3>Why Attackers Are Targeting Cloud Credentials</h3>
+<p>Attackers target cloud-based identity providers because they provide:<br>
+
+- <strong>Remote access from anywhere</strong>: Authentication occurs over the internet, so attackers don’t need access to the internal network.<br>
+- <strong>Legitimate access to multiple services via SSO</strong>: One successful sign-in can unlock emails, files, chat, and connected apps for a user.<br>
+- <strong>Out of the radar of traditional tools</strong>: Firewalls and endpoint tools may see nothing suspicious because the attacker is using valid credentials or the authentication is occurring outside of their visibility.<br>
+- <strong>Direct access to high-value resources</strong>: Email and collaboration platforms contain sensitive data, internal communication, and often allow resetting account credentials and other authentication factors.<br>
+
+Entra ID has plenty of features to better protect identities within a tenant and prevent attackers from being successful. This leads to another important question: “<strong>If Entra ID is so secure, how do these attacks still work?</strong>”</p>
+
+<h3>Cloud Identity Providers Security Gaps</h3>
+<p>Cloud identity providers usually offer strong security controls, but those controls only work when they’re properly configured and consistently enforced. In many incidents, attackers don’t rely on advanced exploits; they simply exploit the lack of these security configurations.<br>
+
+Using Entra ID as an example, the diagram below illustrates how the platform evaluates authentication signals to decide whether to allow, block, or request MFA validation before a user can access the organization's apps and data.</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/b7e2d3e1-9486-45b7-8003-0f16819ac63a"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>Common misconfigurations (or lack of configuration) that increase the risk of compromise:<br>
+
+- <strong>Lack of multi-factor authentication (MFA) enforcement</strong>: Attackers can gain access with simple stolen credentials, bypassing MFA entirely.<br>
+- <strong>Overly permissive access policies</strong>: Broad policies or group exclusions create gaps, allowing sign-ins from any location or exempting admin accounts from security requirements.<br>
+- <strong>Excessive administrative privileges</strong>: Too many admin accounts or standing privileges increase the attack surface and, if compromised, provide full tenant control.<br>
+- <strong>Weak password policies</strong>: Default settings may allow easily guessable passwords without protection against known breaches or common password lists.<br>
+- <strong>Disabled authentication risk policies</strong>: Risky authentication attempts from suspicious IPs or locations may be permitted if security policies aren’t enabled.<br>
+- <strong>Insufficient logging and monitoring</strong>: Without active monitoring of sign-in and audit logs, suspicious activity can persist undetected for extended periods.</p>
+
+<h3>Importance of Identity Logs</h3>
+<p>After learning the identity risks, one thing is clear: attackers don’t need advanced exploits: they just need a gap.<br>
+Those gaps don’t always trigger alerts; the strongest evidence often lives in logs. That’s why we will cover many of these logs in this module, as they are a powerful resource for identifying both Entra ID and M365 threats.<br>
+
+The logs can reveal to us:<br>
+
+- Successful and failed logins<br>
+- Reasons for failed logins (e.g., bad password)<br>
+- Account lockouts<br><br>
+- MFA prompts and results<br>
+- Source IP address and users' geographic location<br>
+- Device and browser information<br>
+- Client/app used to authenticate (browser, mobile app, etc.).<br>
+- Conditional Access outcomes (allowed, blocked, MFA required, etc.).<br>
+
+You can also use this identity data to correlate with service logs, such as M365, to analyze what the user did after successfully accessing an account (mailbox access/management, file downloads, chat activity, etc.).</p>
+
+<p align="center">It's important to mention that these logs can be tricky because they're very rich,<br> capturing every step of every interaction in Entra ID or M365 environments.<br> When analyzing them, use a timeline approach to understand<br> what's happening from a user or application perspective.</p>
+
+<p>Now that you know the importance of cloud-based identity logs, we will start exploring them in the following task!</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What authentication resource can prevent attackers from authenticating with only a stolen password?</em><br><a id='3.1'></a>
+>> <strong><code>MFA</code></strong><br>
+<br>
+
+> <em>What can help us detect and monitor cloud identity threats?</em><br><a id='3.2'></a>
+>> <strong><code>Logs</code></strong><br>
+<br>
+
+<h2>Task 4 &nbsp;・&nbsp; Entra ID Sign-in Logs</h2> 
+<p>After understanding why attackers target cloud identities, let's dive into how we use their logs. This is where Microsoft Entra ID's logging capabilities become your most valuable tool.<br>
+
+Microsoft Entra ID generates detailed logs for every authentication attempt, configuration change, and administrative action within a tenant. These logs don't just tell you what happened, they tell you who did it, when, where from, and often why it succeeded or failed.</p>
+
+<h3>Entra ID Core Components</h3>
+<p>Before we explore the logs, let's understand the key components that generate them:</p>
+
+<h4>Users and Sign-ins (Authentication)</h4>
+<p>Every time a user attempts to authenticate to any service protected by Entra ID, a record is created. This includes successful logins, failed attempts, MFA challenges, and the context around each event (IP address, location, device, application, and others).</p>
+
+<h4>Roles and Access Decisions (Authorization)</h4>
+<p>After authentication, Entra ID determines what the user is allowed to do based on their assigned roles and permissions. Changes to these roles, group memberships, or permissions are all logged in audit events.</p>
+
+<h4>Security Features</h4>
+<p>Entra ID includes built-in security capabilities that generate their own logs:<br>
+
+- <strong>Multi-factor authentication (MFA)</strong>: Logs show whether MFA was required, prompted, satisfied, or bypassed.<br>
+- <strong>Conditional Access policies</strong>: These policies enforce rules like "require MFA from untrusted locations." Logs show which policies were applied and their outcomes (allowed, blocked, MFA required).<br>
+- <strong>Identity Protection</strong>: Entra ID's native threat detection flags risky sign-ins (impossible travel, anonymous IP, password spray) and risky users. We won't dive deep into these in this room, but we will see how these logs can help us identify threats in the next room, Entra ID Monitoring (coming soon).</p>
+
+<h3>Exploring Entra ID Logs</h3>
+<p>To explore the Entra ID logs and investigate the alert, we will use a Splunk instance. Start the lab by clicking the Start Machine button below. You will then have access to the Splunk Web Interface.
+To access Splunk, please wait for the VM to start and follow this link:<br>
+
+- https://LAB_WEB_URL.p.thmlabs.com<br>
+
+Please wait 4-5 minutes for the Splunk instance to launch. Use Splunk’s All Time range to search. The indexes where logs are stored for each practical exercise are present in each task.</p>
+
+<h3>Set up your virtual environment</h3>
+<p>To successfully complete this room, you'll need to set up your virtual environment. This involves starting the Target Machine, ensuring you're equipped with the necessary tools and access to tackle the challenges ahead.</p>
+
+<h3>Sign-in Logs</h3>
+<p>The alert you are tasked to investigate mentions multiple failed authentication attempts followed by a successful login. The Sign-in logs capture every authentication attempt made against a tenant. It will show you the brute force pattern and the moment the attacker succeeded!<br>
+
+In the Splunk instance, you can start hunting by filtering all the Sign-in (authentication) logs:</p>
+
+<br>
+<div align="center"><p>
+
+| List all Sign-in events                                           |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index=scenario sourcetype="azure:aad:signin"
+```
+
+<p align="center"><strong>Entra ID was previously named Azure Active Directory (Azure AD).<br>When you see "Azure Active Directory" or "Azure AD"<br> in the logs or elsewhere, it is the same as Entra ID.</strong></p>
+
+<p>The structure of a Sign-in log has a couple of fields that may help you identify a suspicious authentication attempt:</p>
+
+```bash
+{
+  "id": "014adaeb-c9db-4119-8a9b-a9f68dd4b700",
+  "createdDateTime": "2026-02-11T17:15:10Z",
+  "userDisplayName": "John Doe",
+  "userPrincipalName": "john.doe@contoso.onmicrosoft.com", // The user address
+  "userId": "a1b2c3d4-e5f6-7890-a1b2-c3d4e5f67890",
+  "appId": "4765445b-32c6-49b0-83e6-1d93765276ca",
+  "appDisplayName": "OfficeHome", // Which application the user logged in to. In this case, the main web portal (office.com)
+  "ipAddress": "203.0.113.45", // The IP address used by the user.
+  "clientAppUsed": "Browser",
+  "correlationId": "dc8fb3db-403c-43e4-b759-21aa137a143a",
+  "conditionalAccessStatus": "success",
+  "isInteractive": true,
+  [...]
+  "resourceDisplayName": "OfficeHome",
+  "resourceId": "4765445b-32c6-49b0-83e6-1d93765276ca",
+  "status": {
+    "errorCode": 0, // The result of the authentication. Code 0 means successful.
+    "failureReason": "Other.",
+    "additionalDetails": null
+ [...]
+  "location": {  // Details about the location from the IP address used by the user.
+    "city": "New York",
+    "state": "New York",
+    "countryOrRegion": "US",
+    "geoCoordinates": {
+      "altitude": null,
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  },
+  "appliedConditionalAccessPolicies": [ // Information about which access control policy was applied during the authentication process.
+    {
+      "id": "c63499f4-64b6-4943-bfc3-52fbb641ef10",
+      "displayName": "Require MFA",
+      "enforcedGrantControls": ["Block"],
+      "enforcedSessionControls": [],
+      "result": "notApplied"
+    }
+  ]
+}
+```
+
+<p>With this context, you can use the <code>errorCode</code> to find failure attempts and other relevant data:</p>
+
+<br>
+<div align="center"><p>
+
+| List all failed Sign-ins                                          |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index="scenario" sourcetype="azure:aad:signin" "status.errorCode"!=0
+| stats count as event_count values(ipAddress) as ip_addresses
+ values(appDisplayName) as applications values(status.errorCode) as errorCodes  by userPrincipalName
+| sort - event_count
+| table applications, userPrincipalName, ip_addresses, errorCodes, event_count
+```
+
+<p>Error codes are a big ally when analyzing suspicious authentication alerts. They can help you to understand the stage of a credential attack the attacker is in. Below are common error codes:<br>
+
+- <code>50126</code>: Invalid username or password<br>
+- <code>50053</code>: Account locked due to too many failed attempts<br>
+- <code>50074</code>: MFA required but not provided<br>
+- <code>50055</code>: Password expired<br>
+
+If you want to verify what an error code means, Microsoft has a useful <a href="https://login.microsoftonline.com/error">tool</a> to help you research it.<br>
+
+In the same query results, you can see that all failed attempts are from the same source IP in the <code>ipAddress</code> field. This is relevant information for further investigation into what this IP address has done in the tenant.<br>
+
+Now, you can filter the successful logins from this source and validate which account was compromised and the applications the attacker accessed by changing the <code>ADD-IPHERE</code> placeholder to the IP address you want to investigate in the following query:</p>
+
+<br>
+<div align="center"><p>
+
+| List all successfull Sign-ins from an IP address                  |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index=scenario sourcetype="azure:aad:signin" "status.errorCode"=0 ipAddress="<ADD-IP-HERE>"
+| stats values(ipAddress) as ip_addresses values(appDisplayName) as applications  by userPrincipalName
+| table applications, userPrincipalName, ip_addresses
+```
+
+<p>You should see the exact account that the attacker compromised!</p>
+
+<h4>Practice</h4>
+<p>For this task, you will answer a couple of questions regarding this suspicious authentication.<br>
+With the filter <code>index=scenario sourcetype="azure:aad:signin"</code>, you will be able to see all Sign-in logs, but feel free to use any other queries you learned in this task.<br>
+Remember to search for All Time to find all log activity.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What is the email address of the compromised identity?</em><br><a id='4.1'></a>
+>> <strong><code>allan.smith@finegalo.thm</code></strong><br>
+
+<br>
+<p><code>56</code> sign-ins</p>
+
+```bash
+index=scenario sourcetype="azure:aad:signin"
+```
+
+<img width="1348" height="369" alt="image" src="https://github.com/user-attachments/assets/aa5e40be-e802-467a-b289-78340027c6fc" />
+
+<br>
+<br>
+<p><code>26</code> failed sign-ins</p>
+
+```bash
+index="scenario" sourcetype="azure:aad:signin" "status.errorCode"!=0
+| stats count as event_count values(ipAddress) as ip_addresses
+ values(appDisplayName) as applications values(status.errorCode) as errorCodes  by userPrincipalName
+| sort - event_count
+| table applications, userPrincipalName, ip_addresses, errorCodes, event_count
+```
+
+<img width="1352" height="341" alt="image" src="https://github.com/user-attachments/assets/be17c472-7629-4ef8-9900-5d0685e17695" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the IP address used by the attacker?</em><br><a id='4.2'></a>
+>> <strong><code>2804:2488:7082:a4c0:fd97:b11b:9895:49c0</code></strong><br>
+
+<img width="1352" height="341" alt="image" src="https://github.com/user-attachments/assets/be17c472-7629-4ef8-9900-5d0685e17695" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the city of the IP address used by the attacker?</em><br><a id='4.3'></a>
+>> <strong><code>Belo Horizonte</code></strong><br>
+
+```bash
+index="scenario" sourcetype="azure:aad:signin" status.errorCode="0" ipAddress="2804:2488:7082:a4c0:fd97:b11b:9895:49c0"
+| table _time appDisplayName, userDisplayName, userPrincipalName, ipAddress, deviceDetail.browser, status.errorCode, location.city, status.failureReason
+| sort by -_time
+```
+
+<img width="1349" height="670" alt="image" src="https://github.com/user-attachments/assets/4c674ae3-4a4d-4d8b-8f8a-57789fd6c056" />
+
+<br>
+<br>
+<br>
+
+> <em>When was the first successful sign-in in the compromised account after the failure attempts? Answer Format: 1/12/25 1:15:00.000 PM (Exact Splunk <code>Time</code> value)</em><br><a id='4.4'></a>
+>> <strong><code>2/11/26 6:16:53.000 PM</code></strong><br>
+
+```bash
+index=scenario sourcetype="azure:aad:signin" "status.errorCode"=0 ipAddress="2804:2488:7082:a4c0:fd97:b11b:9895:49c0"
+| table _time signinDateTime ipAddress appDisplayName userPrincipalName
+|  sort by +_time
+```
+
+<img width="1347" height="473" alt="image" src="https://github.com/user-attachments/assets/acda097a-9136-49c8-b92c-252719f11031" />
+
+<br>
+<br>
+
+<img width="1274" height="120" alt="image" src="https://github.com/user-attachments/assets/59fe1cdd-fd11-4a00-831b-c8c93976fb85" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the first application the attacker accessed after the office home page? Answer Format: The exact value of the <code>appDisplayName</code> field.</em><br><a id='4.4'></a>
+>> <strong><code>One Outlook Web</code></strong><br>
+
+<img width="1349" height="431" alt="image" src="https://github.com/user-attachments/assets/e1e9829b-c84d-4737-8619-b9e0dba2bc5e" />
+
+<br>
+<br>
+<br>
+<h2>Task 5 &nbsp;・&nbsp; Entra ID Audit Logs</h2> 
+
+<p>After confirming a compromised account, the next step is to identify the changes the attacker made to it. This is where you should use Audit Logs.<br>
+
+Audit logs capture administrative actions and changes made within the Entra ID environment. Below are some examples of post-compromise activities an attacker can perform, and you can hunt with logs:
+
+- Resetting passwords to maintain access<br>
+- Adding new MFA methods or devices<br>
+- Assigning privileged roles to escalate access<br>
+- Modifying user attributes<br>
+- Registering malicious applications</p>
+
+<h3>Hunting for Post-Compromise Activity</h3>
+<p>Within the same Splunk instance, you can use the following query to filter for Entra ID audit logs and see account or environment changes:</p>
+
+<br>
+<div align="center"><p>
+
+| List all Audit logs                                               |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index=scenario sourcetype="azure:aad:audit"
+```
+
+<p>Each event has its own particular properties, but you should pay additional attention to the fields below, since they appear in all events and can reveal what was changed, who changed, and the target:<br>
+
+- <code>activityDisplayName</code>: The detailed activity or action that was performed by a user or app. All activities that generate logs are documented on this Microsoft page (e.g., "Change user password", "Disable account").<br>
+- <code>initiatedBy</code>: The account or app that performed the action. When the source of the action is a user account, this field contains its email address. In the case of an app, it will have the app name.</p>
+
+```bash
+initiatedBy: {
+ app: {
+   appId: null
+   displayName: Microsoft password reset service // An app executed the change.
+   servicePrincipalId: d6871dee-b91e-42a7-b98e-beeb5357dfff
+   servicePrincipalName: null
+ }
+ user: null
+ }
+```
+
+<p>
+  
+- <code>targetResources</code>: The account or object that has been changed or affected by an action</p>
+
+```bash
+ targetResources: [
+ {
+   displayName: null
+   groupType: null
+   id: d15f0e8c-80f7-41c0-b861-207d79cbb734
+   modifiedProperties: [
+ {
+   displayName: ForceChangePassword
+   newValue: "True"
+   oldValue: "False"
+ }
+ {
+   displayName: Password // The Resource that was changed
+   newValue: null
+   oldValue: null
+ }
+   ]
+   type: User
+   userPrincipalName: email@example.thm // The target identity
+ }
+ ]
+```
+
+<p>With that context, you can query specifically for the changes related to the compromised account you found in the previous task by using its user email address and changing the <code>ADD-USER-EMAIL</code> placeholder in the following queries:</p>
+
+<br>
+<div align="center"><p>
+
+| List changes targeting a specific user                            |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" targetResources{}.userPrincipalName="<ADD-USER-EMAIL>" 
+| eval initiator=coalesce('initiatedBy.user.userPrincipalName', 'initiatedBy.app.displayName')
+| sort - _time
+| table _time, initiator, activityDisplayName, result, targetResources{}.userPrincipalName
+```
+
+<br>
+<div align="center"><p>
+
+| List changes performed by a user                                  |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" initiatedBy.user.userPrincipalName="<ADD-USER-EMAIL>" 
+| sort - _time
+| table _time, initiatedBy.user.userPrincipalName, activityDisplayName, result, targetResources{}.userPrincipalName
+```
+
+<p>You've now briefly learned how to leverage Entra ID logs to identify suspicious activity in a user account by checking its Sign-In logs and post-compromise activity using Audit logs.<br>
+
+In the next task, we'll explore Microsoft 365 (M365) logs to see what the attacker did after gaining access to cloud services like Outlook, Teams, and SharePoint.</p>
+
+<h4>Practice</h4>
+<p>For this task, you will answer a few questions about changes to the compromised account.<br>
+With the filter <code>index="scenario" sourcetype="azure:aad:audit"</code>, you will be able to see all Audit logs, but feel free to use any other queries you learned in this task.<br>
+Remember to search for <strong>All Time</strong> to find all log activity.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What was the first change made by the attacker in the compromised user account? Answer Format: Paste the exact value of <code>activityDisplayName</code></em><br><a id='5.1'></a>
+>> <strong><code>User started security info registration</code></strong><br>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" targetResources{}.userPrincipalName="allan.smith@finegalo.thm"
+| table _time activityDisplayName initiatedBy.app.displayName initiatedBy.app.servicePrincipalId result operationType loggedByService targetResources{}.userPrincipalName
+|  sort by +_time
+```
+
+<img width="1341" height="638" alt="image" src="https://github.com/user-attachments/assets/83d86205-0a52-430f-a34d-47f53c723a3c" />
+
+<br>
+<br>
+<br>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" targetResources{}.userPrincipalName="allan.smith@finegalo.thm"
+| eval initiator=coalesce('initiatedBy.user.userPrincipalName', 'initiatedBy.app.displayName')
+| sort - _time
+| table _time, initiator, activityDisplayName, result, targetResources{}.userPrincipalName
+```
+
+<img width="1340" height="600" alt="image" src="https://github.com/user-attachments/assets/566ce09b-748a-4d30-b479-9ed676c1a562" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the <code>activityDisplayName</code> that reveals all the details of the modified properties in a user?</em> Hint: Explore the logs content beyond the queries you learned in this task. For example, remove the table function to explore raw logs.<br><a id='5.2'></a>
+>> <strong><code>Update User</code></strong><br>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" initiatedBy.user.userPrincipalName="allan.smith@finegalo.thm"
+| table _time activityDisplayName initiatedBy.app.displayName result initiatedBy.app.servicePrincipalId result operationType loggedByService targetResources{}.userPrincipalName
+|  sort by +_time
+```
+
+<img width="1349" height="471" alt="image" src="https://github.com/user-attachments/assets/fa2a46a5-6571-442d-8a40-fdd01a24c288" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the second change made in the account? Answer Format: Paste the exact value of the <code>activityDisplayName</code> field.</em> Hint: Remember that one change can generate multiple logs.<br><a id='5.3'></a>
+>> <strong><code>Reset password (self-service)</code></strong><br>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" targetResources{}.userPrincipalName="allan.smith@finegalo.thm"
+| eval initiator=coalesce('initiatedBy.user.userPrincipalName', 'initiatedBy.app.displayName')
+| sort - _time
+| table _time, initiator, activityDisplayName, result, targetResources{}.userPrincipalName
+```
+
+<img width="1349" height="471" alt="image" src="https://github.com/user-attachments/assets/b0d6ba0b-a994-4f8e-8e1c-2f4dd5db4550" />
+
+<br>
+<br>
+<br>
+
+```bash
+index=scenario sourcetype="azure:aad:audit" initiatedBy.user.userPrincipalName="allan.smith@finegalo.thm"
+| eval initiator=coalesce('initiatedBy.user.userPrincipalName', 'initiatedBy.app.displayName')
+| sort - _time
+| table _time, initiator, activityDisplayName, result, targetResources{}.userPrincipalName
+```
+
+<img width="1341" height="481" alt="image" src="https://github.com/user-attachments/assets/0fe24eed-fd36-4600-969a-877ab95094da" />
+
+<br>
+<br>
+<br>
+<h2>Task 6 &nbsp;・&nbsp; M365 Introduction</h2> 
+<p>You've confirmed the account is compromised through Entra ID logs. Now, the investigation shifts to what the attacker did with that access. While Entra ID tells you who authenticated, <strong>Microsoft 365 logs tell you what they did after</strong>.</p>
+
+<p>Microsoft 365 (M365) is a collection of cloud-based productivity and collaboration services tied to Entra ID identities. Once a user authenticates through Entra ID, they gain access to services like:<br>
+
+- <strong>Exchange Online (Outlook)</strong>: Email, calendars, and mailbox management<br>
+- <strong>SharePoint Online</strong>: Document storage, file sharing, and team sites.<br>
+- <strong>OneDrive</strong>: Personal cloud storage.<br>
+- <strong>Teams</strong>: Chat, meetings, and collaboration.<br>
+- <strong>Other services</strong>: Power BI, Dynamics, and various Microsoft apps.</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/63e34df5-0197-4e6d-9a45-dc7d962399d7"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<h3>Why M365 is a High-Value Target</h3>
+<p>For an attacker with valid credentials, M365 services provide:<br>
+
+- <strong>Access to sensitive communications</strong>: Email contains business decisions, credentials, financial information, and confidential discussions.<br>
+- <strong>Document repositories</strong>: SharePoint and OneDrive store the company's intellectual property, customer data, and strategic plans.<br>
+- <strong>Persistence mechanisms</strong>: Mailbox rules, forwarding rules, and application permissions allow attackers to maintain access even after password changes.<br>
+- <strong>Further credential harvesting</strong>: Attackers can search for credentials, API keys, or sensitive information in emails and files.</p>
+
+<h3>M365 Relevant Logs</h3>
+<p>M365 generates detailed audit logs for user and administrative actions across all services. These logs are centralized in the <strong>Unified Audit Log</strong>, which captures events from Exchange, SharePoint, OneDrive, Teams, and other M365 services.<br>
+
+Below are some key log categories relevant to investigations:</p>
+
+<h4>Exchange (Mailbox) Logs:</h4>
+<p>
+
+- Mailbox access and email operations (read, send, delete)<br>
+- Mailbox rule creation (often used for persistence or email exfiltration)<br>
+- Mailbox permission changes<br>
+- Forwarding rule creation</p>
+
+<h4>SharePoint and OneDrive Logs:</h4>
+<p>
+  
+- File accessed, downloaded, or modified<br>
+- File sharing and permission changes<br>
+- Folder operations</p>
+
+<h4>General M365 Activity:</h4>
+<p>
+
+- Application permissions granted<br>
+- Service configurations changed<br>
+- Administrative actions performed</p>
+
+<p>The complete reference for M365 audit logs can be found <a href="https://learn.microsoft.com/en-us/purview/audit-log-activities">here</a>.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the question below}}$$ </h3>
+
+> <em>Let's explore M365 logs!</em><br><a id='6.1'></a>
+>> <strong><code>No answer needed</code></strong><br>
+<br>
+
+<br>
+<h2>Task 7 &nbsp;・&nbsp; M365 Audit Logs</h2> 
+<h3>Exploring M365 Logs</h3>
+<p>In the Splunk instance, you can filter M365 unified audit logs with:</p>
+
+<br>
+<div align="center"><p>
+
+| List all M365 Audit logs                                          |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index="scenario" sourcetype="o365:management:activity"
+```
+
+<p>Again, each event has its own specific structure, but below are key fields in M365 audit logs that appear in all log types:<br>
+
+- <code>Operation</code>: The specific action performed (e.g., "New-InboxRule", "FileAccessed", "Send").<br>
+- <code>UserId</code>: The account that performed the action, usually an email address.<br>
+- <code>ClientIP</code> or <code>ClientIPAddress</code>: The source IP address (Note that sometimes this information can be an Office 365 IP address. Ensure you always check the registrant for ClientIP).<br>
+- <code>Workload</code>: The M365 service where the action occurred (Exchange, SharePoint, OneDrive).<br>
+- <code>ObjectId</code>: The target resource (email address, file path, mailbox).</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/75e6ea81-f2a0-42ed-b1c3-9ada9f390b4c"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<h3>Hunting for Post-Compromise M365 Activities</h3>
+<p>For your investigation into M365 logs, identifying suspicious activities on the compromised account is essential. You will further explore these attackers' techniques in this module. For now, here are some common post-compromise activities you should be aware of:</p>
+
+<h4>Mailbox Manipulation:</h4>
+<p>
+
+- Creation of inbox rules to delete, forward, or move emails<br>
+- Mass email deletion or moves to the deleted items<br>
+- Emails sent to external addresses<br>
+- Access from unusual IP addresses or locations</p>
+
+<h4>File Operations:</h4>
+<p>
+
+- Mass file downloads from SharePoint or OneDrive<br>
+- Access to sensitive or executive-level documents<br>
+- File sharing to external domains<br>
+- Downloads of files the user wouldn't normally access</p>
+
+<p>Below is an enhanced Splunk query that might help you as a starting point to identify what the attacker did with the user account you found in task 4 by replacing the <code>ADD-USER=EMAIL</code> placeholder:</p>
+
+<br>
+<div align="center"><p>
+
+| List actions performed by a user                                  |  
+|:-----------------------------------------------------------------:|
+
+</p></div>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" UserId="<ADD-USER-EMAIL>"
+| sort - _time
+| eval sourceIP=coalesce('ClientIP', 'ClientIPAddress')
+| table _time, Operation, UserId, sourceIP, Workload, ObjectId
+```
+
+<h4>Practice</h4>
+<p>For this task, you will answer a few questions about the activities on the compromised account.<br>
+With the filter <code>index="scenario" sourcetype="o365:management:activity"</code>, you will be able to see all M365 audit logs, but feel free to use any other queries you learned in this task.<br>
+Remember to search for All Time to find all log activity.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What is the application used by the attacker? Answer Format: Paste the exact value of the <code>Workload</code> field.</em><br><a id='7.1'></a>
+>> <strong><code>Exchange</code></strong><br>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" UserId="allan.smith@finegalo.thm"
+| table _time Workload Operation Item.Subject ClientIPAddress ClientIP ClientAppId Folders{}.Path
+| sort by +_time
+```
+
+<img width="1346" height="470" alt="image" src="https://github.com/user-attachments/assets/c35c2a1c-8f5e-4517-8f9f-ca5007666c6c" />
+
+<br>
+<br>
+<br>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" UserId="allan.smith@finegalo.thm"
+| sort +_time
+| eval sourceIP=coalesce('ClientIP', 'ClientIPAddress')
+| table _time, Operation, UserId, sourceIP, Workload, ObjectId
+```
+
+<img width="1352" height="436" alt="image" src="https://github.com/user-attachments/assets/22e3b01d-e19b-4de2-bc92-8c4f749df83d" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the change made in the user application by the attacker? Answer Format: Paste the exact value of the <code>Operation</code> field.</em><br><a id='7.2'></a>
+>> <strong><code>New-InboxRule</code></strong><br>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" UserId="allan.smith@finegalo.thm"
+| table _time Workload Operation Item.Subject ClientIPAddress ClientIP ClientAppId Folders{}.Path
+| sort by +_time
+```
+
+<img width="1346" height="470" alt="image" src="https://github.com/user-attachments/assets/2018d2eb-5f88-45a2-8405-04a1bc917ffa" />
+
+<br>
+<br>
+<br>
+
+> <em>What is the subject of the email message sent by the attacker?</em><br><a id='7.3'></a>
+>> <strong><code>URGENT: Approval for new internal VPN Access</code></strong><br>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" UserId="allan.smith@finegalo.thm"
+| table _time Workload Operation Item.Subject ClientIPAddress ClientIP ClientAppId Folders{}.Path
+| sort by +_time
+```
+
+<img width="1346" height="470" alt="image" src="https://github.com/user-attachments/assets/932aff09-1ff2-4d75-9710-5ecb2128e02c" />
+
+<br>
+<br>
+<br>
+
+> <em>When did the attacker access the response to the message? Answer Format: 1/12/25 1:15:00.000 PM (Exact Splunk <code>Time</code> value)</em> Hint: Explore the logs content beyond the queries you learned in this task. For example, remove the table function to explore raw logs.<br><a id='7.4'></a>
+>> <strong><code>2/11/26 6:20:09.000 PM</code></strong><br>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" 
+|  table _time user Folders{}.FolderItems{}.Subject Workload Operation Item.Subject ClientIPAddress ClientIP Folders{}.Path
+|  sort by +_time
+```
+
+<img width="1347" height="556" alt="image" src="https://github.com/user-attachments/assets/82cb5ad7-4952-4580-acad-f76c4d21cb92" />
+
+<br>
+<br>
+<br>
+
+> <em>Which path was the response stored in? Answer Format: \PathName</em> HInt: Email answers usually starts with "Re:" in English conversations in outlook.<br><a id='7.5'></a>
+>> <strong><code>\Deleted Items</code></strong><br>
+
+```bash
+index="scenario" sourcetype="o365:management:activity" UserId="allan.smith@finegalo.thm"
+| table _time Workload Operation Item.Subject ClientIPAddress ClientIP ClientAppId Folders{}.Path
+| sort by +_time
+```
+
+<img width="1346" height="470" alt="image" src="https://github.com/user-attachments/assets/d878712c-5ca3-42ac-abd1-d91a32374969" />
+
+<br>
+<br>
+<br>
+
+<br>
+<h2>Task 8 &nbsp;・&nbsp; Conclusion</h2> 
+<p>Congratulations! You've completed your first investigation into a compromised cloud identity using Entra ID and M365 logs.</p>
+
+<h3>What You've Learned</h3>
+
+<p>
+
+- Learned why attackers target Entra ID and M365, and the common gaps they exploit.<br>
+- Learned that the real power of these log sources lies in correlating them to build a complete timeline of an attack.<br>
+- Understand that Entra ID Sign-in logs are the investigation starting point to identify:<br>Suspicious authentication attempts.<br>If an attacker successfully authenticates.<br>The location from which the authentications are coming.<br>
+- Understand that Entra ID Audit logs help you to identify privilege escalation or persistence at the identity level.<br>
+- Understand that M365 Audit logs help you to identify what the attacker did with legitimate access in the company's applications, such as Outlook, SharePoint, and others.<br>
+
+In the next room, Entra ID Monitoring (coming soon), you'll learn about multiple common techniques attackers use when targeting Entra ID identities and how you can detect or prevent them.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the question below}}$$ </h3>
+
+> <em>Ready to explore Entra ID threats!</em><br><a id='8.1'></a>
+>> <strong><code>No answer needed</code></strong><br>
+<br>
+
+<br>
+<br>
+<h1 align="center">Completed</h1>
+
+<p align="center"><img width="500px" src="https://github.com/user-attachments/assets/4eb3c47b-f6ff-4726-a43d-be6a6876b541"><br>
+                  <img width="900px" src="https://github.com/user-attachments/assets/bda15984-ffe5-42c0-bc8b-4c9c5a5a13b1"><br>
+                  <img width="900px" src="https://github.com/user-attachments/assets/65b03159-a6b9-4ff3-a939-ecfcc628d433"></p>
+
+            
+<h1 align="center">My TryHackMe Journey ・ 2026, March<a id='9'></a></h1>
+
+<div align="center"><h6>
+
+|Day<br><br><br> |Streak<br><br><br>|Room Name<br><br><br>|Level<br><br><br>|Type<br><br><br>|Rooms<br>Completed<br><br>|Points<br><br><br>|Badges<br><br><br>|Global<br>All<br>Time<br>|Global<br>Monthly<br><br>|Brazil<br>All<br>Time<br>|Brazil<br>Monthly<br><br>|League<br><br><br>|
+|---------------:|-----------------:|:----------------|:---------------|:----------------------------------------:|-------------------------:|-----------------:|-----------------:|--------------------:|------------------------:|--------------------:|---------------:|---------------:|
+|10<br><br>      |68<br><br>        |M365 Monitoring Basics<br><br>   |Medium<br><br> |🔗<br><br>| 1,144<br><br>| 160,016<br><br>| 91<br><br>| 16ᵗʰ<br><br>| 8ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|9<br><br>       |67<br><br>        |Advent of Cyber 2022<br><br>     |Easy  <br><br> |🔗<br><br>| 1,143<br><br>| 159,880<br><br>| 91<br><br>| 16ᵗʰ<br><br>| 8ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|8<br><br>       |66<br><br>        |Windows Reversing Intro<br>      |Medium<br><br> |🔗<br><br>| 1,142<br><br>|        <br><br>| 91<br><br>|     <br><br>|    <br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|8<br><br>       |66<br><br>        |Advent of Cyber 2 [2020]<br>     |Easy<br><br>   |🔗<br><br>| 1,141<br><br>| 159,164<br><br>| 91<br><br>| 20ᵗʰ<br><br>| 7ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|8<br><br>       |66<br><br>        |25 Days of Cyber Security<br>    |Easy<br><br>   |🔗<br><br>| 1,140<br><br>| 159,068<br><br>| 91<br><br>| 20ᵗʰ<br><br>| 7ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|7<br><br>       |65<br><br>        |25 Days of Cyber Security<br>    |Easy<br><br>   |🔗<br><br>| 1,139<br><br>|        <br><br>| 91<br><br>| 20ᵗʰ<br><br>| 7ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|6<br><br>       |64<br><br>        |25 Days of Cyber Security<br>    |Easy<br><br>   |🔗<br><br>| 1,139<br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+|6<br><br>       |64<br><br>        |Persistence: T1053<br>           |Easy<br><br>   |🔗<br><br>| 1,139<br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+|5<br><br>       |63<br><br>        |LOVELETTER.EXE<br><br>           |Hard<br><br>   |🚩<br><br>| 1,139<br><br>| 158,294<br><br>| 90<br><br>| 20ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|5<br><br>       |63<br><br>        |Monitoring AWS Workloads<br>     |Medium<br><br> |🔗<br><br>| 1,139<br><br>| 157,994<br><br>| 90<br><br>| 20ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|5<br><br>       |63<br><br>        |Kernel Blackout<br><br>          |Medium<br><br> |🚩<br><br>| 1,138<br><br>| 157,978<br><br>| 90<br><br>| 20ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|5<br><br>       |63<br><br>        |Operation Endgame<br><br>        |Hard<br><br>   |🚩<br><br>| 1,137<br><br>| 157,578<br><br>| 90<br><br>| 23ʳᵈ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|7ᵗʰ<br><br>|
+|4<br><br>       |62<br><br>        |Monitoring Active Directory<br>  |Medium<br><br> |🔗<br><br>| 1,136<br><br>| 157,396<br><br>| 90<br><br>| 22ⁿᵈ<br><br>|10ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|3<br><br>       |61<br><br>        |Monitoring AWS Services<br>      |Medium<br><br> |🔗<br><br>| 1,135<br><br>|        <br><br>| 90<br><br>| 22ⁿᵈ<br><br>|10ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|2<br><br>       |60<br><br>        |<br><br>                         |      <br><br> |  <br><br>|      <br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+|1<br><br>       |59<br><br>        |<br><br>                         |      <br><br> |  <br><br>|      <br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+
+</h6></div><br>
+
+<h1 align="center">My TryHackMe Journey ・ 2026, March</h1>
+<p align="center">Global All Time:     16ᵗʰ<br><img width="250px" src="https://github.com/user-attachments/assets/eceb501f-8a48-4f0d-a959-350e9a08929c"><br>
+                                               <img width="1200px" src="https://github.com/user-attachments/assets/40755500-6e20-4bb2-8deb-05eaae2fbe15"><br><br>
+                  Global Monthly:       8ᵗʰ<br><img width="1200px" src="https://github.com/user-attachments/assets/8daba691-a940-4405-9b01-6fd571be0e5c"><br><br>
+                  Brazil All Time:      2ⁿᵈ<br><img width="1200px" src="https://github.com/user-attachments/assets/3d6b87e4-c7df-430b-b00c-554358d04617"><br><br>
+                  Brazil Monthly:       1ˢᵗ<br><img width="1200px" src="https://github.com/user-attachments/assets/df19994d-3982-4ef5-af99-4b2de08d960c"></p>
+
+<h1 align="center">Skills</h1>
+<p align="center">All:               <br><img width="1200px" src="https://github.com/user-attachments/assets/fe770192-1689-4afb-a35f-5820ce7119ff"><br><br>
+                  SECURITY ANALYST<br>Security Analysis(73): Digital Forensics (75): Incident Response (72): Security Operations (74): Threat Hunting (79): Dectection Engineering(71)<br><img width="1200px" src="https://github.com/user-attachments/assets/71c46ffe-ff1c-4071-8da9-2d91d2f601f6"><br><br>
+                  PENETRATION TESTER:<br>Penetration Testing (90): Red Teaming (84): Exploitation (80): Enumeration (84): Privilege Escalation (88): Vulnerability Analysis(73)<br><img width="1200px" src="https://github.com/user-attachments/assets/161c592d-3baa-469c-991e-538788a99d55"><br><br>
+                  SECURITY ENGINEER:<br>Security Architecture (72): Threat Management (81): Incident Response (71): Identity Security (75): Security Automation (84)<br><img width="1200px" src="https://github.com/user-attachments/assets/369afa87-a986-48b4-bdde-10b8375cc924"><br><br>
+                  FOUNDATIONAL<br>Security Operations (85): Incident Response (74): Malware Analysis (88): Penetration Testing (85): Exploitation (86): Red Teaming (83)<br><img width="1200px" src="https://github.com/user-attachments/assets/7d6b6d86-8ef6-4dc1-ad41-ba4695e943b3"><br><br>
+</p>
+
+<h1 align="center">Thanks for coming!</h1>
+<p align="center">Follow me on <a href="https://medium.com/@RosanaFS">Medium</a>, here on <a href="https://github.com/RosanaFSS/TryHackMe">GitHub</a>, and on <a href="https://www.linkedin.com/in/rosanafssantos/">LinkedIN</a>.</p>

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pc:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  grpc:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  cve:
+    -
+
+wals:
+  pcwu:
+    -
+  pcvi:
+    -
+---

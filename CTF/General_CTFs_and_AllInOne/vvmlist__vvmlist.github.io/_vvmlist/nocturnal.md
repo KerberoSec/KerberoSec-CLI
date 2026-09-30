@@ -1,0 +1,46 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nocturnal:
+    -
+  nocturnalac:
+    -
+  nocturnalcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  idor:
+    -
+  bf:
+    -
+  rce:
+    -
+  ci:
+    -
+  sql:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  cve:
+    -
+
+wals:
+  nocturnalwu:
+    -
+  nocturnalvi:
+    -
+---

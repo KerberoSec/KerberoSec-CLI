@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  helium:
+    -
+  heliumac:
+    -
+  heliumcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  heliumwu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  hackback:
+    -
+  hackbackac:
+    -
+  hackbackcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  cron:
+    -
+  logical:
+    -
+  ads:
+    -
+
+wals:
+  hackbackwu:
+    -
+  hackbackvi:
+    -
+---

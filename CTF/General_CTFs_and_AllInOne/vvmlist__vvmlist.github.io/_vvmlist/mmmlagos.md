@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  mmmlagos:
+    -
+  mmmlagosac:
+    -
+  mmmlagoscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  rce:
+    -
+  bf:
+    -
+
+wals:
+  mmmlagoswu:
+    -
+---

@@ -560,6 +560,7 @@ if [ -n "\$LC_ALL" ] && { [ "\$LC_ALL" = "C" ] || [ "\$LC_ALL" = "POSIX" ] || [ 
 fi
 
 export PATH="$HOME/Tools/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.bun/bin:${BUN_BIN_DIR}:\$PATH"
+export KERBEROSEC_CTF_KNOWLEDGE_DIR="\$HOME/.kerberosec/knowledge/ctf"
 
 # Respect hardware-calibrated Ollama context if previously configured
 if [ -z "\$OLLAMA_NUM_CTX" ] && [ -f "\$HOME/.kerberosec/ollama_num_ctx" ]; then
@@ -583,6 +584,7 @@ WRAPPER_EOF
 setlocal
 chcp 65001 >nul 2>&1
 set "PATH=%USERPROFILE%\\Tools\\bin;%USERPROFILE%\\go\\bin;%USERPROFILE%\\.local\\bin;%USERPROFILE%\\.bun\\bin;%PATH%"
+set "KERBEROSEC_CTF_KNOWLEDGE_DIR=%USERPROFILE%\\.kerberosec\\knowledge\\ctf"
 if exist "%USERPROFILE%\\.kerberosec\\ollama_num_ctx" (
     set /p OLLAMA_NUM_CTX=<"%USERPROFILE%\\.kerberosec\\ollama_num_ctx"
 )
@@ -594,6 +596,7 @@ CMD_EOF
     cat << PS1_EOF > "$BIN_DIR/kerberosec.ps1"
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 \$env:PATH = "\$HOME\\Tools\\bin;\$HOME\\go\\bin;\$HOME\\.local\\bin;\$HOME\\.bun\\bin;\$env:PATH"
+\$env:KERBEROSEC_CTF_KNOWLEDGE_DIR = "\$HOME\\.kerberosec\\knowledge\\ctf"
 if (Test-Path "\$HOME\\.kerberosec\\ollama_num_ctx") {
     \$env:OLLAMA_NUM_CTX = (Get-Content "\$HOME\\.kerberosec\\ollama_num_ctx" -Raw).Trim()
 }
@@ -617,6 +620,7 @@ ensure_shell_path() {
 
 # KerberoSec Security Tools and CLI PATH
 export PATH="$HOME/Tools/bin:$HOME/go/bin:$HOME/.local/bin:$HOME/.bun/bin:$PATH"
+export KERBEROSEC_CTF_KNOWLEDGE_DIR="$HOME/.kerberosec/knowledge/ctf"
 PATH_EOF
             echo -e "  * Added PATH export to ${CYAN}${rc_file}${NC}"
         fi
@@ -630,6 +634,30 @@ ensure_shell_path "$HOME/.bash_profile"
 
 export PATH="$HOME/.bun/bin:$BIN_DIR:$PATH"
 echo -e "  * ${GREEN}[OK]${NC} Global command registered: ${WHITE}${WRAPPER_PATH}${NC}"
+
+# ------------------------------------------------------------------------------
+# 5.1 Link CTF & Cybersecurity Knowledge Base
+# ------------------------------------------------------------------------------
+echo -e "\n${BLUE}${BOLD}[5.1/6] Linking CTF & Cybersecurity Knowledge Base...${NC}"
+KNOWLEDGE_DIR="$HOME/.kerberosec/knowledge"
+mkdir -p "$KNOWLEDGE_DIR"
+if [ -d "$REPO_DIR/CTF" ]; then
+    ln -sfn "$REPO_DIR/CTF" "$KNOWLEDGE_DIR/ctf"
+    echo -e "  * ${GREEN}[OK]${NC} CTF Knowledge Base linked at ${WHITE}$KNOWLEDGE_DIR/ctf${NC} (30,000+ writeups ready)"
+fi
+
+# Link built-in skills and rules
+mkdir -p "$HOME/.kerberosec/skills"
+mkdir -p "$HOME/.kerberosec/rules"
+if [ -d "$REPO_DIR/.kerberosec/skills/ctf-knowledge" ]; then
+    ln -sfn "$REPO_DIR/.kerberosec/skills/ctf-knowledge" "$HOME/.kerberosec/skills/ctf-knowledge"
+    echo -e "  * ${GREEN}[OK]${NC} CTF Knowledge Skill linked to user environment"
+fi
+if [ -f "$REPO_DIR/.kerberosecrules/ctf-knowledge.md" ]; then
+    rm -f "$HOME/.kerberosec/rules/ctf-knowledge.md"
+    cp -f "$REPO_DIR/.kerberosecrules/ctf-knowledge.md" "$HOME/.kerberosec/rules/ctf-knowledge.md"
+    echo -e "  * ${GREEN}[OK]${NC} CTF Knowledge Rules linked to user environment"
+fi
 
 # ------------------------------------------------------------------------------
 # 6. Security Toolchain Verification (tools.sh)

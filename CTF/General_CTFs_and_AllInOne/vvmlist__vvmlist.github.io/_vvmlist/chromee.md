@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  chromee:
+    -
+  chromeeac:
+    -
+  chromeecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  ftp:
+    -
+  al:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  hc:
+    -
+  ssh:
+    -
+  steg:
+    -
+  sudo:
+    -
+  decode:
+    -
+
+wals:
+  chromeewu:
+    -
+---

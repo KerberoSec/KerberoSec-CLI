@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  photographer:
+    -
+  photographerac:
+    -
+  photographercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  suid:
+    -
+
+wals:
+  photographerwu:
+    -
+---

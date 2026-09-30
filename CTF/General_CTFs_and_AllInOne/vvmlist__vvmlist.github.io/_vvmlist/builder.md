@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  builder:
+    -
+  builderac:
+    -
+  buildercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  al:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  logical:
+    -
+  ssh:
+    -
+
+wals:
+  builderwu:
+    -
+  buildervi:
+    -
+---

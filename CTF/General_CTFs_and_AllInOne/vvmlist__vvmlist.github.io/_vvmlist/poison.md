@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  poison:
+    -
+  poisonac:
+    -
+  poisoncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  decode:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  logical:
+    -
+
+wals:
+  poisonwu:
+    -
+  poisonvi:
+    -
+---

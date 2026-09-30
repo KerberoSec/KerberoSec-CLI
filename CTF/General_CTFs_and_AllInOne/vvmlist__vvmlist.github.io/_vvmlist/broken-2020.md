@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  broken-2020:
+    -
+  broken-2020ac:
+    -
+  broken-2020cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  cron:
+    -
+  rwp:
+    -
+  logical:
+    -
+wals:
+  broken-2020wu:
+    -
+
+---

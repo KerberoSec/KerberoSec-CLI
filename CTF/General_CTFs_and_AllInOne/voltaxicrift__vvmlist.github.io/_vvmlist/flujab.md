@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  flujab:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+  rbash:
+    -
+  suid:
+    -
+
+wals:
+  flujabwu:
+    -
+  flujabvi:
+    -
+---

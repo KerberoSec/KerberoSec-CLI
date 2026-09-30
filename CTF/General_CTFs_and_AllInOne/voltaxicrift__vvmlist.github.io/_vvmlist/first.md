@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  first:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  steg:
+    -
+  decode:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+  rev:
+    -
+
+wals:
+  firstwu:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  napping:
+    -
+  nappingac:
+    -
+  nappingcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  tabb:
+    -
+  groups:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  nappingwu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  vulnos:
+    -
+  vulnosac:
+    -
+  vulnoscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  rce:
+    -
+  pspy:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  vulnoswu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  forgot:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  hj:
+    -
+  creds:
+    -
+  cve:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  forgotwu:
+    -
+  forgotvi:
+    -
+---

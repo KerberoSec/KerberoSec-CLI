@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  goetia:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  ci:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  fuzz:
+    -
+  fj:
+    -
+  sudo:
+    -
+
+wals:
+  goetiawu:
+    -
+---

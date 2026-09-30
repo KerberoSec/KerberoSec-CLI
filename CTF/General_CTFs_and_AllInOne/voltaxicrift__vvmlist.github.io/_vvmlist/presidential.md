@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  presidential:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  rce:
+    -
+  cap:
+    -
+
+wals:
+  presidentialwu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  backfire:
+    -
+  backfireac:
+    -
+  backfirecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ssrf:
+    -
+  rce:
+    -
+  logical:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  backfirewu:
+    -
+  backfirevi:
+    -
+---

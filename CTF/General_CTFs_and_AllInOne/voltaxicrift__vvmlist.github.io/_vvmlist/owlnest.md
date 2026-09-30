@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  owlnest:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ato:
+    -
+  lfi:
+    -
+  creds:
+    -
+  decode:
+    -
+  rev:
+    -
+  bof:
+    -
+  rce:
+    -
+  be:
+    -
+
+wals:
+  owlnestwu:
+    -
+---

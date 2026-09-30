@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sense:
+    -
+  senseac:
+    -
+  sensecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  cve:
+    -
+
+wals:
+  sensewu:
+    -
+  sensevi:
+    -
+---

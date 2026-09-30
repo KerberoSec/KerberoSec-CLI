@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  visions:
+    -
+  visionsac:
+    -
+  visionscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  sudo:
+    -
+  bf:
+    -
+
+wals:
+  visionswu:
+    -
+---

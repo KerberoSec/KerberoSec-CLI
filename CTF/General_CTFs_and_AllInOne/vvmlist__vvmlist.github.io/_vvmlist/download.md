@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  download:
+    -
+  downloadac:
+    -
+  downloadcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  source:
+    -
+  logical:
+    -
+  orm:
+    -
+  bf:
+    -
+  hc:
+    -
+  tty:
+    -
+  pspy:
+    -
+  cron:
+    -
+  creds:
+    -
+  sql:
+    -
+
+wals:
+  downloadwu:
+    -
+  downloadvi:
+    -
+---

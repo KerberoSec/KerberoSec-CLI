@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  retro2:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  hc:
+    -
+  sql:
+    -
+  creds:
+    -
+  pretk:
+    -
+  bhgw:
+    -
+  bhas:
+    -
+  groups:
+    -
+  cve:
+    -
+
+wals:
+  retro2wu:
+    -
+---

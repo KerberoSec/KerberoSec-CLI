@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  warez:
+    -
+  warezac:
+    -
+  warezcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  logical:
+    -
+  suid:
+    -
+
+wals:
+  warezwu:
+    -
+---

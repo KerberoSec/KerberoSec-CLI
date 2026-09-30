@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  vulnescape:
+    -
+  vulnescapeac:
+    -
+  vulnescapecm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  kio:
+    -
+  creds:
+    -
+  uacss:
+    -
+
+wals:
+  vulnescapewu:
+    -
+  vulnescapevi:
+    -
+---

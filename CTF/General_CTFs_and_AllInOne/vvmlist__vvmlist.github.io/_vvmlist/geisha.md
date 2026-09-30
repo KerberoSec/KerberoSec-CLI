@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  geisha:
+    -
+  geishaac:
+    -
+  geishacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  suid:
+    -
+
+wals:
+  geishawu:
+    -
+---

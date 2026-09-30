@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  monteverde:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  creds:
+    -
+  logical:
+    -
+  groups:
+    -
+
+wals:
+  monteverdewu:
+    -
+  monteverdevi:
+    -
+---

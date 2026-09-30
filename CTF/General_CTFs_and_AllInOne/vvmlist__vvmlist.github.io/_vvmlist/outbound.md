@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  outbound:
+    -
+  outboundac:
+    -
+  outboundcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  outboundwu:
+    -
+  outboundvi:
+    -
+---

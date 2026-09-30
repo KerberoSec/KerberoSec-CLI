@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  publisher:
+    -
+  publisherac:
+    -
+  publishercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  bre:
+    -
+  cron:
+    -
+
+wals:
+  publisherwu:
+    -
+---

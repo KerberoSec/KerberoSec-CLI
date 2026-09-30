@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  connection:
+    -
+  connectionac:
+    -
+  connectioncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  smb:
+    -
+  suid:
+    -
+
+wals:
+  connectionwu:
+    -
+---

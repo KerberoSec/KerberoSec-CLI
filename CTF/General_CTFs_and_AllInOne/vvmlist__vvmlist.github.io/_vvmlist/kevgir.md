@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  kevgir:
+    -
+  kevgirac:
+    -
+  kevgircm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  ato:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  kevgirwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  government:
+    -
+  governmentac:
+    -
+  governmentcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  decode:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  governmentwu:
+    -
+---

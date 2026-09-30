@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  time:
+    -
+  timeac:
+    -
+  timecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  logical:
+    -
+
+wals:
+  timewu:
+    -
+  timevi:
+    -
+---

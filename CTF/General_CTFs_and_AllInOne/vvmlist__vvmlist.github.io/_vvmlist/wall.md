@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  wall:
+    -
+  wallac:
+    -
+  wallcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  cve:
+    -
+  waf:
+    -
+  rce:
+    -
+  decode:
+    -
+  suid:
+    -
+  be:
+    -
+
+wals:
+  wallwu:
+    -
+  wallvi:
+    -
+---

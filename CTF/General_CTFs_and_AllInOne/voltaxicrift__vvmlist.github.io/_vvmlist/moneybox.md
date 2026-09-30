@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  moneybox:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  steg:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  bf:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  moneyboxwu:
+    -
+---

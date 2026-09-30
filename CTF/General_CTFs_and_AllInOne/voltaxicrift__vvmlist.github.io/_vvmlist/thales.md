@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  thales:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  ssh:
+    -
+  bf:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  thaleswu:
+    -
+---

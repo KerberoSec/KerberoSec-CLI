@@ -1,0 +1,34 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  gattaca:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  lfi:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  gattacawu:
+    -
+---

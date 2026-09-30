@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  epsilon:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  source:
+    -
+  aws:
+    -
+  creds:
+    -
+  jwt:
+    -
+  ssti:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+
+wals:
+  epsilonwu:
+    -
+  epsilonvi:
+    -
+---

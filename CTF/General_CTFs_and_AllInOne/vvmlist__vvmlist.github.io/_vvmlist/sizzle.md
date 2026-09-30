@@ -1,0 +1,52 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sizzle:
+    -
+  sizzleac:
+    -
+  sizzlecm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  al:
+    -
+  smb:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  adcs:
+    -
+  clm:
+    -
+  tunnel:
+    -
+  krb:
+    -
+  dcsync:
+    -
+
+wals:
+  sizzlewu:
+    -
+  sizzlevi:
+    -
+---

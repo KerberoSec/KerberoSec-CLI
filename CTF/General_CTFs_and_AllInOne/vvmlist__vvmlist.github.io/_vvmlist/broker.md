@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  broker:
+    -
+  brokerac:
+    -
+  brokercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  brokerwu:
+    -
+  brokervi:
+    -
+---

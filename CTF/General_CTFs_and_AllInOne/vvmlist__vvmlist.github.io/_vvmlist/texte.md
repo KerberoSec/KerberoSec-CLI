@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  texte:
+    -
+  texteac:
+    -
+  textecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fv:
+    -
+  rce:
+    -
+  suid:
+    -
+  rev:
+    -
+
+wals:
+  textewu:
+    -
+---

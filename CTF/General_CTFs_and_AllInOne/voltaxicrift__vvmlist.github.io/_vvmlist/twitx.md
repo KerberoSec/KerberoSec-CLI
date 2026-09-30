@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  twitx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  rwp:
+    -
+  cron:
+    -
+  sudo:
+    -
+  suid:
+    -
+
+wals:
+  twitxwu:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  election:
+    -
+  electionac:
+    -
+  electioncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  creds:
+    -
+  cve:
+    -
+
+wals:
+  electionwu:
+    -
+---

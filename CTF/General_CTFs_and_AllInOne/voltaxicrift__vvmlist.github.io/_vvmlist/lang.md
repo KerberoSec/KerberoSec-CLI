@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  lang:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  snmp:
+    -
+  bf:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  langwu:
+    -
+---

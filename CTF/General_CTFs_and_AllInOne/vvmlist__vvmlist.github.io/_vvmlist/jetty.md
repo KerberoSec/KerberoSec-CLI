@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  jetty:
+    -
+  jettyac:
+    -
+  jettycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  hc:
+    -
+  creds:
+    -
+  rbash:
+    -
+  sudo:
+    -
+
+wals:
+  jettywu:
+    -
+---

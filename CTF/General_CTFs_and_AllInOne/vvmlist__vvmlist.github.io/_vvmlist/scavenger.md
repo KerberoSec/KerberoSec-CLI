@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  scavenger:
+    -
+  scavengerac:
+    -
+  scavengercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  rce:
+    -
+  creds:
+    -
+  ftp:
+    -
+  pcap:
+    -
+  logical:
+    -
+  rev:
+    -
+
+wals:
+  scavengerwu:
+    -
+  scavengervi:
+    -
+---

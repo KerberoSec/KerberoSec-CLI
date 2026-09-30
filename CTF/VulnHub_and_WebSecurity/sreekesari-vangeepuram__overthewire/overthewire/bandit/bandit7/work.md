@@ -1,0 +1,922 @@
+This seems to be a bit tricky, right!
+![Bandit7](https://github.com/sreekesari-vangeepuram/overthewire/blob/master/overthewire/bandit/bandit7/level7-%3Elevel8.png)
+
+Let's see how tough is this! Shall we?
+```
+bandit7@bandit:~$ ls
+data.txt
+bandit7@bandit:~$ cat data.txt 
+binning	WnfnFPqkuhl2nwHBohzn2C4L5W0gwcLq
+abuts	v8PAwDdkGDdp5NsJ7ZFM5A7TJ5MkYDbm
+fathead	wBhCy0fqvbQdexz5kMKBtGoSWgXw7s0H
+attacks	3GzwnGiZnBDdVuHivJk1pEfOOYu7uOTa
+lopping	H9hzviFp1QO4WF8EzcQNl5MDz5r1bzUC
+tyrannosaurus	WxtYXVar4sgInHp7YUpTzOjdUw1Ww0x8
+reservists	QDidoX6BN1MDTi0QwA6Vt82L9Rb64cm3
+atrophy's	mSpCwP9VgcGRn1SCD8R9bb9cPBl2yqkW
+bolt's	726RB3lt2RmeCtbWEQ8lhUAxVBJfepy0
+Klondikes	wVh3ILxQAsKg8WNnFHp8GxtnSu213GbR
+spatulas	k7YBF0D09pnjHKVuDG12KA2hdfFLEOsG
+emending	ppqz0MTdjpt126Sy4sSISqh8kdn02fAC
+gangrenes	3XssrPp6kgwTImB0QbdbVmVxHTNkQUCc
+proportionate	0HoqF84boKrYnQm9xtcxaPdQ5D389g5c
+sectarian	pSVmt2ghL6WDbMtD71EIsuhNk2g0ADjS
+subjugation	16WI1nJY9ySs7F0WtsiT7ZvOLw36Pcq0
+embroideries	m9ow4lmYnwSnqaRZs6hYJiSNxFu1NL4Q
+Skopje	7gqRJFPGcrlX7L47xnYX15hW66a7awlh
+pony	lGlq0C6a89LB7UHc1QZFDqSuVaYeG2Fy
+hippos	FJTUeFKWOxYplvgGcrnBlbXkYM1Vxzk2
+aspires	vuo3Cu2L8t7UCYb9SpGa6NGNLtFu83OP
+jottings	bGSmarhv6Q2McIdfBe8Q2lX4DjbiPcwN
+parenthesizes	mdPOY1JVefXwE4xCSuHrjCTQBf1FQhuC
+fin's	eHLtjwrRu6GKAruACTVvl9ppqIszf9Jf
+ketch	nb29rBbIX3buQq20DohwTHeCt1drwTvu
+stalwarts	BKgFiHfHMJicyHmdQjmiHIyv2iLZBr4O
+Nippon	hBeEW6BBDRieTI44XE36mDqhh5hDmg1v
+slots	BuJvlLhyubycrZMdJTpdxH8Dz8eJ7Xz9
+s	0xjr6AlFLc1o1arBoPDwzMWbYHA9WC8D
+oldening	JlBO0iihbw4FoMbVPibjw9GuKrsWoj3T
+Euripides	TPATLSIdBFEYEe6SbE2LyouM28ZtTn1M
+hairline's	mnyQgzLMzKyZrMuV1zMh4Ul7Vc2AHcBM
+minuteman	UZfSW2njAi9blxdhEdHYboDbGjLNPp1E
+Kyrgyzstan	TSwZqxGxzV2w9KQtNpUr2ebv1oYJDXcL
+duchy's	KRzB3Ikd8MJSOIv0ZT2iSOdpNki5DvWn
+Bradbury's	6Rh7oXIUjV4Ez4I9qKUrdR4U79F4hSqK
+Secretary	P8uJc1me7jsj63cN9HhPNAI7jwlX1UFr
+erectly	trU15DrySFKuy757rxdiKUQHTpYfspGo
+distributive	wel0dzqqER3DRHZYX2ktuS9WlxHdHmnJ
+scream	pUcQbIxqYsPF9TvOLZKFnTzYMGylLEdh
+meatier	rtKgB0Ismkx8SakFrcRWjSXFUuEt2J6e
+boozes	7ZBMn5eYZ4kRHuZNKzHKdXKeDw4Is0eh
+comradeship	dAr4mUBnGEjcwj27vkc72bkRws20SUZL
+hornet	rvcSQxLCwLKwoyqm63MrBslRiPuYJb3s
+strawberries	2eBpUI6IQPMNGTczLJ1TfGtrdrKEZS6j
+underscoring	wNZpurNbV0FnbTghHTq0hEofX8f6pYHK
+pandemonium's	ARVA7KNd7GoSg3F8ujJGHVP3OFQlzG3v
+marathon's	ynH2KPv84Tf2cXgTdxXDCWP17ED7uDxK
+sleaze	MhLs49f71SUCXRhuMBvnAQ6iJx7VPKwE
+deliberating	RQNO9DfMJYmhIQsGkbcpk90meaJL3PoT
+Pekingeses	sY3OwXYOGwuUZoWM0qTDQtbjTw0WEzqc
+eerie	y0S2L5NLevi6o0KlLu6VdmOUn86QOrfM
+skier	aDeXnuaT0ll3WonVaFIHrNzNqN5fgVBf
+unintelligent	N4ffmZ4lM2qsnnCidwtFMCQIqoapFc5j
+Elam's	Jbm61tl95EpqFpK99vfIG2ejw1jMDCfx
+callable	dGc94HChNMNtOYNDlq1j71BYajnrfK37
+feast's	0TxnozlR81V2o4AuW6BCkDcxebb4jNMF
+custom	mRr5imaJM0PfcBRA46PH3uZHfRHxjU2A
+publicist	EtpAj9llwIXPEOQlwme3gcXkN2YWodNs
+pustule's	k5rEttke1rqgiqo0ECeHX0DMRo9fcxGp
+wickedness	S00ea9A5vHhPOvZhineLcp4UK5oSB79N
+mystics	ckhu7NASGJrHgGua4dHHZAguPhCWlaFS
+dreariest	BZ4nw2ftcrRSSJGIMNQXWoheMG35sTZo
+Harlan's	E5JfMrI0Ko11LXe9zGRqAHNKKCqcVvjg
+equestriennes	FPGsZMlrAqq5DQK7346Li7FDyrEXHcNe
+daybeds	1Fe27XiFvCAKc3S1r5eSf36QL5YPyNa0
+perished	RHr6P71Wzs6tseBnxyrz7SVgJdiAjUjp
+palpitation's	qioCalLUBzY4zX0J061Wl8OwhXBBSKOa
+mildew	Tb1D03bsdXWKbYqLdlITMC2lr3NvuGPT
+obliviousness's	8QW3JWkYkKOnH32HaRO08oIkmy2mh3q6
+seducer's	I4fWGVZt6glJgDltYLWLpclMqpWnbI4r
+woodiness	eVbhXxV5L8sVDJeXgx2xAIOkBz1kXF6A
+Lewis	7UaBBrc1HzFaiLleH5JleLd8q92VHNLH
+Jain	v1xIUIcfIs5GDg2DdNjOSMPMhkDYEGQg
+Munro	tMbNy71IxaB8elAv1khKdIZQ2DmdQ9to
+marketer	X0P0frAEP9yzdEJ8KnxOR5rzEPjaunoZ
+magnolias	nybSKpDcYI93Vhj6vy3iwOV6HjjoOZUx
+vixens	VmYDO3P1ZvxevvRZVOV0151QAhfHKAwD
+bagpipe's	nt3aL2sJ8iXrht8FHDNuZUjhv3r7k2vb
+lasciviousness	wptjMCnLpJKKPaf1g8GhQhyDHPIpYMSr
+patted	iihTzIgsq6NVjmectp6yVWC8BqLJEvGl
+skateboard's	MTTBqOOZyLfJSgttldOAh4ZQDTDK7LD4
+wetback's	20HaX5Uz3PVSVzjV8JQxE5ejdBgfOYoJ
+killdeer	WqNXxZz8Fk1ZTenWnkcyUjyeC2MwuC5M
+laurel's	OvDdvEaTTnSAp5p6YWApZt4AOquT4c6z
+dribbling	a0D61FNNPcufzGoHzDAx4qbNybXv4XfA
+voltmeter	tQjtTbpSrxDdEa1n7lFZfa67QXN0IOqn
+paramilitaries	iUjazXfkAuga2xRQiqTlLx8LSk2v9Jsi
+curiously	EFOqV5j9oyYXzQy0jOqpRDHLBBtwxIjN
+parakeet	biSQed6FP7XvQQWwLkqy9zhnBvSqu2tH
+sicker	C9XUpA5F3GwuPoG3kqtKRkGqDZTS2sAK
+alcohols	6Z6r7eK6TIaanGLgtEoVbMlNjfVd9Yyc
+commuter's	HAxYJucx8CHvt9LRKlcTBB1BJltIJxni
+impact's	Sl7bqdYiNgBgEVboO7WIa9cRxpHiYrps
+croupier	vkmqFUDGzv9FumQANj5QfMuXXafwh8Xx
+evasiveness's	eUjN7FWrMeJa74cgR3P7QWdZDowDNTeZ
+hairpin's	1SB1WBQxK6JcUGzmXP4jpyg64qJLeW90
+unfriendlier	2vYgKCLtcbJux2F6HqoH7KFJfRqO6hWb
+logarithm's	nlVY58jdKmIGLSpxdRisGO0iioOjlHRs
+Nureyev	oAAHSeP1NPUosYBWVeEMUs6iHNVvJ8BX
+fabricated	qA4ZmMJ9W7fDZDuSMaeqGgFZNXTAmdss
+Thracian	4liNFQMWvvkutqAW1MJpvAvSZXtMf27I
+exhibits	hPOIKcmueNt0SCa25VF6RQKFoMoEi4Lv
+splaying	Kby0ev1KmhRJqzOUjYRGfd3cr7IfqhTn
+Argentine	Y1m0jGOu21kDSKCdbNMzUB4Fzun26KOL
+overhanging	hPE5OLVcUzZuNT4uMxXZX6vK1VggGIwL
+realm's	vPybYX0TWJDzxe4vfozIUO6MpIrm3rlG
+Utah	qDKyNlm2s5CFaWKHDymXTiV1crR3UDoA
+Sindbad's	jlYOKYu6e5Ukr6N6qbOcmt3LjgNxgl1j
+sinecures	kWyOrkDe37k7oDsDTHkox9GGc7rgU8Xz
+gaped	snQpPytr2J046l9C0UfIiA2dTxP3xYPl
+skilful	HWA7Ue3xUis0nKJ4IeVbR7Hmwojpc9Zd
+sinecure	hci73l673RNjj0WIN1gizl37mHzYTEDM
+dray's	NeQWwYs4SXNkf4jfUhF5z20iB9c0KKrj
+furbelow's	urT7R7C3SfTxhpZupDUkVZNlAGAIziKr
+Riga's	R0vFrtRuTwiwWRLa2WYkD98zRjOIzCB9
+Irma's	voqw7PseLJiLLAmRhUDIvJ9yxv6EhGhz
+geography's	H83TT6TvQvQjuzswuVTWhEqNRg7jufhA
+piazze	D5027i3imbn5okvNovP5wRnRPxAQWH5J
+loyally	YyMmX0n8cdpPy02uwZs3G2J9WNeOPMLi
+Chi	TuZV1kdJWfpoxj8HfX1U3NsTMkLJqxRG
+gels	SOQnleswHgdRBdqW0PNdkt6yz6Adcy4f
+showerier	yJjwe7tMHzjbsteTvdtTxe0b1wIp1NPI
+manges	MzPFOIsdTkj3pTD8RRBpzSGGmmICplag
+unsaddles	jeAoUnVzSYx9XSop9tvkuFudlG6bJbUo
+Benito	9s90PvL9a1a6WHOSfaihv4HgNwrW7ILN
+spokesman's	ynXd2Q38idoZd9yne0Jmlu5gTdWjteJP
+Rollins	gWDv3ssw9KjnsBjz9UnnBzjF3dPoZRu4
+chargeable	jBWdn8i2S67HKog7fJTZCkKoHOXK2QEs
+Suarez's	62vsHjCKp94jplybeipk6GmvkXqFnjHJ
+dooring	JOU6nXhG3P1AiIPJQWYNfzkivShDaGrB
+professing	kVVJyBtsEs58YyVvugLQBjJhEqbDGWVp
+tether	xvkYh2bz5USHPbRLxI2MFhdWHLSp9wIL
+mysteriously	a10FmcfjVFFmT9pNEQrj830FyhrCuCzv
+surfacing	85xHfoQIpzIZs11SNSbSoepHKrFsLSbM
+strategy's	8IYneIdv5npWRXYFsI838a7aZ77i5NKg
+indulgences	pPRGSF4tkouW7oPXfNEYJASHTvdQKc6A
+cruciforms	SKZB3yxe3MFuqkpn9sAsYek0kh5IeMok
+emphasize	abs4kEDQmmzjqtY173KNoRbsiASgDMj7
+matrimony	ZLWEubrbqlPwaJJp083aF3nDvovZSYxL
+persona's	PVWV5aZtfgp9RR5VR4WsrFhNFNHddd8p
+drachmai	gYV0Xu6Qk8DBWys0r05dfy4h7osx0a9m
+devotee	5j7KFcO4ZmBEVV4xQvodN3fHKWZO1ZLX
+rink's	rgzxEuLfptBz8c42unZoFBPChAVk2yHx
+estrange	NkuICR58vBfb0cjXg3vhafkZWi2teo53
+answer's	lasnAfLGpMYPaK9WO50p0i5InG8QiDad
+corralled	Ks3G6QNvp286UQipCvamdXi0LMBVu0sQ
+remedy's	MPfJTYocoyF8Adyqxbf0nMb02IwmzmcS
+desegregation's	pDOtHxXg0fbkSvwXGr3deiFwNS4rwFjp
+sipping	tfMbFEjADXudYwiVHRO7LpWy6jIrLA54
+stylishness	mmUTVUI4nH1RamOagpsCkUTuSdPPuPbk
+incredulous	gOkc5TeWsk2Hr9lKpBeztu2zli0NLbCK
+premiere	9JLMHjl7rVrUDUjSZLakzQftK8PsjGqp
+confining	0MG2RTHWn8VxVZWj8YcUv9HuMr6A3DAh
+deafening's	O1uwXmX3rsqzMqwE7CDRT2KYyvPxpoOf
+jittery	UopWyRo6xCAJy0Unbx9g4Gtf4altvBuJ
+Iguassu	IT5xJwpiymeypVdJPoitymlEbHH8dzcr
+minstrels	CSDGCzug9houk3arOCj0IM1JRtoEbHNT
+bronzing	PS9dEnle0yhDCIKxQbrDBvP4gznryrLZ
+phonemics	8bxAQNVpe1aKOih1NsO8ffGPM8wEhehK
+locker's	fhkvBnbUjTyrsTQ0C5edGQlMCCfWnBlJ
+competitiveness's	N7tQyY5ald2QCoNjkqH2Yzuua8rs2Udz
+nihilist's	cd3tJIIMZtW0dtMZ6llnnuh9kiGmbkyi
+translated	JvEgiWYxsb8bHX6RkXq6rzFN2lA6UiO7
+lobbing	2sFEEHEviVmX4Dq95k5DtLhmVyTFxh9D
+immodestly	2V088VkbE5VtNxoeNL1rnMJgCptxNSQI
+Johannesburg	iZ0SRpEnIhLnr3OwbKz8WnU3QR4VzAFq
+satellites	I4vXJFSqP2KflWegnvIit4LXtazewYza
+reposeful	X6iWwNuFadXhFqQpZDXVh7RNNs0jYedp
+wad's	iRBlOQbfKdSEPDAYjEA4gn3NPANt8UaA
+joyful	YptFKQIuN8k4OH4Z0kBlCkfzT11Y7pkn
+Beethoven	X3qCXZldydXWQDTnrQAdakpwNbUld4JM
+walk	sEswR5UWV0Pbn0Y7cwln3jUwotugDehW
+pucked	n1Lpqph0jlGzT2TRk3JxGYaJPOGp1Bru
+parvenu	AsjNJqFVsU9iUu5ozAh2d4nYG6Lii0We
+cornucopia's	gOktzvNCCjpls98OAbSoYGHhzxXrxlIs
+Nevsky	4lFR6Tjv75inwRh5PdzwJHMpquuzoHbT
+clobber	6yE0r9l1i09zkEXIRaSMOdQzBi6Rmj6t
+gulling	3TsSHMiEJ66qQAlKNKRcuXdHdRtJQZfb
+uncleanest	hzH8mHReFmi9a1loZ63dMPpAgXxDg1gK
+Kamehameha	frjTb5m5YeRek5zEpiJjDbzaXVX9dwRy
+properest	AvNrio7yhw180sfypwjrrqqod8TbWA1g
+rove	8Azajyl5gftlNV4a82r67SXyunumssuc
+mummies	pyOwAARSYRiu8eV9GkHlJXjxWnPNYSU7
+fabrications	EU9z7El1XWBv5TFyBQp9nDe1CX3hKizN
+shell	mfRqvcd41coDgSxOicfE0qNBiCXVMSNj
+Ch'in	yVEDGPKHRaPt4swbjMmeu5XbUiCpIrkN
+fathom	fxOondsChkiXhXCJhNaJ9yqZQlgOqCSo
+manicurist	c7YwFqBGZSMzdlXEZmTFyslTn4cQL38u
+fireproofed	GcvOydx2SIG7GeXPEUyilNK1pn9ROprh
+astronomy	rXrpFwZPQhplp4siJxAxHL3im6yGdVoE
+maize's	Tm8IIb05Ahp5Qq8mUoe681DMopTV5vQa
+Leakey's	vjCVuxHpiV5Lau0Idp54T0K7OOWxgsS9
+baptists	OMepHjaOD57jmm2W8hVquoZr2t7GX0Di
+attar	ClkJqfEbVQWP44UGPLG8VAbjyWQf94SA
+cottages	usDWdfNqI5QjTKN2N6VTf6963drmOGsX
+hellishly	DYww03hyhLQvASlc2pNZec1ocsO5rUKr
+Jonah's	kQrycxZ5UBFBGJ15z5WTbgrM3f9GMJbO
+Klaus	CruH9m2c4YdpplRhg1IhUbG9yVz1NsNt
+spanner's	NiStGWV1Q0VbrCxSqevJw9Ww3Qn0MtGn
+creationism	Cb9sDiRZZTwzYUAqp7ExYVWwWmCPDuYa
+unbolt	g1ngOPpF4LFTXdcaSDXb0CRB7Cw7EXrD
+fertile	BG5l2kyRMQ70MF1ry39ZK1iU7bDcqRez
+Lambrusco	5ORdfbR9lTmf7aAHkCxXbKHPMasCt0Zp
+extravagance	pYQW6vaUE4B9AJJFZiAEmnCFj7DnDpPB
+reputations	LICcQtHEhknZ7k9QC8K7VilzocgVVIbd
+extrapolated	nVC8bAV9UNtOqMLLqdDrIWDuhEgD3rxb
+discoed	7x1h2aPNGrfKgBfDM0bWG3Gn94P0E7Cv
+chronics	hd5bHKYjPCsuwdjpdhXshRagdRTKCkk3
+skillful	941amGy3M4VX2Ub5Dn1VjvaZfG41CbSb
+Cerenkov	TMBGGHJe1fQWazhOY6kAIIkq0aSH5iz1
+Heinlein	D8YosdpanIXcdf4xKarDpDQ5MdGYYqwW
+resemblance	X2qVzgv2nO3Em8oxBKv8YZc5hYLhrrbZ
+juice	yHVgJ6PtZ9IOYwfNMzGndp5GmfEEvQAo
+Catullus's	hhQuL5RDlSnLt614To4yPt8UjvfFUh3R
+Puccini	SAi4MNmOJkhZKW9B7eMA9By5FSJOTstE
+flunks	EAz4FDMThOm9dPEHNQHa8cp07aOkKuJG
+comment's	j8AyjLr7CMF9McmPAy8wy8TA3e9aaTGB
+blender's	xDbTPLU5lPjVfy83HNyLD53erzcIIPry
+primeval	H0cIK6AJTfhCXZeqKvjZANzcccshQUgj
+Cherokee	1UTOnnwvesTOBGIRgl9dUOMdjlKCQTdx
+erodes	EKEebRKl5ukHk9qOKiAsVy30ellHx64P
+worrywarts	6VdiPqqTwr15QMT2NUOIIlEiIX3U0MrD
+windpipes	hn6syH3mRMAIsPjTFreVCS0GPIGjFG9b
+confidentially	kuZScbiCtbWEGLZR2C7xiHnZDQhYHJO8
+Hermitage	yuhY2n5UIfRqx2Y6ptYnNb0Nq0I3uuDa
+frankincense	gZBXNO1XMqKxiVqb6lNcjXy6v9qCgi9J
+bedbug	a8cdJlp7sZgsaUFXCuTJTWCu4IX66dOt
+umbraging	BUKfp5pKdKGYxEKM6us9xassEYTzlRwY
+fusillades	BcE8Ak9uMk2iLTkV0m9eMwXs91fosa3S
+Randi	RJWIJXl0bUTW8BllwktymvaXNeyn1dOL
+exigency	7uZNpEHN2qEE2LQqVR5JdnorX5wykVz4
+angiosperm's	sBWQ6FR0qEXkr1JAfF8YoZbNycug1YVj
+mildew's	4q1T8m0RbXa6vS5zNOLRjPNDZaEwNTJz
+Olenek	s9iWcOsDgY5r7XMMSa1y90XX2avKUEEH
+reprisal's	Cx6BuXkUAjHEpCkUgm6YmeQRdvr1tjTg
+doormats	MSimcGacOlCNhD03UB6VMKc49uCDDxR2
+revolts	axnaGdGuiQsejpHNXI72v4P8Jj2dnm13
+constitutionality's	iusPbKQJ6TOgZigzvlaSYkbb6akMab6Z
+disadvantages	rPR09fpyTx5uKdm2CNYxqaXlUbmOUYB7
+Yakutsk's	KHU1Z6Iedozujs8RrG9IacDe6Us1L6nk
+shams	J85xBZ1VpB2nSqb3SbPEi1CBFPJ9ZC9l
+housemother	WkgXn1EuwxSljNndO1hyJp636Lkc2HsL
+fogginess's	tPE1WgjPKxfashDmcQMg7KxQ1QuR6p55
+rover's	HEVf0W2Ywr9mRhavikDzzSmY93q32aLH
+Selassie's	vGobYrP1VAhrEQ3zQQ26DIMqFK6bTBrA
+piebalds	CBrd521O054lpeuAljb2LOZBM3j77lol
+Yugo's	ao4Cn16ueFkbdZRZx51jpb6123TN4fhq
+compartment's	6iT04TDbqXF2Tgjt9ti6gFQfLl8sFVRb
+remember	1BJVFTjlOPZiFzpZx9HO9vVxWFIofDYR
+correspondence	gg5DzoUcaXs7CadYwMyYsqrzsd7AjzeG
+bashes	qzosHpIBtCsgRA4pCsqJTraLMgnvzmDm
+bestiality	OrreKbdSSmMkp8uFhB8aYZmNGsc61f0d
+hut's	1i9aZQITLRTFdPkKc5FvLbPDzYUmFCM4
+Delores	d0Jld07pxbgNWescCbo5GHbJkBK49llL
+prefix's	AS1MYbmSdlYistSRKIySccH3B3wz59tX
+stuffs	DPLqjNpXweUUduFYeLxcAHftAK0OMD91
+filching	cinsvRJt7MmMtBvXHDz7ssVf33vNBxKT
+pincushion	AP8zxnGmpzn2nri6kxcyTJgVwC4Giv1n
+cession's	iu2M2GwcVLOkVIAszjnwyXQnGfo0YItF
+scammed	Qimngycxrf8fIVoUDAAoDaWOnUIgr0mm
+cretin's	5lBZp7Zvwa5KJCochRDw58i74hVAdic3
+Spinoza	tT1udEuRMPx20SUbC1xC8GixDMzoU2Ly
+businesses	1VkeymCTFYtlggNh9uG62xOAvroe4uDg
+reserves	0tgoBm6U8Pz29o2ctWwW9Y6Cer2xSgYj
+Brahmaputra's	kBiUKMYIFc4k4FAh2glJqxhjszOrL2lz
+Lombardy's	hV4Og9J360W7DH6e5kqyAihGZSaZzOS9
+wrestler's	c2c44R3mulUyOqOhYuxnVPXPRMqlDqZu
+bifurcation	YVslItmaKhQEypbKlJVzP1YtI7KsLn4F
+child's	ohBZf6AXjCDkF3FFg0ZueVpk1pUafl0y
+ribald	UhFFxp1W2yhVjyoeIvRI3OZAqCuWsJDP
+informant	qJ2DMWsYFiYIvAy51H7TtwafSZfa0Vmb
+headfirst	BgOxmprMO6tjo3ZiGE2FeqhaZLnbwwBD
+typographer	d4gMySiK6iJkpzwTYKBiFXMBrg0ifggv
+pillions	yeVLE7mxPtPWhfZS8dmhInMuC3iPp18D
+plainness	P33BWNcRKoefMZIfz1SAJidhfQ27xM9T
+vacationing	KrTWlnHRp4mqkSsUqB7aAcRRqsZxL6Gl
+Connie	ycppHjbzTiqHzZybxOsLg62y26GBJh5l
+nod	8kSIv1tTbj2TwNKAM4jr4V4cyzX05O6c
+Pauline	47kymIbE2fOy75kDGtokMUzc3kuLKS6S
+smocked	hkYoOhIw093WMuyVwVW4noNoCUKuCHia
+cantata's	32bEgQwp2ZTXyKLzvqBwiu8K5N3Nfvhk
+Io's	mqkIzG0v7SK4IF3U0bDaZyMt1AY9lD2r
+bolstering	rcLxkjw70szFRo8CAEsRTk5LvwnyboSi
+dreamer	LIQQOUqopmSPxo6JGabwWpFdF6i5jxu9
+peppermint	WI5YymaLW69f7kNVqsQ1cxktXmewdD0Y
+puma's	Bep75ZGsCkLEUcmyGv8sW0oaYjEIdQwA
+vomiting	OPZgf1CLffVfovbEds15kbhGH48RRRi8
+amazing	2w4tnNQmSlNnWgbTwIU6rOCFQyC6Ku7M
+rehashing	NIXrmPpztQXPMpFCpO0F9AWWKNsnK327
+riot's	3aHCcjOg9w7oNbOAwN4EKHNJp9LDtz3M
+Mirabeau's	GmvvI0uuEh0Rk0GaG63aGYNCVYiYPHrC
+mystification's	ZW3Ax41fuIOQyfJvmnJHFVHxayh9lHst
+Ana's	LQ2mHZTFh7r9x00Xf8BtwSTAEBM5XHXb
+cleared	AcRd5HLWiOtgQgotJ7fIzc5hxCep7QsT
+narks	RV3Tgsedp3kkI1h2VBT8nMPmYhZldsRn
+suppressing	xtDn6S3v2NByGMJFC0WeENkxsSh4ziW0
+crawfish's	5wazqMLynOD9Zalh7i3CpjcljiAiM5oC
+Thatcher	pDo2wsYwl0kifGaZN8jMNiZWUKpqT1cF
+hankering's	7unVJh0MvRnrSbQZT6gP90XI6fnUcne0
+plowmen	0o2GiTRYFdeZ3bqHKwgVV2YWAwxwO8AA
+bird's	M91iGUhQZlKjM7dfGva28TskD6nyIxRV
+untold	4vnqCSKFWxELwIRw5rU7Ft4i5TCumBMz
+commencing	BC1Ha1cZkSNMMWOIHK1kUYzo5eOp4AbV
+austerity's	7aXWddVXSHCey6eUC0xFQirFR6At1Mws
+waxwing	uYAnO0VdszcPn2R3TrG2SKgZGuO61XFu
+grouts	8fhBmCSf24jjy0VGohwhaf2eWtudCjuU
+Ethiopia	ptEcQ2W1zQyJ4qit3TfTOPUY9QGVlkNn
+Coltrane	BSi9wQ6xPNnGQM7GYcCwuEsB45RoLsCJ
+chill's	vePE10awvgobfmAcxgfk6bYqLOW0cHGF
+minestrone's	vNqQoJFjNGQYEOon8bGEy81tutF1DNlk
+pediments	5InChlKbrjdpoNZ4ENds5WV5PFX4G3hp
+stalk	MEk3fwv0PohoTQcv6zUK8IOF3OOdfS9R
+Gavin	F8mGR1VjACzgsEI2DR19lnE63QD2zgwC
+Jamar	AarsHGE13YxP7wEl46c0aw1MVUxqRrRw
+garnishees	1RAXS247ygEspOE3Gk60BbGIFs7mo6KP
+timbre's	YXL1zaV4NThgKeSmDEHcGg6YEccaNLwb
+bells	XQgRy8QAFC6i2jBt3bWVurTapRrNNN7Q
+blabbed	vrMQrrseAe8dyHpkzw09S4lR1TmKKeDc
+heed's	gVKKcUnVUqkOsHcEzr3WV5xNA1xk7zvX
+appoints	UvvBPPiMhWDxrR7BUq0fD19UawGn3kk6
+Joyner's	dM11ZR1bMmMd0oqn26tOU99JdnSzuddv
+Mantle's	wEpTNxuSUw1IFSxtm7eB6JwkohZO4g65
+autoed	DgaNiAbcm1b0qnipyLnZhiEUppnQuWoM
+probation	Ta6cazFj4mBsCQmb44VEvzWzpKLqWwnJ
+safeness	islrIhdJ7FDw95iaOcjHJ4zYSSaEKgsN
+Elul's	UZS0cuvsiAQhMwaJM2AixgxLIUvkk2JL
+cherish	KP7WnVQ7TukVeqYU5psodqK4S5VZ19jl
+fizzled	B3St4iIu1zQ7v49uCAOufA0CAAUNnFfQ
+Beatlemania's	IwIlj2RUwuUpeBIVBwgBBFRg1j9FaSvh
+Sherrie	m0xixk2NHOw2nJ2aFtR8YQfwQEyDNnHm
+Snell's	txmM50MuWk8BnTaGnprwYysuIbppkOC6
+conspiracy's	b2P05rjxna7apAYbWz883HNUOgrPIMNl
+kiwis	iQSZEyWezYVmpoyqoPIbvyHUif78sqUP
+mockingbirds	9KiiUWFa0NnMz4wEjVH70ZQUHTQexir1
+dependants	HfHuEc23fznWRTKP4qN2JywC6wMcjC9q
+forgetting	BupKRy2G2Q4htmDfsWjvysZUUyxZLKeM
+incorporates	MVNGGm3dJbsBp781iYQVtJSzrwU81713
+accompanists	H9dMNYyEtUp2cx8Yi7WbnROk3g0Y75qR
+Guyanese	ZlM51lZbpkAx0p0e8YrZChEaaxpTRGO4
+Brazos	Cz35gajva8zEy8TKgjUihT0gEOuF9qg0
+governor	ateRg8YsjoDzZqtLo2V0cx0BRba5SqvP
+licentiousness	yRdyBiN86I7HuRNrKOnx0cMCN5EAGM41
+quid's	fufyt7PHXqb7d0lByBflS9SIyWhGVjgW
+Beryl's	2Qi70aGHjGDT6AtgnCPlHJbRuRygEpF0
+dressmaker's	oHfj06WCXho9nMJFSMqy1iqV0OvIkUge
+sustainable	6GKgfAIixdCDoUtzYq9B352UyYro8wuv
+functionally	V5jc9GpOAoYYBEF6zbzLvk8CF6EV9Ur9
+Ned	QyVofD7QyXf6kNZoeeb3TAPSYQ9Osi7L
+wager's	DbCJHgAShYVAFQV6r3yAkBV7AJZ9goX5
+Dodgson's	6X5nhxLwlwso6Jk1hGD3ghfHjmqORmPn
+cashmere	sS0Irv3sAgQdM7TZ6m5yhFTi7MwNwwqd
+intrinsically	Uozp5aXpqEv3Be0pWQIU5Qv3y3QIELP4
+gaol's	WmA0qLuH0rfvhqulfGSyLg8nbvxmqjsC
+reprinted	ucZ467jlJmvPBvSs2ahulLmiOeoC6qif
+pointillist	tMnB2iFq6fH4sfaFnJwUDrLimBaAuMD4
+aquavit	eDCct4DE1WsGziegVtPZrU4LDQk1ni9F
+compositor's	Xsc4GL0M8wIcjaZ7AW4Gh9lldDJ82VNT
+Cain	8VKInC3fWw1p3sH84sGJSGcoJ3OpXt5Y
+stirrup's	jpMlgzuB7GLbUqxrgztFhXizquKDaOr2
+thereby	lC0CXkuAMCtCEHiG9o2Uevw6Cp0mtJqF
+Janacek's	owT8BBRqksUhDZLRTkEs1ZJw68yHSOfM
+Tl	akTxRvbc01zMMGuLKCQQ8lPWo87dEZ2g
+colds	LsnQLh7K56BUXWAfYrg3pX7c89hRYOht
+pinnacles	xcxElNXvkp9RKgNzb0dQdLMSfh33kUdP
+flyswatters	5TeyN52DtHOyLghGnhLJiuUtXRUfFGM1
+agent	xLL2PNV9Fyto0JQGjyCrWGFEDA4nQuk3
+barons	HQz7fMDdgJgnxnP9YGX0ViDrECLf3rLh
+galleon	CuKc8zVaNCaAaE9xCJvTJZWBzGl3U6Q0
+unawares	FNewd4lJVGTkaSMQdYLcwYjioS7frdRq
+blotching	9eluNpl8B4nlqcTsOHLhYmSthcv8iyX1
+merrymaker's	5myeaFxigQA1qDiTG0zTcNxSA19MaUk6
+bipolar	ytaCcTsGDFVIgCzLO7kiVSxA1ranqFmp
+throaty	hNVYh8p30gR4aEihDckYIvRqao085iyz
+basemen	ovdCRklWn6kknICgBPc4SfkwRBFgji42
+bosom	9JETN9Ws7x6ytAJCreoaspnwmxqkkAj9
+underpays	ISVZUY3V4RGLQcmCox1B2i9swNZYOhZE
+cheapskate's	XeeuHfIkRpPNtQuuK6Mv1fqez9c9NLEG
+rabble	CJINYhVwOoM2yhjOdM8RjCWhRQEdrppI
+Ethel	J8DVMVgeXipdC3hnuabnisQELbAHzIPX
+denominators	zko3mJYuLzp0es1s4yVq4git3hKPwK0c
+Debora's	UC4G7CYSosULhdhIaGF3R9XcPyEPIwij
+turgid	GSq45lMKhQrukNUmjPTAr9HLowStkDih
+downgrades	V8arDVG42xGBGYfp30roNajWdfY0f1jx
+wetlands	imZmlpowETeNgLDQJZeFtqufGcCqen6R
+wincing	xXwTN3ws42TIcoiUCeXk93w20B4bdKma
+Forest	70m1AXcea3WigcBtiBjnJJcG47NhLjri
+footnote	x8ZCtwaNUAfdx6TeoyMHNRIHZngY0IHX
+crucifies	nE75fTSK4cw8NO2yca82xuSVZLHb4VlH
+pearlier	XvljmXTwIH16s9f6p0I5esYKZAsHkDun
+vertebras	kr4FRaqN6clX3zazDHMr6iB6PNPCrDW4
+faltered	yxnNd171RJe8X49n6T0mKxHWvnoJGvBO
+personified	876iU9ZEpd9oNWYpOBWHQozCdneQxDTe
+Sam	xFz5jOCMeNPpye11Eo4kdohdb7OoLRhC
+Potsdam's	8zgeBIqMsN1H0K2TTMvA7WfojpIhThmm
+slanderer	Y9Ghespc2Dvv3IzKzk25Nqdlj9rtsNN2
+godliness	tvpbcglFLiIisnrtEn9UfhyrkkxOxyUE
+croziers	M3GJDcNegav3Sl8jef8MuDTyAJrXc6DC
+webbed	rPqyKDyaYUG7HHuKmRnGHBkKn7OFX243
+expressionists	FBL6tNwkhVeHgA8AGOckqhmq37A0CcMB
+mudguards	WGaWH2F9pRGdIFBNqjy0gW0CKvNb0idS
+Varanasi's	JAwD5wM7NwTFFmkWuVEHgGPzaMxhqQwK
+shipyard	NnzHyCIFV4Dov6KsN5Mre8j88CzK865J
+Elma	T2ReXsBuSC9YdJikkvyBssfjdfzDJKia
+answers	kOuHwdzJ3L2nlUCLE2iLzITuYGSrryWx
+adapter's	FAPngNjAh8kGZVjGmUxJkBjVys9jkpYn
+tell	7tCy55m1PedNV7XBjyezWNqiJx1vIAIV
+Fremont's	c8KQo9G0y839gzi7Po3ysolcW56VRWsZ
+disclosures	t9YStEejHjVcUx6E08s2KWuf8RZW1IJN
+will	xaPlldlKbsjrhoTBWbsZkm13O02N7g4v
+Darrow	6mwGPn5QoxDid5pvdnpdDyxQjj4aanar
+undefined	yhsxP8DASqxqtZKnLfyGJYggjttI2OUM
+constancy	jJUZcxTIdW9bSeVpSnumN3rUFnUtyLq4
+droplet	oxZ4wwa9z72GCFWu1sljOZax88JIzoyd
+Quaternary	JzFch3qB0DXnGmQDRpN9w4fEUak2YNOE
+transport	GMBd8pNin0sQGMHGkM08Wnzef8HuxeAf
+opiate's	PcvJgqrpwAgO4utLAO9K7uplniv552PV
+amount	25Sg8ZwXGPPPXsxCK0dSzVTS2PgokljU
+Nguyen	9Ppd6OoX74ghSIvK6g2MV03lhg2BjiKV
+reimbursements	JnoSn9f2d4NIOtTZ77RpK0zSvZkEtpMj
+engagement's	20cDFzfuLxufY8h59ARZSGy52Wp4B3oC
+twain	vEMDvb2VKavHBblafD1oxFDYW1cqXHJd
+footlocker's	Yqg7iKFS5LtgZze0L54rLaBqEV4b6rsH
+particularities	dZ3lKEbO6ev87yHvrap5do1UqFNTIDQi
+calipering	rZv2qmUZ8POlV0WDzkWYa9Y6BUvv2soV
+Gamow	hsIfGMWlXC5eXeKRAnzAPKiY0OFcXn9e
+orangutan's	mT33TPgO1Ftih4vtJG4yNUkfa8Vm3dwR
+Rush	Z4jCI08hGnxF3r0MDTDYcPpOX6ktI10w
+catchword	cQ5IMKmZAZ404B8P0upIor30aVma8oVm
+hibachi's	ttVYw3Iy243End6LnIygX0dEeyHB1zjA
+Iguassu's	9wTEKhty02DdGlHq6FW3PwYPWNAIzYWF
+wheelwrights	ttHH9W2cCZJEzB5wwqXcEwS2ZQdtbKNY
+setup	jC5TPnTDOs5YwPYcNDt9WLjTNCmSuc4b
+Slavs	JQaW13TOID9CPJnjV5VZIwUPDkOyhjLi
+Wahhabi's	zVnwJbvVFpzGTKCRmyHTB4o4BJdbWoJL
+ampoule	1ennG6nKoC2IBMy62SbsHdbf2FODCuHG
+malled	4ZXfbq8PcpdzxVaQXVfK3yi5eB6Y6cnH
+millet's	cdaHDwlspnUJjiZ3aojQZvD8XHwTo0Hj
+bedpan	lcszPNJr349KyoxRXKlNy3uVzjOTQOtB
+masochist	yAVsGcgmcDwGXswKwPihX9pUFCXXfdMK
+mast	kpZhLgDZvxwvbML2HXEYA5d5mrMkQvr0
+compacter	zsaqdbvmq74ciKmQj2zslf89J30g2IiM
+trashcans	cG4skDIHjUVMnOAhjYktSphpOI8mSJ3z
+destruction's	WeOxT4vS9ERe5lg2cFN8wnbNGO2KUoTI
+nutmeats	TNu3P0aVOluiLqFbzZ6mddyZ572g2gkC
+afterword	5kRiaXDs7tqdK3bzGVUU7YGnVqmIo7si
+little	mRFW4IBy02pSlGRsRxJTC0RcMoIuUrw3
+deluged	ZUcC753QmzWNojTqrWDCNhSyV7uoa8fI
+distorter's	qh28S0n5ZsYjSTFDix0UOUXO0cLnKJja
+rack	QVohSdif6WKfcPqqtsLLbQa9s4jtUNW4
+Dortmund's	AiOCiV8JB3FZSXrOrp6cNbuMfi8jXPrC
+Potemkin's	4HsU2MY2XINsL0nRVxpqiYuJuSKoaJ15
+mandrakes	PDHlD8wTmdW4uYaRJwx74pRMimE7XwuR
+repertory	3nTnebl3JqrmqJ3vfrUWNB1KpbvKynLP
+midges	wFrVfgaayy2yUYhhze9L5Y4vp28n65SO
+accusatory	A7awgPQYVBRsdeEAXQCrXrAP5ApJJn2i
+legato	LptjEMUeVESBjSlxTfhUOlSWEwsYXwhd
+corns	ppkahGcGcyeYODawLQYuqY4cPWmYqLye
+guarantor	EJwq8QX2Kx3Vma1qGjzU8r07qMTIWUTA
+catalysis	m1qjldxXf6HSjvGV2VAUkgm8HkrOd7rB
+ounces	GeJdXF8r7SH5qCzlba4y7oSfw5HrgXOs
+energizer	AfWvvveZhHN5UiaXfdDBwGdXYb3z4lgP
+nationals	5baVo5eeW2W5ermAFMyjPDaKkIndWwQ2
+Emacs's	BKSIbqDxdg2VpOZ7kIF4viZRtE8BX5TP
+loaner	aCKjwhtpEFVMmEtySuQxUtrjOjblLwtb
+suntan	bEM0aowkXEwJWXC3a6Z8vNS7V9Z901fr
+statuette's	5OWvLDppCeZNJpsixFT4H6Jj7gz3VhMY
+battleground	9WiJlHULcj9vnFI47G4xA4laEsRI553g
+orientate	lXGL0vRuH77uRvXraOjQ4ov26hNKdUvZ
+ethnically	j4EY7pMFWnepBCmmz8fDkPFKSD1XTgkk
+heckled	313z0RL3OCxgKNN4T6dSw3dxlFYnNr5v
+Constable	4VY9EjHpFI28oCJ2f86HDvCcWH6Ql0aH
+sisal's	AnEtADx0jBswN58x1inA7CWWjpOoXhUk
+offsprings	MlAQpPoRoBNTvGm4aftROAtp8M3yzaA3
+scabbiest	hMShtIbwkAXm9azmwJJrTteYVhdOrjeH
+speared	xSejrnWZv7Of2FjpOGwQYjdN81T2vTiX
+armors	CYwWHQ4nI9a4XuHPhnSMGcvotYqGkKt3
+Manama's	dznDKrN7ikBnfF4w7uL2r6RhMcDIbiQo
+deviating	PCu4ZSOkSRPhgI3WpkSSJIxr85bXQjci
+midland's	o5Q8iHKfFHYLoB0MkHJ8gqKSEmBs6W80
+Heston's	bZ154XPmDEWVxoVTfDeYlhA9kHOMbFfJ
+Clemenceau	54nTqlnA7oEsc0WSF9bWG77wGo3Ujt93
+Niccolo	vLUPJ79Z1eJelRiQzCRxXWEue0enIKib
+motorcades	x5D1icivR14xTZtnW0mLMDWDht3hp46v
+chemise's	YF4Xrj1IpfUAKsORtC91axk44tZSHOuy
+Atlantes	kI1vgSxsjo2vYFfoqpxxjOQevmDSXLM9
+dehumanizes	Cp7mNC2aCWc84HA5ylSIZph35uI8Z0nO
+puma	PmXvIzypwXXHafSNNa4xrVPvGbs6diTO
+vindictive	70LEnqb83AF20NHyKoZEV3lvR46av1Hk
+allocating	iI7si0GE65WFxOgjfaR3UzlisvjorWhW
+Clark	0C0p4v0QpnWd4i8DahS4PY1biGXDlRc9
+funnier	JeoK0TCG3zSoo9SeOMDEjXNAREITeVxm
+resignedly	8hBJm2bIdx0sPSLRWoLS4Ng7r6nUUrrj
+hallucinate	RDfnanIe2AoCGOimLayDTb46gN00rbGi
+rote's	CM0cMv6mFGnSExsM1fsUD6vdz6dcIA6T
+Pyongyang	YxnKRr5IkJP4oRiuSXVUrMR5Fo46f6uy
+propensity	UUylzd8qVuiMb4ONyYc5VhfSBlMZO9i8
+coercion	n9LHsX87uhGQtfhD93MQF2LrzdugYfWe
+motocrosses	ieCiti9Hy3weIAUcOuP39QQYbzSl2p7S
+aerie's	zmQjUjaAms149DdtvZM97gc8FhfLxiOt
+cannibalism's	r5gghlAerNXeUdTZGonvom5tqWS9E53h
+exclaim	NLSxF98DmcaAsY9kMOUm6oQGFfXzQ4s2
+gauze's	e8dEM7CrYGCTpnp0IZur5hDFWolAvcJx
+adieus	Yuy9aiQPNPH8irySeKkyZeAjc8QdNNPn
+brotherliness	GUwxnJQ6XC9n60h95bykJu2HN5O351OV
+polities	hJ2MTwxaRkC54oqmmi55n4T5I5jwXejd
+affixed	Epc6sGw2YWwS0EabUV4kcPFaxUJg4inE
+blacktopped	vrT0SnHkM80oOtqc6bWTJJlBMxN0LyE1
+nastiness	TZZxDlL3GQK6YJwwFsYFW97Us7IJAb2A
+besting	NrOB5yT3jz0W80fnjWMhfhNjFg9aSJww
+encumbrance	6bKzyJiZH35Uk33z7TvUjmVW7lOXT2wD
+telegram	IjsBvij2TAzOuSsgjOyJp1C9ZC15auM6
+easterners	XxtuZQ4s4J43U9DIIz4nJKbFy05Bo2F7
+skewering	gDA4IFfEQTl4Ope8202lUrd498KnJTWs
+amebas	sWiJaafPWOefShnBQeY200oseEcywzqh
+Lela's	hDh3f0DHtLRchJdkCUMaqtHk3ZR7drzR
+pancaked	jbpLqAdU1WxBQ2lFFGMlxt7pYeoqweGc
+Abner	JlZbJlEVeoPMvW2gLUSTIHfVmE934wvA
+squaw	fqQxT4NuGkML4F8IXfKJHMA3CWKjZz6h
+psalmist	jn8n7lSiLYMwxPlaMlCTadJm3JIGlBeJ
+spinner's	Qp80HVFccGz17Hf3ENhLihRAdpT15FfZ
+softens	QaI8HKeYeqFABvR9lUtRSEclbEgAIpis
+gamete's	CeKSoilmvmRbdfqTEkQ6MlC707fQ52Zb
+medication	hh5G8qkPNTPTn3vM9gSCDRnhlyFwUaFb
+federal	EtaB5bhtzcCGQ1FEBhFB5ztqEq5osXsB
+pirates	S7uby8JvcJBThMMwER8ELNdPR5QxcEB8
+amorally	ktXrS37PzLENaq3He61X8HCnuz4nkPD8
+cation's	n5w275oHYmsxCBYuSo7HLTO4z7CtF50y
+tenancies	6Gy56JmcA4keImLZ5X8RIwBVvsIq8exU
+riff's	XuEj00MHNbvg8DAnE3oDpaC7l4y7nn0C
+reprint	ZFJW59XXLxpOaZbwulSTH29R9rO8uExi
+Althea	bnoM4E1dp6ENbrhczyAZ6db40vG2Lgiq
+parquetry	LxFgfln9MAeVPozoJyWBwJcywD77FZ78
+slantwise	rMb6AHrjIdhFqXc6b0UemjbiIuEsTtrz
+hooping	J23cjkOrhLz4iumLojIOic2wb1qHVpdm
+utterly	lDdJwPXzgUezn5d1IlUaXh8kBZhcCYr7
+deprograms	1WPkqn5bIGUSdHki3hyUnpG71aPJ4s4V
+Maritza's	St2TGNFBH7LTeI5IkXKUWTQGJr6HetX1
+approvals	ail8EsLMwfUAPWSJ1AwUSMmEOZRS5Pn5
+tardy	SWiNC6BB25CdBSfJEcnjTYrNhOOTbU7s
+Thurmond's	mELT1OX56Bf9SKZ7cx8i47Itj3q75WjN
+cubicle	zWXEeGsLigDk2cuyfPrRDfticIgU1zW8
+Amman's	bvpYW4lBxFLDCfba5lyO4jyA8clpgdsH
+premier	PGjfD7qfX72HoWoXW6Ly51gYZVK4GRG6
+splodge	vjqeNIrQ4W4ANMrOYmsuArd6RP0jyuff
+wighted	BYV1a3FmyAJ9OR23ksGmi2RBvLxjROpp
+riposte	Kjeu2B4GpKigSb69uKaFY2lQRrBSKaO0
+gang	v1glBmA2EBW9yCDrMpCMdYGK89FQd8uQ
+cushion	kzjWsGnZbwfwkR2gOvXxGV3Vu63Zc1Qw
+Sioux's	W0oqJqzHXOV9sSB5dNr3L2zjaUwvylXh
+among	bc2Lihqjk1NLtJc4282zzooNOKswZhnW
+Eve	jEzyJS4P0RuDElcGJxED7toe5SMaboiV
+outlast	80EVUWGynmjPMwoax9LeB3qLPSq9Xnqt
+oak	IwF24n6aPP461mrVZDtDYkinKAiY0fVq
+Day	6ayla7uKypukQgiwQRtM2z5bSgg3xZF2
+Sept's	LLlYG0VKgwnePrIy8FvDwTy3tMg6mAUa
+Chen's	2ju99ph6jgmsPY4yUYIX9mxikGOQCzz6
+cocoas	GNzDaft8C0R3MOkUpgF1XImVrK3Z0chs
+holed	5MYmorMLFE46RulZJhNc1iS7or15pWKd
+castanets	XPVFmurKeaivp96CjXzuui7NBKAF3ggA
+abattoir	0FGQwPE165P9ENukRz8rxwJzPhozi7rX
+Fri's	XckhlhZfu9x9VVWIGxZPRTepISwm0X3E
+m	GkX9P84ocohKKRHeyF6KBjoeZHTGhIoT
+Alsace's	DEAynRHhVsZZHzLpL1Yyz7LNhnwx6m6R
+Elisa	7ckc1Mi95tCb74zkTNIAznK5zx3NRF8y
+Labrador's	KiBAcPFAI68Ol4OJtKBYNUjFzaitaacb
+backache's	9jUESbRP8F0CmzpVBHpuWLuijxgdt8pK
+disreputable	QZdBvvtdWziZpZeHGq81aeKLlaz9mOC8
+overthrew	VIctHNMqwWYfWkCNMdf7SB7t5SAH45uK
+untruest	SrB4ABKh7cUJMzYq1RfjRpYNOfz6O6oA
+figuratively	cbSQhcKNSn0HPXJgJrs9E6vZAnvgvcZt
+Farsi	EZmkuO9yZhkYzflZbGZrbTVDrTbTiGBk
+hearty	F6UWRLsTW8ThoKsZoJ402Xpt0DsuSKDU
+encyclopedia's	Pc1x1kL8sa28GCO4Mptm8G7ZvBovxKJW
+weariness's	oXo8xuPtYmXzrUE1xPo4hiqqPoRavCO5
+explored	7Tyx1EbYsFS9CHnRgG3hbmpmeXDSiB1s
+Bridger	NdprhwquPUCBCvnsgWzi66LBNyQ0QGc3
+Achebe	hXIiRepIhtdZiq7RYaac1CwUBc1hTVNY
+greyhounds	J6QyNQ07Hp3JDWvni0RWbaGras3cDjsf
+bicycle	j6gz57tMvqmff1pJ9Ixwb8ba5SJM2Y4v
+pinker	H5KYVuqvOMl8DFG6QSYHgPZnt8P3wCd8
+overdraft	Ugki8aW74caeJYOSRI348SUMm1DLhtuR
+opinion	IkJCDo8Shch6dI5Z4OTdKc91eZ5BWim6
+Tammuz's	KxxoewXeHJ8sxvptYkoWpunxuD8RkY1X
+breaths	GZG9jxikXJRRhG9QpUmMXDWJClAM92PE
+requiem	3RdFuG1yHYQNHStDGbWMdxNNbrSy7qeb
+Jermaine's	yus4LLQyJaj3fQPAXzkm2u5jwPq1Bg4Q
+interruption	Winvwlv1hWxfuHg1PTkZOwD5PB3BCmgN
+Anibal's	YvlbVqaGYi5UWWsNonOdeH5cgXuZP8HQ
+beatification	YWc0nORWuZ1lE2grbcGXHiNfZfCaBPmc
+majesty	YdsF4Gn70sRV5NMJoNRvJ61yd1RhP1kI
+compounding	4WMnoy5MJxMbXDEm3GSDqABPJKlFCVF6
+glissando's	5v0U3p18EtfNjL9yrIH0aa99WJwNOpz8
+shortfall's	Z3hWEAon9A74FU65VyhBU1n7FqZhoi96
+Rosales	fJGwmoz8nurdIMmPldyFaFJQLf58qvTI
+sharpening	kmsVXOq7J0W16jVBwf6vVGBHqA32V1nH
+perihelions	WjZGnu1SFiaSNKyzGks31xFPuQdSFKUm
+stockiness	pvJ1XFxsyxa1zjLuEjMG6zCmRmIKGUKh
+charger's	NJbc6DqvovYXkrF6R3kdwCv0zMyQgcYA
+rougher	qSGD49xn7uJJyyvIs2mDxq9BiV2nvZK4
+payroll	raPc4eJ9tO2mMHnerL7Mych5Iv7X6aQX
+snooper's	LjCRmUOF0hDJMDpg3AQY60YhsbAAesnE
+Gucci's	hyQIApCcmXf1gJAKHJb6u6YL7SZrFZUc
+driblet	9oJ7wwXEj3AtameVm3UUcZ2ILf3azjUc
+vulgarly	PmSaTgeIaoqWDlDtLnPE3pivnjdxsvOu
+database	k9UkpCs5Ja0TW7gPTCHqD366ks6XZ7RT
+reforming	UjDJPoiSHIMcZPKzBbBtO10UvezTJowr
+Maltese	VB4rAHcW5qVFvGGj661lfHII1nCEy3Kw
+ales	FvjD91J7gPKgO6sTyn7u3styKcz0B4TM
+sirring	EvsL6DBGPO6bQ2vq5zgL166F6Dr1Zv8H
+favor	8hUk6CAi91nb6OjS4afut7opp3CdeCb1
+disparate	a7x6UgzVdZe2CsN7Ap2YofL2elMHWluy
+Gauls	dqcnn88ePICUlYbPwPYlFKtyKku5OEV5
+deathbeds	5TyXy3xndfI59H14nrIYhoPojQQv40Tx
+undying	UDQcan5KsNGbzc8HLoLClTbhIGaXIbXs
+sooty	X4yg6RA2rTSxi7JxGgC2lYk6KBL4lhbq
+adjuster	f8t1bVerH6dFOuCnrJsrxT3k44aAoeDr
+tympana	7VmFhZ5G5zdyk6oYmhUPudeP8dIj7GWm
+errors	T9vzoO9QMzJroNTCF2XVHmvEXVVFyBlE
+academy's	BQjaE7mR52AJlAuMx0LNZtrBoyZWcSE5
+anytime	tV6mgMQyJeUz5szpFOL0xU13VCBxmDZI
+evolves	BN3wFINUEJcTtCfeVl2Pi1QU3bZB3oXz
+bootie	uHCBzUUqVUv0ZrDEhxIOYDulRfcfXst5
+Alton's	8Ia9rYmNa7Fj4h5N5vm8nUpMjfEtTPVP
+propels	zYGHUNiIjY5vNeTvVcM3SXuBlDi8hWyx
+sublimest	6cPhYt3PZ2n2NZe3HtLOsqfaUUhSbp4W
+directorate	K9Pu1YAlBLzZFmMRFm3tMwsIrYnlNGnT
+jumpiness's	iAsPxfD2gyq7vwbayKb2BRAQlAdlZYj5
+accomplish	vzCekGeyZWSuQ3qIhqKjB9wxyDjiCRYj
+abridging	6ZnDffdf0rHPAUFsITTCTnTDXfo74e0d
+orator's	KaZvY2bsqFPyqB4QLkmabJtTgATGcaE5
+immoveable	PhYfFlu34IQZiTK6IqM7Uw4BYzrjazDg
+cankerous	GqxFMUfkauZU21lfLzqTXHSzyCfE0pt8
+Paglia's	NlwHKn2MDiOvp9sz2FtxsNy5kyEJz9xs
+alpine	hKASGNEliDmpstGFfkXKafXyMneHXad1
+connotations	xd4sBb9Y9qD0QXerbfRcY2Hztij4m1Le
+edifice's	Y0JhoT86dT4mvI3WErr4vZiql56gdsKd
+curtseyed	ahBF7h3b1cIKYQNaZKXItta7XWtkmsSm
+countermanding	2FH1dlKEPMwRwaiEpzuR2bhEbHfkzr84
+solemnize	PXPeIgSy7rwS7YCpkpLEQhJaJZ13HXnn
+perambulated	uFte343QlQg49rJ8115fcggLizMoMcxw
+heedlessness's	tkYuNy7r7xxrQ5R68CtPnMp3EPpCBnGk
+Case's	LIcC4AJFfBfP9ndJjHlm24aWOGDYoGuO
+stinkers	MmB48dcVsBJ5cak32J3sR1bm7A2aQsgF
+Litton	6eVnovlVCrmGLS7MAPPiBak2IeZc7TSW
+fertilize	J0MClice9QgPgntJ1X1mqq8Jl53y8E5e
+copycatting	KrNX7tGeAzJr0mpgm682z5HoIH0N0IRC
+abstains	hmlBx1SI7ZcxFusWjLBcPpVVuQrhYgJL
+unburdened	IEdP2Dy4cqdibHNdGLUGvzV85F1F9dmd
+perky	o1fB3mF7ku2tlVAJ8YNyxyL9eBojlIqo
+hind	ro6vxMsZgqYS2AQzOuWNzXSVgUrZql2y
+oils	DRVzNioInTHvsnII6W4r3pXSUjk6zWfH
+publication	FspxnloG70l6X4Kr4PN0NtSMsypxE2SU
+programmer's	R09wR4QfYGEiKxnenCJSCHrb2vGzfMqs
+wrier	6UBa3C9ofodOEK6cPLV9Qd7jZiErELaD
+expels	MSUvL3UaU6wD6aYZviABj7TXLbJ1lDpE
+legwork's	3EtyGsv2mWm3rmArTD5H5EnO5e5mcNqx
+Candy's	dtHUPPqgsgWogthI5l7ZZIj51VcBn9Sh
+telegram's	2UP0I12KT4K9B93hinsy4RpUQShxDcMF
+commerced	SgMjbLTZuf5XjtvwXOjnNmWSHgXEuI2Z
+hods	BClMJ4P0BQnoyA4hGzrOD7jpJzjn6wtT
+pervert	cfvdRhcTlGoTgEHQDMxYPanSkDTX5JKu
+currycombed	ufWBp2TZdVZ1gnAYlZK5W6vdEnT7P5jy
+tablelands	5ZnFKUT7SUZLWADrzCnUOeycMqj0nBYQ
+flamencos	r629yMi63XRTkkVM5HF1uxouxkQ2v4gE
+configured	HfHWh06WHubFp7lvXwLtaCFLgpKqLezz
+seasons	Fze7Tn8478U0jucpcRrrbIDjDJsUkISm
+kaput's	dw5yQXXVdC9UQi4432AOi51wWVPylVcQ
+posture	FI54zHJkFqoHfuRIYcJHVyYhTtK2NaNc
+Nat	WXyG0G0Fjj6POpzYliotM9EWiCWqAE3t
+restoration	30cbJMOq34J4pKFDBVOuiDEqAV5CMisE
+Mahler's	Ssa132Si6R2ESwcQwI1jUSYlNrIO3Jje
+jinrikisha	9kCwU5Plgy9q1qxdKgDM7Keeaj1xN5DJ
+topping	4HrA92NSGzL7FuHK9Q0ZdQ06PHZpmIML
+paring	NGhqHhEiHBKTOiavbSFC0gYhsaKeKQaK
+passenger	KPay4qvJc8RXoIazUZZ0LmXlkKc0CK56
+vulcanizing	rpNRFx1wlTmq4u95K2ePQNbgLWH70AV4
+anthropologists	v1tnkHq0O8JVlIR6X9CwWA8ni0ZJwDsz
+leeway	FDrlFmjxYKI28G5304dcMyPAKwy0Jf6v
+subtitle	mQJjQ3HIBnshBNTeC6GAlHMCo45FgfxQ
+Acosta's	CGYDRq06faCh9zQKu99lDU45jdRxQzj8
+empathize	dopJ5bIZ0ubfD8eqNhOgyUbgUT5NmEor
+swindler	fyToaMk21FqOjCrqj0Hfg1P25S8gWe0j
+torment	Mq1872AXyEnKMdNO4j5fx5fzmezd2JHt
+surceases	Tx4stv9GFApmpw53gRLkbCNT50zMUGe2
+crazy	Iw4X6F6Bb3huqJmcxIX2Zyr8wFH5lFzY
+weevil's	lMRz6GH5n8NrLrNzKjNXMNlIv0l621Xi
+resplendence's	dWchUsWEp9PXf900JdUoxYccnTId6IO1
+barrage's	RYLWoObyDHU5r3EfPtYbyveyxdvxSe4q
+improbably	fSTGAGVY8soGoJoexm2WHzGwtBKnZhMi
+contraceptive	M3kRG2jdWnNxLqOSmtPp269zPtPN2je1
+uniformed	XWcSuvPl6wpxi6sRTgTMa55Vl7hr7uD8
+princely	mfvPmyDEqfQeiN2eaIi4ekNrGAJXN0sU
+unlacing	DLE5mDPBNZ070SLCAfySRNmQwlZpc2pq
+knighthood	9TMXAQr2DZDD0B7cmPjd1MAa9mBTg70x
+edicts	6OSLHOmyjU29FqGrVkIxBfrJR9VXYqfi
+subcontinents	67yXMJ18IMa3ZYtSFinNI63YQEzBMoPG
+balcony	7W2mrwMiDWYZpQ341OBgeXrsvJHJcvxt
+elusively	BAxcbopvCwDZ9e8IpjY278SJGTujwhZv
+schools	17KGYEJcPvEjAMVOs2ZHmR1fY1XaPjkK
+manifestation	edvIfyB67x45zxstWYfiJcwyW3SDdYND
+rodents	PnW6zK9WGxxJpfq2x0Tfmed9NGa7N05m
+gobbed	ta5GQ0XrEQVdp78ZMSNqgtZLcHfl0oy1
+Darby's	Gw72pRbGgFONTBuOXCvfktg5lrFWaRue
+hallmarks	HAM4OqmdiI6KLoOjyK5rqNH8DrowPqRn
+egalitarianism's	qc69V1LUkd8eEzrHy4VXFR5R6oHnUyfD
+gallerying	Nhu1EylYcffdlBW47ap7sckVUqnsftUO
+oratory's	FGa8hK60PYGkl9vQXvfJ1TyVFokp14qO
+lime's	arMlklMq27JqrcUtGUrqaJfhYEVlXbuj
+mealtimes	xHknqakyOYBSMVybFatBrAYkysER9tjf
+nuttiness	cNzMjlFYRwP0TEWUjRGU6ZZCjaTinM48
+doorman	ZsDKwaNqe6NRc9J17uqfFqi1E5a7eKga
+enroll	OmUCy1CZF39oB96tDQ8karb2uHmxOafl
+scad	8tvAfkrYkIrqZahI8LxreR2JoHbx66gk
+premising	2Tdbj3tUXXddjzGryzs2tBnuDbfaLMYH
+kidders	MXclxRqaqQYjwtAbMc31nFCc1lBdtit7
+governmental	J5ffVKv53LMaB7WdpbLx39sG9w0k1Qiz
+rawhide's	FlQSB7b739cs2IHtexjUUCtzSZIt6tIS
+puddles	iFkuPmVz6d2WMUGc83N9OBJubIwsiKhM
+feint	wAtLjhERElifLKRzknzxqCnCiKjcFPai
+policeman's	aQrszIrSHeBQky6bzk44Y2pvSOjw74gj
+embroidered	YxDRVbF4p199ZLJoSJqi8XYdWCWxiCwe
+republishing	gO0uy5wdzvw5pr6g9HFbutSVPvTEYleG
+mariner's	MewCDyB8K1qRMSI9SXhwi73W24twJxU3
+contraception	Y2VNdQOkcVWe4qpUZliJzbKx9XODtcBY
+Rankin's	ybYxNRqtv8j0sv9GNcqacQRQ74xXvCFw
+invent	F8NdyMclW8YuYuoHRsBdrONC4jofzJC6
+buts	d9Dyg39A8JYf0QQ7p0QZ6sJXylNprxpp
+materially	nYmufLBOEvGpvQTR7Syu3pzjIph951US
+Ratliff	xdRuOK9663sZcoofZlDhUxY2ZT99Rz9d
+Springfield	gSwhX363feG3oQLfDqaoXylKO6XFYmUx
+burglars	cyBna5MMN356kXzOwztL39klwfifj9C4
+basket's	rW8Zx8WEO845iQcTsaUdMOQuUCJk3cSS
+loge's	1mUoyAETqQ7qhfzpk5HgBN38jXesqjXu
+Mathewson	GKjA7x2FyQ0McPMvotOUV9GpnGCAdTX4
+pardon	F8F6GwIsLfNxwGhdaAk8IAOQeaGdhO2G
+Delacruz's	0UuKZPzh4PuIetyL3HGXR1eO80J6ZKzI
+fatalism's	7A6xeDYkGDjAdbnBoXxvRsPEsvOrAW0h
+pining	mQCrvHalFoPpmapjSjOwWYoaRs0erzVX
+tearoom	w4C7C0yT79Hyvt7aMQVqUFoC3s7el9kU
+polymaths	dkWnsy2LyyeaHYRWnAhFPuBAOpZfEBsS
+expunged	jfzus9PqtHAEZ08FhudiLnKxsNFq2OOb
+whosoever	nLI7wlcILR4r8FS853HcHb6Z26iHP34A
+heels	VjKgqBrOYL6dyUuGQxTHMWC9qrgCGIh7
+hypotenuse	wA4ouCRU7r1E9g30NZXSvYX7I9fVkeJq
+Knapp	IDk0AbPUXesN6f6nt97UqkyP2uwZTcxZ
+extremist's	ddsbuPxt7ePIJE2cSV9PfTGcajMY7EnO
+Lvov	ErvPnNjapwnqbRaPN6d7LoluAhN5GwsT
+coined	FERdRDIn9IFzid6PlCGAtA2N5msgIdBt
+cilia's	3fufEMojiZ3IWA81MRcD2UTGrfC3hHGt
+chose	Gs2rj5PessR5WHv89iCbJG4kjSGbUiId
+Suharto	5tPbvtmu4lqbKZM1Mm8sXIHzGpIeXzGQ
+Buckley	BWcvwJDgXHRyB4UBwVRHekC98g2teFiX
+Oxycontin's	HyvKBkWSrETZTPdIk97qPPKWmcg9o1Rn
+succumbed	YsZabp5vILt52CQPa2nuLDUcEhrA8KHT
+Irtish's	obTPfrECXRp0BL1lbP9Ms7X40XWPAQyH
+transpiration	cGBe9zqnqA5YIx58Pb0YChvtiKQWAGaP
+clustering	fFjsI2H6r6a7DpN1folkTFpT9XyQy8To
+infliction's	3shcXeCEkiDZ584KxdJz7Hey2EsIInZV
+reassert	uFoInvz70jpFNTTeAdsHN3J0sMhweb4B
+deceleration's	JTpvKJA7QwroRy6JoT4pNtaFFlhCxxJ9
+ells	AnCyArbx7hyxmBcDS9gXa69iAI8uwtLt
+metropolis	1pkGFHk4XKJPpsBbXRaI0AzUXNS7D1Wi
+clout	1YknwceAxu6GcQ9Mc8bE0Pxa50rA2FOE
+theologies	iRJTLNDiQwjFrcHgWeWfDDhzh30OfapP
+malts	dGFQoKWBKMbOAXHHFF7UtKaIKkkpUBn4
+blockbuster's	CXrv9aD16z8KiFCspvFW9LUWI3sZBBKA
+infighting's	hVAgtZb6dm6Xqfg1zaU3dHIc8QmfcPDz
+hurdling	QW0T0UexM9H6brqsLGBUQVvBYkA9S0kG
+Hirobumi's	S3bn4mOzp3rAYJejOEGOJiYkfDkAHS1Y
+guttersnipe	G9YCLponM2X1O4SghkIsqVUg0chM5UXT
+costar	Q6eULasWsZ3HbzWvoapSi2Zw3LNNskGw
+questioning	ftepMzQSt2SbiaFWoslfJERfhFWdZBWP
+hem	3lYfByO1XveKM59ijbs6bAmlTVQK9waO
+filth	pIgiUPB1CezrkzUPJwfUh5Vs66RwKy0u
+hypnotics	WRAVPMTCuRTomJGi0bAMnOvCNAcBKls0
+buttress's	zIaIuO6YHOu81dxqgi2L3uwwYzL7yCIp
+attestation's	DmSEcURsF6RsgRx5FpMZWRGyXS0L1M2r
+manicurist's	O9QrgC4J46SosixLWwMl2bHOFQz8CnRU
+Sicilians	aWZQzn2xqlkLM9OUsGZc6sAlOw1nSvMa
+glamored	fRdP7m2m8yTd01SYstYcIJSQBJFlZnWE
+juvenile	woykS0ri0MzCcejrqWcKl7sb4wSdMII2
+monster	CdHz6oqhjtKEf8oyb5tOWqOL5H9s599R
+verbiage's	f2YYmgb5oJLdvFNTMZzBfJn8M3MFG5rV
+Jerold	MK1EfCcWmPMSy3M98OthD9B3BNqLgO97
+diode	grE3soOkeEto8sIvvhDA4Z8L1kukkLhV
+floodlighting	63DHwCTIFwPtBDzgAHfIF234iKTupWRa
+vista's	o0VFoJIo77L4oshHGoY7VAuWX5O80hJg
+empathy	GQOKkieCX4MmwMyaB5gQb5xK40ltazwu
+Kuwait	HsiAABn3AzthlnLKELxhAe4vl63rMMWE
+doghouse's	YSxngEsFuXhSqKHUsPRw4tJGl7cHp6nm
+Bettye's	qRsi9J2OrycTRB7rhI2YkPQz6NBwUlwR
+internship's	0vDSe9lyig2zvmL7SlmkVBveQWIOFNMk
+wiriness	GxNcQRWrbrmegKUdMjm0TXlFSMEG4ob5
+Diogenes	jMDljqljI3PDkB0NXGv1Jc4nV4oS8feX
+Susan's	1vbqW9Vy9EIbvTuKAtah6OEbIanA7cAv
+Galvani	xfUpfBxTpfeXwGC238VPhmkQz7NaPImF
+invertebrate	6D44q6hZJBcjgRbVqTJqmQa8CemRheAY
+pragmatists	SNvlJGEFBKQtJmvDzMNzZPILLaaF5KIq
+morning	PkWgiFTGX3aoAHzzDX472EWiWAkZvJ6N
+deliberation	wd8mja60u4sHgTuJun73I92BNg2SrMCF
+disrupted	z3bOXLTJ4Wc6x6BagEARj5KZhUjq9W2o
+torrential	Qk4xT7Lfc6e40FThfAM7i14vCbQZj2z0
+Dodoma	eRCIwNdaTh7n77tOOQIazLXzgXCUsbPO
+anesthetizing	QRehmI2RHEeqQIuh90yTQcLRklBZBVNk
+experiencing	aayl37t91e4977R09e4DJ6sRrAhTrJCj
+griddlecake	ny42axO0XVOrYJRrbR0kjpd5mwloxrJr
+completes	Dj4WuzSlOwNtbXDRMhro7TKJ8y4BK5Ay
+narcissuses	Ylgwg7RAS4YYeZyr6POc2ItBmhZdQmJG
+retouched	PGryuJT83sJwvmWxNXRTUOcE3uMXz9mb
+whirl	B6uHaSHT1MSySAallJJuxgr7LcUXIX19^C
+bandit7@bandit:~$
+```
+OOPS! It seems this file has a million of lines...
+
+Let's read the challenge statement again.
+`The password for the next level is stored in the file` data.txt`next to the word` millionth.
+Gotcha! So;
+```
+bandit7@bandit:~$ cat data.txt | grep millionth
+millionth	cvX2JJa4CFALtqS87jk27qwqGhBM9plV
+```
+Did you here something like: `Security Through Obscurity`.
+It seems we've cracked this!
+
+So, what did we learn from this?
+GREP? So what's that!
+Let's see what it's about:
+```
+$ grep --help
+Usage: grep [OPTION]... PATTERNS [FILE]...
+Search for PATTERNS in each FILE.
+Example: grep -i 'hello world' menu.h main.c
+PATTERNS can contain multiple patterns separated by newlines.
+
+Pattern selection and interpretation:
+  -E, --extended-regexp     PATTERNS are extended regular expressions
+  -F, --fixed-strings       PATTERNS are strings
+  -G, --basic-regexp        PATTERNS are basic regular expressions
+  -P, --perl-regexp         PATTERNS are Perl regular expressions
+  -e, --regexp=PATTERNS     use PATTERNS for matching
+  -f, --file=FILE           take PATTERNS from FILE
+  -i, --ignore-case         ignore case distinctions in patterns and data
+      --no-ignore-case      do not ignore case distinctions (default)
+  -w, --word-regexp         match only whole words
+  -x, --line-regexp         match only whole lines
+  -z, --null-data           a data line ends in 0 byte, not newline
+
+Miscellaneous:
+  -s, --no-messages         suppress error messages
+  -v, --invert-match        select non-matching lines
+  -V, --version             display version information and exit
+      --help                display this help text and exit
+
+Output control:
+  -m, --max-count=NUM       stop after NUM selected lines
+  -b, --byte-offset         print the byte offset with output lines
+  -n, --line-number         print line number with output lines
+      --line-buffered       flush output on every line
+  -H, --with-filename       print file name with output lines
+  -h, --no-filename         suppress the file name prefix on output
+      --label=LABEL         use LABEL as the standard input file name prefix
+  -o, --only-matching       show only nonempty parts of lines that match
+  -q, --quiet, --silent     suppress all normal output
+      --binary-files=TYPE   assume that binary files are TYPE;
+                            TYPE is 'binary', 'text', or 'without-match'
+  -a, --text                equivalent to --binary-files=text
+  -I                        equivalent to --binary-files=without-match
+  -d, --directories=ACTION  how to handle directories;
+                            ACTION is 'read', 'recurse', or 'skip'
+  -D, --devices=ACTION      how to handle devices, FIFOs and sockets;
+                            ACTION is 'read' or 'skip'
+  -r, --recursive           like --directories=recurse
+  -R, --dereference-recursive  likewise, but follow all symlinks
+      --include=GLOB        search only files that match GLOB (a file pattern)
+      --exclude=GLOB        skip files that match GLOB
+      --exclude-from=FILE   skip files that match any file pattern from FILE
+      --exclude-dir=GLOB    skip directories that match GLOB
+  -L, --files-without-match  print only names of FILEs with no selected lines
+  -l, --files-with-matches  print only names of FILEs with selected lines
+  -c, --count               print only a count of selected lines per FILE
+  -T, --initial-tab         make tabs line up (if needed)
+  -Z, --null                print 0 byte after FILE name
+
+Context control:
+  -B, --before-context=NUM  print NUM lines of leading context
+  -A, --after-context=NUM   print NUM lines of trailing context
+  -C, --context=NUM         print NUM lines of output context
+  -NUM                      same as --context=NUM
+      --color[=WHEN],
+      --colour[=WHEN]       use markers to highlight the matching strings;
+                            WHEN is 'always', 'never', or 'auto'
+  -U, --binary              do not strip CR characters at EOL (MSDOS/Windows)
+
+When FILE is '-', read standard input.  With no FILE, read '.' if
+recursive, '-' otherwise.  With fewer than two FILEs, assume -h.
+Exit status is 0 if any line (or file if -L) is selected, 1 otherwise;
+if any error occurs and -q is not given, the exit status is 2.
+
+Report bugs to: bug-grep@gnu.org
+GNU grep home page: <https://www.gnu.org/software/grep/>
+General help using GNU software: <https://www.gnu.org/gethelp/>
+```
+So, GREP is a very famous tool where almost everyone who used Unix or Unix-like systems would've came accross it!
+We just have to submit a search-term which is typically called as a `regular expression`.
+Regular expressions are very much used in all areas, when we have to search/retrive a pattern from text.
+Google it & learn more about it.
+A famous site to practice or make a quick check whether our regular expression works or not is: `https://regex101.com/`.
+
+Hope you've learnt something new from this [if you don't know this before/didn't strike to you during the start].
+
+Now, let's use the password `cvX2JJa4CFALtqS87jk27qwqGhBM9plV` to log into the remote-machine as `bandit8`.
+
+**Warning: Please, first try Level 8 -> Level 9! Otherwise it's useless to simply cpy-pst the command[s]/password[s].

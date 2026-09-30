@@ -1,0 +1,1 @@
+There is a `stack overflow` vulnerability in this challenge, by which you can leak `read@GOT`, find `glibc` base address, and jump to `execve` found by `one gadget` using `return oriented programming (ROP)` technique.

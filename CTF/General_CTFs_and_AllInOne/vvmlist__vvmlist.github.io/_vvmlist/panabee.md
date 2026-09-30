@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  panabee:
+    -
+  panabeeac:
+    -
+  panabeecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  bf:
+    -
+  ftp:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  panabeewu:
+    -
+---

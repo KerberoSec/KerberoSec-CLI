@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  enterprise:
+    -
+  enterpriseac:
+    -
+  enterprisecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  wp:
+    -
+  rce:
+    -
+  logical:
+    -
+  suid:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  enterprisewu:
+    -
+  enterprisevi:
+    -
+---

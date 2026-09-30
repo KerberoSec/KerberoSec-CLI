@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  animetronic:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  ci:
+    -
+  creds:
+    -
+  decode:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  animetronicwu:
+    -
+---

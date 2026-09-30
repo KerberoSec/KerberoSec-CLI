@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  vault:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  cve:
+    -
+  sudo:
+    -
+  rbash:
+    -
+  pgp:
+    -
+
+wals:
+  vaultwu:
+    -
+  vaultvi:
+    -
+---

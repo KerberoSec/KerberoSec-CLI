@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pdf:
+    -
+  pdfac:
+    -
+  pdfcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  ssh:
+    -
+  suid:
+    -
+
+wals:
+  pdfwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  maskcrafter:
+    -
+  maskcrafterac:
+    -
+  maskcraftercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  ci:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  maskcrafterwu:
+    -
+---

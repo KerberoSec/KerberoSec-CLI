@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  easypwn:
+    -
+  easypwnac:
+    -
+  easypwncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  rev:
+    -
+  be:
+    -
+  bf:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  easypwnwu:
+    -
+---

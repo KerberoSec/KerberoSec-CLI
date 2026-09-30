@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  paper:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  logical:
+    -
+  creds:
+    -
+  pathtr:
+    -
+  be:
+    -
+
+wals:
+  paperwu:
+    -
+  papervi:
+    -
+---

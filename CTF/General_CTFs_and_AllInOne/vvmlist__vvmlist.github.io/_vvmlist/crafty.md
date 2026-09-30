@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  crafty:
+    -
+  craftyac:
+    -
+  craftycm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  log4j:
+    -
+  cve:
+    -
+  rev:
+    -
+  logical:
+    -
+  creds:
+    -
+
+wals:
+  craftywu:
+    -
+  craftyvi:
+    -
+---

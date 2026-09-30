@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  myexpense:
+    -
+  myexpenseac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  xss:
+    -
+  coot:
+    -
+  creds:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+
+wals:
+  myexpensewu:
+    -
+---

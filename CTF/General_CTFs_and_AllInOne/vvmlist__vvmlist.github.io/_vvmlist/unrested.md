@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  unrested:
+    -
+  unrestedac:
+    -
+  unrestedcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  sqli:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  unrestedwu:
+    -
+---

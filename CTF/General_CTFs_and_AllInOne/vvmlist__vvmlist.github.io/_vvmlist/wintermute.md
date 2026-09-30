@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  wintermute:
+    -
+  wintermuteac:
+    -
+  wintermutecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  dcr:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  suid:
+    -
+  cve:
+    -
+  kern:
+    -
+
+wals:
+  wintermutewu:
+    -
+---

@@ -1,0 +1,50 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  apt:
+    -
+  aptac:
+    -
+  aptcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  hc:
+    -
+  creds:
+    -
+  amsi:
+    -
+  logical:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  ntds:
+    -
+
+wals:
+  aptwu:
+    -
+  aptvi:
+    -
+---

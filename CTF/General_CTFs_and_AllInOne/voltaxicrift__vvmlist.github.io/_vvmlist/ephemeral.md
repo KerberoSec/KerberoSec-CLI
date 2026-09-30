@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  ephemeral:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  sudo:
+    -
+  decode:
+    -
+  ssh:
+    -
+  ssti:
+    -
+  groups:
+    -
+  docker:
+    -
+
+wals:
+  ephemeralwu:
+    -
+---

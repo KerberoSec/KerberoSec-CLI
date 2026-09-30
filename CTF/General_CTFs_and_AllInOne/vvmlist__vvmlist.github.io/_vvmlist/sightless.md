@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sightless:
+    -
+  sightlessac:
+    -
+  sightlesscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  keepass:
+    -
+  creds:
+    -
+  mbck:
+    -
+
+wals:
+  sightlesswu:
+    -
+  sightlessvi:
+    -
+---

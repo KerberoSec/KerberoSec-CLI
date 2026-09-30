@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pikaboo:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  obs:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  creds:
+    -
+  decode:
+    -
+  cron:
+    -
+  logical:
+    -
+
+wals:
+  pikaboowu:
+    -
+  pikaboovi:
+    -
+---

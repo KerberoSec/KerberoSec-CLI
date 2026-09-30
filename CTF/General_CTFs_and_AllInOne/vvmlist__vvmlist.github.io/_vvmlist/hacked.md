@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hacked:
+    -
+  hackedac:
+    -
+  hackedcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  logical:
+    -
+
+wals:
+  hackedwu:
+    -
+---

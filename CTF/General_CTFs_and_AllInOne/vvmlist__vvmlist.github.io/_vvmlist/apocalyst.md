@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  apocalyst:
+    -
+  apocalystac:
+    -
+  apocalystcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  steg:
+    -
+  logical:
+    -
+
+wals:
+  apocalystwu:
+    -
+  apocalystvi:
+    -
+---

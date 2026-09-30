@@ -1,0 +1,46 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  crossroads:
+    -
+  crossroadshmv:
+    -
+  crossroadsac:
+    -
+  crossroadscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  smb:
+    -
+  magsh:
+    -
+  rce:
+    -
+  suid:
+    -
+  rev:
+    -
+  steg:
+    -
+  bf:
+    -
+
+wals:
+  crossroadswu:
+    -
+---

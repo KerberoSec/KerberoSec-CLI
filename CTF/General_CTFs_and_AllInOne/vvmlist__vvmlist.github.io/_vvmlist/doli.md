@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  doli:
+    -
+  doliac:
+    -
+  dolicm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  decode:
+    -
+  kern:
+    -
+
+wals:
+  doliwu:
+    -
+---

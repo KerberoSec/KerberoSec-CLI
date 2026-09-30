@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  yummy:
+    -
+  yummyac:
+    -
+  yummycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  source:
+    -
+  jwt:
+    -
+  sqli:
+    -
+  rce:
+    -
+  git:
+    -
+  creds:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  yummywu:
+    -
+  yummyvi:
+    -
+---

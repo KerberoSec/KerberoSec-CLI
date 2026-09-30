@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  doll:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  docker:
+    -
+  api:
+    -
+  creds:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  dollwu:
+    -
+---

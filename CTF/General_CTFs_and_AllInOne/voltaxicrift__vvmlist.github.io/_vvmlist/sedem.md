@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  sedem:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  ci:
+    -
+  sudo:
+    -
+  hc:
+    -
+  suid:
+    -
+  rev:
+    -
+  pathj:
+    -
+
+wals:
+  sedemwu:
+    -
+---

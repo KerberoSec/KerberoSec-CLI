@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bounty:
+    -
+  bountyac:
+    -
+  bountycm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  bountywu:
+    -
+  bountyvi:
+    -
+---

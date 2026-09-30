@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  double:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  ci:
+    -
+  rce:
+    -
+  lfi:
+    -
+  suid:
+    -
+
+wals:
+  doublewu:
+    -
+---

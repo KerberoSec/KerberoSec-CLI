@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  comingsoon:
+    -
+  comingsoonac:
+    -
+  comingsooncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  hc:
+    -
+
+wals:
+  comingsoonwu:
+    -
+---

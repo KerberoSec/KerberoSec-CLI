@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  find:
+    -
+  findac:
+    -
+  findcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  decode:
+    -
+  bf:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  findwu:
+    -
+---

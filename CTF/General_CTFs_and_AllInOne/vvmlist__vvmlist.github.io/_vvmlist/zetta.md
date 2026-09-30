@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  zetta:
+    -
+  zettaac:
+    -
+  zettacm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  bou:
+    -
+  ftp:
+    -
+  bf:
+    -
+  logical:
+    -
+  git:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+
+wals:
+  zettawu:
+    -
+  zettavi:
+    -
+---

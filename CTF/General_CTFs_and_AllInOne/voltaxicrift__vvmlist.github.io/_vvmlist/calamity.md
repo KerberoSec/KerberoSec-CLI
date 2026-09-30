@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  calamity:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  rce:
+    -
+  steg:
+    -
+  source:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  calamitywu:
+    -
+  calamityvi:
+    -
+---

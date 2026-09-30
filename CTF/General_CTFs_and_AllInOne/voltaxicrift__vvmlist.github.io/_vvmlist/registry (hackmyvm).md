@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  registryh:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  rev:
+    -
+  be:
+    -
+  logical:
+    -
+  bof:
+    -
+
+wals:
+  registryhwu:
+    -
+---

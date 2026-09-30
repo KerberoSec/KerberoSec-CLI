@@ -1,0 +1,48 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  opensource:
+    -
+  opensourceac:
+    -
+  opensourcecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  source:
+    -
+  git:
+    -
+  pathtr:
+    -
+  rce:
+    -
+  bre:
+    -
+  tunnel:
+    -
+  creds:
+    -
+  pspy:
+    -
+  cron:
+    -
+  logical:
+    -
+
+wals:
+  opensourcewu:
+    -
+  opensourcevi:
+    -
+---

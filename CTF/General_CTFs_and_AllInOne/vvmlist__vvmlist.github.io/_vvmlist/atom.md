@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  atom:
+    -
+  atomac:
+    -
+  atomcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  smb:
+    -
+  rev:
+    -
+  sniff:
+    -
+  logical:
+    -
+  creds:
+    -
+  sql:
+    -
+  decode:
+    -
+
+wals:
+  atomwu:
+    -
+  atomvi:
+    -
+---

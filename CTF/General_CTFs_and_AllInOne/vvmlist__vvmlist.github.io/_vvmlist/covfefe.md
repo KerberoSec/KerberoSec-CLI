@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  covfefe:
+    -
+  covfefeac:
+    -
+  covfefecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  hc:
+    -
+  bof:
+    -
+
+wals:
+  covfefewu:
+    -
+---

@@ -1,0 +1,48 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  multimaster:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  waf:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+  rev:
+    -
+  creds:
+    -
+  amsi:
+    -
+  asrep:
+    -
+  groups:
+    -
+
+wals:
+  multimasterwu:
+    -
+  multimastervi:
+    -
+---

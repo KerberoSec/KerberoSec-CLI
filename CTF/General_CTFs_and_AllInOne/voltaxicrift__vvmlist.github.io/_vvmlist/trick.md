@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  trick:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  trickwu:
+    -
+  trickvi:
+    -
+---

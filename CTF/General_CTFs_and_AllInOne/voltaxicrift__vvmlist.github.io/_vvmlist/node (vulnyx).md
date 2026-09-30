@@ -1,0 +1,26 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  nodevx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  nodevxwu:
+    -
+---

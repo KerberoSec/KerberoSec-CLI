@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  investigator:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  adb:
+    -
+  gogal:
+    -
+  logical:
+    -
+
+wals:
+  investigatorwu:
+    -
+---

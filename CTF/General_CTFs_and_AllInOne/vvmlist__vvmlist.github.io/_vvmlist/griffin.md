@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  griffin:
+    -
+  griffinac:
+    -
+  griffincm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  bf:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  griffinwu:
+    -
+---

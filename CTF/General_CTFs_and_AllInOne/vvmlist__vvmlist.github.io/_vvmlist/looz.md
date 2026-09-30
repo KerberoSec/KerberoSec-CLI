@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  looz:
+    -
+  loozac:
+    -
+  loozcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  wp:
+    -
+  bf:
+    -
+  suid:
+    -
+
+wals:
+  loozwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  homelab:
+    -
+  homelabac:
+    -
+  homelabcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  vpn:
+    -
+  passre:
+    -
+  sudo:
+    -
+  logical:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  homelabwu:
+    -
+---

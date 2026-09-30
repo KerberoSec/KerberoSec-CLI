@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  factorspace:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  xpaj:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  sniff:
+    -
+  ssh:
+    -
+
+wals:
+  factorspacewu:
+    -
+---

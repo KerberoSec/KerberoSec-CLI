@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  suuk:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  libj:
+    -
+
+wals:
+  suukwu:
+    -
+---

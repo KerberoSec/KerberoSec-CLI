@@ -1,0 +1,73 @@
+
+rucimp 的 examples 提供数个示例可执行文件,主要目的是提供演示代码，并提供简单的测试程序
+
+(若要全功能, See [ruci-cmd](crates/ruci-cmd/README.md))
+
+lua_trace 演示 单连接流量监控
+lua_infinite 演示 完全动态链, 其与 lua 的运行方式一样, 不再赘述
+
+run_h2_trojans_recorder_pair.sh 同时运行h2 的 local 和 remote端用于测试并生成 recorder记录文件
+
+# 通用
+
+接受 一个 命令行参数, 将其作为配置文件读取, 未提供或者找不到时, 会在工作目录, ruci_config/ , resource/ , ../resource, dev_res/ 等 目录下找默认的配置文件.
+
+```sh
+# in folder rucimp, run:
+
+RUST_LOG=none,ruci=debug cargo run --features "lua quinn lwip smoltcp use-native-tls steganography" --example lua
+RUST_LOG=none,ruci=debug cargo run --features "lua steganography" --example lua
+
+RUST_LOG=none,ruci=debug cargo run --features "lua quinn lwip smoltcp use-native-tls steganography" --example lua -- remote.lua
+RUST_LOG=none,ruci=debug cargo run --features "lua steganography" --example lua -- remote.lua
+
+RUST_LOG=none,ruci=debug cargo run --features "lua quinn" --example lua_infinite -- local_mux_h2.lua
+
+# linux
+RUST_LOG=none,ruci=debug cargo run --features "lua quinn sockopt" --example lua
+
+```
+
+powershell 的指定日志等级前缀：
+
+```powershell
+$Env:RUST_LOG="none,ruci=debug";
+```
+
+( (h2 的代码实现所依赖的 h2包)、 quic 包、 rustls 等包 都会在debug 下打印大量日志输出, 影响观察ruci本身的日志信息, 
+故使用 RUST_LOG=none,ruci=debug 过滤掉非ruci 的 日志)
+
+## route
+to use rule_route,
+
+download Country.mmdb from https://cdn.jsdelivr.net/gh/Loyalsoldier/geoip@release/Country.mmdb
+
+then put it to resource folder
+ 
+
+### macos test
+
+使用 [dev_res/local.lua](../../dev_res/local.lua) 的对应示例 config_16_tun, inbounds 如
+
+```lua
+inbounds = { 
+    {chain = { { BindDialer={ dial_addr = "ip://10.0.0.1:24#utun321" } } }, tag = "listen1"} ,
+}
+```
+
+运行上面命令运行 lua, 然后在 terminal 新标签中 输入下面命令
+
+```sh
+sudo ifconfig utun321 10.0.0.1 10.0.0.2 up
+ping 10.0.0.2
+```
+
+将能在 lua 的命令行中接收到 ping 的数据包
+
+### 全局代理路由
+
+如果您要将您个人电脑的全局网络流量全交由 ruci 代理, 则可以使用 in_auto_route 和 out_auto_route, 或自行配置系统的路由. 
+
+自动路由的配置示例见 [dev_res/local.lua](../../dev_res/local.lua)  和 [dev_res/remote.lua](../../dev_res/remote.lua) 
+(在文件中搜索 auto_route )
+

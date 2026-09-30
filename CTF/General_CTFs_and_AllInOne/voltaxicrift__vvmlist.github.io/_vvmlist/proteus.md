@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  proteus:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  xss:
+    -
+  coot:
+    -
+  ep:
+    -
+  ci:
+    -
+  rce:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  proteuswu:
+    -
+---

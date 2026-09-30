@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  twomillion:
+    -
+  twomillionac:
+    -
+  twomillioncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  api:
+    -
+  logical:
+    -
+  ci:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  twomillionwu:
+    -
+  twomillionvi:
+    -
+---

@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  belial:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  keepass:
+    -
+  hc:
+    -
+  creds:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  pcap:
+    -
+  decode:
+    -
+  jwt:
+    -
+  cve:
+    -
+
+wals:
+  belialwu:
+    -
+---

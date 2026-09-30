@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  grimtheripper:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  grimtheripperwu:
+    -
+---

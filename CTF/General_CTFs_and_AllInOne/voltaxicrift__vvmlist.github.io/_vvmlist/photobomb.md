@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  photobomb:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  ci:
+    -
+  sudo:
+    -
+  pathj:
+    -
+
+wals:
+  photobombwu:
+    -
+  photobombvi:
+    -
+---

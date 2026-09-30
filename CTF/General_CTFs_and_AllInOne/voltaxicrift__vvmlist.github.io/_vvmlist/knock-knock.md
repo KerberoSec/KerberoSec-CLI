@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  knock-knock:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  knock:
+    -
+  steg:
+    -
+  creds:
+    -
+  decode:
+    -
+  rbash:
+    -
+  suid:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  knock-knockwu:
+    -
+---

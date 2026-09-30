@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  resolute:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  creds:
+    -
+  groups:
+    -
+  dnsadm:
+    -
+
+wals:
+  resolutewu:
+    -
+  resolutevi:
+    -
+---

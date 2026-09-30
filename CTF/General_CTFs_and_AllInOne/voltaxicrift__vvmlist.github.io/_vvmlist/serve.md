@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  serve:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  keepass:
+    -
+  hc:
+    -
+  creds:
+    -
+  bf:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  servewu:
+    -
+---

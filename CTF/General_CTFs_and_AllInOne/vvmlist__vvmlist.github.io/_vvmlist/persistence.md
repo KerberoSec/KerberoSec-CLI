@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  persistence:
+    -
+  persistenceac:
+    -
+  persistencecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ci:
+    -
+  rev:
+    -
+  creds:
+    -
+  rbash:
+    -
+  bof:
+    -
+
+wals:
+  persistencewu:
+    -
+---

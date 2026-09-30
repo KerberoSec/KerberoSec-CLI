@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  tiki:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  authb:
+    -
+  sudo:
+    -
+
+wals:
+  tikiwu:
+    -
+---

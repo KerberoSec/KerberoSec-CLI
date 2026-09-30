@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sweep:
+    -
+  sweepac:
+    -
+  sweepcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  bf:
+    -
+  bhga:
+    -
+
+wals:
+  sweepwu:
+    -
+  sweepvi:
+    -
+---

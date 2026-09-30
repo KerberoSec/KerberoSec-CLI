@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  precious:
+    -
+  preciousac:
+    -
+  preciouscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ci:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  preciouswu:
+    -
+  preciousvi:
+    -
+---

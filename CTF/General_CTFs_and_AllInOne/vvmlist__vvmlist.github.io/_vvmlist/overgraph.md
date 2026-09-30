@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  overgraph:
+    -
+  overgraphac:
+    -
+  overgraphcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  csti:
+    -
+  xss:
+    -
+  csrf:
+    -
+  lfi:
+    -
+  ssrf:
+    -
+  rev:
+    -
+  bf:
+    -
+  pspy:
+    -
+  be:
+    -
+
+wals:
+  overgraphwu:
+    -
+  overgraphvi:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  milnet:
+    -
+  milnetac:
+    -
+  milnetcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  milnetwu:
+    -
+---

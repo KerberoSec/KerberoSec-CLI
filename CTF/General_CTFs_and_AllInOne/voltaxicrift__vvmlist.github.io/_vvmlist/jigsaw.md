@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  jigsaw:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  sniff:
+    -
+  knock:
+    -
+  steg:
+    -
+  xxe:
+    -
+  lfi:
+    -
+  creds:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  jigsawwu:
+    -
+---

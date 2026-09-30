@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bart:
+    -
+  bartac:
+    -
+  bartcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  auto:
+    -
+
+wals:
+  bartwu:
+    -
+  bartvi:
+    -
+---

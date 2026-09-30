@@ -1,0 +1,64 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  corporate:
+    -
+  corporateac:
+    -
+  corporatecm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  htj:
+    -
+  javaj:
+    -
+  coot:
+    -
+  phish:
+    -
+  idor:
+    -
+  creds:
+    -
+  bf:
+    -
+  vpn:
+    -
+  bre:
+    -
+  groups:
+    -
+  keepass:
+    -
+  sql:
+    -
+  logical:
+    -
+  git:
+    -
+  hwt:
+    -
+  docker:
+    -
+  pve:
+    -
+
+wals:
+  corporatewu:
+    -
+  corporatevi:
+    -
+---

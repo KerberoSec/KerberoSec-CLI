@@ -1,0 +1,30 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  basilic:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  pathtr:
+    -
+  rce:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  basilicwu:
+    -
+---

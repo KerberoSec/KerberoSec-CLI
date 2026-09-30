@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  seppuku:
+    -
+  seppukuac:
+    -
+  seppukucm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  rbash:
+    -
+  ssh:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  seppukuwu:
+    -
+---

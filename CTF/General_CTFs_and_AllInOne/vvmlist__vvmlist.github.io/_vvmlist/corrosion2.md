@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  corrosion2:
+    -
+  corrosion2ac:
+    -
+  corrosion2cm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  creds:
+    -
+  suid:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  corrosion2wu:
+    -
+---

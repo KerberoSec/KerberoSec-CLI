@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  printervx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  printerwu:
+    -
+---

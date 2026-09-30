@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  dog:
+    -
+  dogac:
+    -
+  dogcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  creds:
+    -
+  rce:
+    -
+  passre:
+    -
+  sudo:
+    -
+
+wals:
+  dogwu:
+    -
+  dogvi:
+    -
+---

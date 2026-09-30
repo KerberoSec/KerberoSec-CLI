@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  casino:
+    -
+  casinoac:
+    -
+  casinocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  ssrf:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  rev:
+    -
+
+wals:
+  casinowu:
+    -
+---

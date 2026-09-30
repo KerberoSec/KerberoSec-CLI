@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  omni:
+    -
+  omniac:
+    -
+  omnicm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  rce:
+    -
+  rat:
+    -
+  decode:
+    -
+  creds:
+    -
+
+wals:
+  omniwu:
+    -
+  omnivi:
+    -
+---

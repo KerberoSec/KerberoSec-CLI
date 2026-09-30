@@ -1,0 +1,46 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  kvasir:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  authb:
+    -
+  ci:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  raptor:
+    -
+  pivot:
+    -
+  sniff:
+    -
+  steg:
+    -
+  decode:
+    -
+  knock:
+    -
+
+wals:
+  kvasirwu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cozyhosting:
+    -
+  cozyhostingac:
+    -
+  cozyhostingcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  ss:
+    -
+  ci:
+    -
+  source:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  cozyhostingwu:
+    -
+  cozyhostingvi:
+    -
+---

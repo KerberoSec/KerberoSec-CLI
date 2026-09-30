@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  cachevx:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  proxy:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  cachevxwu:
+    -
+---

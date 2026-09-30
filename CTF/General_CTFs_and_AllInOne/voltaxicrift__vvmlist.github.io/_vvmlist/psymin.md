@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  psymin:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  hc:
+    -
+  dcr:
+    -
+
+wals:
+  psyminwu:
+    -
+---

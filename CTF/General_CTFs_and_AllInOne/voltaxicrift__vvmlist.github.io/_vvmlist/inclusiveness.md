@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  inclusiveness:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  lfi:
+    -
+  al:
+    -
+  ftp:
+    -
+  rce:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  inclusivenesswu:
+    -
+---

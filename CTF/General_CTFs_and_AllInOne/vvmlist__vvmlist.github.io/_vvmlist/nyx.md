@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  nyx:
+    -
+  nyxac:
+    -
+  nyxcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  nyxwu:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  r-temis:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  bf:
+    -
+  sql:
+    -
+  creds:
+    -
+
+wals:
+  r-temiswu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  pinkys palace:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  proxy:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  decode:
+    -
+  ssh:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  pinkys palacewu:
+    -
+---

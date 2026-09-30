@@ -1,0 +1,54 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  oz:
+    -
+  ozvh:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  ssti:
+    -
+  rce:
+    -
+  bre:
+    -
+  knock:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  ssh:
+    -
+  docker:
+    -
+  sudo:
+    -
+
+wals:
+  ozwu:
+    -
+  ozvi:
+    -
+---

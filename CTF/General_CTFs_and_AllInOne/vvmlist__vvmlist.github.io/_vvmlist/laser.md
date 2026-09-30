@@ -1,0 +1,42 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  laser:
+    -
+  laserac:
+    -
+  lasercm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  decode:
+    -
+  cve:
+    -
+  rce:
+    -
+  pspy:
+    -
+  bre:
+    -
+  ssh:
+    -
+
+wals:
+  laserwu:
+    -
+  laservi:
+    -
+---

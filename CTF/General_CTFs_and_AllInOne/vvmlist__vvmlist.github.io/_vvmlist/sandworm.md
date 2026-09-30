@@ -1,0 +1,54 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sandworm:
+    -
+  sandwormac:
+    -
+  sandwormcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  ssti:
+    -
+  rce:
+    -
+  decode:
+    -
+  pgp:
+    -
+  creds:
+    -
+  sql:
+    -
+  suid:
+    -
+  pspy:
+    -
+  cron:
+    -
+  groups:
+    -
+  cve:
+    -
+
+wals:
+  sandwormwu:
+    -
+  sandwormvi:
+    -
+---

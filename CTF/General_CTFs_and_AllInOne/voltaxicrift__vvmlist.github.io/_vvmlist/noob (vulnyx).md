@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  noobvx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  hc:
+    -
+  bf:
+    -
+
+wals:
+  noobvxwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  linkvortex:
+    -
+  linkvortexac:
+    -
+  linkvortexcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  cve:
+    -
+  creds:
+    -
+  sudo:
+    -
+  ssh:
+    -
+  toctou:
+    -
+
+wals:
+  linkvortexwu:
+    -
+  linkvortexvi:
+    -
+---

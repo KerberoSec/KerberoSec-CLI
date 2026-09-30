@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  greenhorn:
+    -
+  greenhornac:
+    -
+  greenhorncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  git:
+    -
+  hc:
+    -
+  cve:
+    -
+  rce:
+    -
+  passre:
+    -
+  creds:
+    -
+
+wals:
+  greenhornwu:
+    -
+  greenhornvi:
+    -
+---

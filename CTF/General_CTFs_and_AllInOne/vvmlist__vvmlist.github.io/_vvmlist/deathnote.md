@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  deathnote:
+    -
+  deathnoteac:
+    -
+  deathnotecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  creds:
+    -
+  bf:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  deathnotewu:
+    -
+---

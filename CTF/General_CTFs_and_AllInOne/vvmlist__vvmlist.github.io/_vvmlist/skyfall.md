@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  skyfall:
+    -
+  skyfallac:
+    -
+  skyfallcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  minio:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  fuse:
+    -
+
+wals:
+  skyfallwu:
+    -
+  skyfallvi:
+    -
+---

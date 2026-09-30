@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  spectra:
+    -
+  spectraac:
+    -
+  spectracm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  wp:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  spectrawu:
+    -
+  spectravi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  carrier:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  rce:
+    -
+  logical:
+    -
+  bgpj:
+    -
+  cron:
+    -
+  sniff:
+    -
+  creds:
+    -
+  ftp:
+    -
+
+wals:
+  carrierwu:
+    -
+  carriervi:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  vikings:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  hc:
+    -
+  steg:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  vikingswu:
+    -
+---

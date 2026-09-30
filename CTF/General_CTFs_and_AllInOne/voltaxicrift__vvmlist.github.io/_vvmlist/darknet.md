@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  darknet:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  authb:
+    -
+  sqli:
+    -
+  rce:
+    -
+  xpaj:
+    -
+
+wals:
+  darknetwu:
+    -
+---

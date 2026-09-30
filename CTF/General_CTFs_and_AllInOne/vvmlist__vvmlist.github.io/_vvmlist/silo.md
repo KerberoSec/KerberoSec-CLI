@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  silo:
+    -
+  siloac:
+    -
+  silocm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  sql:
+    -
+  daly:
+    -
+  creds:
+    -
+
+wals:
+  silowu:
+    -
+  silovi:
+    -
+---

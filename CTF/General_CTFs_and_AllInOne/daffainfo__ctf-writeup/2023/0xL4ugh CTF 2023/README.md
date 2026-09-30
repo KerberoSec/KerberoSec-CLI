@@ -1,0 +1,12 @@
+# 0xL4ughCTF 2023
+CTF writeup for 0xL4ugh CTF 2023. I took part in this CTF competition with the TCP1P team and secured the 2nd place out of 340 teams
+
+| Category | Challenge |
+| --- | --- |
+| Web | [Bruh](/2023/0xL4ugh%20CTF%202023/Bruh/)
+| Web | [Bruh 2](/2023/0xL4ugh%20CTF%202023/Bruh%202/)
+| Web | [Bypass 403](/2023/0xL4ugh%20CTF%202023/Bypass%20403/)
+| Web | [bypasser](/2023/0xL4ugh%20CTF%202023/bypasser/)
+| Web | [XSS 1](/2023/0xL4ugh%20CTF%202023/XSS%201/)
+| Steganography | [Colorful](/2023/0xL4ugh%20CTF%202023/Colorful/)
+| Osint | [El bes](/2023/0xL4ugh%20CTF%202023/El%20bes/)

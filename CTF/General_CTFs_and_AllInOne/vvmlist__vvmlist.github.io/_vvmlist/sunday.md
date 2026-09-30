@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sunday:
+    -
+  sundayac:
+    -
+  sundaycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  bf:
+    -
+  finger:
+    -
+  creds:
+    -
+  hc:
+    -
+
+wals:
+  sundaywu:
+    -
+  sundayvi:
+    -
+---

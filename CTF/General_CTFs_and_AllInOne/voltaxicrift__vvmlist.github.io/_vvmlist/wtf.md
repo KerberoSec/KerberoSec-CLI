@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  wtf:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sniff:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  wtfwu:
+    -
+---

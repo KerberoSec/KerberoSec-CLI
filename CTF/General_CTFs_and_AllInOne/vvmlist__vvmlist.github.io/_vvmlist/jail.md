@@ -1,0 +1,48 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  jail:
+    -
+  jailac:
+    -
+  jailcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  al:
+    -
+  nfs:
+    -
+  source:
+    -
+  creds:
+    -
+  bof:
+    -
+  logical:
+    -
+  sudo:
+    -
+  decode:
+    -
+  hc:
+    -
+
+wals:
+  jailwu:
+    -
+  jailvi:
+    -
+---

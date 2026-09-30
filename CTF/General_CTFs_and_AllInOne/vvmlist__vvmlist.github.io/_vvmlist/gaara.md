@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  gaara:
+    -
+  gaaraac:
+    -
+  gaaracm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  decode:
+    -
+  suid:
+    -
+
+wals:
+  gaarawu:
+    -
+---

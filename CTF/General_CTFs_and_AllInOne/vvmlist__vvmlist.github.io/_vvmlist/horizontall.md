@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  horizontall:
+    -
+  horizontallac:
+    -
+  horizontallcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  logical:
+    -
+
+wals:
+  horizontallwu:
+    -
+  horizontallvi:
+    -
+---

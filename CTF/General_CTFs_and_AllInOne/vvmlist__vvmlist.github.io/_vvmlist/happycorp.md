@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  happycorp:
+    -
+  happycorpac:
+    -
+  happycorpcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  ssh:
+    -
+  hc:
+    -
+  suid:
+    -
+
+wals:
+  happycorpwu:
+    -
+---

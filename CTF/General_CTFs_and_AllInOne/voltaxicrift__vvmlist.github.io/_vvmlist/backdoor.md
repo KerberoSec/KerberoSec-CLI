@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  backdoor:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  wp:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+
+wals:
+  backdoorwu:
+    -
+  backdoorvi:
+    -
+---

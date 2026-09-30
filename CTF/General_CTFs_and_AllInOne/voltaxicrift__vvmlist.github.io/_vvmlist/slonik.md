@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  slonik:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  al:
+    -
+  nfs:
+    -
+  creds:
+    -
+  hc:
+    -
+  pspy:
+    -
+  cron:
+    -
+  logical:
+    -
+
+wals:
+  slonikwu:
+    -
+---

@@ -1,0 +1,58 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  office:
+    -
+  officeac:
+    -
+  officecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  cve:
+    -
+  creds:
+    -
+  smb:
+    -
+  pcap:
+    -
+  hc:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  reg:
+    -
+  phish:
+    -
+  decode:
+    -
+  logical:
+    -
+  dpapi:
+    -
+  groups:
+    -
+  gpo:
+    -
+
+wals:
+  officewu:
+    -
+  officevi:
+    -
+---

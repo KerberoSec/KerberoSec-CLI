@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  apaches:
+    -
+  apachesac:
+    -
+  apachescm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  rce:
+    -
+  mbck:
+    -
+  hc:
+    -
+  cron:
+    -
+  groups:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  apacheswu:
+    -
+---

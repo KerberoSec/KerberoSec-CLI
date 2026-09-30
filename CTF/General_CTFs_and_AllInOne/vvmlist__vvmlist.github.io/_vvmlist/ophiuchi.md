@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ophiuchi:
+    -
+  ophiuchiac:
+    -
+  ophiuchicm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  deser:
+    -
+  rce:
+    -
+  creds:
+    -
+  passre:
+    -
+  sudo:
+    -
+  source:
+    -
+  logical:
+    -
+
+wals:
+  ophiuchiwu:
+    -
+  ophiuchivi:
+    -
+---

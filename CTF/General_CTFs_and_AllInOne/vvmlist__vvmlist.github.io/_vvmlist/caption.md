@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  caption:
+    -
+  captionac:
+    -
+  captioncm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  git:
+    -
+  creds:
+    -
+  reqs:
+    -
+  xss:
+    -
+  coot:
+    -
+  cve:
+    -
+  ssh:
+    -
+  ci:
+    -
+
+wals:
+  captionwu:
+    -
+  captionvi:
+    -
+---

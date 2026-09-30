@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sauna:
+    -
+  saunaac:
+    -
+  saunacm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  asrep:
+    -
+  hc:
+    -
+  auto:
+    -
+  dcsync:
+    -
+
+wals:
+  saunawu:
+    -
+  saunavi:
+    -
+---

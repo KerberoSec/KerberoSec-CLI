@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  anaximandre:
+    -
+  anaximandreac:
+    -
+  anaximandrecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  decode:
+    -
+  logical:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  anaximandrewu:
+    -
+---

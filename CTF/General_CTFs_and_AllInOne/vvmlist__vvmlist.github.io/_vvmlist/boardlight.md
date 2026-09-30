@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  boardlight:
+    -
+  boardlightac:
+    -
+  boardlightcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  creds:
+    -
+  dcr:
+    -
+  passre:
+    -
+  suid:
+    -
+
+wals:
+  boardlightwu:
+    -
+  boardlightvi:
+    -
+---

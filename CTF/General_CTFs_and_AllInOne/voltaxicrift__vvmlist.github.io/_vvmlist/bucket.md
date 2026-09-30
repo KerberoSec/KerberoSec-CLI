@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bucket:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  aws:
+    -
+  s3:
+    -
+  sql:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  bucketwu:
+    -
+  bucketvi:
+    -
+---

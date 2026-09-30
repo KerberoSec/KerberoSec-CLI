@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  savesanta:
+    -
+  savesantaac:
+    -
+  savesantacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  savesantawu:
+    -
+---

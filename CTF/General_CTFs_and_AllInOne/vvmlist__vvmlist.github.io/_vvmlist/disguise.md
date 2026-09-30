@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  disguise:
+    -
+  disguiseac:
+    -
+  disguisecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  coof:
+    -
+  rce:
+    -
+  creds:
+    -
+  bf:
+    -
+  pspy:
+    -
+  cve:
+    -
+
+wals:
+  disguisewu:
+    -
+---

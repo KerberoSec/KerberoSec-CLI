@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  bruno:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  al:
+    -
+  ftp:
+    -
+  asrep:
+    -
+  hc:
+    -
+  smb:
+    -
+  rev:
+    -
+  zz:
+    -
+  dllj:
+    -
+  krbr:
+    -
+  rbcd:
+    -
+
+wals:
+  brunowu:
+    -
+---

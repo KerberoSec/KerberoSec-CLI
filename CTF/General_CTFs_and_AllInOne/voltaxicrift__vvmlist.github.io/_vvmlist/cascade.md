@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cascade:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  decode:
+    -
+  creds:
+    -
+  smb:
+    -
+  reg:
+    -
+  groups:
+    -
+  sql:
+    -
+  rev:
+    -
+  adrb:
+    -
+
+wals:
+  cascadewu:
+    -
+  cascadevi:
+    -
+---

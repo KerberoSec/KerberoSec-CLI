@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  altered:
+    -
+  alteredac:
+    -
+  alteredcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  rlb:
+    -
+  bf:
+    -
+  sqli:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  alteredwu:
+    -
+  alteredvi:
+    -
+---

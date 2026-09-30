@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mischief:
+    -
+  mischiefac:
+    -
+  mischiefcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  snmp:
+    -
+  creds:
+    -
+  decode:
+    -
+  bf:
+    -
+  rce:
+    -
+  ci:
+    -
+
+wals:
+  mischiefwu:
+    -
+  mischiefvi:
+    -
+---

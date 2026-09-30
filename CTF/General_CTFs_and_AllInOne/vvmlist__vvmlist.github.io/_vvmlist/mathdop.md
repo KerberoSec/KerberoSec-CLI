@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  mathdop:
+    -
+  mathdopac:
+    -
+  mathdopcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  bre:
+    -
+  suid:
+    -
+  logical:
+    -
+  bf:
+    -
+  sudo:
+    -
+  hc:
+    -
+
+wals:
+  mathdopwu:
+    -
+---

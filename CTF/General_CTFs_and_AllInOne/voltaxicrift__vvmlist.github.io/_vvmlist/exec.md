@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  exec:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  al:
+    -
+  smb:
+    -
+  bf:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  execwu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  hacksudo:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  rce:
+    -
+  steg:
+    -
+  decode:
+    -
+  hc:
+    -
+  cron:
+    -
+  rev:
+    -
+  sudo:
+    -
+
+wals:
+  hacksudowu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  previse:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ear:
+    -
+  logical:
+    -
+  ci:
+    -
+  source:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+  pathj:
+    -
+
+wals:
+  previsewu:
+    -
+  previsevi:
+    -
+---

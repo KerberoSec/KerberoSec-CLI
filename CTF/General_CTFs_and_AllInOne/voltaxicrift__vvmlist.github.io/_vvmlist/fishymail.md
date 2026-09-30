@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  fishymail:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  decode:
+    -
+  creds:
+    -
+  hc:
+    -
+  cve:
+    -
+  kern:
+    -
+
+wals:
+  fishymailwu:
+    -
+---

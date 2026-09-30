@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  boxing:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  ci:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  logical:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  boxingwu:
+    -
+---

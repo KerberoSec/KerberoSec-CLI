@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ypuffy:
+    -
+  ypuffyac:
+    -
+  ypuffycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  smb:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  ypuffywu:
+    -
+  ypuffyvi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  reddish:
+    -
+  reddishac:
+    -
+  reddishcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  rce:
+    -
+  bre:
+    -
+  tunnel:
+    -
+  redis:
+    -
+  cron:
+    -
+  wildcard:
+    -
+
+wals:
+  reddishwu:
+    -
+  reddishvi:
+    -
+---

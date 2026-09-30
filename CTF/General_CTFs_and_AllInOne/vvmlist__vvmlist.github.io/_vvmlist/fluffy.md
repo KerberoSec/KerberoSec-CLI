@@ -1,0 +1,48 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fluffy:
+    -
+  fluffyac:
+    -
+  fluffycm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  cve:
+    -
+  resp:
+    -
+  hc:
+    -
+  ntlmt:
+    -
+  bhga:
+    -
+  bhgw:
+    -
+  bhsc:
+    -
+  adcs:
+    -
+
+wals:
+  fluffywu:
+    -
+  fluffyvi:
+    -
+---

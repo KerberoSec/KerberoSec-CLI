@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  helpdesk:
+    -
+  helpdeskac:
+    -
+  helpdeskcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  helpdeskwu:
+    -
+---

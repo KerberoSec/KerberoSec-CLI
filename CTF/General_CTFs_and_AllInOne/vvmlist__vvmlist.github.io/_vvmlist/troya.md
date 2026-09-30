@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  troya:
+    -
+  troyaac:
+    -
+  troyacm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ci:
+    -
+  rce:
+    -
+  decode:
+    -
+  sql:
+    -
+  kernmod:
+    -
+
+wals:
+  troyawu:
+    -
+---

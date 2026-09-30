@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  principle:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  ep:
+    -
+  rce:
+    -
+  sudo:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  groups:
+    -
+
+wals:
+  principlewu:
+    -
+---

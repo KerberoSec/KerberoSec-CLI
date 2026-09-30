@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  hancliffe:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  urln:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  daly:
+    -
+  decode:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  hancliffewu:
+    -
+  hancliffevi:
+    -
+---

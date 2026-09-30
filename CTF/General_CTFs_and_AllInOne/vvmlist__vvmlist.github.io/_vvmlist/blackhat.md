@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  blackhat:
+    -
+  blackhatac:
+    -
+  blackhatcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  phpmod:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+wals:
+  blackhatwu:
+    -
+
+---

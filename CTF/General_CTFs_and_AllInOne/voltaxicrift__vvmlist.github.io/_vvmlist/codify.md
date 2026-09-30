@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  codify:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  source:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  logical:
+    -
+  sudo:
+    -
+  pspy:
+    -
+
+wals:
+  codifywu:
+    -
+  codifyvi:
+    -
+---

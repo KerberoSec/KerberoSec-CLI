@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  university:
+    -
+  universityac:
+    -
+  universitycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  git:
+    -
+  source:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  cve:
+    -
+
+wals:
+  universitywu:
+    -
+---

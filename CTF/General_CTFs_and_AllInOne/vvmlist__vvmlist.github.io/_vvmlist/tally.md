@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  tally:
+    -
+  tallyac:
+    -
+  tallycm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  ftp:
+    -
+  keepass:
+    -
+  hc:
+    -
+  smb:
+    -
+  xpc:
+    -
+  cve:
+    -
+  cron:
+    -
+  tsi:
+    -
+
+wals:
+  tallywu:
+    -
+  tallyvi:
+    -
+---

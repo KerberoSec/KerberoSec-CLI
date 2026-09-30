@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  analysis:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  ldapj:
+    -
+  bf:
+    -
+  hta:
+    -
+  maldll:
+    -
+
+wals:
+  analysiswu:
+    -
+  analysisvi:
+    -
+---

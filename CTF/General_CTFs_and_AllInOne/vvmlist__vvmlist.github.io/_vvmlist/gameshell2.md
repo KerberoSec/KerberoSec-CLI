@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  gameshell2:
+    -
+  gameshell2ac:
+    -
+  gameshell2cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  gameshell2wu:
+    -
+---

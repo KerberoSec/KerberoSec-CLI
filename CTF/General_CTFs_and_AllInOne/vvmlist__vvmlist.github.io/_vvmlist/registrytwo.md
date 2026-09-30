@@ -1,0 +1,54 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  registrytwo:
+    -
+  registrytwoac:
+    -
+  registrytwocm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  api:
+    -
+  docker:
+    -
+  source:
+    -
+  pathtr:
+    -
+  mass:
+    -
+  rce:
+    -
+  deser:
+    -
+  creds:
+    -
+  bre:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+  rmi:
+    -
+
+wals:
+  registrytwowu:
+    -
+  registrytwovi:
+    -
+---

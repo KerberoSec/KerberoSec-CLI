@@ -1,0 +1,13 @@
+---
+curls:
+  art:
+    -
+  artcm:
+    -
+functions:
+  art:
+    -
+wals:
+  art:
+    -
+---

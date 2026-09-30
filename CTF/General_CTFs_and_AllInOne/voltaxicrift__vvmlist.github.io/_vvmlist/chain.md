@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  chain:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  snmp:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  ci:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  chainwu:
+    -
+---

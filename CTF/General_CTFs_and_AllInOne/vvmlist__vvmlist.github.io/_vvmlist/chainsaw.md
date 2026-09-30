@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  chainsaw:
+    -
+  chainsawac:
+    -
+  chainsawcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  al:
+    -
+  ftp:
+    -
+  web3:
+    -
+  rce:
+    -
+  decode:
+    -
+  hc:
+    -
+  ssh:
+    -
+  tunnel:
+    -
+  suid:
+    -
+  logical:
+    -
+
+wals:
+  chainsawwu:
+    -
+  chainsawvi:
+    -
+---

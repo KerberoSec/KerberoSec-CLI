@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  fing:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  finger:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  fingwu:
+    -
+---

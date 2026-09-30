@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  zerovx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  bre:
+    -
+  sudo:
+    -
+
+wals:
+  zerovxwu:
+    -
+---

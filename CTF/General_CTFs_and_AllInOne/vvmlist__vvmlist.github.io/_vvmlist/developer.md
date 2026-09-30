@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  developer:
+    -
+  developerac:
+    -
+  developercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  rev:
+    -
+  decode:
+    -
+  tabb:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  developerwu:
+    -
+  developervi:
+    -
+---

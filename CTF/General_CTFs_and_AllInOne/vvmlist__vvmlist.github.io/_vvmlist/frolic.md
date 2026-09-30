@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  frolic:
+    -
+  frolicac:
+    -
+  froliccm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  hc:
+    -
+  cve:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  frolicwu:
+    -
+  frolicvi:
+    -
+---

@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  writer:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  ci:
+    -
+  rce:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  groups:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+
+wals:
+  writerwu:
+    -
+  writervi:
+    -
+---

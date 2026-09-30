@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  wifinetic:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  wifi:
+    -
+  bf:
+    -
+  cap:
+    -
+
+wals:
+  wifineticwu:
+    -
+  wifineticvi:
+    -
+---

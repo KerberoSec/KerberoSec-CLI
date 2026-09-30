@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  friendzone:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  al:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  pspy:
+    -
+  cron:
+    -
+  logical:
+    -
+  libj:
+    -
+
+wals:
+  friendzonewu:
+    -
+  friendzonevi:
+    -
+---

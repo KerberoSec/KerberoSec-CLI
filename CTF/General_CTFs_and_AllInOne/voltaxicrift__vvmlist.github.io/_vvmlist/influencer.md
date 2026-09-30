@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  influencer:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  steg:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  influencerwu:
+    -
+---

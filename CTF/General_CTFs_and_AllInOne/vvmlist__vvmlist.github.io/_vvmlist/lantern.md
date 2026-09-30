@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  lantern:
+    -
+  lanternac:
+    -
+  lanterncm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  ssrf:
+    -
+  sqli:
+    -
+  creds:
+    -
+  rev:
+    -
+  decode:
+    -
+  pathtr:
+    -
+  sudo:
+    -
+  sql:
+    -
+
+wals:
+  lanternwu:
+    -
+  lanternvi:
+    -
+---

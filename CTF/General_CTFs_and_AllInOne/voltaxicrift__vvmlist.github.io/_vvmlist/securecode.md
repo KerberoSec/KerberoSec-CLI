@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  securecode:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  source:
+    -
+  sqli:
+    -
+  creds:
+    -
+  ep:
+    -
+  rce:
+    -
+
+wals:
+  securecodewu:
+    -
+---

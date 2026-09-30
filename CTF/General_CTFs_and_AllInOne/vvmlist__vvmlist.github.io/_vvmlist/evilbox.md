@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  evilbox:
+    -
+  evilboxac:
+    -
+  evilboxcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  hc:
+    -
+  rwp:
+    -
+
+wals:
+  evilboxwu:
+    -
+---

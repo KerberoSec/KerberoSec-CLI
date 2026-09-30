@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  demons:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  decode:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  demonswu:
+    -
+---

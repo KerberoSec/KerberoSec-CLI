@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  relevant:
+    -
+  relevantac:
+    -
+  relevantcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  rce:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  relevantwu:
+    -
+---

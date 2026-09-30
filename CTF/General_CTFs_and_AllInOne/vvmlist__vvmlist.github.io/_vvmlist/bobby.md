@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  bobby:
+    -
+  bobbyac:
+    -
+  bobbycm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  ftp:
+    -
+  cve:
+    -
+  kern:
+    -
+
+wals:
+  bobbywu:
+    -
+---

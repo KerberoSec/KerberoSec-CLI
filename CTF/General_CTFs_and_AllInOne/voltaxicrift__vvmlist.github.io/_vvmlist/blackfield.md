@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blackfield:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  asrep:
+    -
+  hc:
+    -
+  bhfcp:
+    -
+  creds:
+    -
+  daly:
+    -
+  lsass:
+    -
+  tsb:
+    -
+  vss:
+    -
+  ntds:
+    -
+
+wals:
+  blackfieldwu:
+    -
+  blackfieldvi:
+    -
+---

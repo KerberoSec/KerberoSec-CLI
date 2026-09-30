@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pollution:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  hc:
+    -
+  sql:
+    -
+  rce:
+    -
+  fj:
+    -
+  lfi:
+    -
+  pspy:
+    -
+  api:
+    -
+  logical:
+    -
+  tunnel:
+    -
+  source:
+    -
+  pp:
+    -
+
+wals:
+  pollutionwu:
+    -
+  pollutionvi:
+    -
+---

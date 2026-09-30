@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  store:
+    -
+  storeac:
+    -
+  storecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  decode:
+    -
+  source:
+    -
+  creds:
+    -
+  ftp:
+    -
+  tunnel:
+    -
+  rce:
+    -
+  logical:
+    -
+
+wals:
+  storewu:
+    -
+  storevi:
+    -
+---

@@ -1,0 +1,58 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sekhmet:
+    -
+  sekhmetac:
+    -
+  sekhmetcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  deser:
+    -
+  waf:
+    -
+  rce:
+    -
+  pspy:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  smb:
+    -
+  creds:
+    -
+  ci:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  dpapi:
+    -
+  logical:
+    -
+
+wals:
+  sekhmetwu:
+    -
+  sekhmetvi:
+    -
+---

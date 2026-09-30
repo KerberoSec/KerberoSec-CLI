@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  registry:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  api:
+    -
+  docker:
+    -
+  ssh:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  rce:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  registrywu:
+    -
+  registryvi:
+    -
+---

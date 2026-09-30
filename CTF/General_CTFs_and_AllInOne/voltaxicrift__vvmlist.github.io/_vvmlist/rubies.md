@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  rubies:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  ci:
+    -
+  rce:
+    -
+  git:
+    -
+  creds:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  rubieswu:
+    -
+---

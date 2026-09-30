@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  shop:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  bf:
+    -
+  cap:
+    -
+
+wals:
+  shopwu:
+    -
+---

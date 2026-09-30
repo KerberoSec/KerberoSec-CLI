@@ -1,0 +1,56 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  crossfit:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xss:
+    -
+  csrf:
+    -
+  cors:
+    -
+  ftp:
+    -
+  rce:
+    -
+  hc:
+    -
+  creds:
+    -
+  groups:
+    -
+  cron:
+    -
+  cve:
+    -
+  sql:
+    -
+  ci:
+    -
+  pspy:
+    -
+  rev:
+    -
+  logical:
+    -
+
+wals:
+  crossfitwu:
+    -
+  crossfitvi:
+    -
+---

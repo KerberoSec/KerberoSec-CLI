@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  warrior:
+    -
+  warriorac:
+    -
+  warriorcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  warriorwu:
+    -
+---

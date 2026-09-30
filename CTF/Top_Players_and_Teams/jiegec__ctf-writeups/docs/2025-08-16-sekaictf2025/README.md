@@ -1,0 +1,18 @@
+# SekaiCTF 2025
+
+Link: <https://2025.ctf.sekai.team/>
+
+CTFTime: <https://ctftime.org/event/2683>
+
+Official writeup: <https://github.com/project-sekai-ctf/sekaictf-2025>
+
+Result: 39 Points, 783rd Place
+
+Solved Challenges:
+
+- [Sanity Check](./sanity-check.md)
+
+Not solved challenges, but worth a writeup:
+
+- [My Flask App](./my-flask-app.md)
+- [SSSS](./ssss.md)

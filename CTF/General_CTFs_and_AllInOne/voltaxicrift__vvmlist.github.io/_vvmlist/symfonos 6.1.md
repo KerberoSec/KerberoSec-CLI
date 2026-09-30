@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  symfonos 6.1:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  xss:
+    -
+  creds:
+    -
+  git:
+    -
+  api:
+    -
+  passre:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  symfonos 6.1wu:
+    -
+---

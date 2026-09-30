@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  awkward:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  source:
+    -
+  creds:
+    -
+  hc:
+    -
+  api:
+    -
+  ssrf:
+    -
+  jwt:
+    -
+  pathtr:
+    -
+  logical:
+    -
+  pspy:
+    -
+  ci:
+    -
+
+wals:
+  awkwardwu:
+    -
+  awkwardvi:
+    -
+---

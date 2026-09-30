@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  control:
+    -
+  controlac:
+    -
+  controlcm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+  reg:
+    -
+
+wals:
+  controlwu:
+    -
+  controlvi:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  writeup:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  logical:
+    -
+  be:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  writeupwu:
+    -
+  writeupvi:
+    -
+---

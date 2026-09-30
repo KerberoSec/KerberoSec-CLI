@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pyrat:
+    -
+  pyratac:
+    -
+  pyratcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  git:
+    -
+  pspy:
+    -
+  cron:
+    -
+  fuzz:
+    -
+
+wals:
+  pyratwu:
+    -
+---

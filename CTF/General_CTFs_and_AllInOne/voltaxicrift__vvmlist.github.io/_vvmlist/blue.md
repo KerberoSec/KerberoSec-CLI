@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blue:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  kern:
+    -
+
+wals:
+  bluewu:
+    -
+  bluevi:
+    -
+---

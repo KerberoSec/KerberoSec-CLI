@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  chaos:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  creds:
+    -
+  logical:
+    -
+  decode:
+    -
+  rce:
+    -
+  rbash:
+    -
+  dr:
+    -
+
+wals:
+  chaoswu:
+    -
+  chaosvi:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  admirer:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  ftp:
+    -
+  sql:
+    -
+  logical:
+    -
+
+wals:
+  admirerwu:
+    -
+  admirervi:
+    -
+---

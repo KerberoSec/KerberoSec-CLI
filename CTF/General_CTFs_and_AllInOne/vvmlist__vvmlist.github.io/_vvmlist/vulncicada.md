@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  vulncicada:
+    -
+  vulncicadaac:
+    -
+  vulncicadacm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  nfs:
+    -
+  al:
+    -
+  smb:
+    -
+  adcs:
+    -
+
+wals:
+  vulncicadawu:
+    -
+---

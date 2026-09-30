@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  watcher:
+    -
+  watcherac:
+    -
+  watchercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  sqli:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  passre:
+    -
+
+wals:
+  watcherwu:
+    -
+---

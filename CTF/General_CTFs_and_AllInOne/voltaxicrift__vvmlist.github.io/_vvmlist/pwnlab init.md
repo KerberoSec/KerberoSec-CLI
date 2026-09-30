@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  pwnlab init:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  sql:
+    -
+  decode:
+    -
+  ep:
+    -
+  rce:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  pwnlab initwu:
+    -
+---

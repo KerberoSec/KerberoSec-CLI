@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  travel:
+    -
+  travelac:
+    -
+  travelcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  source:
+    -
+  ssrf:
+    -
+  deser:
+    -
+  rce:
+    -
+  logical:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+
+wals:
+  travelwu:
+    -
+  travelvi:
+    -
+---

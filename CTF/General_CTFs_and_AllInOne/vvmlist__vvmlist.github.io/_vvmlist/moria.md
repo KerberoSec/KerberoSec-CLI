@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  moria:
+    -
+  moriaac:
+    -
+  moriacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ftp:
+    -
+  hc:
+    -
+  ssh:
+    -
+
+wals:
+  moriawu:
+    -
+---

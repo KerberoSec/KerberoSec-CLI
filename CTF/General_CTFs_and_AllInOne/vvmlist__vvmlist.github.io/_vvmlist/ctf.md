@@ -1,0 +1,36 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ctf:
+    -
+  ctfac:
+    -
+  ctfcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ldapj:
+    -
+  logical:
+    -
+  rce:
+    -
+  wildcard:
+    -
+
+wals:
+  ctfwu:
+    -
+  ctfvi:
+    -
+---

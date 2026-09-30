@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  cachalot:
+    -
+  cachalotac:
+    -
+  cachalotcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  lfi:
+    -
+  creds:
+    -
+  rce:
+    -
+  bre:
+    -
+
+wals:
+  cachalotwu:
+    -
+---

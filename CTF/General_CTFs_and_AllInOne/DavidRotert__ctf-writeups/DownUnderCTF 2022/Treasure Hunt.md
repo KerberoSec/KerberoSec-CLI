@@ -1,0 +1,2 @@
+# Treasure Hunt
+Tresure Hunt is a website written in Flask 2.2.2 and Python 3.8.14. It has a login form, a signup form and a protected profile page which is only accessible when signing up and logging in.

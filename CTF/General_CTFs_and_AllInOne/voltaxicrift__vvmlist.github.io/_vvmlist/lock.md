@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  lock:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  git:
+    -
+  rce:
+    -
+  decode:
+    -
+  creds:
+    -
+  cve:
+    -
+  logical:
+    -
+
+wals:
+  lockwu:
+    -
+---

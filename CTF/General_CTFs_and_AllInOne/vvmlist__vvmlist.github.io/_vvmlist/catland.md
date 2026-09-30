@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  catland:
+    -
+  catlandac:
+    -
+  catlandcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+  pathj:
+    -
+
+wals:
+  catlandwu:
+    -
+---

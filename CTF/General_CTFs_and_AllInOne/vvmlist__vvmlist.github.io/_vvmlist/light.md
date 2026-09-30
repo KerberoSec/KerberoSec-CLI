@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  light:
+    -
+  lightac:
+    -
+  lightcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  creds:
+    -
+  sudo:
+    -
+  pspy:
+    -
+
+wals:
+  lightwu:
+    -
+---

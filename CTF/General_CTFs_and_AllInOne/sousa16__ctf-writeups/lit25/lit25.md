@@ -1,0 +1,1 @@
+[Link to challenges](https://lit.lhsmathcs.org/ctf/challenges)

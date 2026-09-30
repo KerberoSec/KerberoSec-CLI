@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  digitalworld.local mercy:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  creds:
+    -
+  smb:
+    -
+  knock:
+    -
+  cve:
+    -
+  lfi:
+    -
+  rce:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  digitalworld.local mercywu:
+    -
+---

@@ -1,0 +1,50 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  tombwatcher:
+    -
+  tombwatcherac:
+    -
+  tombwatchercm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  bhas:
+    -
+  hc:
+    -
+  gmsa:
+    -
+  groups:
+    -
+  bhfcp:
+    -
+  bhwo:
+    -
+  bhsc:
+    -
+  adrb:
+    -
+  bhga:
+    -
+  adcs:
+    -
+
+wals:
+  tombwatcherwu:
+    -
+  tombwatchervi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  magifi:
+    -
+  magifiac:
+    -
+  magificm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  ssti:
+    -
+  rce:
+    -
+  sudo:
+    -
+  wifi:
+    -
+  pcap:
+    -
+  hc:
+    -
+  suid:
+    -
+  rev:
+    -
+
+wals:
+  magifiwu:
+    -
+---

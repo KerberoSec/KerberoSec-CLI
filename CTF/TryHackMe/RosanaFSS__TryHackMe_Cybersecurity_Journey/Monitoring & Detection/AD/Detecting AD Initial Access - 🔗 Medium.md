@@ -1,0 +1,481 @@
+<h1 align="center"><a href="https://tryhackme.com/room/detectingadinitialaccess">Detecting AD Initial Access</a></h1>
+<p align="center"><img width="1200px" src="https://github.com/user-attachments/assets/b3bf781f-5000-4545-9ba5-a654065956d4"><br>
+If you find it helpful, consider coming back for research.<br><p align="center"><a href="https://githubhttps://github.com/user-attachments/assets/f9d56f26-bf87-4309-b5d8-f98cbb0302b0com/RosanaFSS"><img src="https://img.shields.io/github/followers/RosanaFSS?label=Follow&style=for-the-badge&logo=github&color=24292e" alt="Follow Rosana on GitHub"></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<img src="https://img.shields.io/badge/COMPLETED-2026%2C%20MAR%2011-444444?style=for-the-badge&logo=calendar-check" alt="Completion Date"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="https://www.linkedin.com/in/rosanafssantos/"><img src="https://img.shields.io/badge/Connect-LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white" alt="Connect on LinkedIn"></a></p
+
+<br>
+<h2>Task 1 &nbsp;・&nbsp; Introduction</h2> 
+<p>In an AD environment, every internet-facing service that authenticates against the domain is a potential entry point. This room teaches how to detect initial access attacks against three of the most common ones: IIS web applications, Exchange OWA, and VPN gateways.<br>
+
+Each scenario uses a different application log source, but they share a common principle:<br>
+
+- The attack is visible in the application logs first<br>
+- Then, correlating with other log sources (e.g., Sysmon and Windows Security logs) to reveal the full scope</p>
+
+<h3>Learning Objectives</h3>
+<p>
+  
+- Analyze IIS logs to detect web application attacks and web shell activity<br>
+- Correlate Exchange/OWA authentication events with Windows Security logs<br>
+- Investigate VPN credential attacks using NPS event logs<br>
+- Investigate post-authentication activity to determine the impact of a breach<br>
+- Build investigation timelines by correlating application logs with Windows Security logs</p>
+
+<h3>Learning Prerequisites</h3>
+<p>
+  
+- <strong>Active Directory</strong>: How users, groups, and authentication work (<a href="https://tryhackme.com/room/winadbasics">Active Directory Basics</a> room)<br>
+- <strong>Windows Event Logs</strong>: Reading and filtering Security events (<a href="https://tryhackme.com/room/windowseventlogs">Windows Event Logs</a> room)<br>
+- <strong>Splunk</strong>: Writing SPL queries to search and filter log data (<a href="https://tryhackme.com/room/splunkexploringspl">Splunk: Exploring SPL</a> room)<br>
+- <strong>AD Monitoring</strong>: Understanding the main Event IDs needed to know what's normal in AD to detect abnormal (<a href="https://tryhackme.com/room/monitoringactivedirectory">Monitoring Active Directory</a> room)</p>
+
+<h3>Machine Access</h3>
+<p>Start the machine by clicking the Start Machine button below. Give the Splunk instance about 4-5 minutes to launch, then access it using the link below. Feel free to continue reading the next tasks while it boots:<br>
+
+https://LAB_WEB_URL.p.thmlabs.com</p>
+
+<h3>Set up your virtual environment</h3>
+<p>To successfully complete this room, you'll need to set up your virtual environment. This involves starting the Target Machine, ensuring you're equipped with the necessary tools and access to tackle the challenges ahead.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the question below}}$$ </h3>
+
+> <em>I have successfully started my Splunk instance.</em><br><a id='1.1'></a>
+>> <code>No answer needed</code></strong><br>
+
+<br>
+<h2>Task 2 &nbsp;・&nbsp; Understanding IIS and Its Logs</h2> 
+
+<h3>Why AD Changes the Attack Surface</h3>
+<p>Consider a standalone web server. An attacker can exploit a vulnerability in the web application, brute-force an exposed login page, or phish an admin for credentials. All of these are serious, but the damage stays on that one machine.<br>
+
+Active Directory changes the equation. In an AD environment, services like web applications, Exchange email, and VPN gateways all authenticate users against the same central directory. Each of these services becomes a potential entry point, not just to the service itself, but to every resource in the domain.<br>
+
+The diagram below illustrates the difference in impact between compromising a standalone server versus a service connected to Active Directory.</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/4483002a-6b7a-4ddb-9fca-2642039f8e32"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>We'll see how attacks can occur at the application layer before they ever reach Active Directory.</p>
+
+<h3>What IIS Is and Why It Matters</h3>
+<p>Internet Information Services (IIS) is Microsoft's web server platform. Exchange, SharePoint, ADFS, and many internal business applications all run on IIS. Any of these applications can become an initial access point if an attacker finds a vulnerability to exploit.<br>
+
+When a user logs into an IIS-hosted application, IIS passes the credentials to Active Directory for validation. Windows logs the result as Event 4624 (An account was successfully logged on) or Event 4625 (An account failed to log on). This means IIS authentication generates events in both the IIS access logs and the Windows Security logs on the web server, while the Domain Controller logs Event 4776 for credential validation, as shown in the diagram below.</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/23211d8b-fc3e-490a-a157-a4b2535dd8a9"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<h3>IIS Log Basics</h3>
+<p>IIS stores access logs in C:\inetpub\logs\LogFiles\W3SVC1 by default. Each log file contains one line per HTTP request.</p>
+
+<h6 align="center"><img width="600px" src="https://github.com/user-attachments/assets/0daf441b-9448-4b0c-86b7-afbc237bbd58"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/9323d650-a2b3-48bc-ae10-b454fdbede86"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p> Important note: IIS records all timestamps in UTC, regardless of the server's local time zone. This matters when we correlate IIS entries with Windows Security events, which use the machine's local time zone.<br>
+
+Not every field in the log is relevant for us, so here are the ones worth focusing on</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/d7efa56f-ec6b-4dad-a9de-460964a4ddd3"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>We don't need to memorize them as we'll use them in the following investigation tasks.</p>
+
+<h3>Normal vs Suspicious IIS Patterns</h3>
+<p>Before we move on, this table shows what normal IIS traffic looks like compared to patterns that should raise our attention:</p>
+
+<h6 align="center"><img width="900px" src="https://github.com/user-attachments/assets/54b328b4-3d02-4692-9fd8-de9c8dcc4015"><br>This image and all the theoretical content of the present article is TryHackMe´s property.</h6>
+
+<p>When analyzing IIS logs, we should first look for deviations from these normal patterns. For example, a flood of authentication failures from a single IP or POST requests to files in unexpected directories are both red flags and require investigation.</p>
+
+<br>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the question below}}$$ </h3>
+
+> <em>Where does IIS store access logs by default?</em><br><a id='2.1'></a>
+>> <code>C:\inetpub\logs\LogFiles\W3SVC1</code></strong><br>
+
+<br>
+<h2>Task 3 &nbsp;・&nbsp; Detecting Web Shell Deployment</h2> 
+<br>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What is the filename of the web shell the attacker used?</em><br><a id='3.1'></a>
+>> <code>shell.aspx</code></strong><br>
+
+```bash
+index=iis sc_status=404
+| stats count by c_ip
+| sort - count
+```
+
+<img width="957" height="309" alt="image" src="https://github.com/user-attachments/assets/e36d66db-657e-429f-9c0f-eb8be6e82152" />
+
+<br>
+<br>
+
+```bash
+index=iis
+| stats count by c_ip, sc_status
+| sort - count
+```
+
+<img width="945" height="598" alt="image" src="https://github.com/user-attachments/assets/0d9d0cc3-bb0f-402d-87e7-6bcc37b38bbb" />
+
+<br>
+<br>
+
+> <em>What IP address was used to interact with the web shell?</em><br><a id='3.2'></a>
+>> <code>203.0.113.47</code></strong><br>
+
+```bash
+index=iis cs_uri_stem="*aspnet_client/*"
+| stats count by c_ip, cs_uri_stem
+| sort - count
+```
+
+<img width="957" height="350" alt="image" src="https://github.com/user-attachments/assets/c699775d-a727-4498-8bc1-0856c8cacc35" />
+
+<br>
+<br>
+
+> <em>After accessing the web shell, what was the first reconnaissance command the attacker executed?</em><br><a id='3.3'></a>
+>> <code>whoami</code></strong><br>
+
+```bash
+index=iis cs_uri_stem="*aspnet_client/*"
+| table _time, c_ip, cs_method, cs_uri_query, sc_status
+| sort -_time
+```
+
+<img width="956" height="468" alt="image" src="https://github.com/user-attachments/assets/98be912b-36a9-4d76-baac-ef53e010e5fb" />
+
+<br>
+<br>
+<br>
+<h2>Task 4 &nbsp;・&nbsp; Exchange, OWA, and Credential Attacks</h2> 
+<br>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What virtual directory path provides access to the Exchange admin console? (Answer Format: /path)</em><br><a id='4.1'></a>
+>> <code>/ecp</code></strong><br>
+
+<br>
+
+> <em>What virtual directory path provides access to the Exchange admin console? (Answer Format: /path)</em><br><a id='4.1'></a>
+>> <code>4625</code></strong><br>
+
+<br>
+<h2>Task 5 &nbsp;・&nbsp; Detecting OWA Brute-Force Attacks</h2> 
+<br>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>How many failed login attempts occurred during the OWA brute-force attack?</em><br><a id='5.1'></a>
+>> <code>15</code></strong><br>
+
+```bash
+index=iis cs_uri_stem="/owa/auth.owa" cs_method=POST
+| bin _time span=5m
+| stats count by _time, c_ip
+| where count > 10
+| sort - count
+```
+
+<img width="1270" height="334" alt="image" src="https://github.com/user-attachments/assets/20544de9-a1b7-49fe-8da0-e8df23f6d31e" />
+
+```bash
+index=win EventCode=4625 <code>Logon_Type</code>=8
+| table _time, EventCode, user, Process_Name, <code>Logon_Type</code>
+| sort _time
+```
+
+<img width="1283" height="644" alt="image" src="https://github.com/user-attachments/assets/988cbedb-089a-42bf-88f9-97294bb69263" />
+
+<br>
+<br>
+
+```bash
+index=win EventCode=4625 <code>Logon_Type</code>=8
+| stats count by user
+| sort -count
+```
+
+<img width="1279" height="294" alt="image" src="https://github.com/user-attachments/assets/49d3f7ca-ee01-434d-ba23-e34688b6df47" />
+
+<br>
+<br>
+
+> <em>What username was successfully compromised in this attack?)</em><br><a id='5.2'></a>
+>> <code>sarah.kim</code></strong><br>
+
+```bash
+index=win EventCode=4625
+| stats count by user, <code>Logon_Type</code>
+| sort - count
+```
+
+<img width="1283" height="644" alt="image" src="https://github.com/user-attachments/assets/f8e72568-4208-488d-907e-46dbe25a1b83" />
+
+<img width="1267" height="369" alt="image" src="https://github.com/user-attachments/assets/58915438-ae67-44a3-baac-f0583e0d1429" />
+
+<br>
+<br>
+
+```bash
+index=win EventCode=4625
+| stats count by user, <code>Logon_Type</code>
+| sort - count
+```
+
+<img width="1267" height="369" alt="image" src="https://github.com/user-attachments/assets/58915438-ae67-44a3-baac-f0583e0d1429" />
+
+<br>
+<br>
+
+```bash
+index=win EventCode IN (4624, 4625) user="sarah.kim" <code>Logon_Type</code>=8
+| table _time, EventCode, user, Process_Name, <code>Logon_Type</code>
+| sort +_time
+```
+
+<img width="1269" height="684" alt="image" src="https://github.com/user-attachments/assets/1882b40f-d1c7-4606-8962-95390154c11f" />
+
+<br>
+<br>
+
+> <em>What source IP address conducted this brute-force attack?</em><br><a id='5.3'></a>
+>> <code>203.0.113.47</code></strong><br>
+
+<br>
+
+> <em>After the successful login, what path did the attacker access to reach the Exchange admin console? (Answer Format: /path)</em><br><a id='5.4'></a>
+>> <code>/ecp</code></strong><br>
+
+```bash
+index=iis
+|  table _time, EventCode, cs_method, cs_uri_query, cs_uri_stem, c_ip, s_ip, s_port, cmd
+|  sort by +_time
+```
+
+<img width="1263" height="735" alt="image" src="https://github.com/user-attachments/assets/d802113d-9caf-47ac-b744-bf338dc03cb5" />
+
+<br>
+<br>
+<h2>Task 6 &nbsp;・&nbsp; VPN and Active Directory</h2> 
+<br>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What Windows Event ID indicates that NPS granted network access to a VPN user?</em><br><a id='6.1'></a>
+>> <code>6272</code></strong><br>
+
+<br>
+
+> <em>In a typical enterprise VPN deployment, what protocol does the VPN gateway use to communicate authentication requests to NPS?</em><br><a id='6.2'></a>
+>> <code>RADIUS</code></strong><br>
+
+<br>
+<h2>Task 7 &nbsp;・&nbsp; Detecting VPN Credetntial Attacks</h2> 
+<br>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What username was successfully compromised via VPN after the credential attack?</em><br><a id='7.1'></a>
+>> <code>david.chen</code></strong><br>
+
+<br>
+
+> <em>Based on the NPS access-accept event, at what time did the successful VPN authentication occur? (Answer Format: HH:MM:SS)</em><br><a id='7.2'></a>
+>> <code>10:47:06</code></strong><br>
+
+```bash
+index=win EventCode=6273
+|  table _time, EventCode, cs_method, User_Account_Name, Client_IP_Address
+|  sort by +_time
+```
+
+<img width="1267" height="504" alt="image" src="https://github.com/user-attachments/assets/31a6bcdb-f56d-4838-ace9-42df51d52fc6" />
+
+<br>
+<br>
+
+```bash
+index=win EventCode=6273
+| stats count by User_Account_Name, Client_IP_Address
+| sort - count
+```
+
+<img width="1261" height="292" alt="image" src="https://github.com/user-attachments/assets/25fe4bc5-5263-4707-a2e0-07a5626f4be9" />
+
+<br>
+<br>
+
+```bash
+index=win User_Account_Name=david.chen
+|  table _time, EventCode, cs_method, User_Account_Name, Client_IP_Address
+|  sort by +_time
+```
+
+<img width="1265" height="476" alt="image" src="https://github.com/user-attachments/assets/4952104b-7ffc-4b9a-9d41-4eefc03350b9" />
+
+<br>
+<br>
+
+```bash
+index=win User_Account_Name=david.chen
+|  table _time, EventCode, cs_method, User_Account_Name, Client_IP_Address
+|  sort by +_time
+```
+
+<img width="1270" height="481" alt="image" src="https://github.com/user-attachments/assets/8b8506ea-dc4b-4527-a2a7-6e4e346ab245" />
+
+<br>
+<br>
+
+```bash
+index=win EventCode IN (4624,4625,6273,6272) "*david.chen*"
+|  table _time, EventCode, host, Client_IP_Address, user, User_Account_Name
+|  sort by +_time
+```
+
+<img width="1262" height="318" alt="image" src="https://github.com/user-attachments/assets/c89980d9-dd1e-4834-9898-4ea45b99f1da" />
+
+<br>
+<br>
+
+<br>
+<h2>Task 8 &nbsp;・&nbsp; Investigation Challenge</h2> 
+<h3>Scenario</h3>
+<p>The SOC team received an alert about suspicious HTTP activity on one of the organization's IIS web servers. The alert was triggered by an unusual volume of HTTP 404 responses originating from a single external IP address.<br>
+
+As part of the SOC team, you're tasked with reconstructing what happened.</p>
+
+<h3>Machine Access</h3>
+<p>Before starting this machine, you can stop the first machine from Task 1 as it's no longer needed.<br>
+
+To start the second machine, click the Start Machine button below. This is a separate investigation environment with its own Splunk instance and log data, independent from the walkthrough machine. Give it 4-5 minutes to launch, then access it here:<br>
+
+https://.....reverse-proxy.cell-prod-eu-west-1b.vm.tryhackme.com<br>
+
+Info: This machine uses the same indexes: index=iis for IIS access logs and index=win for Windows Security and Sysmon events. Remember to set the time picker to All time if your queries return no results.</p>
+
+<h3>Your virtual environment has been set up</h3>
+<p>All machine details can be found at the top of the page.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>What is the filename of the web shell the attacker deployed?</em><br><a id='8.1'></a>
+>> <code>error.aspx</code></strong><br>
+
+```bash
+index=iis cs_uri_stem="*aspnet_client/*"
+| stats count by c_ip, cs_uri_stem
+| sort - count
+```
+
+<img width="1264" height="342" alt="image" src="https://github.com/user-attachments/assets/a1dce23d-08dd-44df-81b8-ae3d9e903b1a" />
+
+<br>
+<br>
+
+> <em>What was the first reconnaissance command the attacker executed through the web shell?</em> Hint: Check process creation events<br><a id='8.2'></a>
+>> <code>hostname</code></strong><br>
+
+```bash
+index=iis cs_uri_stem="*aspnet_client/*"
+| table _time, EventCode, c_ip, cs_method, cs_uri_query, cmd, s_ip, s_port, sc_status
+| sort +_time
+```
+
+<img width="1267" height="444" alt="image" src="https://github.com/user-attachments/assets/30b0c73f-69ab-4fa3-8c13-c20d7c3dded2" />
+
+<br>
+<br>
+
+> <em>What URI path was used to upload the web shell to the server? (Answer Format: /path/file.ext)</em><br><a id='8.3'></a>
+>> <code>/internalapp/upload.aspx</code></strong><br>
+
+```bash
+index=iis cs_method="POST" 
+| table _time, EventCode, c_ip, cs_method, cs_uri_query, cs_uri_stem, s_ip, s_port, sc_status
+| sort +_time
+```
+
+<img width="1271" height="324" alt="image" src="https://github.com/user-attachments/assets/1526196a-89e3-4c52-884a-60dc94fdedea" />
+
+<br>
+<br>
+
+> <em>At what time was the web shell file created on the server? (Answer Format: HH:MM:SS)</em> Hint: Check Sysmon file creation events<br><a id='8.4'></a>
+>> <code>10:40:33</code></strong><br>
+
+```bash
+index=win SourceName=Microsoft-Windows-Sysmon EventCode=11 "error.aspx"
+```
+
+<img width="1284" height="526" alt="image" src="https://github.com/user-attachments/assets/f344cf25-35af-4c50-8a8a-72a230b8841c" />
+
+<br>
+<h2>Task 9 &nbsp;・&nbsp; Conclusion</h2> 
+<p>This room covered three attack surfaces, three application log sources, and a consistent investigation approach. Every service we looked at, whether it was IIS, Exchange, or VPN, authenticates against Active Directory. And every attack left traces in both the application logs and the Windows Security logs.</p>
+
+<h3>Takeaways</h3>
+
+<p>
+
+- IIS logs capture source IPs, URI paths, and request patterns that Windows Security events miss, making them essential for detecting web shell interaction and credential attacks against OWA.<br>
+- The <code>w3wp.exe</code> spawning <code>cmd.exe</code> or <code>powershell.exe</code> pattern catches web shell activity regardless of the vulnerability exploited.<br>
+- NPS Events 6272/6273 exhibit the same failed/succeeded pattern for VPN authentication as IIS does for web applications, so the investigation methodology transfers directly.<br>
+- VPN credential attacks aren't always brute force. Stolen credentials produce no failure cluster, making post-authentication activity the primary detection opportunity.<br>
+- Correlation across application logs, Windows Security events, and post-authentication checks on internal hosts builds the complete picture from initial attack to impact.<br>
+- The <code>Logon_Type</code> field in Event 4624 helps work backwards from AD alerts: Type 8 points to IIS, Type 3 from unexpected sources can indicate VPN compromise.</p>
+
+<h3 align="left"> $$\textcolor{#f00c17}{\textnormal{Answer the questions below}}$$ </h3>
+
+> <em>Great work! You have completed the Detecting AD Initial Access room.</em><br><a id='9.1'></a>
+>> <code>No answer needed</code><br>
+
+<br>
+<br>
+<h1 align="center">Completed</h1>
+
+<p align="center"><img width="500px" src="https://github.com/user-attachments/assets/54d79580-6826-416e-b4a9-48af9664ea59"><br>
+                  <img width="900px" src="https://github.com/user-attachments/assets/83ca85d9-09b7-46f6-8393-93ea53dfa75f"><br>
+                  <img width="900px" src="https://github.com/user-attachments/assets/1d5790c7-47a3-463c-8aae-288d0e2fad37"></p>
+
+            
+<h1 align="center">My TryHackMe Journey ・ 2026, March<a id='9'></a></h1>
+
+<div align="center"><h6>
+
+|Day<br><br><br> |Streak<br><br><br>|Room Name<br><br><br>|Level<br><br><br>|Type<br><br><br>|Rooms<br>Completed<br><br>|Points<br><br><br>|Badges<br><br><br>|Global<br>All<br>Time<br>|Global<br>Monthly<br><br>|Brazil<br>All<br>Time<br>|Brazil<br>Monthly<br><br>|League<br><br><br>|
+|---------------:|-----------------:|:----------------|:---------------|:----------------------------------------:|-------------------------:|-----------------:|-----------------:|--------------------:|------------------------:|--------------------:|---------------:|---------------:|
+|11<br><br>      |69<br><br>        |Detecting AD Initial Access<br>  |Medium<br><br> |🔗<br><br>| 1,146<br><br>| 160,195<br><br>| 91<br><br>| 16ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|4ᵗʰ<br><br>|
+|11<br><br>      |69<br><br>        |Minotaur´s Labyrinth<br><br>     |Medium<br><br> |🚩<br><br>| 1,145<br><br>| 160,051<br><br>| 91<br><br>| 16ᵗʰ<br><br>|10ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|9ᵗʰ<br><br>|
+|10<br><br>      |68<br><br>        |M365 Monitoring Basics<br><br>   |Medium<br><br> |🔗<br><br>| 1,144<br><br>| 160,016<br><br>| 91<br><br>| 16ᵗʰ<br><br>| 8ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|9<br><br>       |67<br><br>        |Advent of Cyber 2022<br><br>     |Easy  <br><br> |🔗<br><br>| 1,143<br><br>| 159,880<br><br>| 91<br><br>| 16ᵗʰ<br><br>| 8ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|8<br><br>       |66<br><br>        |Windows Reversing Intro<br>      |Medium<br><br> |🔗<br><br>| 1,142<br><br>|        <br><br>| 91<br><br>|     <br><br>|    <br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|8<br><br>       |66<br><br>        |Advent of Cyber 2 [2020]<br>     |Easy<br><br>   |🔗<br><br>| 1,141<br><br>| 159,164<br><br>| 91<br><br>| 20ᵗʰ<br><br>| 7ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|8<br><br>       |66<br><br>        |25 Days of Cyber Security<br>    |Easy<br><br>   |🔗<br><br>| 1,140<br><br>| 159,068<br><br>| 91<br><br>| 20ᵗʰ<br><br>| 7ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|7<br><br>       |65<br><br>        |25 Days of Cyber Security<br>    |Easy<br><br>   |🔗<br><br>| 1,139<br><br>|        <br><br>| 91<br><br>| 20ᵗʰ<br><br>| 7ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|6<br><br>       |64<br><br>        |25 Days of Cyber Security<br>    |Easy<br><br>   |🔗<br><br>| 1,139<br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+|6<br><br>       |64<br><br>        |Persistence: T1053<br>           |Easy<br><br>   |🔗<br><br>| 1,139<br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+|5<br><br>       |63<br><br>        |LOVELETTER.EXE<br><br>           |Hard<br><br>   |🚩<br><br>| 1,139<br><br>| 158,294<br><br>| 90<br><br>| 20ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|5<br><br>       |63<br><br>        |Monitoring AWS Workloads<br>     |Medium<br><br> |🔗<br><br>| 1,139<br><br>| 157,994<br><br>| 90<br><br>| 20ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|5<br><br>       |63<br><br>        |Kernel Blackout<br><br>          |Medium<br><br> |🚩<br><br>| 1,138<br><br>| 157,978<br><br>| 90<br><br>| 20ᵗʰ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|3ʳᵈ<br><br>|
+|5<br><br>       |63<br><br>        |Operation Endgame<br><br>        |Hard<br><br>   |🚩<br><br>| 1,137<br><br>| 157,578<br><br>| 90<br><br>| 23ʳᵈ<br><br>| 9ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|7ᵗʰ<br><br>|
+|4<br><br>       |62<br><br>        |Monitoring Active Directory<br>  |Medium<br><br> |🔗<br><br>| 1,136<br><br>| 157,396<br><br>| 90<br><br>| 22ⁿᵈ<br><br>|10ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|3<br><br>       |61<br><br>        |Monitoring AWS Services<br>      |Medium<br><br> |🔗<br><br>| 1,135<br><br>|        <br><br>| 90<br><br>| 22ⁿᵈ<br><br>|10ᵗʰ<br><br>| 2ⁿᵈ<br><br>| 1ˢᵗ<br><br>|<br><br>|
+|2<br><br>       |60<br><br>        |<br><br>                         |      <br><br> |  <br><br>|      <br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+|1<br><br>       |59<br><br>        |<br><br>                         |      <br><br> |  <br><br>|      <br><br>|        <br><br>|   <br><br>|     <br><br>|    <br><br>|    <br><br>|    <br><br>|<br><br>|
+
+</h6></div><br>
+
+<h1 align="center">My TryHackMe Journey ・ 2026, March</h1>
+<p align="center">Global All Time:     16ᵗʰ<br><img width="250px"  src="https://github.com/user-attachments/assets/9a4cbe9b-125b-44ee-8ddb-4fb124b59e7e"><br>
+                                               <img width="1200px" src="https://github.com/user-attachments/assets/054066fe-d083-478c-a529-fce118227ba3"><br><br>
+                  Global Monthly:       9ᵗʰ<br><img width="1200px" src="https://github.com/user-attachments/assets/068d48ad-42c6-411b-b18e-0a7f5db603e6"><br><br>
+                  Brazil All Time:      2ⁿᵈ<br><img width="1200px" src="https://github.com/user-attachments/assets/1b13c7be-c590-405d-9727-c5737f846e81"><br><br>
+                  Brazil Monthly:       1ˢᵗ<br><img width="1200px" src="https://github.com/user-attachments/assets/2b3207dc-a870-40e4-b27c-57cd8842049e"></p>
+
+<h1 align="center">Thanks for coming!</h1>
+<p align="center">Follow me on <a href="https://medium.com/@RosanaFS">Medium</a>, here on <a href="https://github.com/RosanaFSS/TryHackMe">GitHub</a>, and on <a href="https://www.linkedin.com/in/rosanafssantos/">LinkedIN</a>.</p>

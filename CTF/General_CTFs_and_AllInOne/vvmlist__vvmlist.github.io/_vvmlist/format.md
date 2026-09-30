@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  format:
+    -
+  formatac:
+    -
+  formatcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  pathtr:
+    -
+  al:
+    -
+  sql:
+    -
+  creds:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  formatwu:
+    -
+  formatvi:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  backdoored:
+    -
+  backdooredac:
+    -
+  backdooredcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  cap:
+    -
+wals:
+  backdooredwu:
+    -
+
+---

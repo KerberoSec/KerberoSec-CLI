@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  yourwaf:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  waf:
+    -
+  rce:
+    -
+  creds:
+    -
+  lfi:
+    -
+  ssh:
+    -
+  hc:
+    -
+  groups:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  yourwafwu:
+    -
+---

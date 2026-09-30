@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  noobbox:
+    -
+  noobboxac:
+    -
+  noobboxcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  wp:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  noobboxwu:
+    -
+---

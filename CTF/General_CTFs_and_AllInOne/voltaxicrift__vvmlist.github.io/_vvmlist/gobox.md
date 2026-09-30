@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  gobox:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ssti:
+    -
+  rce:
+    -
+  aws:
+    -
+  logical:
+    -
+
+wals:
+  goboxwu:
+    -
+  goboxvi:
+    -
+---

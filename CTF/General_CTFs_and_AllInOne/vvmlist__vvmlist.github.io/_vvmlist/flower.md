@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  flower:
+    -
+  flowerac:
+    -
+  flowercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  libj:
+    -
+  sudo:
+    -
+
+wals:
+  flowerwu:
+    -
+---

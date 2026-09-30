@@ -1,0 +1,46 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  metatwo:
+    -
+  metatwoac:
+    -
+  metatwocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  wp:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  xxe:
+    -
+  ftp:
+    -
+  logical:
+    -
+
+wals:
+  metatwowu:
+    -
+  metatwovi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  retrotwo:
+    -
+  retrotwoac:
+    -
+  retrotwocm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  hc:
+    -
+  creds:
+    -
+  pretk:
+    -
+  bhgw:
+    -
+
+wals:
+  retrotwowu:
+    -
+  retrotwovi:
+    -
+---

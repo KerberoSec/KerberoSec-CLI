@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  controler:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  ad:
+    -
+  asrep:
+    -
+  hc:
+    -
+  bf:
+    -
+  dcsync:
+    -
+
+wals:
+  controlerwu:
+    -
+---

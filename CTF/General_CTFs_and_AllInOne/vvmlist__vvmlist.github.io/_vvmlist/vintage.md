@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  vintage:
+    -
+  vintageac:
+    -
+  vintagecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  gmsa:
+    -
+  bhas:
+    -
+  bhgw:
+    -
+  bhga:
+    -
+  krb:
+    -
+  bf:
+    -
+  dpapi:
+    -
+  bhaaa:
+    -
+  rbcd:
+    -
+  dcsync:
+    -
+
+wals:
+  vintagewu:
+    -
+  vintagevi:
+    -
+---

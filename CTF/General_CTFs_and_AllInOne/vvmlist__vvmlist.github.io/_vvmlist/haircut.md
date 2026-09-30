@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  haircut:
+    -
+  haircutac:
+    -
+  haircutcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ci:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  haircutwu:
+    -
+  haircutvi:
+    -
+---

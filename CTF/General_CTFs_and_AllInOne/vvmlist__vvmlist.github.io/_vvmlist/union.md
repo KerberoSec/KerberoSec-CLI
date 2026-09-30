@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  union:
+    -
+  unionac:
+    -
+  unioncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  sqli:
+    -
+  waf:
+    -
+  sql:
+    -
+  creds:
+    -
+  source:
+    -
+  ci:
+    -
+  sudo:
+    -
+
+wals:
+  unionwu:
+    -
+  unionvi:
+    -
+---

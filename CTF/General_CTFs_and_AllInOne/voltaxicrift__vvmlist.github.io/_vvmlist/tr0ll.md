@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  tr0ll:
+    -
+  tr0llac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  pcap:
+    -
+  bf:
+    -
+  kern:
+    -
+
+wals:
+  tr0llwu:
+    -
+---

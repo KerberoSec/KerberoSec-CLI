@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  adria:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+  pspy:
+    -
+
+wals:
+  adriawu:
+    -
+---

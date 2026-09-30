@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  undiscovered:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  rce:
+    -
+  nfs:
+    -
+  suid:
+    -
+  cap:
+    -
+
+wals:
+  undiscoveredwu:
+    -
+---

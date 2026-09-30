@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mirage:
+    -
+  mirageac:
+    -
+  miragecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  nfs:
+    -
+  al:
+    -
+  creds:
+    -
+  krb:
+    -
+  hc:
+    -
+  bhfcp:
+    -
+  gmsa:
+    -
+  adcs:
+    -
+
+wals:
+  miragewu:
+    -
+  miragevi:
+    -
+---

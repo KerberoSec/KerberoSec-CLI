@@ -1,0 +1,38 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  brainfuck:
+    -
+  brainfuckac:
+    -
+  brainfuckcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  wp:
+    -
+  creds:
+    -
+  decode:
+    -
+  hc:
+    -
+  lxd:
+    -
+
+wals:
+  brainfuckwu:
+    -
+  brainfuckvi:
+    -
+---

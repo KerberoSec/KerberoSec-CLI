@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  analytics:
+    -
+  analyticsac:
+    -
+  analyticscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  bre:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  analyticswu:
+    -
+  analyticsvi:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  homeless:
+    -
+  homelessac:
+    -
+  homelesscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  ci:
+    -
+  rce:
+    -
+  bf:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  homelesswu:
+    -
+---

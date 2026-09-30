@@ -54,6 +54,7 @@ echo @echo off
 echo setlocal
 echo chcp 65001 ^>nul 2^>^&1
 echo set "PATH=%%USERPROFILE%%\Tools\bin;%%USERPROFILE%%\go\bin;%%USERPROFILE%%\.local\bin;%%USERPROFILE%%\.bun\bin;%%PATH%%"
+echo set "KERBEROSEC_CTF_KNOWLEDGE_DIR=%%USERPROFILE%%\.kerberosec\knowledge\ctf"
 echo if exist "%%USERPROFILE%%\.kerberosec\ollama_num_ctx" (
 echo     set /p OLLAMA_NUM_CTX=^<"%%USERPROFILE%%\.kerberosec\ollama_num_ctx"
 echo ^)

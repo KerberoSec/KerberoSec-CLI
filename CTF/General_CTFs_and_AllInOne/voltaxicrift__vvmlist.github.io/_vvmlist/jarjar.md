@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  jarjar:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  authb:
+    -
+  lfi:
+    -
+  suid:
+    -
+  hc:
+    -
+
+wals:
+  jarjarwu:
+    -
+---

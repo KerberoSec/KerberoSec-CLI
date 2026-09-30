@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  five86:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  ci:
+    -
+  rce:
+    -
+  hc:
+    -
+  sudo:
+    -
+  creds:
+    -
+  suid:
+    -
+
+wals:
+  five86wu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  redcross:
+    -
+  redcrossac:
+    -
+  redcrosscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xss:
+    -
+  coot:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  logical:
+    -
+
+wals:
+  redcrosswu:
+    -
+  redcrossvi:
+    -
+---

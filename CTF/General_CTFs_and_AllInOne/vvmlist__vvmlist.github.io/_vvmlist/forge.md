@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  forge:
+    -
+  forgeac:
+    -
+  forgecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  forgewu:
+    -
+  forgevi:
+    -
+---

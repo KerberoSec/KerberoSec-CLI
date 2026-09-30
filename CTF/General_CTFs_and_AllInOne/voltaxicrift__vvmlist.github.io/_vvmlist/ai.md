@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ai:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  jdwp:
+    -
+
+wals:
+  aiwu:
+    -
+  aivi:
+    -
+---

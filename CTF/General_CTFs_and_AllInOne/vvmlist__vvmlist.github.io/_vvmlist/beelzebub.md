@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  beelzebub:
+    -
+  beelzebubac:
+    -
+  beelzebubcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  creds:
+    -
+  cve:
+    -
+
+wals:
+  beelzebubwu:
+    -
+---

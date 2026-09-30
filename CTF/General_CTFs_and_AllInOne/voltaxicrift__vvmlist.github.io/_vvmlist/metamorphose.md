@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  metamorphose:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  erl:
+    -
+  bf:
+    -
+  hc:
+    -
+  groups:
+    -
+  debugfs:
+    -
+
+wals:
+  metamorphosewu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hoshi:
+    -
+  hoshiac:
+    -
+  hoshicm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  lfi:
+    -
+  rce:
+    -
+  bf:
+    -
+  sudo:
+    -
+  ci:
+    -
+
+wals:
+  hoshiwu:
+    -
+---

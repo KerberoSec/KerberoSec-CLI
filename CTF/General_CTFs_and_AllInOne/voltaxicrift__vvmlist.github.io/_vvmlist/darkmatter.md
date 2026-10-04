@@ -1,0 +1,34 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  darkmatter:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sqli:
+    -
+  sql:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  darkmatterwu:
+    -
+---

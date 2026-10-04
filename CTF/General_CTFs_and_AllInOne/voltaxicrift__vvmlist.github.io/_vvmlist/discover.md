@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  discover:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  bf:
+    -
+  smb:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  discoverwu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  active:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  gpp:
+    -
+  decode:
+    -
+  creds:
+    -
+  smb:
+    -
+  krb:
+    -
+  hc:
+    -
+
+wals:
+  activewu:
+    -
+  activevi:
+    -
+---

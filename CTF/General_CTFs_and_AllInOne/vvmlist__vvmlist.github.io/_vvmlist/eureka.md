@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  eureka:
+    -
+  eurekaac:
+    -
+  eurekacm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  hed:
+    -
+  logical:
+    -
+  groups:
+    -
+  ci:
+    -
+
+wals:
+  eurekawu:
+    -
+  eurekavi:
+    -
+---

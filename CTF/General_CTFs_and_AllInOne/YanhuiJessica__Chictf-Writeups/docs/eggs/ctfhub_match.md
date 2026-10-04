@@ -1,0 +1,13 @@
+---
+title: Eggs: 赛事
+description: CTFHub | 技能树 | 彩蛋
+---
+
+## 题目
+
+赛事中貌似也有哎
+
+## 解题思路
+
+赛事中心标签，查询名称为`egg`的赛事<br>
+*[Image: 取得 flag]*

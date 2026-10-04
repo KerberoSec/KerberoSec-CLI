@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  environment:
+    -
+  environmentac:
+    -
+  environmentcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  authb:
+    -
+  ep:
+    -
+  rce:
+    -
+  pgp:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  environmentwu:
+    -
+  environmentvi:
+    -
+---

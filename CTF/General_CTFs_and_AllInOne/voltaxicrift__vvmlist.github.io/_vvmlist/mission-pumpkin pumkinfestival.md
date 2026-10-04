@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  mission-pumpkin pumkinfestival:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  wp:
+    -
+  decode:
+    -
+  creds:
+    -
+  bf:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  mission-pumpkin pumkinfestivalwu:
+    -
+---

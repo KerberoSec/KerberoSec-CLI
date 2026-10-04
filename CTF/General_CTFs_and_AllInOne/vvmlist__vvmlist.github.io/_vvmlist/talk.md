@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  talk:
+    -
+  talkac:
+    -
+  talkcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  sqli:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  talkwu:
+    -
+---

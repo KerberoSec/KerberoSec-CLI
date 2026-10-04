@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  p4l4nc4:
+    -
+  p4l4nc4ac:
+    -
+  p4l4nc4cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+  hc:
+    -
+  rwp:
+    -
+
+wals:
+  p4l4nc4wu:
+    -
+---

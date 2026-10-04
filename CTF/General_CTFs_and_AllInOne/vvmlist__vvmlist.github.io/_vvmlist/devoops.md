@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  devoops:
+    -
+  devoopsac:
+    -
+  devoopscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  ssh:
+    -
+  git:
+    -
+  logical:
+    -
+
+wals:
+  devoopswu:
+    -
+  devoopsvi:
+    -
+---

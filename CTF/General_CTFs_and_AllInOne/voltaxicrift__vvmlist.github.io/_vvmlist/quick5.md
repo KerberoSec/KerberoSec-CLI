@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  quick5:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  phish:
+    -
+  creds:
+    -
+  decode:
+    -
+
+wals:
+  quick5wu:
+    -
+---

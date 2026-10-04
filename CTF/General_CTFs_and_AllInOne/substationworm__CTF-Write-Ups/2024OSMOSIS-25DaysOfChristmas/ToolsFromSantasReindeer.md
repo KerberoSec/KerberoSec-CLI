@@ -1,0 +1,20 @@
+- [Audacity](https://www.audacityteam.org/).
+- [Cyber Chef-The Swiss Army Knife](https://gchq.github.io/CyberChef/).
+- [Forensically Beta](https://29a.ch/photo-forensics/#forensic-magnifier).
+- [MaxMind Geo Locate IP Locations](https://www.maxmind.com/en/geoip-demo).
+- [Google Earth](https://earth.google.com/web/@0,-0.20530005,0a,22251752.77375655d,35y,0h,0t,0r).
+- [Central Ops](https://centralops.net/co/).
+- [Steganography Tools](https://futureboy.us/stegano/).
+- [Carrot2](https://search.carrot2.org/#/search/web).
+- [Norton Site Validator](https://safeweb.norton.com/).
+- [US PhoneBook](https://www.usphonebook.com/).
+- [Ritu's top tools](https://www.forensicosint.com/top-osint-tools).
+- [PimEyes](https://pimeyes.com/en).
+- [OSINT Framework](https://osintframework.com/).
+- [Rae Baker's collection of Resources](https://www.raebaker.net/resources).
+- [Bellingcat's Toolkit](https://docs.google.com/spreadsheets/d/18rtqh8EG2q1xBo2cLNyhIDuK9jrPGwYr9DI2UncoqJQ/edit?gid=1575012979#gid=1575012979).
+- [OSINT Combine Tools](https://www.osintcombine.com/tools).
+- [Skopenow Workflow Examples](https://www.skopenow.com/guides-and-reports?s).
+- [Hetherington Group: Great Tricks](https://hetheringtongroup.com/blog).
+- [Mr. Osint's Toolbox](https://mrosint.com/).
+- [Shodan.io](https://www.shodan.io/).

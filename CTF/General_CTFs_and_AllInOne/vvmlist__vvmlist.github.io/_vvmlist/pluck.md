@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  pluck:
+    -
+  pluckac:
+    -
+  pluckcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  lfi:
+    -
+  ci:
+    -
+  kern:
+    -
+
+wals:
+  pluckwu:
+    -
+---

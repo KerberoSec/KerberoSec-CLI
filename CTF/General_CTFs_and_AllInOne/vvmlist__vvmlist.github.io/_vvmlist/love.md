@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  love:
+    -
+  loveac:
+    -
+  lovecm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  sqli:
+    -
+  logical:
+    -
+  creds:
+    -
+  bhaie:
+    -
+
+wals:
+  lovewu:
+    -
+  lovevi:
+    -
+---

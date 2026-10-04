@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  updown:
+    -
+  updownac:
+    -
+  updowncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  source:
+    -
+  phar:
+    -
+  rce:
+    -
+  suid:
+    -
+  sudo:
+    -
+
+wals:
+  updownwu:
+    -
+  updownvi:
+    -
+---

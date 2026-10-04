@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  devel:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  develwu:
+    -
+  develvi:
+    -
+---

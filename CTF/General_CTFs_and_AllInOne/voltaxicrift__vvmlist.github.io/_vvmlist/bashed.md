@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bashed:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  bashedwu:
+    -
+  bashedvi:
+    -
+---

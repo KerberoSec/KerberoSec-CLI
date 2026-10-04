@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  rickdiculouslyeasy:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  ci:
+    -
+  rce:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  rickdiculouslyeasywu:
+    -
+---

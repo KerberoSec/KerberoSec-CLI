@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bamboo:
+    -
+  bambooac:
+    -
+  bamboocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  proxy:
+    -
+  cve:
+    -
+  pspy:
+    -
+
+wals:
+  bamboowu:
+    -
+---

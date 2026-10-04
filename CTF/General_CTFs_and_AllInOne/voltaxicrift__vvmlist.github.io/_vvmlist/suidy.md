@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  suidy:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  suid:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  suidywu:
+    -
+---

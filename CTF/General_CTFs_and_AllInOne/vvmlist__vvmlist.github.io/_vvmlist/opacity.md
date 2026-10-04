@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  opacity:
+    -
+  opacityac:
+    -
+  opacitycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  keepass:
+    -
+  hc:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  opacitywu:
+    -
+---

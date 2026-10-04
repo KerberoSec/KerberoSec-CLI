@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  quoted:
+    -
+  quotedac:
+    -
+  quotedcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  ftp:
+    -
+  al:
+    -
+  rce:
+    -
+  tsi:
+    -
+
+wals:
+  quotedwu:
+    -
+---

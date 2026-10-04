@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  otte:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  ottewu:
+    -
+---

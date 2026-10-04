@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  method:
+    -
+  methodac:
+    -
+  methodcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  methodwu:
+    -
+---

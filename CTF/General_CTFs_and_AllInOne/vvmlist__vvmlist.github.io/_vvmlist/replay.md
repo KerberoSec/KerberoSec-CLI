@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  replay:
+    -
+  replayac:
+    -
+  replaycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  rev:
+    -
+  creds:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  replaywu:
+    -
+---

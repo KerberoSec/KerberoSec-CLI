@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  tech_supp0rt:
+    -
+  tech_supp0rtac:
+    -
+  tech_supp0rtcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  decode:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  tech_supp0rtwu:
+    -
+---

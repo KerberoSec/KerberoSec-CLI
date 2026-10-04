@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  snoopy:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  decode:
+    -
+  creds:
+    -
+  cve:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  snoopywu:
+    -
+  snoopyvi:
+    -
+---

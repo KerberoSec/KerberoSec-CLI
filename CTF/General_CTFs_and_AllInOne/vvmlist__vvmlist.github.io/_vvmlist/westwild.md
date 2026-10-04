@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  westwild:
+    -
+  westwildac:
+    -
+  westwildcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  westwildwu:
+    -
+---

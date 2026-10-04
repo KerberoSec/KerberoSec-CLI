@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pickle:
+    -
+  pickleac:
+    -
+  picklecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  source:
+    -
+  snmp:
+    -
+  creds:
+    -
+  deser:
+    -
+  rce:
+    -
+  logical:
+    -
+  cap:
+    -
+
+wals:
+  picklewu:
+    -
+---

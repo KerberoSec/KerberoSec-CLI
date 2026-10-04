@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  redelegate:
+    -
+  redelegateac:
+    -
+  redelegatecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  ftp:
+    -
+  al:
+    -
+  keepass:
+    -
+  hc:
+    -
+  bf:
+    -
+  groups:
+    -
+  bhfcp:
+    -
+  ted:
+    -
+  cd:
+    -
+
+wals:
+  redelegatewu:
+    -
+---

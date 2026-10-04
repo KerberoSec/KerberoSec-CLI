@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  lampião:
+    -
+  lampiãoac:
+    -
+  lampiãocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  lampiãowu:
+    -
+---

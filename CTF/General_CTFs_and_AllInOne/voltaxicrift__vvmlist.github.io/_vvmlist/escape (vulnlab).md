@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  escapevl:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  logical:
+    -
+  creds:
+    -
+  uacss:
+    -
+
+wals:
+  escapevlwu:
+    -
+---

@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  quick:
+    -
+  quickac:
+    -
+  quickcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  esi:
+    -
+  rce:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+
+wals:
+  quickwu:
+    -
+  quickvi:
+    -
+---

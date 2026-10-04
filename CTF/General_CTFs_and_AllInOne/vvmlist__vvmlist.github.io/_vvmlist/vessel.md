@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  vessel:
+    -
+  vesselac:
+    -
+  vesselcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  creds:
+    -
+  sqli:
+    -
+  source:
+    -
+  cve:
+    -
+  rce:
+    -
+  logpoi:
+    -
+  suid:
+    -
+  be:
+    -
+
+wals:
+  vesselwu:
+    -
+  vesselvi:
+    -
+---

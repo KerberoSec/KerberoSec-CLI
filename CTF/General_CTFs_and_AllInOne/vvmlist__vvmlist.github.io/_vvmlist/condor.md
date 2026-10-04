@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  condor:
+    -
+  condorac:
+    -
+  condorcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  condorwu:
+    -
+---

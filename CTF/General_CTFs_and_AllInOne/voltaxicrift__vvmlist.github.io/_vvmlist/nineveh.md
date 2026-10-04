@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nineveh:
+    -
+  ninevehvu:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  phpj:
+    -
+  rce:
+    -
+  typec:
+    -
+  lfi:
+    -
+  steg:
+    -
+  pspy:
+    -
+  knock:
+    -
+  cve:
+    -
+  be:
+    -
+
+wals:
+  ninevehwu:
+    -
+  ninevehvi:
+    -
+---

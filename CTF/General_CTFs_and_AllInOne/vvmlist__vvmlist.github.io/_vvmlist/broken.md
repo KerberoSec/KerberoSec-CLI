@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  broken:
+    -
+  brokenac:
+    -
+  brokencm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  sudo:
+    -
+wals:
+  brokenwu:
+    -
+
+---

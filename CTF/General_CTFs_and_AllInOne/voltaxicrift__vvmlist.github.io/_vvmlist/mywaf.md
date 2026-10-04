@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  mywaf:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  waf:
+    -
+  bf:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  cap:
+    -
+
+wals:
+  mywafwu:
+    -
+---

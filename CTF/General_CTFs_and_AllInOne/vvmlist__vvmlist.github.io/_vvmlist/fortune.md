@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fortune:
+    -
+  fortuneac:
+    -
+  fortunecm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ci:
+    -
+  rce:
+    -
+  logical:
+    -
+  creds:
+    -
+  sql:
+    -
+  decode:
+    -
+
+wals:
+  fortunewu:
+    -
+  fortunevi:
+    -
+---

@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  certificate:
+    -
+  certificateac:
+    -
+  certificatecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  nulj:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  passre:
+    -
+  pcap:
+    -
+  groups:
+    -
+  adcs:
+    -
+  tsmv:
+    -
+
+wals:
+  certificatewu:
+    -
+  certificatevi:
+    -
+---

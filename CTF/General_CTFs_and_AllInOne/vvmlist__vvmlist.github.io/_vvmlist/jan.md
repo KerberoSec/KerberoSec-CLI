@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  jan:
+    -
+  janac:
+    -
+  jancm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  creds:
+    -
+  sudo:
+    -
+  ssh:
+    -
+
+wals:
+  janwu:
+    -
+---

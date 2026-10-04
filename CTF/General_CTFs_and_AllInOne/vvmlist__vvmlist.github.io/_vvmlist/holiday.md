@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  holiday:
+    -
+  holidayac:
+    -
+  holidaycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  xss:
+    -
+  sql:
+    -
+  hc:
+    -
+  ci:
+    -
+  sudo:
+    -
+
+wals:
+  holidaywu:
+    -
+  holidayvi:
+    -
+---

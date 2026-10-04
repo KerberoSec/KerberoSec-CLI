@@ -1,0 +1,26 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hommie:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  logical:
+    -
+  suid:
+    -
+
+wals:
+  hommiewu:
+    -
+---

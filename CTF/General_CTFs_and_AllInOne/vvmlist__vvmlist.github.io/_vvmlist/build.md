@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  build:
+    -
+  buildac:
+    -
+  buildcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  git:
+    -
+  rsync:
+    -
+  mbck:
+    -
+  creds:
+    -
+  decode:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+
+wals:
+  buildwu:
+    -
+---

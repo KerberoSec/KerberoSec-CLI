@@ -1,0 +1,46 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bankrobber:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xss:
+    -
+  coot:
+    -
+  decode:
+    -
+  sqli:
+    -
+  sql:
+    -
+  csrf:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  bf:
+    -
+  bof:
+    -
+
+wals:
+  bankrobberwu:
+    -
+  bankrobbervi:
+    -
+---

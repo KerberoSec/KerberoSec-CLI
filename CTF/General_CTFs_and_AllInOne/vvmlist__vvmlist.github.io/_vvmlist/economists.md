@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  economists:
+    -
+  economistsac:
+    -
+  economistscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  economistswu:
+    -
+---

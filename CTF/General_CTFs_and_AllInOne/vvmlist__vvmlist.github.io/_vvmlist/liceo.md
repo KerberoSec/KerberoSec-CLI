@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  liceo:
+    -
+  liceoac:
+    -
+  liceocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  al:
+    -
+  ftp:
+    -
+  ep:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  liceowu:
+    -
+---

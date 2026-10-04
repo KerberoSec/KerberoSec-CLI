@@ -1,0 +1,38 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ethereal:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  al:
+    -
+  ftp:
+    -
+  mbck:
+    -
+  creds:
+    -
+  rce:
+    -
+  tsi:
+    -
+  ci:
+    -
+
+wals:
+  etherealwu:
+    -
+  etherealvi:
+    -
+---

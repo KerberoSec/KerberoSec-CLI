@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  red:
+    -
+  redac:
+    -
+  redcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  bf:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+  rwp:
+    -
+
+wals:
+  redwu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  literal:
+    -
+  literalac:
+    -
+  literalcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  literalwu:
+    -
+---

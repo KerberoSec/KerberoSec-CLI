@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  suidyrevenge:
+    -
+  suidyrevengeac:
+    -
+  suidyrevengecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  rce:
+    -
+  bf:
+    -
+  suid:
+    -
+  rev:
+    -
+  logical:
+    -
+
+wals:
+  suidyrevengewu:
+    -
+---

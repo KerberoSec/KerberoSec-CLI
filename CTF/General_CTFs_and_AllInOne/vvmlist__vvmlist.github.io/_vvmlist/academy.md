@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  academy:
+    -
+  academyac:
+    -
+  academycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  groups:
+    -
+
+wals:
+  academywu:
+    -
+  academyvi:
+    -
+---

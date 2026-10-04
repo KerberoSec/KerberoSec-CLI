@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  vinylizer:
+    -
+  vinylizerac:
+    -
+  vinylizercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+  libj:
+    -
+
+wals:
+  vinylizerwu:
+    -
+---

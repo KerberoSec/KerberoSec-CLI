@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  shrek:
+    -
+  shrekac:
+    -
+  shrekcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  ftp:
+    -
+  decode:
+    -
+  sudo:
+    -
+  pspy:
+    -
+  cron:
+    -
+  wildcard:
+    -
+
+wals:
+  shrekwu:
+    -
+  shrekvi:
+    -
+---

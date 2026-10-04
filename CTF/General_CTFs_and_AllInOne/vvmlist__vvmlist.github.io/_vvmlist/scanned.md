@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  scanned:
+    -
+  scannedac:
+    -
+  scannedcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  source:
+    -
+  pathtr:
+    -
+  sql:
+    -
+  hc:
+    -
+  maldll:
+    -
+  cap:
+    -
+
+wals:
+  scannedwu:
+    -
+  scannedvi:
+    -
+---

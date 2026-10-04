@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  metasploitable:
+    -
+  metasploitableac:
+    -
+  metasploitablecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  kern:
+    -
+  hc:
+    -
+  bf:
+    -
+
+wals:
+  metasploitablewu:
+    -
+---

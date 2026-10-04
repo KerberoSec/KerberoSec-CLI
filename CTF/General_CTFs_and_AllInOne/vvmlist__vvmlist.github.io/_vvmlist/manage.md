@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  manage:
+    -
+  manageac:
+    -
+  managecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  rce:
+    -
+  mbck:
+    -
+  sudo:
+    -
+
+wals:
+  managewu:
+    -
+---

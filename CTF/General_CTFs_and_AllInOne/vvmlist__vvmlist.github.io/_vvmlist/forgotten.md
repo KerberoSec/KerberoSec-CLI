@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  forgotten:
+    -
+  forgottenac:
+    -
+  forgottencm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sql:
+    -
+  bre:
+    -
+  creds:
+    -
+  docker:
+    -
+
+wals:
+  forgottenwu:
+    -
+---

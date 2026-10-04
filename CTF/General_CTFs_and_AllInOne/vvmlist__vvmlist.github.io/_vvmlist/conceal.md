@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  conceal:
+    -
+  concealac:
+    -
+  concealcm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  snmp:
+    -
+  creds:
+    -
+  hc:
+    -
+  logical:
+    -
+  fuzz:
+    -
+  ftp:
+    -
+  al:
+    -
+  rce:
+    -
+  vpn:
+    -
+  tsi:
+    -
+
+wals:
+  concealwu:
+    -
+  concealvi:
+    -
+---

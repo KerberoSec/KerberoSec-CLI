@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  convert:
+    -
+  convertac:
+    -
+  convertcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  convertwu:
+    -
+---

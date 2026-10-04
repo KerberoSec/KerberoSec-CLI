@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  bamboo:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  proxy:
+    -
+  cve:
+    -
+  rce:
+    -
+  logical:
+    -
+
+wals:
+  bamboowu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  takedown:
+    -
+  takedownac:
+    -
+  takedowncm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  ssti:
+    -
+  authb:
+    -
+  rce:
+    -
+  sudo:
+    -
+  decode:
+    -
+  logical:
+    -
+  cron:
+    -
+
+wals:
+  takedownwu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  thefrizz:
+    -
+  thefrizzac:
+    -
+  thefrizzcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  decode:
+    -
+  groups:
+    -
+  gpo:
+    -
+
+wals:
+  thefrizzwu:
+    -
+  thefrizzvi:
+    -
+---

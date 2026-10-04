@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  printer2:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  printer2wu:
+    -
+---

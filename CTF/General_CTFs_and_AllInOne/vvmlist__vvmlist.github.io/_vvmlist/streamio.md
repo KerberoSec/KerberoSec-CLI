@@ -1,0 +1,52 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  streamio:
+    -
+  streamioac:
+    -
+  streamiocm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  waf:
+    -
+  sql:
+    -
+  hc:
+    -
+  rce:
+    -
+  logical:
+    -
+  decode:
+    -
+  creds:
+    -
+  groups:
+    -
+  laps:
+    -
+
+wals:
+  streamiowu:
+    -
+  streamiovi:
+    -
+---

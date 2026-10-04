@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  granny:
+    -
+  grannyac:
+    -
+  grannycm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  webdav:
+    -
+  kern:
+    -
+
+wals:
+  grannywu:
+    -
+  grannyvi:
+    -
+---

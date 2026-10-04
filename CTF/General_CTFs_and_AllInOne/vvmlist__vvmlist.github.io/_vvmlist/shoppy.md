@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  shoppy:
+    -
+  shoppyac:
+    -
+  shoppycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  nosqli:
+    -
+  hc:
+    -
+  sudo:
+    -
+  rev:
+    -
+  docker:
+    -
+  logical:
+    -
+
+wals:
+  shoppywu:
+    -
+  shoppyvi:
+    -
+---

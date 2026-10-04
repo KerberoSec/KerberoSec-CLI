@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  soc1:
+    -
+  soc1ac:
+    -
+  soc1cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  dcr:
+    -
+  cve:
+    -
+  lfi:
+    -
+  hc:
+    -
+  rce:
+    -
+  cve:
+    -
+  bj:
+    -
+  sudo:
+    -
+
+wals:
+  soc1wu:
+    -
+---

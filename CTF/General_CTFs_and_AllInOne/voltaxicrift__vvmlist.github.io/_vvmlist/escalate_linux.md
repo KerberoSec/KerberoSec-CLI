@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  escalate_linux:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  escalate_linuxwu:
+    -
+---

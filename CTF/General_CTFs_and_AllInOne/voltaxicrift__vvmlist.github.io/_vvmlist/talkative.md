@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  talkative:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  bre:
+    -
+  creds:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  docker:
+    -
+
+wals:
+  talkativewu:
+    -
+  talkativevi:
+    -
+---

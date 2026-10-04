@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  orasi:
+    -
+  orasivu:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  rev:
+    -
+  fuzz:
+    -
+  ssti:
+    -
+  rce:
+    -
+  sudo:
+    -
+  apk:
+    -
+  source:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  orasiwu:
+    -
+---

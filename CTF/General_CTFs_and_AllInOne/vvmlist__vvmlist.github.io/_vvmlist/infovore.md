@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  infovore:
+    -
+  infovoreac:
+    -
+  infovorecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  hc:
+    -
+  bre:
+    -
+  ssh:
+    -
+  groups:
+    -
+  docker:
+    -
+
+wals:
+  infovorewu:
+    -
+---

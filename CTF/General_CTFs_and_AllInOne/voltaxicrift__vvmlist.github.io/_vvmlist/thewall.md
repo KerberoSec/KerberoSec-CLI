@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  thewall:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cap:
+    -
+
+wals:
+  thewallwu:
+    -
+---

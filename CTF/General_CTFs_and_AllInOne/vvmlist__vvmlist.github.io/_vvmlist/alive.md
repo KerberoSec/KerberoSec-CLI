@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  alive:
+    -
+  aliveac:
+    -
+  alivecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+
+wals:
+  alivewu:
+    -
+---

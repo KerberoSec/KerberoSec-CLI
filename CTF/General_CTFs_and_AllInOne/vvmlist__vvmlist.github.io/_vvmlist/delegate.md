@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  delegate:
+    -
+  delegateac:
+    -
+  delegatecm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  bhgw:
+    -
+  hc:
+    -
+  groups:
+    -
+  ted:
+    -
+  unde:
+    -
+  krbr:
+    -
+  dcsync:
+    -
+
+wals:
+  delegatewu:
+    -
+  delegatevi:
+    -
+---

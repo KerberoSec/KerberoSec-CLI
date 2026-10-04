@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  otp:
+    -
+  otpac:
+    -
+  otpcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  ftp:
+    -
+  rce:
+    -
+  creds:
+    -
+  decode:
+    -
+  sqli:
+    -
+  sudo:
+    -
+
+wals:
+  otpwu:
+    -
+---

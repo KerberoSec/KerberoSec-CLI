@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cheran:
+    -
+  cheranac:
+    -
+  cherancm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  cheranwu:
+    -
+---

@@ -1,0 +1,54 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fingerprint:
+    -
+  fingerprintac:
+    -
+  fingerprintcm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  source:
+    -
+  pathtr:
+    -
+  sql:
+    -
+  hqli:
+    -
+  xss:
+    -
+  decode:
+    -
+  jwt:
+    -
+  logical:
+    -
+  rce:
+    -
+  creds:
+    -
+  suid:
+    -
+  bf:
+    -
+
+wals:
+  fingerprintwu:
+    -
+  fingerprintvi:
+    -
+---

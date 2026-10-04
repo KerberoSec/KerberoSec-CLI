@@ -1,0 +1,106 @@
+
+# Wifi Hacking 101
+
+## *The basics: An Intro to WPA*
+
+- What type of attack on the encryption can you perform on WPA(2) personal?
+
+> brute force
+
+- Can this method be used to attack WPA2-EAP handshakes? (Yea/Nay)
+
+> Nay
+
+- What three letter abbreviation is the technical term for the "wifi code/password/passphrase"?
+
+> PSK
+
+- What's the minimum length of a WPA2 Personal password?
+
+> 8
+
+---
+
+## *You're being watched: Capturing packets to attack*
+
+- How do you put the interface “wlan0” into monitor mode with Aircrack tools? (Full command)
+
+> airmon-ng start wlan0
+
+# ***IF YOU DID THIS, LOST INTERNET CONNECTION AND FREAKING OUT***
+
+First, find out what interface you were using:
+
+```bash
+$ ifconfig -a
+```
+
+"lo" is localhost, "ethX" (X is a number): ethernet, "wlanX" / "wlp3sX": wifi.
+I was using "wlp3s0" interface.
+
+```bash
+# Restart the Network Manager
+$ sudo service network-manager restart
+
+# Stop monitoring. (The last word is your "new" interface, created by airmon-ng. It's
+# old interface + "mon"
+$ sudo airmon-ng stop wlp3s0mon
+
+# This wasn't mandatory for me, but ut might be for you
+$ sudo ifconfig wlp3s0 up
+```
+
+- What is the new interface name likely to be after you enable monitor mode?
+
+> wlan0mon
+
+- What do you do if other processes are currently trying to use that network adapter? 
+
+> airmon-ng check kill
+
+- What tool from the aircrack-ng suite is used to create a capture?
+
+> airodump-ng
+
+- What flag do you use to set the BSSID to monitor?
+
+> --bssid
+
+- And to set the channel?
+
+> --channel
+
+- And how do you tell it to capture packets to a file?
+
+> -w
+
+---
+
+## *Aircrack-ng: Let's Get Cracking*
+
+- What flag do we use to specify a BSSID to attack?
+
+> -b
+
+- What flag do we use to specify a wordlist?
+
+> -w
+
+- How do we create a HCCAPX in order to use hashcat to crack the password?
+
+> -j
+
+- Using the rockyou wordlist, crack the password in the attached capture. What's the password?
+
+Use the following command:
+
+```bash
+$ aircrack-ng -b 02:1A:11:FF:D9:BD -e 'James Honor 8' -w ~/CyberSecurity/SecLists/Passwords/Leaked-Databases/rockyou.txt NinjaJc01-01.cap
+```
+
+> greeneggsandham
+
+- Where is password cracking likely to be fastest, CPU or GPU?
+
+> GPU
+

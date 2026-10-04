@@ -1,0 +1,28 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  confusion:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  logical:
+    -
+  sudo:
+    -
+  decode:
+    -
+
+wals:
+  confusionwu:
+    -
+---

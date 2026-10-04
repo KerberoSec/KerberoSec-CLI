@@ -1,0 +1,58 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hell:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  bf:
+    -
+  lfi:
+    -
+  rce:
+    -
+  passre:
+    -
+  bre:
+    -
+  tunnel:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  rsa:
+    -
+  decode:
+    -
+  suid:
+    -
+  rev:
+    -
+  pathj:
+    -
+  sudo:
+    -
+  bof:
+    -
+
+wals:
+  hellwu:
+    -
+---

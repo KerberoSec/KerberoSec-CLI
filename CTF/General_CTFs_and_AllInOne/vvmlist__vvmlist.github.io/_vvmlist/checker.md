@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  checker:
+    -
+  checkerac:
+    -
+  checkercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  sqli:
+    -
+  hc:
+    -
+  creds:
+    -
+  ssh:
+    -
+  passre:
+    -
+  ssrf:
+    -
+  sudo:
+    -
+  source:
+    -
+
+wals:
+  checkerwu:
+    -
+  checkervi:
+    -
+---

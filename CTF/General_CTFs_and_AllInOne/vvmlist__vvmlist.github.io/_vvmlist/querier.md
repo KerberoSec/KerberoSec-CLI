@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  querier:
+    -
+  querierac:
+    -
+  queriercm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  sql:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  xpc:
+    -
+  gpp:
+    -
+
+wals:
+  querierwu:
+    -
+  queriervi:
+    -
+---

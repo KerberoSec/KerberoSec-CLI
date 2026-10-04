@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  realsaga:
+    -
+  realsagaac:
+    -
+  realsagacm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  cve:
+    -
+  creds:
+    -
+  rce:
+    -
+  suid:
+    -
+  docker:
+    -
+
+wals:
+  realsagawu:
+    -
+---

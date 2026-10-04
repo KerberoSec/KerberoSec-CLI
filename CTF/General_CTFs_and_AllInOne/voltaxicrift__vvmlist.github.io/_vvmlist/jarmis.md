@@ -1,0 +1,34 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  jarmis:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  jarm:
+    -
+  fuzz:
+    -
+  api:
+    -
+  cve:
+    -
+
+wals:
+  jarmiswu:
+    -
+  jarmisvi:
+    -
+---

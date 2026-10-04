@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  transmission:
+    -
+  transmissionac:
+    -
+  transmissioncm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  logical:
+    -
+  decode:
+    -
+  creds:
+    -
+  bf:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  docker:
+    -
+  bre:
+    -
+
+wals:
+  transmissionwu:
+    -
+---

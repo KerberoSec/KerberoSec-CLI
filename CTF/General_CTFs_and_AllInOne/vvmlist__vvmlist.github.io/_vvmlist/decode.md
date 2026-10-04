@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  decode:
+    -
+  decodeac:
+    -
+  decodecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  pathtr:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  decodewu:
+    -
+---

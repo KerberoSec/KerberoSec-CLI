@@ -1,0 +1,50 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  timing:
+    -
+  timingac:
+    -
+  timingcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  pathtr:
+    -
+  source:
+    -
+  sc:
+    -
+  mass:
+    -
+  rce:
+    -
+  git:
+    -
+  creds:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  timingwu:
+    -
+  timingvi:
+    -
+---

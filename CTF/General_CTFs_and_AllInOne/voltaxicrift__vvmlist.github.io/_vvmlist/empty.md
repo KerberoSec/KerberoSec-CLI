@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  empty:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  creds:
+    -
+  knock:
+    -
+
+wals:
+  emptywu:
+    -
+---

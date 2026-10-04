@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  readyvx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  sql:
+    -
+  rce:
+    -
+  groups:
+    -
+  debugfs:
+    -
+  hc:
+    -
+  ssh:
+    -
+  redis:
+    -
+
+wals:
+  readyvxwu:
+    -
+---

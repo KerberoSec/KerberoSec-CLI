@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  safe:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  bof:
+    -
+  keepass:
+    -
+  hc:
+    -
+
+wals:
+  safewu:
+    -
+  safevi:
+    -
+---

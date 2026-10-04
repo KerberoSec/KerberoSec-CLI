@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  secnotes:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  csrf:
+    -
+  creds:
+    -
+  smb:
+    -
+  wsl:
+    -
+
+wals:
+  secnoteswu:
+    -
+  secnotesvi:
+    -
+---

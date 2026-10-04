@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  ephemeral2:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  smb:
+    -
+  magsh:
+    -
+  cron:
+    -
+  sudo:
+    -
+
+wals:
+  ephemeral2wu:
+    -
+---

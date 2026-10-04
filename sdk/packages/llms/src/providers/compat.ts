@@ -5,6 +5,7 @@ import type {
 	GatewayProviderRegistration,
 	GatewayStreamRequest,
 } from "@kerberosec/shared";
+import { normalizeProviderToolInputSchema } from "@kerberosec/shared";
 import { nanoid } from "nanoid";
 import type {
 	ModelInfo,
@@ -413,7 +414,11 @@ function toGatewayTools(
 	return tools?.map((tool) => ({
 		name: tool.name,
 		description: tool.description,
-		inputSchema: tool.inputSchema,
+		// Requests are rejected upstream ("Invalid schema for function ...:
+		// null is not of type \"array\"") when a tool schema reaches the provider
+		// without `required`, so the wire shape is normalized here for every
+		// tool regardless of where its schema came from.
+		inputSchema: normalizeProviderToolInputSchema(tool.inputSchema),
 	}));
 }
 

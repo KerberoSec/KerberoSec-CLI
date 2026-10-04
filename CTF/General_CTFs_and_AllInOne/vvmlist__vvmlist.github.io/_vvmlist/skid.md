@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  skid:
+    -
+  skidac:
+    -
+  skidcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ci:
+    -
+  sudo:
+    -
+
+wals:
+  skidwu:
+    -
+---

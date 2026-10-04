@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fuse:
+    -
+  fuseac:
+    -
+  fusecm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  bf:
+    -
+  smb:
+    -
+  creds:
+    -
+  tsl:
+    -
+
+wals:
+  fusewu:
+    -
+  fusevi:
+    -
+---

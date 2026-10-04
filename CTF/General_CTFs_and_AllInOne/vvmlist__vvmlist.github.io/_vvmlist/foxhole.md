@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  foxhole:
+    -
+  foxholeac:
+    -
+  foxholecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  decode:
+    -
+  creds:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  foxholewu:
+    -
+---

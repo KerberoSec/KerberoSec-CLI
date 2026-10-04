@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  breadcrumbs:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  fgc:
+    -
+  jwt:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  smb:
+    -
+  rev:
+    -
+  sqli:
+    -
+  decode:
+    -
+  logical:
+    -
+
+wals:
+  breadcrumbswu:
+    -
+  breadcrumbsvi:
+    -
+---

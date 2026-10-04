@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  oouch:
+    -
+  oouchac:
+    -
+  oouchcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  oauth:
+    -
+  fuzz:
+    -
+  csrf:
+    -
+  api:
+    -
+  bre:
+    -
+  logical:
+    -
+
+wals:
+  oouchwu:
+    -
+  oouchvi:
+    -
+---

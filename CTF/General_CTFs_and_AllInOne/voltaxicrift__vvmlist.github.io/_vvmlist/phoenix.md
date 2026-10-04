@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  phoenix:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  wp:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  wildcard:
+    -
+
+wals:
+  phoenixwu:
+    -
+  phoenixvi:
+    -
+---

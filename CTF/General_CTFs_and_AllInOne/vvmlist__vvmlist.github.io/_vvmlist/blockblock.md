@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blockblock:
+    -
+  blockblockac:
+    -
+  blockblockcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  htj:
+    -
+  xss:
+    -
+  creds:
+    -
+  logical:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  pathj:
+    -
+
+wals:
+  blockblockwu:
+    -
+  blockblockvi:
+    -
+---

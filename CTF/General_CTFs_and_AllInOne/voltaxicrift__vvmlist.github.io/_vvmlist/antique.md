@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  antique:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  cve:
+    -
+
+wals:
+  antiquewu:
+    -
+  antiquevi:
+    -
+---

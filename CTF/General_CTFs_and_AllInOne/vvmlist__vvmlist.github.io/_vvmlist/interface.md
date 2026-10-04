@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  interface:
+    -
+  interfaceac:
+    -
+  interfacecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  cve:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+  aei:
+    -
+
+wals:
+  interfacewu:
+    -
+  interfacevi:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  deploy:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  dcr:
+    -
+  rce:
+    -
+  creds:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  deploywu:
+    -
+---

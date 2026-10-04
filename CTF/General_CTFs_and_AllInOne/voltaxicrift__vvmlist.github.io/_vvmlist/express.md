@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  express:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  api:
+    -
+  ssrf:
+    -
+  fuzz:
+    -
+  ssti:
+    -
+  ci:
+    -
+  rce:
+    -
+
+wals:
+  expresswu:
+    -
+---

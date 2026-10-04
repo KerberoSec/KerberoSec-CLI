@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  matrix:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  creds:
+    -
+  bf:
+    -
+  rbash:
+    -
+  sudo:
+    -
+
+wals:
+  matrixwu:
+    -
+---

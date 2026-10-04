@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  wakanda:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  lfi:
+    -
+  creds:
+    -
+  cron:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  wakandawu:
+    -
+---

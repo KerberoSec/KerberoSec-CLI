@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  venom:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  hc:
+    -
+  ftp:
+    -
+  decode:
+    -
+  rce:
+    -
+  creds:
+    -
+  suid:
+    -
+
+wals:
+  venomwu:
+    -
+---

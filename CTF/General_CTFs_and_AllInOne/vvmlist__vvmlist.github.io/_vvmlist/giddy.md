@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  giddy:
+    -
+  giddyac:
+    -
+  giddycm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  cve:
+    -
+  be:
+    -
+
+wals:
+  giddywu:
+    -
+  giddyvi:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  data:
+    -
+  dataac:
+    -
+  datacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  sql:
+    -
+  hc:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  datawu:
+    -
+  datavi:
+    -
+---

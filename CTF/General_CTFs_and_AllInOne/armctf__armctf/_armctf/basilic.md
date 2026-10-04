@@ -1,0 +1,13 @@
+---
+curls:
+  basilic:
+    -
+  basiliccm:
+    -
+functions:
+  basilic:
+    -
+wals:
+  basilic:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  ew_skuzzy:
+    -
+  ew_skuzzyac:
+    -
+  ew_skuzzycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  iscsi:
+    -
+  bf:
+    -
+  mbck:
+    -
+  pathtr:
+    -
+  decode:
+    -
+  rce:
+    -
+  suid:
+    -
+  rev:
+    -
+  pathj:
+    -
+
+wals:
+  ew_skuzzywu:
+    -
+---

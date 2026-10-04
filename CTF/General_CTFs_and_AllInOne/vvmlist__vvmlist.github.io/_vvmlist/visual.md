@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  visual:
+    -
+  visualac:
+    -
+  visualcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  git:
+    -
+  logical:
+    -
+  rce:
+    -
+  tsi:
+    -
+
+wals:
+  visualwu:
+    -
+  visualvi:
+    -
+---

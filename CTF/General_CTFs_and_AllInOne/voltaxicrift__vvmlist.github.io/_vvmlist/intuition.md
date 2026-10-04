@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  intuition:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xss:
+    -
+  coot:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+  ans:
+    -
+  source:
+    -
+  sudo:
+    -
+
+wals:
+  intuitionwu:
+    -
+  intuitionvi:
+    -
+---

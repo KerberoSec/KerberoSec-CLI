@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  insanity:
+    -
+  insanityac:
+    -
+  insanitycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  creds:
+    -
+
+wals:
+  insanitywu:
+    -
+---

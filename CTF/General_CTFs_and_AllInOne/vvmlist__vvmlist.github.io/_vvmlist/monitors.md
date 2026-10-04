@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  monitors:
+    -
+  monitorsac:
+    -
+  monitorscm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  wp:
+    -
+  creds:
+    -
+  sqli:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  docker:
+    -
+  bre:
+    -
+  logical:
+    -
+
+wals:
+  monitorswu:
+    -
+  monitorsvi:
+    -
+---

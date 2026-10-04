@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  arroutada:
+    -
+  arroutadaac:
+    -
+  arroutadacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  rce:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  api:
+    -
+  sudo:
+    -
+wals:
+  arroutadawu:
+    -
+
+---

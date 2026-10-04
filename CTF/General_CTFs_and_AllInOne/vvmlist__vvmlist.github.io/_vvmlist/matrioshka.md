@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  matrioshka:
+    -
+  matrioshkaac:
+    -
+  matrioshkacm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  cve:
+    -
+  sqli:
+    -
+  rce:
+    -
+  creds:
+    -
+  passre:
+    -
+  tunnel:
+    -
+  dcr:
+    -
+  bre:
+    -
+
+wals:
+  matrioshkawu:
+    -
+---

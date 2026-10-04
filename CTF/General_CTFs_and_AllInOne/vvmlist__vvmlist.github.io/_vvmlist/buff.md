@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  buff:
+    -
+  buffac:
+    -
+  buffcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  be:
+    -
+
+wals:
+  buffwu:
+    -
+  buffvi:
+    -
+---

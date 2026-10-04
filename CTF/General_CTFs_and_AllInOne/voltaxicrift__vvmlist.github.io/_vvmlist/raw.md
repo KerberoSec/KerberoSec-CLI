@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  raw:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  snmp:
+    -
+  creds:
+    -
+  smb:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  rawwu:
+    -
+---

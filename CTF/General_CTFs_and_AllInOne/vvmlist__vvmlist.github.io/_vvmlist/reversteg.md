@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  reversteg:
+    -
+  reverstegac:
+    -
+  reverstegcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  steg:
+    -
+  decode:
+    -
+  ssh:
+    -
+  rev:
+    -
+  sudo:
+    -
+
+wals:
+  reverstegwu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  servmon:
+    -
+  servmonac:
+    -
+  servmoncm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  servmonwu:
+    -
+  servmonvi:
+    -
+---

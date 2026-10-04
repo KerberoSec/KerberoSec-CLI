@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  remotevx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  rfi:
+    -
+  ci:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  remotevxwu:
+    -
+---

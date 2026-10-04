@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  down:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  lfi:
+    -
+  source:
+    -
+  rce:
+    -
+  decode:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  downwu:
+    -
+---

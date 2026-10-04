@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  down:
+    -
+  downac:
+    -
+  downcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  lfi:
+    -
+  source:
+    -
+  rce:
+    -
+  decode:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  downwu:
+    -
+  downvi:
+    -
+---

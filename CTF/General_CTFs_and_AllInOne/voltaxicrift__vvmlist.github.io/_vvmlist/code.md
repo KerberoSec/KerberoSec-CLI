@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  code:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  ep:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  codewu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  noter:
+    -
+  noterac:
+    -
+  notercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  flcoo:
+    -
+  bf:
+    -
+  creds:
+    -
+  ftp:
+    -
+  cve:
+    -
+  rce:
+    -
+  raptor:
+    -
+
+wals:
+  noterwu:
+    -
+  notervi:
+    -
+---

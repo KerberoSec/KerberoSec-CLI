@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  random:
+    -
+  randomac:
+    -
+  randomcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+  ftp:
+    -
+  rce:
+    -
+  creds:
+    -
+  rev:
+    -
+  maldll:
+    -
+
+wals:
+  randomwu:
+    -
+---

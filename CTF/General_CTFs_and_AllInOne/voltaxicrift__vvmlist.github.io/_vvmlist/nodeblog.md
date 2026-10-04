@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nodeblog:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  nosqli:
+    -
+  xxe:
+    -
+  source:
+    -
+  deser:
+    -
+  sql:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  nodeblogwu:
+    -
+  nodeblogvi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  vulnuni:
+    -
+  vulnuniac:
+    -
+  vulnunicm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  vulnuniwu:
+    -
+---

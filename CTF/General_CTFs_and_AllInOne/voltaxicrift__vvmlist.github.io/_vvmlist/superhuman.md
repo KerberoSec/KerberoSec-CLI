@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  superhuman:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  hc:
+    -
+  cap:
+    -
+
+wals:
+  superhumanwu:
+    -
+---

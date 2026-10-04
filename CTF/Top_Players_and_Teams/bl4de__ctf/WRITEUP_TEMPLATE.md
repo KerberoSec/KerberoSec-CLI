@@ -1,0 +1,11 @@
+# PROBLEM TITLE, Category, 50pts
+
+## Problem
+
+Problem description goes here...
+
+## Solution
+
+Problem solution goes here...
+
+*[Image: Screen caption]*

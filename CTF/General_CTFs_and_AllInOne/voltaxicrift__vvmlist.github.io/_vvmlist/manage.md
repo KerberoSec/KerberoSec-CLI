@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  manage:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  logical:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  managewu:
+    -
+---

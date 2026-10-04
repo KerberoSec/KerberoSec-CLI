@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  winter:
+    -
+  winterac:
+    -
+  wintercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  winterwu:
+    -
+---

@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  friends:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  bf:
+    -
+  sql:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  friendswu:
+    -
+---

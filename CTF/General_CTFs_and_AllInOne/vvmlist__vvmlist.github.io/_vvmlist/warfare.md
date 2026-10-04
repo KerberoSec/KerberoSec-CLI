@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  warfare:
+    -
+  warfareac:
+    -
+  warfarecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  ad:
+    -
+  steg:
+    -
+  ssh:
+    -
+  gpo:
+    -
+
+wals:
+  warfarewu:
+    -
+---

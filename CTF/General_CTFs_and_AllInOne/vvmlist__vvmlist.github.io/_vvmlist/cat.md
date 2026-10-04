@@ -1,0 +1,52 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cat:
+    -
+  catac:
+    -
+  catcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  xss:
+    -
+  coot:
+    -
+  sqli:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  creds:
+    -
+  groups:
+    -
+  tunnel:
+    -
+  cve:
+    -
+
+wals:
+  catwu:
+    -
+  catvi:
+    -
+---

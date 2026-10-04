@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  infected:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  phpmod:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  infectedwu:
+    -
+---

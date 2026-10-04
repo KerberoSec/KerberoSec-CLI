@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  seattle:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+
+wals:
+  seattlewu:
+    -
+---

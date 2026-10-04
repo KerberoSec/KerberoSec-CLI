@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  darkside:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  decode:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  darksidewu:
+    -
+---

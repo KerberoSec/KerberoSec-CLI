@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pressed:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  wp:
+    -
+  creds:
+    -
+  api:
+    -
+  decode:
+    -
+  rce:
+    -
+  be:
+    -
+
+wals:
+  pressedwu:
+    -
+  pressedvi:
+    -
+---

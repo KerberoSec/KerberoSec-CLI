@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  intelligence:
+    -
+  intelligenceac:
+    -
+  intelligencecm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  creds:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  gmsa:
+    -
+  dele:
+    -
+
+wals:
+  intelligencewu:
+    -
+  intelligencevi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  instant:
+    -
+  instantac:
+    -
+  instantcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  apk:
+    -
+  rev:
+    -
+  creds:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+  hc:
+    -
+  decode:
+    -
+
+wals:
+  instantwu:
+    -
+  instantvi:
+    -
+---

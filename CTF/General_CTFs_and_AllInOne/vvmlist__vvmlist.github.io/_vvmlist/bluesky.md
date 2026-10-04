@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  bluesky:
+    -
+  blueskyac:
+    -
+  blueskycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+wals:
+  blueskywu:
+    -
+
+---

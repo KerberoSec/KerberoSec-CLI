@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cybersploit:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  cybersploitwu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  espo:
+    -
+  espoac:
+    -
+  espocm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  cve:
+    -
+  rce:
+    -
+  cron:
+    -
+  sudo:
+    -
+
+wals:
+  espowu:
+    -
+---

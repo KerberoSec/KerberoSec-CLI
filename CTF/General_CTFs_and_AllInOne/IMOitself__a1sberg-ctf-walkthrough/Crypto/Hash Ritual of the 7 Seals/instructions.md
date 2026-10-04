@@ -1,0 +1,1 @@
+The Seers of the Obsidian Tower protect their secrets using sacred hashes. Each seal was forged with an ancient ritual, repeated again and again without change. They claim the hashes cannot be reversed… but rituals follow order, and order leaves traces. Break the sequence. Reveal the hidden truth.

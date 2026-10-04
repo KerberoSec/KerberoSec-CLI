@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  thefinals:
+    -
+  thefinalsac:
+    -
+  thefinalscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  source:
+    -
+  xss:
+    -
+  rce:
+    -
+  creds:
+    -
+  decode:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  sql:
+    -
+
+wals:
+  thefinalswu:
+    -
+---

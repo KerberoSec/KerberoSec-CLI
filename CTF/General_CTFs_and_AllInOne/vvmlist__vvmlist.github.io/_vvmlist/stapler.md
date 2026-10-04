@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  stapler:
+    -
+  staplerac:
+    -
+  staplercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  staplerwu:
+    -
+---

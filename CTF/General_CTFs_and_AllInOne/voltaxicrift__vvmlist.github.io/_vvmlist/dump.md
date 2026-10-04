@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  dump:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  al:
+    -
+  ftp:
+    -
+  daly:
+    -
+  hc:
+    -
+  rce:
+    -
+  tunnel:
+    -
+
+wals:
+  dumpwu:
+    -
+---

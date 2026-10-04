@@ -1,0 +1,60 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pivotapi:
+    -
+  pivotapiac:
+    -
+  pivotapicm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  ftp:
+    -
+  al:
+    -
+  asrep:
+    -
+  hc:
+    -
+  smb:
+    -
+  rev:
+    -
+  creds:
+    -
+  xpc:
+    -
+  pivot:
+    -
+  keepass:
+    -
+  ssh:
+    -
+  bhga:
+    -
+  groups:
+    -
+  bhfcp:
+    -
+  laps:
+    -
+
+wals:
+  pivotapiwu:
+    -
+  pivotapivi:
+    -
+---

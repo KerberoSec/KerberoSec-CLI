@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fluxcapacitor:
+    -
+  fluxcapacitorac:
+    -
+  fluxcapacitorcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  waf:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  fluxcapacitorwu:
+    -
+  fluxcapacitorvi:
+    -
+---

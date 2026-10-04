@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  backend:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  jwt:
+    -
+  source:
+    -
+  rce:
+    -
+  logical:
+    -
+  creds:
+    -
+
+wals:
+  backendwu:
+    -
+  backendvi:
+    -
+---

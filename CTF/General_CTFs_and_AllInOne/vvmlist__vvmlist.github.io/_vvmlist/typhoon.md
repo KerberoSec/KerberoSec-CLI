@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  typhoon:
+    -
+  typhoonac:
+    -
+  typhooncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  typhoonwu:
+    -
+---

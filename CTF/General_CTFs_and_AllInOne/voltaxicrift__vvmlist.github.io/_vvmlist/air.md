@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  air:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  bf:
+    -
+
+wals:
+  airwu:
+    -
+---

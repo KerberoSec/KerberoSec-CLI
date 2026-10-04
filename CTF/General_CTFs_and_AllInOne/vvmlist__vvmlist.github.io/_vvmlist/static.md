@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  static:
+    -
+  staticac:
+    -
+  staticcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  sql:
+    -
+  vpn:
+    -
+  xdebug:
+    -
+  rce:
+    -
+  creds:
+    -
+  tunnel:
+    -
+  cve:
+    -
+  logical:
+    -
+
+wals:
+  staticwu:
+    -
+  staticvi:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  unbakedpie:
+    -
+  unbakedpieac:
+    -
+  unbakedpiecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  decode:
+    -
+  deser:
+    -
+  bre:
+    -
+  sql:
+    -
+  tunnel:
+    -
+  bf:
+    -
+  sudo:
+    -
+  pathj:
+    -
+
+wals:
+  unbakedpiewu:
+    -
+---

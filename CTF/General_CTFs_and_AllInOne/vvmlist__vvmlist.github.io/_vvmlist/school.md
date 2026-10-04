@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  school:
+    -
+  schoolac:
+    -
+  schoolcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  sqli:
+    -
+  rce:
+    -
+  bof:
+    -
+
+wals:
+  schoolwu:
+    -
+---

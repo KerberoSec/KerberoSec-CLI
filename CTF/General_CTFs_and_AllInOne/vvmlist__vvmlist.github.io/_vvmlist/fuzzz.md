@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  fuzzz:
+    -
+  fuzzzac:
+    -
+  fuzzzcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  pivot:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  fuzzzwu:
+    -
+---

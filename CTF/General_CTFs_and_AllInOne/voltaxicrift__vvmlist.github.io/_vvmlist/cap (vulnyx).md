@@ -1,0 +1,30 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  capvx:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  sniff:
+    -
+  bf:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  capvxwu:
+    -
+---

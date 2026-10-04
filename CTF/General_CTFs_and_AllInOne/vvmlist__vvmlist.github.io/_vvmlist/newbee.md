@@ -1,0 +1,46 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  newbee:
+    -
+  newbeeac:
+    -
+  newbeecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  source:
+    -
+  rce:
+    -
+  sudo:
+    -
+  libj:
+    -
+  tunnel:
+    -
+  jwt:
+    -
+  creds:
+    -
+  hc:
+    -
+  steg:
+    -
+
+wals:
+  newbeewu:
+    -
+---

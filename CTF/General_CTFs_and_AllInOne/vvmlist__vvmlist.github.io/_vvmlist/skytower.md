@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  skytower:
+    -
+  skytowerac:
+    -
+  skytowercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  sqli:
+    -
+  creds:
+    -
+  proxy:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  skytowerwu:
+    -
+---

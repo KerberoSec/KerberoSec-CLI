@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  memories:
+    -
+  memoriesac:
+    -
+  memoriescm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  memorieswu:
+    -
+---

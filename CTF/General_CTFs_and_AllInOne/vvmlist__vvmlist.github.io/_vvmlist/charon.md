@@ -1,0 +1,52 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  charon:
+    -
+  charonac:
+    -
+  charoncm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  waf:
+    -
+  sql:
+    -
+  hc:
+    -
+  ep:
+    -
+  rce:
+    -
+  decode:
+    -
+  logical:
+    -
+  rsa:
+    -
+  suid:
+    -
+  rev:
+    -
+
+wals:
+  charonwu:
+    -
+  charonvi:
+    -
+---

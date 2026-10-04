@@ -1,0 +1,26 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  chatterbox:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+
+wals:
+  chatterboxwu:
+    -
+  chatterboxvi:
+    -
+---

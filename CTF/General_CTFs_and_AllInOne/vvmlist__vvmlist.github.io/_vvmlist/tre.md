@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  tre:
+    -
+  treac:
+    -
+  trecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sql:
+    -
+  cron:
+    -
+  pspy:
+    -
+  rwp:
+    -
+
+wals:
+  trewu:
+    -
+---

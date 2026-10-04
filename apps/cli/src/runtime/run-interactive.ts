@@ -740,6 +740,19 @@ export async function runInteractive(
 					sessionId: sessionRuntime.getActiveSessionId() || undefined,
 					delivery,
 				});
+				// Sanitize raw HTML error bodies (e.g. 502 Bad Gateway responses)
+				// into a clean one-liner so the terminal stays usable.
+				if (error instanceof Error) {
+					const raw = error.message;
+					if (/<\/?[a-z][\s\S]*>/i.test(raw)) {
+						const statusMatch = raw.match(
+							/\b(50[0-9])\b.*?\b(Bad Gateway|Service Unavailable|Gateway Timeout|Internal Server Error)\b/i,
+						);
+						error.message = statusMatch
+							? `Provider returned HTTP ${statusMatch[1]} ${statusMatch[2]} — please retry.`
+							: "Provider returned an HTML error page — please retry.";
+					}
+				}
 				throw error;
 			} finally {
 				zeroCurrentTurnCost = false;
@@ -828,7 +841,15 @@ export async function runInteractive(
 					{ error },
 				);
 			});
-			await sessionRuntime.restartWithCurrentMessages();
+			try {
+				await sessionRuntime.restartWithCurrentMessages();
+			} catch (error) {
+				logCliError(
+					config.logger,
+					"Session restart after account change failed",
+					{ error },
+				);
+			}
 		},
 		// resumeSession initializes the manager and starts the selected session
 		// directly. Ensuring a session first would mint an empty history entry

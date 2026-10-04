@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  zipping:
+    -
+  zippingac:
+    -
+  zippingcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  sqli:
+    -
+  rce:
+    -
+  source:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  zippingwu:
+    -
+  zippingvi:
+    -
+---

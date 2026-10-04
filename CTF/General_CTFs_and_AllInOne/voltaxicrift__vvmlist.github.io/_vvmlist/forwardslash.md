@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  forwardslash:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  rfi:
+    -
+  lfi:
+    -
+  creds:
+    -
+  xxe:
+    -
+  resp:
+    -
+  suid:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  forwardslashwu:
+    -
+  forwardslashvi:
+    -
+---

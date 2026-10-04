@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  chemistry:
+    -
+  chemistryac:
+    -
+  chemistrycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+
+wals:
+  chemistrywu:
+    -
+  chemistryvi:
+    -
+---

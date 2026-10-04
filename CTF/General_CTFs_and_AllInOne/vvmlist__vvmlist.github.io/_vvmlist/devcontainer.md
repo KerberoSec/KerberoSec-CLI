@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  devcontainer:
+    -
+  devcontainerac:
+    -
+  devcontainercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  cron:
+    -
+  rwp:
+    -
+  sudo:
+    -
+  lfi:
+    -
+
+wals:
+  devcontainerwu:
+    -
+---

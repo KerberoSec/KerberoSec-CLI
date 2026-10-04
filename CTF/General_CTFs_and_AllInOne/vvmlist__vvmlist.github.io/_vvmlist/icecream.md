@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  icecream:
+    -
+  icecreamac:
+    -
+  icecreamcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  smb:
+    -
+  sudo:
+    -
+
+wals:
+  icecreamwu:
+    -
+---

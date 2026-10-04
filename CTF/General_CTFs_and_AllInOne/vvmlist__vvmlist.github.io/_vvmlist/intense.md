@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  intense:
+    -
+  intenseac:
+    -
+  intensecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  sqli:
+    -
+  hle:
+    -
+  api:
+    -
+  creds:
+    -
+  snmp:
+    -
+  tunnel:
+    -
+  bof:
+    -
+
+wals:
+  intensewu:
+    -
+  intensevi:
+    -
+---

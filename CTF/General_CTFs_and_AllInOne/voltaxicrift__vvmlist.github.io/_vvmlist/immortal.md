@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  immortal:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  immortalwu:
+    -
+---

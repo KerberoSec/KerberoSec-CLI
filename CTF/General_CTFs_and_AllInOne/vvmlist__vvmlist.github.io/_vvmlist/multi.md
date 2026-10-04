@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  multi:
+    -
+  multiac:
+    -
+  multicm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  sqli:
+    -
+  rce:
+    -
+  cron:
+    -
+  telnet:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  multiwu:
+    -
+---

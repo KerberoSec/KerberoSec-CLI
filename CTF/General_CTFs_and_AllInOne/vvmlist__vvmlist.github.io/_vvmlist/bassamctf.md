@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  bassamctf:
+    -
+  bassamctfac:
+    -
+  bassamctfcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  decode:
+    -
+  groups:
+    -
+  lxd:
+    -
+  sudo:
+    -
+
+wals:
+  bassamctfwu:
+    -
+---

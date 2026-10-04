@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  wild:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  wildwu:
+    -
+---

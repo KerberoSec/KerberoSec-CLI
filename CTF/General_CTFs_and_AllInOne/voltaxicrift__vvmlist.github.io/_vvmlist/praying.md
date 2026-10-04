@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  praying:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  prayingwu:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mailing:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  hc:
+    -
+  cve:
+    -
+
+wals:
+  mailingwu:
+    -
+  mailingvi:
+    -
+---

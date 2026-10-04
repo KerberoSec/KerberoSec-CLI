@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  shenron:
+    -
+  shenronac:
+    -
+  shenroncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  shenronwu:
+    -
+---

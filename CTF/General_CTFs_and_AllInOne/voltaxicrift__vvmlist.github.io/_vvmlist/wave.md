@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  wave:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  source:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  wavewu:
+    -
+---

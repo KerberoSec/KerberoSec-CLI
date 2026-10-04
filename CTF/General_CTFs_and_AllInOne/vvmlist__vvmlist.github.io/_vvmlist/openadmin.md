@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  openadmin:
+    -
+  openadminac:
+    -
+  openadmincm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  passre:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  openadminwu:
+    -
+  openadminvi:
+    -
+---

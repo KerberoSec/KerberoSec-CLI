@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  juggling:
+    -
+  jugglingac:
+    -
+  jugglingcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  lfi:
+    -
+  creds:
+    -
+  typej:
+    -
+  rce:
+    -
+  sudo:
+    -
+  cap:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  jugglingwu:
+    -
+---

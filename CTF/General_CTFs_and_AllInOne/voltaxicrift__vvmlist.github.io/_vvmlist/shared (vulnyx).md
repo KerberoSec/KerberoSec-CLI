@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  sharedvx:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  keepass:
+    -
+  creds:
+    -
+  nfs:
+    -
+  squash:
+    -
+
+wals:
+  sharedvxwu:
+    -
+---

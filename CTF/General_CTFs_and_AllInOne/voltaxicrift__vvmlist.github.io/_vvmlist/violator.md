@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  violator:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  rce:
+    -
+  bf:
+    -
+  ftp:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+  hc:
+    -
+  steg:
+    -
+
+wals:
+  violatorwu:
+    -
+---

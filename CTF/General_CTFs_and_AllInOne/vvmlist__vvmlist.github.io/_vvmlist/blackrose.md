@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  blackrose:
+    -
+  blackroseac:
+    -
+  blackrosecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  authb:
+    -
+  hc:
+    -
+  rce:
+    -
+  sudo:
+    -
+  rev:
+    -
+  logical:
+    -
+
+wals:
+  blackrosewu:
+    -
+---

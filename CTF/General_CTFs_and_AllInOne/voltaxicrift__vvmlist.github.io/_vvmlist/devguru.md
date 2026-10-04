@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  devguru:
+    -
+  devguruvu:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  git:
+    -
+  creds:
+    -
+  hc:
+    -
+  rce:
+    -
+  sql:
+    -
+  cve:
+    -
+
+wals:
+  devguruwu:
+    -
+---

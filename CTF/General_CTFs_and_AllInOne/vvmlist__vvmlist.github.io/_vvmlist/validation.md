@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  validation:
+    -
+  validationac:
+    -
+  validationcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  sqli:
+    -
+  creds:
+    -
+
+wals:
+  validationwu:
+    -
+  validationvi:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  soul:
+    -
+  soulac:
+    -
+  soulcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  bf:
+    -
+  rbash:
+    -
+  rce:
+    -
+  sudo:
+    -
+  suid:
+    -
+
+wals:
+  soulwu:
+    -
+---

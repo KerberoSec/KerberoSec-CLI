@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  jewel:
+    -
+  jewelac:
+    -
+  jewelcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  git:
+    -
+  source:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  jewelwu:
+    -
+  jewelvi:
+    -
+---

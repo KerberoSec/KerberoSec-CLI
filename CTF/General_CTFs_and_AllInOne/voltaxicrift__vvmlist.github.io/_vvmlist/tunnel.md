@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  tunnel:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  proxy:
+    -
+  al:
+    -
+  hc:
+    -
+  creds:
+    -
+  sudo:
+    -
+  bf:
+    -
+
+wals:
+  tunnelwu:
+    -
+---

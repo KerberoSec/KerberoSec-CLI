@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  joker:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  proxy:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+  hc:
+    -
+  fuzz:
+    -
+  wildcard:
+    -
+  cve:
+    -
+  be:
+    -
+  sym:
+    -
+
+wals:
+  jokerwu:
+    -
+  jokervi:
+    -
+---

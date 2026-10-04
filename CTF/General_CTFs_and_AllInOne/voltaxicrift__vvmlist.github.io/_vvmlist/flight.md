@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  flight:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  smb:
+    -
+  logical:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  dcsync:
+    -
+
+wals:
+  flightwu:
+    -
+  flightvi:
+    -
+---

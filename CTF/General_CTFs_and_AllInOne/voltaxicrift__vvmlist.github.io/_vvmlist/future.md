@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  future:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  lfi:
+    -
+  ssh:
+    -
+  hc:
+    -
+  suid:
+    -
+  docker:
+    -
+
+wals:
+  futurewu:
+    -
+---

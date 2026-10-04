@@ -1,0 +1,50 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  playertwo:
+    -
+  playertwoac:
+    -
+  playertwocm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  creds:
+    -
+  bf:
+    -
+  logical:
+    -
+  rce:
+    -
+  pspy:
+    -
+  pivot:
+    -
+  ssh:
+    -
+  rev:
+    -
+  be:
+    -
+
+wals:
+  playertwowu:
+    -
+  playertwovi:
+    -
+---

@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  brain:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  brainwu:
+    -
+---

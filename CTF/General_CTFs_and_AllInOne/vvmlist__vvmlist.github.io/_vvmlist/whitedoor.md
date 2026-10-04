@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  whitedoor:
+    -
+  whitedoorac:
+    -
+  whitedoorcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  ci:
+    -
+  creds:
+    -
+  decode:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  whitedoorwu:
+    -
+---

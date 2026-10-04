@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  trollcave:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ato:
+    -
+  xss:
+    -
+  coot:
+    -
+  logical:
+    -
+  creds:
+    -
+  pathtr:
+    -
+  ssh:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  trollcavewu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  driftingblues3:
+    -
+  driftingblues3hmv:
+    -
+  driftingblues3ac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  ssh:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  driftingblues3wu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sneakymailer:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  phish:
+    -
+  logical:
+    -
+  creds:
+    -
+  ftp:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  sneakymailerwu:
+    -
+  sneakymailervi:
+    -
+---

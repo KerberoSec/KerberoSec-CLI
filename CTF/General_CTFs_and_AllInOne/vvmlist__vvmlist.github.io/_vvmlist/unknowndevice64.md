@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  unknowndevice64:
+    -
+  unknowndevice64ac:
+    -
+  unknowndevice64cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  steg:
+    -
+  decode:
+    -
+  creds:
+    -
+  rbash:
+    -
+  sudo:
+    -
+
+wals:
+  unknowndevice64wu:
+    -
+---

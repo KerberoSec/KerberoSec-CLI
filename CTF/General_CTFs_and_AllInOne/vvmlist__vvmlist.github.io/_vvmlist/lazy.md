@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  lazy:
+    -
+  lazyac:
+    -
+  lazycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  pado:
+    -
+  bit:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  lazywu:
+    -
+  lazyvi:
+    -
+---

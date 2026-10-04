@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  gameshell:
+    -
+  gameshellac:
+    -
+  gameshellcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  creds:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  gameshellwu:
+    -
+---

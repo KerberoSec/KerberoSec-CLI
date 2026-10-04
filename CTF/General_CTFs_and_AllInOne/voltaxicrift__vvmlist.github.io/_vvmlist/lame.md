@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  lame:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  al:
+    -
+  cve:
+    -
+
+wals:
+  lamewu:
+    -
+  lamevi:
+    -
+---

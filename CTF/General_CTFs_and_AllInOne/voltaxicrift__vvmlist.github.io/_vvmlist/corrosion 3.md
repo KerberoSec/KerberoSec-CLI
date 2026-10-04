@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  corrosion3:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  knock:
+    -
+  lfi:
+    -
+  cron:
+    -
+  pspy:
+    -
+  creds:
+    -
+
+wals:
+  corrosion3wu:
+    -
+---

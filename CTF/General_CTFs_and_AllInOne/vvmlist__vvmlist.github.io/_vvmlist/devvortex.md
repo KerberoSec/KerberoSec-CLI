@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  devvortex:
+    -
+  devvortexac:
+    -
+  devvortexcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+  cve:
+    -
+
+wals:
+  devvortexwu:
+    -
+  devvortexvi:
+    -
+---

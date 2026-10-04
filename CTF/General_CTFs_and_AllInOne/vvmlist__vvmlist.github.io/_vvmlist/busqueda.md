@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  busqueda:
+    -
+  busquedaac:
+    -
+  busquedacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  rce:
+    -
+  sudo:
+    -
+  creds:
+    -
+  sql:
+    -
+  passre:
+    -
+
+wals:
+  busquedawu:
+    -
+  busquedavi:
+    -
+---

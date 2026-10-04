@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  stardust:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  dcr:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  cron:
+    -
+  pspy:
+    -
+  api:
+    -
+
+wals:
+  stardustwu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  kotarak:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ssrf:
+    -
+  creds:
+    -
+  ntds:
+    -
+  hc:
+    -
+  cve:
+    -
+  cron:
+    -
+
+wals:
+  kotarakwu:
+    -
+  kotarakvi:
+    -
+---

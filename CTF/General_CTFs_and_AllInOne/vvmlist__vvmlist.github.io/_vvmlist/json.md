@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  json:
+    -
+  jsonac:
+    -
+  jsoncm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  api:
+    -
+  fuzz:
+    -
+  deser:
+    -
+  rce:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  logical:
+    -
+  creds:
+    -
+  tsi:
+    -
+
+wals:
+  jsonwu:
+    -
+  jsonvi:
+    -
+---

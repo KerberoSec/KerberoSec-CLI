@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  lost:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  ci:
+    -
+  rce:
+    -
+  groups:
+    -
+  lxd:
+    -
+
+wals:
+  lostwu:
+    -
+---

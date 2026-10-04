@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blurry:
+    -
+  blurryac:
+    -
+  blurrycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  blurrywu:
+    -
+  blurryvi:
+    -
+---

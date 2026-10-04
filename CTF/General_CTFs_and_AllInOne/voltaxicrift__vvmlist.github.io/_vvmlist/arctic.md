@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  arctic:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  arcticwu:
+    -
+  arcticvi:
+    -
+---

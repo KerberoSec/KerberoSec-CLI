@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  shibboleth:
+    -
+  shibbolethac:
+    -
+  shibbolethcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ipmi:
+    -
+  hc:
+    -
+  creds:
+    -
+  sql:
+    -
+  cve:
+    -
+
+wals:
+  shibbolethwu:
+    -
+  shibbolethvi:
+    -
+---

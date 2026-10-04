@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  doctor:
+    -
+  doctorac:
+    -
+  doctorcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ssti:
+    -
+  rce:
+    -
+  ci:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  doctorwu:
+    -
+  doctorvi:
+    -
+---

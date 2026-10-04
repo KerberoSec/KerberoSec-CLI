@@ -1,0 +1,1 @@
+[Link to challenges](https://ctfd.crhc.club/challenges)

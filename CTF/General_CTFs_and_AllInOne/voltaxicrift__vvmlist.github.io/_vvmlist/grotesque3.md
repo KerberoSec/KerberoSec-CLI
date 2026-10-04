@@ -1,0 +1,26 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  grotesque3:
+    -
+  grotesque3hmv:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  wack:
+    -
+
+wals:
+  grotesque3wu:
+    -
+---

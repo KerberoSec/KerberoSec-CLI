@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  book:
+    -
+  bookac:
+    -
+  bookcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqlt:
+    -
+  xss:
+    -
+  ssh:
+    -
+  cron:
+    -
+  pspy:
+    -
+  be:
+    -
+
+wals:
+  bookwu:
+    -
+  bookvi:
+    -
+---

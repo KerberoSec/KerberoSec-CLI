@@ -1,0 +1,64 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cybermonday:
+    -
+  cybermondayac:
+    -
+  cybermondaycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  obs:
+    -
+  pathtr:
+    -
+  fuzz:
+    -
+  git:
+    -
+  source:
+    -
+  mass:
+    -
+  api:
+    -
+  jwt:
+    -
+  ssrf:
+    -
+  crlfj:
+    -
+  deser:
+    -
+  rce:
+    -
+  bre:
+    -
+  docker:
+    -
+  ssh:
+    -
+  creds:
+    -
+  sudo:
+    -
+  cap:
+    -
+
+wals:
+  cybermondaywu:
+    -
+  cybermondayvi:
+    -
+---

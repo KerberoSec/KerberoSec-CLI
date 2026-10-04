@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  delivery:
+    -
+  deliveryac:
+    -
+  deliverycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+
+wals:
+  deliverywu:
+    -
+  deliveryvi:
+    -
+---

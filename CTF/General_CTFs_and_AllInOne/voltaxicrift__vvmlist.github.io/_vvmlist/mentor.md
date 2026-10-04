@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mentor:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  snmp:
+    -
+  ci:
+    -
+  dcr:
+    -
+  bre:
+    -
+  tunnel:
+    -
+  creds:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  mentorwu:
+    -
+  mentorvi:
+    -
+---

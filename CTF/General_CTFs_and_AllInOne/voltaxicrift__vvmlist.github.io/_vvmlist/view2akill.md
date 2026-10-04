@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  view2akill:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  cve:
+    -
+  ep:
+    -
+  logical:
+    -
+  rwp:
+    -
+
+wals:
+  view2akillwu:
+    -
+---

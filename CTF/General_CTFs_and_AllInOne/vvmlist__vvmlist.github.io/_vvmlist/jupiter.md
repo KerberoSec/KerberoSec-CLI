@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  jupiter:
+    -
+  jupiterac:
+    -
+  jupitercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sql:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  tunnel:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  jupiterwu:
+    -
+  jupitervi:
+    -
+---

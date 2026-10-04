@@ -1,0 +1,34 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  monitor:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  monitorwu:
+    -
+---

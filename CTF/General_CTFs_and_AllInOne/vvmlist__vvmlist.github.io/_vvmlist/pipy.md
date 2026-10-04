@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pipy:
+    -
+  pipyac:
+    -
+  pipycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  creds:
+    -
+  hc:
+    -
+  be:
+    -
+
+wals:
+  pipywu:
+    -
+---

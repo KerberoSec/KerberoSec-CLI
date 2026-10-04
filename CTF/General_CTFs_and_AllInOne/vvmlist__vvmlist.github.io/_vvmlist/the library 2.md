@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  the library 2:
+    -
+  the library 2ac:
+    -
+  the library 2cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  ftp:
+    -
+  rce:
+    -
+
+wals:
+  the library 2wu:
+    -
+---

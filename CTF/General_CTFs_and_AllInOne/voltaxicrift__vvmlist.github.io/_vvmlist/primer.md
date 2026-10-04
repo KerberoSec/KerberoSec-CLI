@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  primer:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  hc:
+    -
+  logical:
+    -
+  bf:
+    -
+
+wals:
+  primerwu:
+    -
+---

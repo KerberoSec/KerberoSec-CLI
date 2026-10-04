@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  adroit:
+    -
+  adroitvu:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  source:
+    -
+  creds:
+    -
+  sqli:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  adroitwu:
+    -
+---

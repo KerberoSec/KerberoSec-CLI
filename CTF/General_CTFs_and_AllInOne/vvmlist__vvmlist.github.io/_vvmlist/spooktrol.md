@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  spooktrol:
+    -
+  spooktrolac:
+    -
+  spooktrolcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  rev:
+    -
+  sniff:
+    -
+  logical:
+    -
+  bre:
+    -
+  sql:
+    -
+
+wals:
+  spooktrolwu:
+    -
+  spooktrolvi:
+    -
+---

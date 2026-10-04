@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  alzheimer:
+    -
+  alzheimerac:
+    -
+  alzheimercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+  knock:
+    -
+  fuzz:
+    -
+  suid:
+    -
+wals:
+  alzheimerwu:
+    -
+
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  aero:
+    -
+  aeroac:
+    -
+  aerocm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  aerowu:
+    -
+  aerovi:
+    -
+---

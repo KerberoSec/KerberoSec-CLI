@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  bottleneck:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sudo:
+    -
+  rwp:
+    -
+  suid:
+    -
+
+wals:
+  bottleneckwu:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  zipper:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  rce:
+    -
+  creds:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  zipperwu:
+    -
+  zippervi:
+    -
+---

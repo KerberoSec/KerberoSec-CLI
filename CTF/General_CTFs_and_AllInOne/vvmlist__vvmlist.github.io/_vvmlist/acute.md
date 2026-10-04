@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  acute:
+    -
+  acuteac:
+    -
+  acutecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  logical:
+    -
+  hc:
+    -
+  cron:
+    -
+
+wals:
+  acutewu:
+    -
+  acutevi:
+    -
+---

@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  haze:
+    -
+  hazeac:
+    -
+  hazecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  decode:
+    -
+  smb:
+    -
+  gmsa:
+    -
+  bhwo:
+    -
+  bhfcp:
+    -
+  creds:
+    -
+  tsi:
+    -
+
+wals:
+  hazewu:
+    -
+  hazevi:
+    -
+---

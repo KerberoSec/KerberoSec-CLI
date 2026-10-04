@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  rick:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  deser:
+    -
+  rce:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  rickwu:
+    -
+---

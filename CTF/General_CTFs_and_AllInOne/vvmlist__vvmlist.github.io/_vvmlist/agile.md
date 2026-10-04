@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  agile:
+    -
+  agileac:
+    -
+  agilecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  logical:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  tunnel:
+    -
+  sudo:
+    -
+
+wals:
+  agilewu:
+    -
+  agilevi:
+    -
+---

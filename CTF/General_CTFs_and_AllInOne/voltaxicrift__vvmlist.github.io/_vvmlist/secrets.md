@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  secrets:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sniff:
+    -
+  ssh:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  secretswu:
+    -
+---

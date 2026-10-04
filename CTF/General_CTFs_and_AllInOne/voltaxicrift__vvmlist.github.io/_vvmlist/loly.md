@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  loly:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  lolywu:
+    -
+---

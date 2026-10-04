@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  midwest:
+    -
+  midwestac:
+    -
+  midwestcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  wp:
+    -
+  rce:
+    -
+  rwp:
+    -
+
+wals:
+  midwestwu:
+    -
+---

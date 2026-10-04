@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  sokar:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  ci:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  hc:
+    -
+  suid:
+    -
+  rev:
+    -
+  cve:
+    -
+
+wals:
+  sokarwu:
+    -
+---

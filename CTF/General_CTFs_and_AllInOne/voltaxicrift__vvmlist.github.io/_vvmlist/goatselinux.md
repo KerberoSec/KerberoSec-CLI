@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  goatselinux:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  goatselinuxwu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pilgrimage:
+    -
+  pilgrimageac:
+    -
+  pilgrimagecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  git:
+    -
+  source:
+    -
+  cve:
+    -
+  sql:
+    -
+  be:
+    -
+
+wals:
+  pilgrimagewu:
+    -
+  pilgrimagevi:
+    -
+---

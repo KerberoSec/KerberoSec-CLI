@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  europa:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  sqli:
+    -
+  creds:
+    -
+  hc:
+    -
+  rce:
+    -
+  cron:
+    -
+
+wals:
+  europawu:
+    -
+  europavi:
+    -
+---

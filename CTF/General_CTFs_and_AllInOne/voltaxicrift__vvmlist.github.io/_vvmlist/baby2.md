@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  baby2:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  cron:
+    -
+  bhwd:
+    -
+
+wals:
+  baby2wu:
+    -
+---

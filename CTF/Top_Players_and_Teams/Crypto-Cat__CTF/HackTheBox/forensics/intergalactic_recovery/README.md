@@ -1,0 +1,2 @@
+# Intergalactic Recovery: Recover damaged hard disk from RAID 5 config
+[![VIDEO](https://img.youtube.com/vi/Nn9RVroH9Ww/0.jpg)](https://youtu.be/Nn9RVroH9Ww "Intergalactic Recovery [easy]: HackTheBox Forensics Challenge (RAID 5 Disk Recovery)")

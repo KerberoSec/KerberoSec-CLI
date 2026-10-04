@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  yone:
+    -
+  yoneac:
+    -
+  yonecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  sudo:
+    -
+  hc:
+    -
+
+wals:
+  yonewu:
+    -
+---

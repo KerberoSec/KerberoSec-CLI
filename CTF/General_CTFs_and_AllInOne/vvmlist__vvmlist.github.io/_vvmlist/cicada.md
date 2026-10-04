@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  cicada:
+    -
+  cicadaac:
+    -
+  cicadacm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  groups:
+    -
+  tsb:
+    -
+
+wals:
+  cicadawu:
+    -
+  cicadavi:
+    -
+---

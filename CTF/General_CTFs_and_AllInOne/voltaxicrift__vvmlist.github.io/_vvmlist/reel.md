@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  reel:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  ftp:
+    -
+  al:
+    -
+  phish:
+    -
+  decode:
+    -
+  creds:
+    -
+  bhwo:
+    -
+  bhwd:
+    -
+  groups:
+    -
+
+wals:
+  reelwu:
+    -
+  reelvi:
+    -
+---

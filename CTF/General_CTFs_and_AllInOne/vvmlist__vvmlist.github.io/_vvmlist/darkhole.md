@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  darkhole:
+    -
+  darkholeac:
+    -
+  darkholecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  ato:
+    -
+  ep:
+    -
+  rce:
+    -
+  suid:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  darkholewu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  faculty:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  sudo:
+    -
+  ci:
+    -
+  groups:
+    -
+  cap:
+    -
+  logical:
+    -
+
+wals:
+  facultywu:
+    -
+  facultyvi:
+    -
+---

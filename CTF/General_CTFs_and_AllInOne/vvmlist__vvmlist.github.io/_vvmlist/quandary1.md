@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  quandary1:
+    -
+  quandary1ac:
+    -
+  quandary1cm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  rsa:
+    -
+  decode:
+    -
+  cve:
+    -
+  sudo:
+    -
+
+wals:
+  quandary1wu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  uninvited:
+    -
+  uninvitedac:
+    -
+  uninvitedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  creds:
+    -
+  rce:
+    -
+  decode:
+    -
+  rwp:
+    -
+
+wals:
+  uninvitedwu:
+    -
+---

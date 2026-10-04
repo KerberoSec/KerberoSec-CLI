@@ -1,0 +1,52 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  catch:
+    -
+  catchac:
+    -
+  catchcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  apk:
+    -
+  rev:
+    -
+  api:
+    -
+  creds:
+    -
+  cve:
+    -
+  sql:
+    -
+  rce:
+    -
+  sqli:
+    -
+  ssrf:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+
+wals:
+  catchwu:
+    -
+  catchvi:
+    -
+---

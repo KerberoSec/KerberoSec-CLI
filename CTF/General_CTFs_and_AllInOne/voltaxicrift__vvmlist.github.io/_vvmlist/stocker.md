@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  stocker:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  nosqli:
+    -
+  api:
+    -
+  xss:
+    -
+  source:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  stockerwu:
+    -
+  stockervi:
+    -
+---

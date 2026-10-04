@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  fowsniff:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  hc:
+    -
+  osint:
+    -
+  creds:
+    -
+  groups:
+    -
+  rwp:
+    -
+
+wals:
+  fowsniffwu:
+    -
+---

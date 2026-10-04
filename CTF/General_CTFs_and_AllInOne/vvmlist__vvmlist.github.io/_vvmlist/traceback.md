@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  traceback:
+    -
+  tracebackac:
+    -
+  tracebackcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+  ssh:
+    -
+  pspy:
+    -
+  cron:
+    -
+  logical:
+    -
+
+wals:
+  tracebackwu:
+    -
+  tracebackvi:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  y0usef:
+    -
+  y0usefac:
+    -
+  y0usefcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  hb:
+    -
+  dcr:
+    -
+  ep:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  y0usefwu:
+    -
+---

@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  unicode:
+    -
+  unicodeac:
+    -
+  unicodecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  jwt:
+    -
+  waf:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  rev:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  unicodewu:
+    -
+  unicodevi:
+    -
+---

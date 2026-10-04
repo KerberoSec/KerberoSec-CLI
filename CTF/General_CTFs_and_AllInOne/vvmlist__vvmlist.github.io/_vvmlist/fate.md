@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  fate:
+    -
+  fateac:
+    -
+  fatecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rwp:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  fatewu:
+    -
+---

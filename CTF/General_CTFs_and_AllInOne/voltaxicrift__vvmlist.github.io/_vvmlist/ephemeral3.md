@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  ephemeral3:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  prng:
+    -
+  sudo:
+    -
+  groups:
+    -
+
+wals:
+  ephemeral3wu:
+    -
+---

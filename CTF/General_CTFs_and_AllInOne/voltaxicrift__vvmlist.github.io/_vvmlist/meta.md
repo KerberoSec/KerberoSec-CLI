@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  meta:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  pspy:
+    -
+  ci:
+    -
+  be:
+    -
+  sudo:
+    -
+
+wals:
+  metawu:
+    -
+  metavi:
+    -
+---

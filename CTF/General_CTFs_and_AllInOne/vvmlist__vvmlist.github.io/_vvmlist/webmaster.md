@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  webmaster:
+    -
+  webmasterac:
+    -
+  webmastercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  creds:
+    -
+  cve:
+    -
+  sudo:
+    -
+
+wals:
+  webmasterwu:
+    -
+---

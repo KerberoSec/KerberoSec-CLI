@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  heal:
+    -
+  healac:
+    -
+  healcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  rce:
+    -
+  ssh:
+    -
+  api:
+    -
+
+wals:
+  healwu:
+    -
+  healvi:
+    -
+---

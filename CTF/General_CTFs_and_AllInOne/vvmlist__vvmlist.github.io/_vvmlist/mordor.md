@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  mordor:
+    -
+  mordorac:
+    -
+  mordorcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  rbash:
+    -
+  rev:
+    -
+  steg:
+    -
+  bf:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  mordorwu:
+    -
+---

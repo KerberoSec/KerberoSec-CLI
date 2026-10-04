@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  rustykey:
+    -
+  rustykeyac:
+    -
+  rustykeycm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  timr:
+    -
+  hc:
+    -
+  bhas:
+    -
+  bhfcp:
+    -
+  bhaaa:
+    -
+  rbcd:
+    -
+  dcsync:
+    -
+
+wals:
+  rustykeywu:
+    -
+  rustykeyvi:
+    -
+---

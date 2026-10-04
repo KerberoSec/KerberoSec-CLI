@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  principle2:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  smb:
+    -
+  nfs:
+    -
+  creds:
+    -
+  steg:
+    -
+  pathtr:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  passre:
+    -
+  tunnel:
+    -
+  bf:
+    -
+  groups:
+    -
+  rwp:
+    -
+
+wals:
+  principle2wu:
+    -
+---

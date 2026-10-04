@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  icarus:
+    -
+  icarusac:
+    -
+  icaruscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  icaruswu:
+    -
+---

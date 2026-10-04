@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  jab:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  logical:
+    -
+  asrep:
+    -
+  hc:
+    -
+  krb:
+    -
+  creds:
+    -
+  logical:
+    -
+  ecom:
+    -
+  tunnel:
+    -
+  cve:
+    -
+  rce:
+    -
+
+wals:
+  jabwu:
+    -
+  jabvi:
+    -
+---

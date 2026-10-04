@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  away:
+    -
+  awayac:
+    -
+  awaycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  ssh:
+    -
+  sudo:
+    -
+  cap:
+    -
+wals:
+  awaywu:
+    -
+
+---

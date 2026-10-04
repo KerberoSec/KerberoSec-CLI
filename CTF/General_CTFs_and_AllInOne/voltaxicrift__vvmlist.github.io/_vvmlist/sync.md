@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  sync:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnlab:
+    -
+  rsync:
+    -
+  source:
+    -
+  sql:
+    -
+  hc:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  passre:
+    -
+  mbck:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  syncwu:
+    -
+---

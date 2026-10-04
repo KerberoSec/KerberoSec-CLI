@@ -1,0 +1,26 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  potato:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  potatowu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  noport:
+    -
+  noportac:
+    -
+  noportcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  git:
+    -
+  creds:
+    -
+  decode:
+    -
+  logical:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  noportwu:
+    -
+---

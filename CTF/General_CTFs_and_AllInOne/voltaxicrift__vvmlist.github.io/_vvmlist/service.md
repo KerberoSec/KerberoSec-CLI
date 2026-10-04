@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  service:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  cve:
+    -
+  creds:
+    -
+  rce:
+    -
+  bf:
+    -
+  bre:
+    -
+  suid:
+    -
+
+wals:
+  servicewu:
+    -
+---

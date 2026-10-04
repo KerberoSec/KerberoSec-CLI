@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  hat:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  lfi:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  hatwu:
+    -
+---

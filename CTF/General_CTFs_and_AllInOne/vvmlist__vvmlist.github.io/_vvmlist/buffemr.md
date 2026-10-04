@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  buffemr:
+    -
+  buffemrac:
+    -
+  buffemrcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+  cve:
+    -
+  rce:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  buffemrwu:
+    -
+---

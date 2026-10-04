@@ -1,0 +1,50 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  hathor:
+    -
+  hathorac:
+    -
+  hathorcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  creds:
+    -
+  ep:
+    -
+  rce:
+    -
+  hc:
+    -
+  smb:
+    -
+  pspy:
+    -
+  logical:
+    -
+  cron:
+    -
+  libj:
+    -
+  dcsync:
+    -
+
+wals:
+  hathorwu:
+    -
+  hathorvi:
+    -
+---

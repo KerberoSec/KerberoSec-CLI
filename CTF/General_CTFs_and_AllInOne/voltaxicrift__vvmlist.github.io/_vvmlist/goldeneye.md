@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  goldeneye:
+    -
+  goldeneyeac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  decode:
+    -
+  bf:
+    -
+  steg:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  goldeneyewu:
+    -
+---

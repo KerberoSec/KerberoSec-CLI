@@ -1,0 +1,1 @@
+You’ve discovered an encrypted message from a secretive hacker syndicate known as The Architects, secured with a custom RSA scheme built on primes that are not random but carefully constructed to be smooth, each a product of smaller primes, hiding subtle weaknesses within their elegance.

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  lin.security:
+    -
+  lin.securityac:
+    -
+  lin.securitycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  nfs:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  lin.securitywu:
+    -
+---

@@ -81,8 +81,8 @@ export function useLocalCommandActions(input: {
 					const entries = hydrateSessionMessages(messages);
 					if (entries.length === 0) {
 						session.appendEntry({
-							kind: "error",
-							text: `Session ${sessionId} has no messages to resume.`,
+							kind: "status",
+							text: `Session ${sessionId} was empty — starting a fresh session.`,
 						});
 					} else {
 						session.clearEntries();

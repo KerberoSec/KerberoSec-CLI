@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  vulnimage:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  rce:
+    -
+  pspy:
+    -
+  bof:
+    -
+
+wals:
+  vulnimagewu:
+    -
+---

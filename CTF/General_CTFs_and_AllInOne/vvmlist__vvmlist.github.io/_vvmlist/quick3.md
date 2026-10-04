@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  quick3:
+    -
+  quick3ac:
+    -
+  quick3cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ato:
+    -
+  bf:
+    -
+  creds:
+    -
+
+wals:
+  quick3wu:
+    -
+---

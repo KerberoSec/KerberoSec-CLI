@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  boxing:
+    -
+  boxingac:
+    -
+  boxingcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  ci:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+  logical:
+    -
+  cron:
+    -
+  pspy:
+    -
+wals:
+  boxingwu:
+    -
+
+---

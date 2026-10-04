@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  driftingblues4:
+    -
+  driftingblues4ac:
+    -
+  driftingblues4cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  bf:
+    -
+  ftp:
+    -
+  ssh:
+    -
+  rwp:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  driftingblues4wu:
+    -
+---

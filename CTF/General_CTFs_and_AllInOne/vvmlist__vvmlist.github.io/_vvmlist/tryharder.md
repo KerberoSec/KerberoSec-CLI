@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tryharder:
+    -
+  tryharderac:
+    -
+  tryhardercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  bf:
+    -
+  jwt:
+    -
+  ep:
+    -
+  rce:
+    -
+  rev:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  tryharderwu:
+    -
+---

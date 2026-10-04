@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  undetected:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  rev:
+    -
+  logical:
+    -
+  hc:
+    -
+  creds:
+    -
+  ssh:
+    -
+
+wals:
+  undetectedwu:
+    -
+  undetectedvi:
+    -
+---

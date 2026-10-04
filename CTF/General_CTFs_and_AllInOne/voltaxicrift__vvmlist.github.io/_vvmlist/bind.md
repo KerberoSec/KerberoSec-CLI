@@ -1,0 +1,28 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  bind:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  bindwu:
+    -
+---

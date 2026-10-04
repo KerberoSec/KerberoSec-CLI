@@ -1,0 +1,54 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  patents:
+    -
+  patentsac:
+    -
+  patentscm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  rce:
+    -
+  logpoi:
+    -
+  pathtr:
+    -
+  lfi:
+    -
+  bre:
+    -
+  cron:
+    -
+  pspy:
+    -
+  git:
+    -
+  source:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  patentswu:
+    -
+  patentsvi:
+    -
+---

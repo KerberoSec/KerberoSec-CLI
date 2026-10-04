@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  friendly:
+    -
+  friendlyac:
+    -
+  friendlycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  friendlywu:
+    -
+---

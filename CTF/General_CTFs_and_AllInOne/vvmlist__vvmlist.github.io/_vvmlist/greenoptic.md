@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  greenoptic:
+    -
+  greenopticac:
+    -
+  greenopticcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  hc:
+    -
+  pcap:
+    -
+  sniff:
+    -
+  groups:
+    -
+
+wals:
+  greenopticwu:
+    -
+---

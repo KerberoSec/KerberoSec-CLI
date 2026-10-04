@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  tempus fugit 2:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  wp:
+    -
+  sniff:
+    -
+  rce:
+    -
+  creds:
+    -
+  decode:
+    -
+  knock:
+    -
+  sudo:
+    -
+  bf:
+    -
+  bre:
+    -
+  suid:
+    -
+
+wals:
+  tempus fugit 2wu:
+    -
+---

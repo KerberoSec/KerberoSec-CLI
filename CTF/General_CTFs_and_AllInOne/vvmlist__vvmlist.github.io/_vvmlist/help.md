@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  help:
+    -
+  helpac:
+    -
+  helpcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  api:
+    -
+  creds:
+    -
+  hc:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  kern:
+    -
+
+wals:
+  helpwu:
+    -
+  helpvi:
+    -
+---

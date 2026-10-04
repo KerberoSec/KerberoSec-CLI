@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  bah:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  creds:
+    -
+  sql:
+    -
+  passre:
+    -
+  pspy:
+    -
+  suid:
+    -
+
+wals:
+  bahwu:
+    -
+---

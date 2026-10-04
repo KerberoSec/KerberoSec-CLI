@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  napper:
+    -
+  napperac:
+    -
+  nappercm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  rce:
+    -
+  logical:
+    -
+  tunnel:
+    -
+  api:
+    -
+  rev:
+    -
+  uacss:
+    -
+  groups:
+    -
+
+wals:
+  napperwu:
+    -
+  nappervi:
+    -
+---

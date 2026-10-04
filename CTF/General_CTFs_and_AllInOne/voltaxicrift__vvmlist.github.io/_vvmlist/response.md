@@ -1,0 +1,54 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  response:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  source:
+    -
+  dcr:
+    -
+  sniff:
+    -
+  ldaphj:
+    -
+  logical:
+    -
+  creds:
+    -
+  phish:
+    -
+  cprf:
+    -
+  pspy:
+    -
+  cron:
+    -
+  pathtr:
+    -
+  pcap:
+    -
+  rsa:
+    -
+
+wals:
+  responsewu:
+    -
+  responsevi:
+    -
+---

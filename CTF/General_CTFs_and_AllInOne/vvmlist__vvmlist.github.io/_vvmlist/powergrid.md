@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  powergrid:
+    -
+  powergridac:
+    -
+  powergridcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  cve:
+    -
+  rce:
+    -
+  passre:
+    -
+  pgp:
+    -
+  sudo:
+    -
+  docker:
+    -
+
+wals:
+  powergridwu:
+    -
+---

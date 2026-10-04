@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  blocky:
+    -
+  blockyac:
+    -
+  blockycm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  blockywu:
+    -
+  blockyvi:
+    -
+---

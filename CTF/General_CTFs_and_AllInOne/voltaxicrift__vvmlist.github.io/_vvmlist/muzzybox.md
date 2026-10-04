@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  muzzybox:
+    -
+  muzzyboxac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  nosqli:
+    -
+  ci:
+    -
+  rce:
+    -
+  ssti:
+    -
+  rwp:
+    -
+  cron:
+    -
+
+wals:
+  muzzyboxwu:
+    -
+---

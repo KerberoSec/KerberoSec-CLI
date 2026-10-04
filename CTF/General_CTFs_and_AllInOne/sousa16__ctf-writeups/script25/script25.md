@@ -1,0 +1,1 @@
+[Link to challenges](https://play.scriptsorcerers.xyz/challenges)

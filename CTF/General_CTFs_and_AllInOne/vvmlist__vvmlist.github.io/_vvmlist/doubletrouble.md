@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  doubletrouble:
+    -
+  doubletroublehmv:
+    -
+  doubletroubleac:
+    -
+  doubletroublecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+  sqli:
+    -
+  sql:
+    -
+  kern:
+    -
+
+wals:
+  doubletroublewu:
+    -
+---

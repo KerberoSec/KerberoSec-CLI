@@ -1,0 +1,48 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  fighter:
+    -
+  fighterac:
+    -
+  fightercm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  xpc:
+    -
+  waf:
+    -
+  cron:
+    -
+  cve:
+    -
+  rev:
+    -
+  decode:
+    -
+  logical:
+    -
+
+wals:
+  fighterwu:
+    -
+  fightervi:
+    -
+---

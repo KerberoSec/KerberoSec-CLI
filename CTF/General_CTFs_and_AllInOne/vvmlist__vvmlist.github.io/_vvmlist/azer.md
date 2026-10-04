@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  azer:
+    -
+  azerac:
+    -
+  azercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  ci:
+    -
+  hc:
+    -
+  logical:
+    -
+wals:
+  azerwu:
+    -
+
+---

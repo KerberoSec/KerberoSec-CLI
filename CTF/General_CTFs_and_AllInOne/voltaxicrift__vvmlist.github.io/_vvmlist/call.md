@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  call:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  voip:
+    -
+  hc:
+    -
+  sudo:
+    -
+
+wals:
+  callwu:
+    -
+---

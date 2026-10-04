@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  again:
+    -
+  againac:
+    -
+  againcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  rce:
+    -
+  cap:
+    -
+wals:
+  againwu:
+    -
+
+---

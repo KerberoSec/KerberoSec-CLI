@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  canto:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  cve:
+    -
+  rfi:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  cantowu:
+    -
+---

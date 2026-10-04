@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  thefool:
+    -
+  thefoolac:
+    -
+  thefoolcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  steg:
+    -
+  bf:
+    -
+  rce:
+    -
+  cap:
+    -
+
+wals:
+  thefoolwu:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  pylington:
+    -
+  pylingtonac:
+    -
+  pylingtoncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  pylingtonwu:
+    -
+---

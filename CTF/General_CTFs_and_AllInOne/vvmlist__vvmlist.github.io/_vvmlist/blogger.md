@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  blogger:
+    -
+  bloggerac:
+    -
+  bloggercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  wp:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  bloggerwu:
+    -
+---

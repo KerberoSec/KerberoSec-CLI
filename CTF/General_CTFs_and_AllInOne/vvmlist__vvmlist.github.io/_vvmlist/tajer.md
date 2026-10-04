@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tajer:
+    -
+  tajerac:
+    -
+  tajercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  tajerwu:
+    -
+---

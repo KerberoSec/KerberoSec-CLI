@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  aragog:
+    -
+  aragogac:
+    -
+  aragogcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  dcr:
+    -
+  fuzz:
+    -
+  xxe:
+    -
+  cron:
+    -
+  pspy:
+    -
+  logical:
+    -
+
+wals:
+  aragogwu:
+    -
+  aragogvi:
+    -
+---

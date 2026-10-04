@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  gibson:
+    -
+  gibsonac:
+    -
+  gibsoncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  kern:
+    -
+  pgp:
+    -
+
+wals:
+  gibsonwu:
+    -
+---

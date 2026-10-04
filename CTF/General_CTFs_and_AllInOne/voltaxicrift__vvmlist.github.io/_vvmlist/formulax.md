@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  formulax:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  xss:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  creds:
+    -
+  logical:
+    -
+  api:
+    -
+  sudo:
+    -
+
+wals:
+  formulaxwu:
+    -
+  formulaxvi:
+    -
+---

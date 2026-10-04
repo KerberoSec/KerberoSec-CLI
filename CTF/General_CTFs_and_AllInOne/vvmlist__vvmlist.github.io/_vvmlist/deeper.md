@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  deeper:
+    -
+  deeperac:
+    -
+  deepercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  decode:
+    -
+  hc:
+    -
+
+wals:
+  deeperwu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sau:
+    -
+  sauac:
+    -
+  saucm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ssrf:
+    -
+  rce:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  sauwu:
+    -
+  sauvi:
+    -
+---

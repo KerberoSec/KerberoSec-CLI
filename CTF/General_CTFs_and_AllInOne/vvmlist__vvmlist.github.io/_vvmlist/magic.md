@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  magic:
+    -
+  magicac:
+    -
+  magiccm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  sqli:
+    -
+  ep:
+    -
+  rce:
+    -
+  sql:
+    -
+  creds:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  magicwu:
+    -
+  magicvi:
+    -
+---

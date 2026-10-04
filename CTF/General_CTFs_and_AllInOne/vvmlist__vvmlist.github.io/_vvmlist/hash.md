@@ -1,0 +1,36 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hash:
+    -
+  hashac:
+    -
+  hashcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  decode:
+    -
+  x11:
+    -
+  sudo:
+    -
+
+wals:
+  hashwu:
+    -
+---

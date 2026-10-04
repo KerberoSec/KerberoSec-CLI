@@ -1,0 +1,50 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  ginger:
+    -
+  gingerac:
+    -
+  gingercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  cve:
+    -
+  sqli:
+    -
+  hc:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  ssti:
+    -
+  tunnel:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  gingerwu:
+    -
+---

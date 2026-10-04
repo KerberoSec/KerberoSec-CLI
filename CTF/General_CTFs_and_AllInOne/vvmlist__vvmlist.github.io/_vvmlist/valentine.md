@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  valentine:
+    -
+  valentineac:
+    -
+  valentinecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  decode:
+    -
+  logical:
+    -
+  kern:
+    -
+
+wals:
+  valentinewu:
+    -
+  valentinevi:
+    -
+---

@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  always:
+    -
+  alwaysac:
+    -
+  alwayscm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  creds:
+    -
+  ftp:
+    -
+  bhaie:
+    -
+
+wals:
+  alwayswu:
+    -
+---

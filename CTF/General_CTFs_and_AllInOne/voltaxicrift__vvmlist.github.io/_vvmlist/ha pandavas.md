@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  ha pandavas:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  snmp:
+    -
+  bf:
+    -
+  ssh:
+    -
+  docker:
+    -
+  decode:
+    -
+  creds:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  ha pandavaswu:
+    -
+---

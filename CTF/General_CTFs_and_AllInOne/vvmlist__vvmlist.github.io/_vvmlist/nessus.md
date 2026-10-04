@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  nessus:
+    -
+  nessusac:
+    -
+  nessuscm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  smb:
+    -
+  steg:
+    -
+  bf:
+    -
+  decode:
+    -
+  dllj:
+    -
+
+wals:
+  nessuswu:
+    -
+---

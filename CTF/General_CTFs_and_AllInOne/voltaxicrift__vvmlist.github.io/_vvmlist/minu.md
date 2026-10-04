@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  minu:
+    -
+  minuac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ci:
+    -
+  rce:
+    -
+  waf:
+    -
+  jwt:
+    -
+
+wals:
+  minuwu:
+    -
+---

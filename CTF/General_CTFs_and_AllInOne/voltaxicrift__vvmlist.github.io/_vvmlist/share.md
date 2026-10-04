@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  share:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  cve:
+    -
+  pathtr:
+    -
+  hc:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  sharewu:
+    -
+---

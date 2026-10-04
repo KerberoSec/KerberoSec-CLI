@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  passage:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  ep:
+    -
+  rce:
+    -
+  decode:
+    -
+  hc:
+    -
+  ssh:
+    -
+  be:
+    -
+
+wals:
+  passagewu:
+    -
+  passagevi:
+    -
+---

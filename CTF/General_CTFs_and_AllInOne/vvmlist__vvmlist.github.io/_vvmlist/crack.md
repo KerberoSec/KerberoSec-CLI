@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  crack:
+    -
+  crackac:
+    -
+  crackcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  source:
+    -
+  sudo:
+    -
+
+wals:
+  crackwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  mumbai:
+    -
+  mumbaiac:
+    -
+  mumbaicm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  fuzz:
+    -
+  api:
+    -
+  ci:
+    -
+  rce:
+    -
+  groups:
+    -
+  docker:
+    -
+
+wals:
+  mumbaiwu:
+    -
+---

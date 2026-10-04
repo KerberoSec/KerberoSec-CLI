@@ -1,0 +1,60 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ghost:
+    -
+  ghostac:
+    -
+  ghostcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  ldapj:
+    -
+  bf:
+    -
+  git:
+    -
+  api:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  ci:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  gmsa:
+    -
+  xpc:
+    -
+  tsi:
+    -
+  gold:
+    -
+
+wals:
+  ghostwu:
+    -
+  ghostvi:
+    -
+---

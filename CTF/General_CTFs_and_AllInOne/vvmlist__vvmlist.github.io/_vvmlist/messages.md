@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  messages:
+    -
+  messagesac:
+    -
+  messagescm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  sqli:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  pspy:
+    -
+  cron:
+    -
+  sniff:
+    -
+  suid:
+    -
+
+wals:
+  messageswu:
+    -
+---

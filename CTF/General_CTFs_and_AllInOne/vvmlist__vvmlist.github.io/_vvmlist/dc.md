@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  dc:
+    -
+  dcac:
+    -
+  dccm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  dcwu:
+    -
+---

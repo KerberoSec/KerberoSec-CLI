@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  escape:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  sql:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  creds:
+    -
+  adcs:
+    -
+
+wals:
+  escapewu:
+    -
+  escapevi:
+    -
+---

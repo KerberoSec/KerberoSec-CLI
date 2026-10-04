@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  reel2:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  rbash:
+    -
+  decode:
+    -
+  creds:
+    -
+
+wals:
+  reel2wu:
+    -
+  reel2vi:
+    -
+---

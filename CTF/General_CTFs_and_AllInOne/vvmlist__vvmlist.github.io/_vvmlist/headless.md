@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  headless:
+    -
+  headlessac:
+    -
+  headlesscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  xss:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  headlesswu:
+    -
+  headlessvi:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  smasher2:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  source:
+    -
+  api:
+    -
+  rce:
+    -
+  ssh:
+    -
+  groups:
+    -
+  be:
+    -
+
+wals:
+  smasher2wu:
+    -
+  smasher2vi:
+    -
+---

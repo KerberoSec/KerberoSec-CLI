@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  spider:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ssti:
+    -
+  sqli:
+    -
+  sql:
+    -
+  creds:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  xxe:
+    -
+
+wals:
+  spiderwu:
+    -
+  spidervi:
+    -
+---

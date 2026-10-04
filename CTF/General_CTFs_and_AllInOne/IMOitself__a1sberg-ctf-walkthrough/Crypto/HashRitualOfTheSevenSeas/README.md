@@ -1,0 +1,1 @@
+1. use https://crackstation.net/ to crack (note: it only supports minimum of 20, the total hashes are 32)

@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  redelegate:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  al:
+    -
+  ftp:
+    -
+  keepass:
+    -
+  hc:
+    -
+  creds:
+    -
+  logical:
+    -
+  bhfcp:
+    -
+  groups:
+    -
+  ted:
+    -
+  bhga:
+    -
+  cd:
+    -
+  dcsync:
+    -
+
+wals:
+  redelegatewu:
+    -
+---

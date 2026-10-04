@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  nullbyte:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  steg:
+    -
+  bf:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  nullbytewu:
+    -
+---

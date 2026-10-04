@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  quick4:
+    -
+  quick4ac:
+    -
+  quick4cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  sql:
+    -
+  ep:
+    -
+  rce:
+    -
+  cron:
+    -
+  wildcard:
+    -
+
+wals:
+  quick4wu:
+    -
+---

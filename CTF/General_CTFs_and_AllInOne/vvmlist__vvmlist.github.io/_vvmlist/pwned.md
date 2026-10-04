@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  pwned:
+    -
+  pwnedvu:
+    -
+  pwnedac:
+    -
+  pwnedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  ftp:
+    -
+  sudo:
+    -
+  groups:
+    -
+  docker:
+    -
+
+wals:
+  pwnedwu:
+    -
+---

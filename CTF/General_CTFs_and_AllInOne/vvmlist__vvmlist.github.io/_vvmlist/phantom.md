@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  phantom:
+    -
+  phantomac:
+    -
+  phantomcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  decode:
+    -
+  creds:
+    -
+  bf:
+    -
+  hc:
+    -
+  bhfcp:
+    -
+  bhaaa:
+    -
+  dcsync:
+    -
+
+wals:
+  phantomwu:
+    -
+  phantomvi:
+    -
+---

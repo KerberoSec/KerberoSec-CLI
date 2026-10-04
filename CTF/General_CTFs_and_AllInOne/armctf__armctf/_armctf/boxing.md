@@ -1,0 +1,13 @@
+---
+curls:
+  boxing:
+    -
+  boxingcm:
+    -
+functions:
+  boxing:
+    -
+wals:
+  boxing:
+    -
+---

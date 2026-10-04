@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  five:
+    -
+  fiveac:
+    -
+  fivecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sudo:
+    -
+
+wals:
+  fivewu:
+    -
+---

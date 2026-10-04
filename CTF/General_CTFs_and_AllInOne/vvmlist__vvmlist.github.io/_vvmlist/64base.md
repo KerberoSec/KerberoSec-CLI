@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  64base:
+    -
+  64baseac:
+    -
+  64basecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  creds:
+    -
+  rce:
+    -
+  steg:
+    -
+  ssh:
+    -
+
+wals:
+  64basewu:
+    -
+---

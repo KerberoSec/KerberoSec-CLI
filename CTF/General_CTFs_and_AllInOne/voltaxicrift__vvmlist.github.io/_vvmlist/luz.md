@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  luz:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  suid:
+    -
+  be:
+    -
+  groups:
+    -
+
+wals:
+  luzwu:
+    -
+---

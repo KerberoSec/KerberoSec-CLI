@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  umz:
+    -
+  umzac:
+    -
+  umzcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  hc:
+    -
+  suid:
+    -
+
+wals:
+  umzwu:
+    -
+---

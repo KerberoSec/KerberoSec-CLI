@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  nebula:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  sqli:
+    -
+  sql:
+    -
+  sudo:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  nebulawu:
+    -
+---

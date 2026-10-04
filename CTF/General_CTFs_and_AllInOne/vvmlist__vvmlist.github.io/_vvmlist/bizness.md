@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bizness:
+    -
+  biznessac:
+    -
+  biznesscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+
+wals:
+  biznesswu:
+    -
+  biznessvi:
+    -
+---

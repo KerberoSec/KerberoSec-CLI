@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  pit:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  snmp:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  pitwu:
+    -
+  pitvi:
+    -
+---

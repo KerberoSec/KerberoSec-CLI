@@ -1,0 +1,2 @@
+1. japonica refers to camelia cipher. use `k` as the key and the `c` as the input. apparently, theres no good online tools right now that decipher this because its 256 bit instead of 128.
+- run the `basta.py` instead

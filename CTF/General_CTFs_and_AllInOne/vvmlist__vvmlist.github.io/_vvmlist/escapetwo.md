@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  escapetwo:
+    -
+  escapetwoac:
+    -
+  escapetwocm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  creds:
+    -
+  sql:
+    -
+  xpc:
+    -
+  bhwo:
+    -
+  bhsc:
+    -
+  adcs:
+    -
+
+wals:
+  escapetwowu:
+    -
+  escapetwovi:
+    -
+---

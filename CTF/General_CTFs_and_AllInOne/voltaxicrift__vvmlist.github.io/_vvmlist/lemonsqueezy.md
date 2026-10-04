@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  lemonsqueezy:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  bf:
+    -
+  creds:
+    -
+  sql:
+    -
+  rce:
+    -
+  cron:
+    -
+  rwp:
+    -
+
+wals:
+  lemonsqueezywu:
+    -
+---

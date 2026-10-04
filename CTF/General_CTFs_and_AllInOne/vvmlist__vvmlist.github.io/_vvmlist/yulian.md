@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  yulian:
+    -
+  yulianac:
+    -
+  yuliancm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  source:
+    -
+  knock:
+    -
+  fuzz:
+    -
+  rev:
+    -
+  deser:
+    -
+  bf:
+    -
+  bre:
+    -
+  pivot:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  yulianwu:
+    -
+---

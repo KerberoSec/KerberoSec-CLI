@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  rainbow:
+    -
+  rainbowac:
+    -
+  rainbowcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  be:
+    -
+  uacss:
+    -
+
+wals:
+  rainbowwu:
+    -
+---

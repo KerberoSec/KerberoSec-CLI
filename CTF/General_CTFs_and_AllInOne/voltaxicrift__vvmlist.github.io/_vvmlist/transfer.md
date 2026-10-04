@@ -1,0 +1,34 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  transfer:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  ci:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  rwp:
+    -
+
+wals:
+  transferwu:
+    -
+---

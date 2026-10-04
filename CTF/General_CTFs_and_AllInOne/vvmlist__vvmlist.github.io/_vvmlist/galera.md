@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  galera:
+    -
+  galeraac:
+    -
+  galeracm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  sql:
+    -
+  lfi:
+    -
+  bf:
+    -
+  creds:
+    -
+
+wals:
+  galerawu:
+    -
+---

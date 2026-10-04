@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  eighty:
+    -
+  eightyac:
+    -
+  eightycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sudo:
+    -
+  ssh:
+    -
+
+wals:
+  eightywu:
+    -
+---

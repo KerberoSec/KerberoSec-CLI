@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  phantom:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  al:
+    -
+  smb:
+    -
+  decode:
+    -
+  creds:
+    -
+  logical:
+    -
+  hc:
+    -
+  bhfcp:
+    -
+  bhaaa:
+    -
+  rbcd:
+    -
+
+wals:
+  phantomwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  resource:
+    -
+  resourceac:
+    -
+  resourcecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  resourcewu:
+    -
+  resourcevi:
+    -
+---

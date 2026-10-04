@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  underpass:
+    -
+  underpassac:
+    -
+  underpasscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  snmp:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  bf:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  underpasswu:
+    -
+  underpassvi:
+    -
+---

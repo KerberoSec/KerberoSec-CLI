@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bank:
+    -
+  bankac:
+    -
+  bankcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  creds:
+    -
+  ep:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  bankwu:
+    -
+  bankvi:
+    -
+---

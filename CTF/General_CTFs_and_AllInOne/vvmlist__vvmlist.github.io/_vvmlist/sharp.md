@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sharp:
+    -
+  sharpac:
+    -
+  sharpcm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  al:
+    -
+  smb:
+    -
+  decode:
+    -
+  creds:
+    -
+  rev:
+    -
+  logical:
+    -
+
+wals:
+  sharpwu:
+    -
+  sharpvi:
+    -
+---

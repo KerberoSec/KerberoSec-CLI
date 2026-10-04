@@ -1,0 +1,33 @@
+---
+
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  haste:
+    -
+  hasteac:
+    -
+  hastecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ssti:
+    -
+  rce:
+    -
+
+wals:
+  hastewu:
+    -
+---

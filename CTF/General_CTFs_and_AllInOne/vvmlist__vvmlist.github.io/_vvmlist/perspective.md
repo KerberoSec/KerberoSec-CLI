@@ -1,0 +1,50 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  perspective:
+    -
+  perspectiveac:
+    -
+  perspectivecm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  decode:
+    -
+  logical:
+    -
+  ssrf:
+    -
+  api:
+    -
+  deser:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  pado:
+    -
+  ci:
+    -
+
+wals:
+  perspectivewu:
+    -
+  perspectivevi:
+    -
+---

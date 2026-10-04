@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  may:
+    -
+  mayac:
+    -
+  maycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  logical:
+    -
+
+wals:
+  maywu:
+    -
+---

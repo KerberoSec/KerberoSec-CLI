@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  jangow:
+    -
+  jangowac:
+    -
+  jangowcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  ci:
+    -
+  rce:
+    -
+  creds:
+    -
+  kern:
+    -
+
+wals:
+  jangowwu:
+    -
+---

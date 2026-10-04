@@ -1,0 +1,46 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  crossfittwo:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  websocket:
+    -
+  sqli:
+    -
+  sql:
+    -
+  api:
+    -
+  csrf:
+    -
+  cors:
+    -
+  logical:
+    -
+  groups:
+    -
+  suid:
+    -
+  rev:
+    -
+
+wals:
+  crossfittwowu:
+    -
+  crossfittwovi:
+    -
+---

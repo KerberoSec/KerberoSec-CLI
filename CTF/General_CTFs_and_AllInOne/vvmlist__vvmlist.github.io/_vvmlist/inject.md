@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  inject:
+    -
+  injectac:
+    -
+  injectcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  elj:
+    -
+  rce:
+    -
+  creds:
+    -
+  ans:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  injectwu:
+    -
+  injectvi:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  canape:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  git:
+    -
+  source:
+    -
+  rce:
+    -
+  cve:
+    -
+  sql:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  canapewu:
+    -
+  canapevi:
+    -
+---

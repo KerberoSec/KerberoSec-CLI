@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  suidy:
+    -
+  suidyac:
+    -
+  suidycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  suid:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  suidywu:
+    -
+---

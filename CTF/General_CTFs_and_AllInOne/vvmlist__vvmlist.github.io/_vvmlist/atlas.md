@@ -1,0 +1,28 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  atlas:
+    -
+  atlasac:
+    -
+  atlascm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+
+wals:
+  atlaswu:
+    -
+  atlasvi:
+    -
+---

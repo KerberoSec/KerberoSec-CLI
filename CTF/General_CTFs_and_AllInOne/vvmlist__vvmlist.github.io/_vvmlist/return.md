@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  return:
+    -
+  returnac:
+    -
+  returncm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  sniff:
+    -
+  logical:
+    -
+
+wals:
+  returnwu:
+    -
+  returnvi:
+    -
+---

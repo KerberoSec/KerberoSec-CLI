@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hidden:
+    -
+  hiddenac:
+    -
+  hiddencm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  decode:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+  bf:
+    -
+
+wals:
+  hiddenwu:
+    -
+---

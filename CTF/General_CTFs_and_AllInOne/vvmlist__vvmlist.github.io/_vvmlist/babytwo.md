@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  babytwo:
+    -
+  babytwoac:
+    -
+  babytwocm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  bf:
+    -
+  logical:
+    -
+  bhwd:
+    -
+  bhga:
+    -
+  gpo:
+    -
+
+wals:
+  babytwowu:
+    -
+  babytwovi:
+    -
+---

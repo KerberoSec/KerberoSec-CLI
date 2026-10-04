@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  monitored:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  snmp:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  api:
+    -
+  cve:
+    -
+  sqli:
+    -
+  sql:
+    -
+  sudo:
+    -
+
+wals:
+  monitoredwu:
+    -
+  monitoredvi:
+    -
+---

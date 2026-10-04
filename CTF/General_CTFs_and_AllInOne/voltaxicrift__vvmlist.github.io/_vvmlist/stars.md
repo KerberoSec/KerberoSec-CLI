@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  stars:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  sudo:
+    -
+  groups:
+    -
+  hc:
+    -
+
+wals:
+  starswu:
+    -
+---

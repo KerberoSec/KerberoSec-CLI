@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  lightweight:
+    -
+  lightweightac:
+    -
+  lightweightcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  sniff:
+    -
+  creds:
+    -
+  hc:
+    -
+  cap:
+    -
+
+wals:
+  lightweightwu:
+    -
+  lightweightvi:
+    -
+---

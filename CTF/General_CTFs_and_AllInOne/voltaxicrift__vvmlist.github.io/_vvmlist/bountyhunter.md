@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bountyhunter:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  xxe:
+    -
+  creds:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  bountyhunterwu:
+    -
+  bountyhuntervi:
+    -
+---

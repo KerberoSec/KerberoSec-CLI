@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  sputnik:
+    -
+  sputnikac:
+    -
+  sputnikcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  git:
+    -
+  creds:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  sputnikwu:
+    -
+---

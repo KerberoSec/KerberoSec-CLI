@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  masashi:
+    -
+  masashiac:
+    -
+  masashicm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  bf:
+    -
+  sudo:
+    -
+
+wals:
+  masashiwu:
+    -
+---

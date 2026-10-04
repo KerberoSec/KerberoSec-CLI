@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  nexus:
+    -
+  nexusac:
+    -
+  nexuscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  creds:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  nexuswu:
+    -
+---

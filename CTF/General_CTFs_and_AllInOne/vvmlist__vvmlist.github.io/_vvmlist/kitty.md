@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  kitty:
+    -
+  kittyac:
+    -
+  kittycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  pado:
+    -
+  coot:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  jwt:
+    -
+  cron:
+    -
+  cve:
+    -
+  deser:
+    -
+
+wals:
+  kittywu:
+    -
+---

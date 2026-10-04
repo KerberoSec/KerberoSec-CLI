@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  za1:
+    -
+  za1ac:
+    -
+  za1cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sql:
+    -
+  hc:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+  pspy:
+    -
+  cron:
+    -
+
+wals:
+  za1wu:
+    -
+---

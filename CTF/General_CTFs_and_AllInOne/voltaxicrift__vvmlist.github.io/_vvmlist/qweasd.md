@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  qweasd:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  lfi:
+    -
+  bf:
+    -
+  cap:
+    -
+
+wals:
+  qweasdwu:
+    -
+---

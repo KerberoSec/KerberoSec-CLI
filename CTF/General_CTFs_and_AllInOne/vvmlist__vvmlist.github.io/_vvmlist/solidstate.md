@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  solidstate:
+    -
+  solidstatevh:
+    -
+  solidstateac:
+    -
+  solidstatecm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  creds:
+    -
+  ssh:
+    -
+  rbash:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  solidstatewu:
+    -
+  solidstatevi:
+    -
+---

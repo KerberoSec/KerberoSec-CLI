@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  authority:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  creds:
+    -
+  ans:
+    -
+  decode:
+    -
+  sniff:
+    -
+  logical:
+    -
+  adcs:
+    -
+
+wals:
+  authoritywu:
+    -
+  authorityvi:
+    -
+---

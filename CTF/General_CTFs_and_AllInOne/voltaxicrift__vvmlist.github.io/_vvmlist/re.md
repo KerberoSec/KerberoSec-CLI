@@ -1,0 +1,42 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  re:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  al:
+    -
+  smb:
+    -
+  phish:
+    -
+  rce:
+    -
+  xxe:
+    -
+  resp:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  logical:
+    -
+
+wals:
+  rewu:
+    -
+  revi:
+    -
+---

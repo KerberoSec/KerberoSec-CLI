@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  isengard:
+    -
+  isengardac:
+    -
+  isengardcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  decode:
+    -
+  sudo:
+    -
+
+wals:
+  isengardwu:
+    -
+---

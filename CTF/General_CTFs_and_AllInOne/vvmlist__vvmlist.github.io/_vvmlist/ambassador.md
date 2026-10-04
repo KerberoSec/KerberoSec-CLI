@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ambassador:
+    -
+  ambassadorac:
+    -
+  ambassadorcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  sql:
+    -
+  decode:
+    -
+  logical:
+    -
+  git:
+    -
+
+wals:
+  ambassadorwu:
+    -
+  ambassadorvi:
+    -
+---

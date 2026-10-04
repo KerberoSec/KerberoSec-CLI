@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  wicca:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  wiccawu:
+    -
+---

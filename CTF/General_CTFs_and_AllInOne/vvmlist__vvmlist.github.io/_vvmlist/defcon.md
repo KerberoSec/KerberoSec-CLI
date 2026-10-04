@@ -1,0 +1,50 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  defcon:
+    -
+  defconac:
+    -
+  defconcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  wp:
+    -
+  creds:
+    -
+  rce:
+    -
+  sql:
+    -
+  sudo:
+    -
+  steg:
+    -
+  rev:
+    -
+  pathj:
+    -
+  groups:
+    -
+  lxd:
+    -
+
+wals:
+  defconwu:
+    -
+---

@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  soccer:
+    -
+  soccerac:
+    -
+  soccercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  rce:
+    -
+  sqli:
+    -
+  creds:
+    -
+  logical:
+    -
+  sudo:
+    -
+
+wals:
+  soccerwu:
+    -
+  soccervi:
+    -
+---

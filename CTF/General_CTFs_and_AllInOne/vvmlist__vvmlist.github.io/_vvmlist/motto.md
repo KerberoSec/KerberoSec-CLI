@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  motto:
+    -
+  mottoac:
+    -
+  mottocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  sqli:
+    -
+  creds:
+    -
+  ssh:
+    -
+  logical:
+    -
+
+wals:
+  mottowu:
+    -
+---

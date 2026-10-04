@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  zday:
+    -
+  zdayac:
+    -
+  zdaycm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  nfs:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  creds:
+    -
+  squash:
+    -
+
+wals:
+  zdaywu:
+    -
+---

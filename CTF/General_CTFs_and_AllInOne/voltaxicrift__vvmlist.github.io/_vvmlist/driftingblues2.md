@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  driftingblues2:
+    -
+  driftingblues2ac:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  rce:
+    -
+  bf:
+    -
+  ssh:
+    -
+  sudo:
+    -
+
+wals:
+  driftingblues2wu:
+    -
+---

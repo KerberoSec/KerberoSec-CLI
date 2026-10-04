@@ -1,0 +1,62 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  darkcorp:
+    -
+  darkcorpac:
+    -
+  darkcorpcm:
+    -
+functions:
+  win:
+    -
+  i:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  logical:
+    -
+  sqli:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+  creds:
+    -
+  pgp:
+    -
+  ntlmrel:
+    -
+  adcs:
+    -
+  silver:
+    -
+  bhgw:
+    -
+  bhsc:
+    -
+  groups:
+    -
+  gpo:
+    -
+
+wals:
+  darkcorpwu:
+    -
+  darkcorpvi:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  hawk:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ftp:
+    -
+  al:
+    -
+  decode:
+    -
+  rce:
+    -
+  tunnel:
+    -
+  sql:
+    -
+  creds:
+    -
+  logical:
+    -
+
+wals:
+  hawkwu:
+    -
+  hawkvi:
+    -
+---

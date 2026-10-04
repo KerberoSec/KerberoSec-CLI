@@ -1,0 +1,48 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  voleur:
+    -
+  voleurac:
+    -
+  voleurcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  hc:
+    -
+  creds:
+    -
+  krb:
+    -
+  adrb:
+    -
+  groups:
+    -
+  dpapi:
+    -
+  ssh:
+    -
+  ntds:
+    -
+
+wals:
+  voleurwu:
+    -
+  voleurvi:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  reset:
+    -
+  resetac:
+    -
+  resetcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  resetwu:
+    -
+  resetvi:
+    -
+---

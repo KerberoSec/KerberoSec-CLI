@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cyberry:
+    -
+  cyberryac:
+    -
+  cyberrycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  steg:
+    -
+  knock:
+    -
+  bf:
+    -
+  ftp:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  cyberrywu:
+    -
+---

@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  messedup:
+    -
+  messedupac:
+    -
+  messedupcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  ftp:
+    -
+  al:
+    -
+  knock:
+    -
+  wp:
+    -
+  ep:
+    -
+  rce:
+    -
+  decode:
+    -
+  bf:
+    -
+  bof:
+    -
+  hc:
+    -
+
+wals:
+  messedupwu:
+    -
+---

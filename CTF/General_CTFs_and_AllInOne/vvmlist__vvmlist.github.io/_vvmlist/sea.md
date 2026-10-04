@@ -1,0 +1,42 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sea:
+    -
+  seaac:
+    -
+  seacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  xss:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  ssh:
+    -
+  ci:
+    -
+
+wals:
+  seawu:
+    -
+  seavi:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  sneaky:
+    -
+  sneakyac:
+    -
+  sneakycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  snmp:
+    -
+  sqli:
+    -
+  ssh:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  sneakywu:
+    -
+  sneakyvi:
+    -
+---

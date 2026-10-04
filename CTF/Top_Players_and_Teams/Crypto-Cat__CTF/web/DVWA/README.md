@@ -1,0 +1,2 @@
+# Video tutorial series to go with the DVWA challenges
+[![VIDEO](https://img.youtube.com/vi/GmWQ1VIjd2U/0.jpg)](https://www.youtube.com/watch?v=GmWQ1VIjd2U&list=PLHUKi1UlEgOJLPSFZaFKMoexpM6qhOb4Q&index=1 "DVWA Tutorial Series")

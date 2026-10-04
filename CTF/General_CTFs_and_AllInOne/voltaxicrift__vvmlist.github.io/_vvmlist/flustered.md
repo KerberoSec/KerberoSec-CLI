@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  flustered:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  glusterfs:
+    -
+  creds:
+    -
+  al:
+    -
+  proxy:
+    -
+  fuzz:
+    -
+  ssti:
+    -
+  docker:
+    -
+  aze:
+    -
+  ssh:
+    -
+  logical:
+    -
+
+wals:
+  flusteredwu:
+    -
+  flusteredvi:
+    -
+---

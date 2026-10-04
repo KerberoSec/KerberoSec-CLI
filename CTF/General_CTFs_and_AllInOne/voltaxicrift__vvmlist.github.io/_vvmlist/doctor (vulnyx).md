@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  doctorvx:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  lfi:
+    -
+  ssh:
+    -
+  hc:
+    -
+  rwp:
+    -
+
+wals:
+  doctorvxwu:
+    -
+---

@@ -1,0 +1,52 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  trickster:
+    -
+  tricksterac:
+    -
+  trickstercm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  git:
+    -
+  source:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  sql:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  ssti:
+    -
+  bre:
+    -
+  sudo:
+    -
+
+wals:
+  tricksterwu:
+    -
+  trickstervi:
+    -
+---

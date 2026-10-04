@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  friendly2:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  hc:
+    -
+  sudo:
+    -
+  pathj:
+    -
+
+wals:
+  friendly2wu:
+    -
+---

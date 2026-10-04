@@ -1,0 +1,40 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  rope:
+    -
+  ropeac:
+    -
+  ropecm:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  rev:
+    -
+  be:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  ropewu:
+    -
+  ropevi:
+    -
+---

@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  preload:
+    -
+  preloadac:
+    -
+  preloadcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  preloadwu:
+    -
+---

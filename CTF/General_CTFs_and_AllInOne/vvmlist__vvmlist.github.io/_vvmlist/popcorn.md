@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  popcorn:
+    -
+  popcornac:
+    -
+  popcorncm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  ep:
+    -
+  rce:
+    -
+  logical:
+    -
+  be:
+    -
+
+wals:
+  popcornwu:
+    -
+  popcornvi:
+    -
+---

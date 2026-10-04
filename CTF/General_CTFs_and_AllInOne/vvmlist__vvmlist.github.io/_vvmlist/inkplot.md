@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  inkplot:
+    -
+  inkplotac:
+    -
+  inkplotcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  websocket:
+    -
+  sudo:
+    -
+  decode:
+    -
+  groups:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  inkplotwu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  support:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  ldapj:
+    -
+  al:
+    -
+  source:
+    -
+  creds:
+    -
+  rbcd:
+    -
+
+wals:
+  supportwu:
+    -
+  supportvi:
+    -
+---

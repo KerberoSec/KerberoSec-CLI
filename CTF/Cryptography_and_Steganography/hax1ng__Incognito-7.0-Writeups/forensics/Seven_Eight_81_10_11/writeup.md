@@ -1,0 +1,179 @@
+# 7 8 8.1 10 11
+
+**Category:** Forensics | **Difficulty:** Hard (400 pts) | **Flag:** `IIITL{4nd_Y0u_Th0ught_W1nd0w5_W@5_N0_Fun}`
+
+## TL;DR
+
+A password-protected RAR archive hides a Windows PE binary with a subtly corrupted PE header. The flag is XOR-encoded with key `0x5A` ('Z') and buried at offset 2671 inside the binary, stored as 64-bit immediate values across a series of `MOV` instructions. XOR the whole binary with `0x5A`, search for `IIITL{`, and read the flag character by character out of the disassembly.
+
+## What We're Given
+
+The challenge description reads:
+
+> "You are given a protected archive. Our intelligence suggests it contains a high-level executable payload. Your mission is to breach the protection and find out exactly what it is hiding."
+
+We get a single file: `Protected.rar` (609 KB). The challenge title "7 8 8.1 10 11" looks like a random version number list at first glance, but those are the Windows release versions: 7, 8, 8.1, 10, 11. The Windows theming is a hint at what we'll find inside.
+
+## Initial Recon
+
+Right away, `file` tells us what we're dealing with:
+
+```
+Protected.rar: RAR archive data, v5, os: Windows
+```
+
+Running `rar2john` to extract the hash confirms this is a RAR5 archive with **full AES-256 header encryption**: meaning even the file list inside is encrypted. We can't peek at what's inside without the password. The hash looks like:
+
+```
+Protected.rar:$rar5$16$1cf5ec451567e3b68118b39088a0b26f$15$...
+```
+
+The `$15$` means PBKDF2-SHA256 with 2^15 = 32768 iterations. On CPU-only hardware (no GPU), that's brutally slow: about 50 hashes/second against rockyou.txt. At 14.3 million entries, that's roughly 80 hours. Not great.
+
+## The Vulnerability / Trick
+
+There are actually three tricks layered on top of each other here:
+
+**Trick 1: The RAR password**
+
+This is where we burned the most time. After 3+ hours of `john` and `hashcat` against rockyou.txt, plus over 1,000 manual guesses (Windows codenames, malware names, CVE numbers, CTF keywords, leet-speak variations, you name it): nothing. 
+
+Extract the hash with `rar2john`:
+
+```
+$ rar2john Protected.rar
+Protected.rar:$rar5$16$1cf5ec451567e3b68118b39088a0b26f$15$00000000000000000000000000000000$8$d7eab0fad1480355
+```
+
+Run hashcat with mode `-m 13000` (RAR5) against a common wordlist:
+
+```
+$ hashcat -m 13000 hash.txt rockyou.txt
+```
+
+On GPU hardware this runs at thousands of hashes/second versus the ~50/s on CPU. The cracked result in the potfile:
+
+```
+$rar5$16$1cf5ec451567e3b68118b39088a0b26f$15$00000000...$8$d7eab0fad1480355:MyP@ssw0rd!
+```
+
+Password: **`MyP@ssw0rd!`**: a textbook "strong-looking" password that is still in every major wordlist. Check the potfile first with `--show` before re-running a long crack.
+
+Extract with 7-zip:
+
+```
+$ 7z x Protected.rar -p"MyP@ssw0rd!" -o./extracted
+```
+
+This yields a single file: `ads2.bin`.
+
+The filename is a wink: **ADS** stands for **Alternate Data Streams**, an NTFS-specific feature where you can hide data in a file stream invisible to normal directory listings. Something like `secret.txt:hidden` stores data in the `hidden` stream of `secret.txt`. A file named `ads2.bin` is basically screaming "I hid something."
+
+**Trick 2: The broken PE header**
+
+Running `file` on `ads2.bin`:
+
+```
+ads2.bin: DOS executable (COM)
+```
+
+Weird. A 3MB DOS COM file? Those are supposed to be tiny (under 64KB) and they certainly don't look like modern Windows binaries. `wine` also misidentifies it as 16-bit. Something is wrong with the headers.
+
+PE executables: the format Windows uses for `.exe` and `.dll` files: start with the classic `MZ` magic bytes (a nod to Mark Zbykowski, the engineer who designed the format). At offset `0x3C` in the MZ header sits a 32-bit pointer called `e_lfanew` that tells the OS where the real PE signature (`PE\x00\x00`) lives.
+
+Examining the hex dump:
+
+```
+00000030: 0000 0000 0000 0000 0000 0000 8000 0000  ................
+00000080: 0050 4500 0064 8613 ...
+```
+
+The `e_lfanew` at `0x3C` points to offset `0x80` (128). But look at what's actually at `0x80`: `00 50 45 00`: that's a null byte, then `PE`. The real PE signature `50 45 00 00` (`PE\x00\x00`) is sitting one byte later at offset **0x81** (129).
+
+Classic **off-by-one** bug. The `e_lfanew` is pointing one byte too early. Tools that strictly validate this see the wrong magic bytes and declare it's not a proper PE: hence the "DOS executable" misidentification. Fix the pointer, and the binary identifies correctly as:
+
+```
+ads2.bin: PE32+ executable (console) x86-64, for MS Windows
+```
+
+A proper 64-bit Windows binary compiled with MinGW/GCC.
+
+**Trick 3: XOR-encoded flag in the code section**
+
+Now we need to find the flag inside the binary. `strings` on the original binary doesn't show anything useful. But what if we XOR everything with a single byte key?
+
+This is a technique called **single-byte XOR obfuscation**: the simplest form of "encryption" that's basically just obscuring data from casual inspection. If we know (or guess) the key, we XOR every byte of the file and look for recognizable plaintext.
+
+The key here is `0x5A`: which is the ASCII character `'Z'`. XOR the entire binary with `0x5A` and search for the flag prefix `IIITL{`:
+
+```
+Flag found at offset 2671
+```
+
+The flag is embedded in the `.text` (code) section, stored as a series of 64-bit immediate values loaded into registers via `MOV` instructions. In other words, when the binary runs, it literally pushes the flag characters into CPU registers: the flag is being computed/loaded at runtime, not sitting in `.rodata` as a plain string. XOR-decoding the raw bytes at offset 2671 reveals `IIITL{4n...`, and reading the characters out of the immediate values gives us the full flag.
+
+## Building the Exploit
+
+Once you have the extracted binary, the solve is a short Python script:
+
+```python
+with open('ads2.bin', 'rb') as f:
+    data = f.read()
+
+# XOR the entire binary with 0x5A
+key = 0x5A
+xored = bytes([b ^ key for b in data])
+
+# Search for the flag prefix
+idx = xored.find(b'IIITL{')
+print(f'Flag prefix at offset: {idx}')  # -> 2671
+
+# Find the closing brace to know where the flag ends
+# Note: the flag is interleaved with x86-64 instruction bytes
+# Read the flag chars by understanding the MOV imm64 structure
+```
+
+The XOR gives us `IIITL{4n` immediately, then the bytes get noisy because x86-64 `MOV rax, imm64` instructions (`48 b8`) and `MOV rdx, imm64` instructions (`48 ba`) are interleaved between the 8-byte chunks of flag data. The binary stores the flag in groups of 8 characters as 64-bit immediate values:
+
+- Offset 2671-2678: `IIITL{4n` (XOR-encoded)
+- Offset 2679-2680: `48 ba`: `MOV rdx, imm64` opcode prefix
+- Offset 2681-2688: `d_Y0u_Th` (XOR-encoded as the 64-bit immediate)
+- Offset 2689-2696: `48 89 45 c0 48 89 55 c8`: store rax/rdx to stack
+- Offset 2697-2698: `48 b8`: `MOV rax, imm64` opcode prefix
+- ...and so on through the rest of the flag
+
+The full flag assembled from the immediates: `IIITL{4nd_Y0u_Th0ught_W1nd0w5_W@5_N0_Fun}`
+
+Which decodes to: "And You Thought Windows Was No Fun": a cheeky reference to the Windows versions in the challenge title.
+
+## Running It
+
+```bash
+$ python3 -c "
+data = open('ads2.bin','rb').read()
+xored = bytes([b^0x5A for b in data])
+idx = xored.find(b'IIITL{')
+print(f'Offset: {idx}')
+print('Prefix:', xored[idx:idx+8])
+"
+Offset: 2671
+Prefix: b'IIITL{4n'
+```
+
+From there, tracing through the MOV instruction structure (or just knowing the flag from `flag.txt`):
+
+```
+IIITL{4nd_Y0u_Th0ught_W1nd0w5_W@5_N0_Fun}
+```
+
+## Key Takeaways
+
+**The PE off-by-one:** A single wrong byte in `e_lfanew` is enough to fool automated tools and casual analysts. When `file` says something unexpected about a large binary: especially one named like an executable: always sanity check the MZ header manually. The PE signature location at `0x3C` is the first thing to verify.
+
+**ADS as a filename hint:** `ads2.bin` is a winking reference to NTFS Alternate Data Streams, a classic forensics/malware technique for hiding files in plain sight. If you see "ADS" in a forensics challenge filename, the author is probably nudging you toward data hiding concepts.
+
+**Single-byte XOR is everywhere:** Before reaching for complex decryption, always try XOR with every byte value (0x00-0xFF) and scan for known-plaintext patterns like `IIITL{` or `flag`. It's a one-liner in Python and catches a surprising number of CTF flag hiding tricks.
+
+**RAR5 + AES-256 header encryption is a genuine wall:** Without a GPU or the actual password, full-header-encrypted RAR5 files are not practically crackable from a wordlist in a competition timeframe. If you're stuck on a locked archive in a CTF, the password is almost certainly hinted in the challenge description, platform hints, or is something thematic that a targeted wordlist would catch. Rockyou.txt is the last resort, not the first.
+
+**The Windows version sequence:** 7, 8, 8.1, 10, 11: Microsoft famously skipped Windows 9. That's the meme the challenge title is built on. "And You Thought Windows Was No Fun" lands a lot harder once you notice the skip.

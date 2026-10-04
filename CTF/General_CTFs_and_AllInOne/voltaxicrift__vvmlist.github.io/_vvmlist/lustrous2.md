@@ -1,0 +1,48 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  lustrous2:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  vulnlab:
+    -
+  ad:
+    -
+  al:
+    -
+  ftp:
+    -
+  bf:
+    -
+  lfi:
+    -
+  rfi:
+    -
+  ntlmt:
+    -
+  hc:
+    -
+  s4u:
+    -
+  rev:
+    -
+  rce:
+    -
+  logical:
+    -
+  api:
+    -
+
+wals:
+  lustrous2wu:
+    -
+---

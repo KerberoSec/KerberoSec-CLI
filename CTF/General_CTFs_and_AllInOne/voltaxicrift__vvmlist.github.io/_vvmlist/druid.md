@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  druid:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+  suid:
+    -
+  hc:
+    -
+
+wals:
+  druidwu:
+    -
+---

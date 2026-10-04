@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  omg:
+    -
+  omgac:
+    -
+  omgcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+
+wals:
+  omgwu:
+    -
+---

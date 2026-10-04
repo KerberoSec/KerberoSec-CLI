@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  redpanda:
+    -
+  redpandaac:
+    -
+  redpandacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ssti:
+    -
+  rce:
+    -
+  source:
+    -
+  cron:
+    -
+  pspy:
+    -
+  xxe:
+    -
+
+wals:
+  redpandawu:
+    -
+  redpandavi:
+    -
+---

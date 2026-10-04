@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  democracy:
+    -
+  democracyac:
+    -
+  democracycm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  al:
+    -
+  ftp:
+    -
+  cron:
+    -
+  creds:
+    -
+
+wals:
+  democracywu:
+    -
+---

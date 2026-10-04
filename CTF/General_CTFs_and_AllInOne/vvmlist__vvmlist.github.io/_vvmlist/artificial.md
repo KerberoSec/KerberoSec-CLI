@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  artificial:
+    -
+  artificialac:
+    -
+  artificialcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  sql:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  groups:
+    -
+  jwt:
+    -
+  logical:
+    -
+
+wals:
+  artificialwu:
+    -
+  artificialvi:
+    -
+---

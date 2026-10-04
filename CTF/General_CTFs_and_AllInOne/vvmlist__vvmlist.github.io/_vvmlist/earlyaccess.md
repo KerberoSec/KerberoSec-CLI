@@ -1,0 +1,62 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  earlyaccess:
+    -
+  earlyaccessac:
+    -
+  earlyaccesscm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  xss:
+    -
+  coot:
+    -
+  source:
+    -
+  logical:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  lfi:
+    -
+  rce:
+    -
+  passre:
+    -
+  creds:
+    -
+  api:
+    -
+  docker:
+    -
+  bre:
+    -
+  cap:
+    -
+  groups:
+    -
+
+wals:
+  earlyaccesswu:
+    -
+  earlyaccessvi:
+    -
+---

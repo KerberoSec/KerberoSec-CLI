@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  nowords:
+    -
+  nowordsac:
+    -
+  nowordscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  ftp:
+    -
+  logical:
+    -
+  rce:
+    -
+  cve:
+    -
+  be:
+    -
+
+wals:
+  nowordswu:
+    -
+---

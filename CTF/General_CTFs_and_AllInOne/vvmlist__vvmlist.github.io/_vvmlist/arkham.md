@@ -1,0 +1,40 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  arkham:
+    -
+  arkhamac:
+    -
+  arkhamcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  smb:
+    -
+  bf:
+    -
+  creds:
+    -
+  deser:
+    -
+  uacss:
+    -
+
+wals:
+  arkhamwu:
+    -
+  arkhamvi:
+    -
+---

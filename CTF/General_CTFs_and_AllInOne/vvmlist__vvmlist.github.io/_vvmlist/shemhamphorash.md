@@ -1,0 +1,44 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  shemhamphorash:
+    -
+  shemhamphorashac:
+    -
+  shemhamphorashcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  bf:
+    -
+  cve:
+    -
+  xss:
+    -
+  rce:
+    -
+  creds:
+    -
+  sudo:
+    -
+  maldll:
+    -
+
+wals:
+  shemhamphorashwu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  tentacle:
+    -
+  tentacleac:
+    -
+  tentaclecm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  proxy:
+    -
+  cve:
+    -
+  rce:
+    -
+  cron:
+    -
+  logical:
+    -
+
+wals:
+  tentaclewu:
+    -
+  tentaclevi:
+    -
+---

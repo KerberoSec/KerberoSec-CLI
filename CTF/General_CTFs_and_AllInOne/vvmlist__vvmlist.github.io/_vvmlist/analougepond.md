@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  analougepond:
+    -
+  analougepondac:
+    -
+  analougepondcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  osint:
+    -
+  snmp:
+    -
+  pivot:
+    -
+  cron:
+    -
+  rwp:
+    -
+  pgp:
+    -
+  steg:
+    -
+
+wals:
+  analougepondwu:
+    -
+---

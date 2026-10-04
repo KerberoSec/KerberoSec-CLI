@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  forbidden:
+    -
+  forbiddenac:
+    -
+  forbiddencm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  al:
+    -
+  ftp:
+    -
+  suid:
+    -
+  sudo:
+    -
+  hc:
+    -
+
+wals:
+  forbiddenwu:
+    -
+---

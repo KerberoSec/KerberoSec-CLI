@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bastard:
+    -
+  bastardac:
+    -
+  bastardcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  bastardwu:
+    -
+  bastardvi:
+    -
+---

@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  observer:
+    -
+  observerac:
+    -
+  observercm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  ssh:
+    -
+  logical:
+    -
+
+wals:
+  observerwu:
+    -
+---

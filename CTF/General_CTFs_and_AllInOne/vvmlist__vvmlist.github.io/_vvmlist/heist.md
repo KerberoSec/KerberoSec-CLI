@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  heist:
+    -
+  heistac:
+    -
+  heistcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  creds:
+    -
+  hc:
+    -
+  daly:
+    -
+
+wals:
+  heistwu:
+    -
+  heistvi:
+    -
+---

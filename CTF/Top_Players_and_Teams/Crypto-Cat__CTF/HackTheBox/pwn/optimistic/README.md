@@ -1,0 +1,2 @@
+# Optimistic: integer overflow and shellcode injection
+[![VIDEO](https://img.youtube.com/vi/KRRy7jprW60/0.jpg)](https://youtu.be/KRRy7jprW60 "Optimistic [easy]: HackTheBox Pwn Challenge (integer overflow and shellcode injection)")

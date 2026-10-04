@@ -1,0 +1,38 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  compromised:
+    -
+  compromisedac:
+    -
+  compromisedcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  cve:
+    -
+  rce:
+    -
+  rev:
+    -
+
+wals:
+  compromisedwu:
+    -
+  compromisedvi:
+    -
+---

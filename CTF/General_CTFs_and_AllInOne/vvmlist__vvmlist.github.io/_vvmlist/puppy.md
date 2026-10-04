@@ -1,0 +1,50 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  puppy:
+    -
+  puppyac:
+    -
+  puppycm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  bhgw:
+    -
+  smb:
+    -
+  keeppass:
+    -
+  hc:
+    -
+  creds:
+    -
+  bf:
+    -
+  bhga:
+    -
+  mbck:
+    -
+  dpapi:
+    -
+  decode:
+    -
+
+wals:
+  puppywu:
+    -
+  puppyvi:
+    -
+---

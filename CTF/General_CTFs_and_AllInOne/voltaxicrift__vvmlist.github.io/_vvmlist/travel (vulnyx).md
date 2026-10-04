@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  travelvx:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  lfi:
+    -
+  logical:
+    -
+  rsync:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+  tunnel:
+    -
+  cron:
+    -
+  pspy:
+    -
+
+wals:
+  travelvxwu:
+    -
+---

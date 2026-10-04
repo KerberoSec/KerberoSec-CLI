@@ -1,0 +1,14 @@
+# What tank specs the user was looking for
+> What tank specs the user was looking for?
+
+## About the Challenge
+We need to find the tank specs
+
+## How to Solve?
+I got the tanks specs in WhatsApp message (You can get the file in `/userdata/root/data/com.whatsapp/databases/msgstore.db`). Find in `message` table
+
+*[Image: sqlite]*
+
+```
+t14 armata
+```

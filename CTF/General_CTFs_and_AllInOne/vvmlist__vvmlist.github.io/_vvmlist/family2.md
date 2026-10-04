@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  family2:
+    -
+  family2ac:
+    -
+  family2cm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  decode:
+    -
+  sudo:
+    -
+  suid:
+    -
+  pathj:
+    -
+
+wals:
+  family2wu:
+    -
+---

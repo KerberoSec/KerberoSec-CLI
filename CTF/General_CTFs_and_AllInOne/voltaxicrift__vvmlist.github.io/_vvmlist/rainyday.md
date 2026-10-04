@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  rainyday:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  api:
+    -
+  idor:
+    -
+  hc:
+    -
+  tunnel:
+    -
+  pathtr:
+    -
+  logical:
+    -
+  pspy:
+    -
+  uaf:
+    -
+  sudo:
+    -
+
+wals:
+  rainydaywu:
+    -
+  rainydayvi:
+    -
+---

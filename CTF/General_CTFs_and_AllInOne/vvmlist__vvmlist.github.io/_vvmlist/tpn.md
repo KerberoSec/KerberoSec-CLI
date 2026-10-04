@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tpn:
+    -
+  tpnac:
+    -
+  tpncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  git:
+    -
+  source:
+    -
+  authb:
+    -
+  rce:
+    -
+  bf:
+    -
+  kern:
+    -
+
+wals:
+  tpnwu:
+    -
+---

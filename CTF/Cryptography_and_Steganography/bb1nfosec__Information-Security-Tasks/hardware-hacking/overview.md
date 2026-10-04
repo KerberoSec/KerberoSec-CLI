@@ -1,0 +1,59 @@
+---
+description: Root shells all day
+---
+
+# 😆 Hardware Hacking
+
+## Future Goals: To do
+
+* Learn more about the BLE (Bluetooth) stack/protocol
+* Flipper projects and writing firmware/modules for my Flipper
+  * Expanding current capabilities on the Wi-Fi expansion board
+* Get back into Wi-Fi hacking
+* Modify firmware on Ducky and load it with my own
+* Start project for the old Netgear N300 Wireless Router (WNR2000 v3): A true test!
+  * Reverse engineer, perform static/dynamic analysis, identify vulnerabilities, create PoC
+
+## Excellent References
+
+### Flashback Team
+
+{% embed url="https://www.youtube.com/@FlashbackTeam" %}
+
+### Stacksmashing
+
+{% embed url="https://www.youtube.com/@stacksmashing" %}
+
+## Common Acronyms
+
+### UART- <mark style="color:yellow;">Universal Asynchronous Receiver/Transmitter</mark>
+
+{% embed url="https://www.youtube.com/watch?v=01mw0oTHwxg" %}
+
+* A computer hardware device that provides <mark style="color:yellow;">serial communication for debugging</mark>
+* Transmission speeds and data formats are configurable
+* This device looks different on all devices, can be hidden, removed, or modified&#x20;
+* Four pins, however <mark style="color:yellow;">we ONLY need to worry about three</mark> of them
+  * <mark style="color:yellow;">RX</mark>, <mark style="color:yellow;">TX</mark>, and <mark style="color:yellow;">GND</mark> (VCC is not important to us)
+  * <mark style="color:red;">NOTE</mark>: They are often configured in different orders from board to board, so troubleshooting with a multimeter is required prior to testing!
+
+<figure><figcaption><p>Pins exposed (no need to solder) </p></figcaption></figure>
+
+<figure><figcaption><p>Exposed but Soldering or "Paper Clip Bridge" method required here</p></figcaption></figure>
+
+<figure><figcaption><p>Heavily modified/hidden UART</p></figcaption></figure>
+
+<figure><figcaption><p>"Paper Clip Bridge"</p></figcaption></figure>
+
+## GPIO- <mark style="color:yellow;">General Purpose Input/Output</mark>
+
+A standard interface used to <mark style="color:yellow;">connect microcontrollers to other devices</mark>
+
+* Classified as an <mark style="color:yellow;">uncommitted digital signal pin</mark>
+* Found on integrated circuits and electronic circuit boards
+* Used as an input, output, or both
+* No explicit predefined purpose and are left on the board <mark style="color:yellow;">unused by default</mark>
+
+<figure><figcaption><p>GPIO embedded on a Raspberry Pi</p></figcaption></figure>
+
+## JTAG- Joint Test Action Group

@@ -1,0 +1,36 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ropetwo:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  git:
+    -
+  be:
+    -
+  xss:
+    -
+  suid:
+    -
+  rev:
+    -
+  kernmod:
+    -
+
+wals:
+  ropetwowu:
+    -
+  ropetwovi:
+    -
+---

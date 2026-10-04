@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  typo:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  dcr:
+    -
+  rce:
+    -
+  suid:
+    -
+  pathj:
+    -
+  rev:
+    -
+
+wals:
+  typowu:
+    -
+---

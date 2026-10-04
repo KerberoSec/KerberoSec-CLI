@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  scepter:
+    -
+  scepterac:
+    -
+  sceptercm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  nfs:
+    -
+  al:
+    -
+  hc:
+    -
+  bhfcp:
+    -
+  bhga:
+    -
+  adcs:
+    -
+  dcsync:
+    -
+
+wals:
+  scepterwu:
+    -
+  sceptervi:
+    -
+---

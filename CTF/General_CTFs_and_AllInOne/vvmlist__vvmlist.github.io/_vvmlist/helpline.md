@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  helpline:
+    -
+  helplineac:
+    -
+  helplinecm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  cve:
+    -
+  xxe:
+    -
+  lfi:
+    -
+  hc:
+    -
+  creds:
+    -
+  decode:
+    -
+  efs:
+    -
+  logical:
+    -
+
+wals:
+  helplinewu:
+    -
+  helplinevi:
+    -
+---

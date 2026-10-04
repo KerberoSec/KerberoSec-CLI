@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  yincana:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  ssh:
+    -
+  hc:
+    -
+  creds:
+    -
+  sql:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+  groups:
+    -
+  rwp:
+    -
+  xxe:
+    -
+
+wals:
+  yincanawu:
+    -
+---

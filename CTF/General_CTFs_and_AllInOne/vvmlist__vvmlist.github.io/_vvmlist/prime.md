@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  prime:
+    -
+  primeac:
+    -
+  primecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  creds:
+    -
+  wp:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  primewu:
+    -
+---

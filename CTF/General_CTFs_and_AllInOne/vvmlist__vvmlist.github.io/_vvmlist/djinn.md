@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  djinn:
+    -
+  djinnhmv:
+    -
+  djinnac:
+    -
+  djinncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  al:
+    -
+  ftp:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  djinnwu:
+    -
+---

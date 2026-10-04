@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  pegasus:
+    -
+  pegasusac:
+    -
+  pegasuscm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  suid:
+    -
+  be:
+    -
+  nfs:
+    -
+  sudo:
+    -
+  squash:
+    -
+
+wals:
+  pegasuswu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  proper:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  logical:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  lfi:
+    -
+  rce:
+    -
+  wer:
+    -
+
+wals:
+  properwu:
+    -
+  propervi:
+    -
+---

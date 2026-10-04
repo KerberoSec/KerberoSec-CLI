@@ -1,0 +1,44 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  search:
+    -
+  searchac:
+    -
+  searchcm:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  creds:
+    -
+  smb:
+    -
+  krb:
+    -
+  hc:
+    -
+  logical:
+    -
+  gmsa:
+    -
+  bhga:
+    -
+
+wals:
+  searchwu:
+    -
+  searchvi:
+    -
+---

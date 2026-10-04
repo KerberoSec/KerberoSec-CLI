@@ -1,0 +1,381 @@
+# Contributing to Aperi'Solve
+
+Thank you for your interest in contributing! We welcome all contributions, whether it's bug fixes, new features, or documentation improvements.
+
+## Getting Started
+
+> [!TIP]
+> New to the project? Adding a new analyzer is a great first contribution! Check out our [Adding a New Analyzer Guide](docs/adding-analyzer.md).
+
+### Quick Steps
+
+1. **Fork the repository**
+2. **Create a feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Make your changes**
+4. **Test your changes**
+5. **Commit with clear messages** (`git commit -m 'Add amazing feature'`)
+6. **Push to your fork** (`git push origin feature/amazing-feature`)
+7. **Open a Pull Request** describing your changes
+
+## What Can You Contribute?
+
+### 🔧 Adding New Analyzers
+
+Want to add support for a new steganography or forensics tool? We'd love that!
+
+> [!NOTE]
+> Check out our detailed tutorial: [Adding a New Analyzer](docs/adding-analyzer.md)
+
+**Quick checklist for new analyzers:**
+
+- [ ] Create analyzer file in `analyzers/` extending `SubprocessAnalyzer`
+      (set `name`, `display_order` and flags: registration is automatic)
+- [ ] Add tool to Docker setup if needed
+- [ ] Add the analyzer name to the expected list in `tests/test_registry.py`
+- [ ] Test with sample images
+- [ ] Update documentation
+
+### 🐛 Bug Fixes
+
+Found a bug? Please:
+
+- Check if it's already reported in [Issues](../../issues)
+- If not, open a new issue with reproduction steps
+- Feel free to submit a PR with the fix!
+
+### 📚 Documentation
+
+Help us improve:
+
+- Fix typos or unclear explanations
+- Add examples and use cases
+- Improve installation instructions
+- Translate documentation
+
+### 📖 Wiki Pages
+
+The in-app wiki (`/wiki/`) is plain Markdown: the easiest way to contribute:
+
+- Pages live in `aperisolve/wiki_content/en/`. Drop a `.md` file and it appears
+  automatically with navigation, SEO metadata and the sitemap entry. The
+  sidebar sections are **folder-driven**: top-level files (e.g.
+  `getting-started.md`) go under "Wiki", files under `techniques/` go under
+  "Techniques", and
+  `tools/<analyzer>.md` go under "Tools". To add a new sidebar section, create a
+  new top-level folder and add its label to `SECTION_ORDER` / `_section_label`
+  in `aperisolve/wiki.py`.
+- Start each file with `meta` frontmatter (no `---` delimiters):
+
+  ```
+  Title: My Page Title
+  Description: One-sentence summary used for search engines.
+  Order: 150
+  ```
+
+- `Order` controls the position within a sidebar section (tools use 100-260).
+- Use fenced code blocks for commands; a copy button is added automatically.
+  Callout boxes are available via python-markdown admonitions
+  (`!!! tip "…"`, `!!! warning "…"`).
+- Preview locally with `FLASK_DEBUG=1` (page cache is bypassed).
+- The wiki is organized like HackTricks: a `methodology` triage page and the
+  standalone [cheatsheet](#-cheatsheet--decision-tree-map) decision tree feed
+  into per-medium `techniques/` pages, which cross-link to the per-analyzer
+  `tools/` pages. Improvements and corrections are welcome, as are translations
+  (the non-English wiki is currently English-only and falls back automatically).
+
+### 🗺️ Cheatsheet & decision-tree map
+
+The cheatsheet is **not** a wiki page: it is a standalone page served by
+`aperisolve/cheatsheet.py`:
+
+- `/cheatsheet` renders `aperisolve/cheatsheet_content/en/cheatsheet.md` (same
+  Markdown pipeline as the wiki, English fallback). The per-medium command
+  checklists it links to still live in the wiki under `wiki_content/*/cheatsheet/`.
+- `/cheatsheet/map` is a near-fullscreen interactive decision tree: hover a step
+  for the command and a link to its tool, and download the whole tree as PNG or
+  PDF.
+- The map's SVG, its tooltip data (`decision-tree.json`) and the editable
+  Excalidraw scene are all generated from one model. Edit the `BRANCHES` list in
+  `scripts/gen_decision_tree.py`, then regenerate:
+
+  ```console
+  $ python scripts/gen_decision_tree.py
+  ```
+
+  Commit the regenerated `aperisolve/static/img/cheatsheet/decision-tree.*`
+  artifacts alongside the script change.
+
+### 🌍 Translations
+
+The UI ships in English, French, Spanish, German, Russian, Chinese and
+Portuguese. Machine-translated drafts are welcome; native review even more so.
+
+- **UI strings** live in gettext catalogs at
+  `aperisolve/translations/<lang>/LC_MESSAGES/messages.po`. After changing
+  translatable strings in templates/Python, refresh and recompile:
+
+  ```console
+  $ pybabel extract -F babel.cfg -o messages.pot .
+  $ pybabel update --ignore-obsolete -i messages.pot -d aperisolve/translations
+  $ pybabel compile -d aperisolve/translations
+  ```
+
+  Commit both the `.po` and compiled `.mo` files (the dev compose mounts the
+  source tree directly, so the runtime needs the committed `.mo`).
+- **Wiki pages** are translated by mirroring the English file:
+  `aperisolve/wiki_content/fr/techniques/images.md` translates
+  `aperisolve/wiki_content/en/techniques/images.md` (the standalone cheatsheet
+  mirrors the same way under `cheatsheet_content/<lang>/`). Untranslated pages
+  automatically fall back to English with a banner, canonicalize to the
+  English URL and stay out of the sitemap, so partial translations are
+  fine. The wiki content is currently **English-only** (the previous
+  translations were retired when the wiki was restructured), so translating
+  any page under `wiki_content/en/` into another language is a high-impact
+  contribution. Mirror the English path exactly under the target language.
+- Adding a new language: add its code to `PREFIX_LANGS` in
+  `aperisolve/i18n.py`, run `pybabel init -i messages.pot -d
+  aperisolve/translations -l <lang>`, and translate.
+
+### 🎨 UI/UX Improvements
+
+Contributions to the web interface are welcome:
+
+- Better error messages
+- Improved result presentation
+- Mobile responsiveness
+- Accessibility improvements. One rule worth knowing up front: don't put an
+  `aria-label` on a control that already has visible text: the label replaces
+  that text as the accessible name, so voice-control users who say what they
+  see stop matching the control (WCAG 2.5.3, Label in Name). If a control
+  genuinely needs extra context, the label must *contain* the visible text in
+  every language, not just English. Icon-only controls have no visible text, so
+  they still need a label.
+
+## Code Style & Quality
+
+> [!IMPORTANT]
+> Follow the project’s code style and run linters before submitting any code.
+
+This project enforces:
+
+- **Ruff** : Check + Format (line length 100)
+- **ty** : Type checking
+
+> [!TIP]
+> All tool configurations (Ruff, ty) are centralized in pyproject.toml.
+> You can run each tool directly and it will automatically pick up the configuration.
+
+### Setup
+
+> [!TIP]
+> Use a virtual environment and install development dependencies:
+
+```bash
+# Create & activate a virtual environment
+uv venv
+# Install project + development dependencies from pyproject.toml
+uv sync --extra dev
+```
+
+### Running Tools Manually
+
+**Option 1: Bash script (no pre-commit file needed)**
+
+Run this script `lint.sh` at the project root folder.
+
+```
+🧹 Running Ruff lint checks...
+🎨 Running Ruff format checks...
+🔍 Running ty type checks...
+🧪 Running pytest...
+
+✅ All checks passed!
+```
+
+Equivalent manual commands:
+
+```bash
+ruff check .
+ruff format . --check
+ty check aperisolve
+pytest -q
+```
+
+### Tests
+
+- `pytest -q` runs the unit tests (analyzer registry, cache headers, i18n,
+  rate limits, and a couple of in-process analyzers). No services required.
+- `tests/test_webapp_analyzers.py` drives every analyzer end-to-end through
+  the real HTTP path (upload → RQ worker runs the tool → poll → results). It
+  needs the stack running and is **skipped automatically** when no server is
+  reachable, so it does not block the standard `pytest` run:
+
+  ```bash
+  docker compose -f compose.dev.yml up -d
+  pytest tests/test_webapp_analyzers.py -v   # or point APERISOLVE_BASE_URL elsewhere
+  ```
+
+  Each password/extraction tool has a fixture in `tests/fixtures/` that
+  actually contains hidden data (generated with the tool and round-trip
+  verified), so a healthy analyzer returns `ok`. When you add an analyzer,
+  add a case to `CASES` there: `test_all_analyzers_are_covered` fails if a
+  registered analyzer has no web-app test.
+
+**Option 2: Pre-Commit hook**
+
+Create a pre-commit hooks file [.pre-commit-config.yaml](#) at the project root folder.
+
+```bash
+repos:
+- repo: https://github.com/astral-sh/ruff-pre-commit
+  rev: v0.13.0
+  hooks:
+  - id: ruff-check
+- repo: local
+  hooks:
+    - id: ty-check
+      name: ty-check
+      entry: ty check
+      types: [python]
+      language: system
+      pass_filenames: true
+```
+
+Then run the following command so each staged files will be checked while commited.
+
+```bash
+pre-commit install
+```
+
+You can also do a manual pass on all files before commiting:
+
+```bash
+pre-commit run --all-files
+```
+
+> [!NOTE]
+> Continuous Integration (CI) runs all checks on every PR. Ensure your code passes before submitting.
+
+## Pull Request Guidelines
+
+Use clear, descriptive titles:
+
+- ✅ `Add stegdetect analyzer`
+- ✅ `Fix binwalk extraction error handling`
+- ✅ `Update documentation for password-protected tools`
+- ❌ `Update code`
+- ❌ `Fix bug`
+
+### Commit Messages
+
+Write clear, concise commit messages:
+
+```bash
+# Good
+git commit -m "Add zsteg analyzer for PNG steganography detection"
+git commit -m "Fix foremost error detection when no files extracted"
+
+# Not so good
+git commit -m "updates"
+git commit -m "fix"
+```
+
+## Adding New Dependencies
+
+> [!CAUTION]
+> Adding new dependencies requires careful consideration.
+
+If your contribution needs new dependencies:
+
+1. **Python packages**: Add to `pyproject.toml` (`[project.dependencies]` or `[project.optional-dependencies.dev]`)
+2. **System tools**: Add to `Dockerfile`
+3. **Explain why** in your PR description
+4. **Keep dependencies minimal**: avoid adding large libraries for small features
+
+## Useful commands
+
+```bash
+# development environment (hot reload and local volumes)
+docker compose -f compose.dev.yml up --build
+
+# Stop and remove containers and networks (keeps volumes: database and results)
+docker compose down
+
+# DANGER: also remove volumes (wipes the database and all stored results)
+# docker compose down -v
+
+# Enter web container shell
+docker exec -it aperisolve-web bash
+
+# Enter Postgres shell (from host)
+docker exec -it postgres psql -U aperiuser -d aperisolve
+
+# Backup all uploaded files
+docker cp -r aperisolve-web:/app/aperisolve/results /path/to/backup/location
+
+# Backup a single uploaded file
+docker cp aperisolve-web:/app/aperisolve/results/filename.ext /path/to/backup/filename.ext
+```
+
+> [!WARNING]
+> If switching between dev and production compose files, remove the `results` directory or mounted volume to avoid conflicts:
+>
+> ```bash
+> rm -rf aperisolve/results
+> ```
+
+## Docker and Tool Installation
+
+When adding a new analyzer that requires a new tool:
+
+```dockerfile
+# In Dockerfile
+RUN apt-get update && apt-get install -y \
+    your-new-tool \
+    && rm -rf /var/lib/apt/lists/*
+```
+
+Or for tools requiring compilation:
+
+```dockerfile
+# Builder stage example (jphide)
+RUN git clone https://github.com/h3xx/jphs.git /tmp/jphs && \
+    cd /tmp/jphs && \
+    make && \
+    cp jphide jpseek /usr/local/bin/ && \
+    rm -rf /tmp/jphs
+
+# Runtime stage - copy compiled binaries
+COPY --from=builder /usr/local/bin/jphide /usr/local/bin/jphide
+COPY --from=builder /usr/local/bin/jpseek /usr/local/bin/jpseek
+```
+
+> [!NOTE]
+> Test the Docker build locally before submitting!
+
+## Code Review Process
+
+1. **Automated checks** run first (linters, tests)
+2. **Maintainer review**: we'll provide feedback
+3. **Address feedback**: update your PR as needed
+4. **Approval & merge**: once everything looks good!
+
+> [!TIP]
+> Don't worry if you need to make changes: it's a normal part of the process!
+
+## Need Help?
+
+- 💬 **Questions?** Open a [Discussion](../../discussions)
+- 🐛 **Found a bug?** Open an [Issue](../../issues)
+- 💡 **Ideas?** We'd love to hear them in Discussions!
+
+## Recognition
+
+> [!NOTE]
+> All contributors will be recognized in our [Contributors](../../graphs/contributors) page and in release notes!
+
+---
+
+**Thank you for contributing! 🎉**
+
+Your efforts help make this tool better for the entire security and CTF community!

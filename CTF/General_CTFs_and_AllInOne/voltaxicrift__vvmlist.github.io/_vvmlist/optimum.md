@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  optimum:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  kern:
+    -
+
+wals:
+  optimumwu:
+    -
+  optimumvi:
+    -
+---

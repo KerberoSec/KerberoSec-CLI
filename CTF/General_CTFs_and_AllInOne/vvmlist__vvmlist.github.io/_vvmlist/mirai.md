@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  mirai:
+    -
+  miraiac:
+    -
+  miraicm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  sudo:
+    -
+  dr:
+    -
+
+wals:
+  miraiwu:
+    -
+  miraivi:
+    -
+---

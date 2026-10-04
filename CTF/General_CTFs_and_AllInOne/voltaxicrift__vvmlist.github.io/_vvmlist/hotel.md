@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hotel:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  pcap:
+    -
+  sudo:
+    -
+
+wals:
+  hotelwu:
+    -
+---

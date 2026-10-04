@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  xerxes:
+    -
+  xerxesac:
+    -
+  xerxescm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  steg:
+    -
+  decode:
+    -
+  rce:
+    -
+  cve:
+    -
+  deser:
+    -
+  rev:
+    -
+  hc:
+    -
+  suid:
+    -
+  sudo:
+    -
+
+wals:
+  xerxeswu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  corrosion:
+    -
+  corrosionac:
+    -
+  corrosioncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  hc:
+    -
+  sudo:
+    -
+  rwp:
+    -
+
+wals:
+  corrosionwu:
+    -
+---

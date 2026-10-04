@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  nibbles:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  dcr:
+    -
+  cve:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  nibbleswu:
+    -
+  nibblesvi:
+    -
+---

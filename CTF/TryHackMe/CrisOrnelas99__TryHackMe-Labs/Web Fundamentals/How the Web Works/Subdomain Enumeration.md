@@ -1,0 +1,34 @@
+🌐 Subdomain Enumeration: Condensed Detailed Notes
+📘 What Subdomain Enumeration Is
+
+Subdomain enumeration is the process of identifying valid subdomains that exist under a parent domain. Its main purpose in web security is to expand the attack surface by uncovering additional hosts, services, or applications that may not be visible from the main website. A target organization often uses multiple subdomains for different functions such as blogs, stores, development systems, support portals, testing environments, or internal tools. Each discovered subdomain can represent a separate web application, configuration, or service with its own security posture. The three main methods covered here are Brute Force, OSINT, and Virtual Host enumeration. These are important because a security assessment limited to the main domain may miss vulnerable services hosted elsewhere under the same parent domain.
+
+🔎 Main Enumeration Methods
+
+The first method is Brute Force, which attempts many possible subdomain names from a predefined list of common words. This works because organizations often use predictable names such as admin, dev, test, blog, store, or mail. The second method is OSINT, or Open-Source Intelligence, which uses publicly available sources to identify subdomains without directly guessing them. This includes certificate logs, search engines, and other public data sources. The third method is Virtual Host enumeration, which targets web servers hosting multiple websites on one IP address and uses the HTTP Host header to discover sites that may not appear in public DNS results. The direct answers associated with these three methods are Brute Force, OSINT, and Virtual Host.
+
+📜 OSINT Through SSL/TLS Certificate Transparency
+
+One major OSINT technique is checking Certificate Transparency logs. When an SSL/TLS certificate is issued for a domain by a Certificate Authority, the certificate is recorded in public logs. These logs exist to improve trust and detect malicious or accidental certificate issuance, but they are also useful for reconnaissance because they often list subdomains that received certificates. This means that if an organization has obtained a certificate for a host such as store.example.com, that subdomain may become visible in CT logs even if it is not linked from the main site. Services such as crt.sh and Entrust certificate search allow analysts to search historical and current certificate records. This method is valuable because it finds real subdomains based on certificate issuance rather than guesswork. The domain identified from the certificate log entry dated 2020-12-26 is store.tryhackme.com.
+
+🔍 OSINT Through Search Engines
+
+Search engines are another powerful OSINT source because they index enormous amounts of public web content and often expose subdomains that are difficult to find manually. Advanced search operators make this process more precise. A query such as -site:www.tryhackme.com site:*.tryhackme.com limits results to subdomains under the target while excluding the main www host. This allows an analyst to focus only on alternate subdomains that have been indexed. Search engine discovery is useful because it can reveal public-facing hosts such as blogs, shops, documentation portals, support systems, or staging pages that already have searchable content. The subdomain beginning with B discovered through this method is blog.tryhackme.com.
+
+⚙️ Brute Force DNS Enumeration
+
+DNS brute forcing is the process of testing large numbers of possible subdomain names against DNS records to see which ones resolve. Because this requires many requests, it is usually automated with tools. The general idea is to take a wordlist of likely subdomain names and combine each word with the target domain, then check whether DNS returns a valid result. This is effective because many organizations use common naming patterns for infrastructure and web services. DNS brute force is different from passive OSINT because it actively queries the target’s DNS rather than relying on previously published information. The tool referenced for this process is dnsrecon, which automates DNS-based enumeration. In addition, the content also points out that OSINT discovery itself can be automated with tools such as Sublist3r, which gathers subdomains from public sources more quickly. The discovered subdomain from the Sublist3r simulation is web55.acmeitsupport.thm.
+
+🖥️ Virtual Host Enumeration
+
+Virtual host enumeration is used when multiple websites are hosted on the same web server and selected based on the HTTP Host header rather than visible public DNS records. Some subdomains may exist only in private DNS, internal developer systems, or local host mappings, so they will not appear in normal public lookups. However, the web server may still respond differently depending on the host name sent in the request. By modifying the Host header and trying many possible names, an analyst can identify websites that are configured on the server but not publicly advertised. This is especially useful for finding development versions, administration panels, or internal environments that share an IP address with the public site.
+
+The tool shown for this is ffuf, which can fuzz the Host header using a wordlist. In the example command, the word FUZZ is placed in the position where a subdomain would normally go, and ffuf replaces it with values from the wordlist while sending requests to the same server IP. Since the server may return a valid response for many tested names, filtering is required to separate default responses from meaningful hits. This is done with the -fs switch, which filters by response size so that repeated default pages can be ignored. After filtering, only unusual response sizes remain, helping identify actual virtual hosts. The two subdomains discovered through this approach are delta and yellow.
+
+🔐 Overall Security Concepts
+
+Subdomain enumeration is important because every discovered subdomain may represent a separate application, environment, or service with unique vulnerabilities. Public-facing assets such as blogs or stores may be easier to find through OSINT, while development and administration hosts may only appear through brute force or virtual host techniques. Certificate logs expose hosts that received SSL/TLS certificates, search engines reveal indexed subdomains, DNS brute force tests likely hostnames directly, and virtual host enumeration uncovers sites hidden behind shared servers. The larger lesson is that an organization’s real attack surface is often much broader than its main website. Effective enumeration combines passive public research with active probing to identify as many reachable subdomains as possible.
+
+✅ Answers Summary
+
+The key answers are Brute Force, OSINT, Virtual Host, store.tryhackme.com, blog.tryhackme.com, web55.acmeitsupport.thm, delta, and yellow.

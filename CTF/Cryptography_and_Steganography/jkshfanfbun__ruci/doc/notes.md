@@ -1,0 +1,570 @@
+本文档是一个很长的文本文件，分为 user note , dev note 两部分，内容较为碎片化，目的是快速记录一些有用的信息
+
+# user note 
+
+链式配置中, 每条链都必须标一个 tag
+
+## tls
+
+### openssl
+
+因为feature use-native-tls 编译使用了 native-tls, 因此会在 linux 版本中需要 openssl 3 安装在 机器上才行
+
+但是有些老机器上的 openssl 是 1.1.1 版的. 可以用 native-tls-vendored feature 解决
+
+### 证书
+
+证书与key 的 文件格式 都是明文 base64 的 pem 文本格式的，但是 其解码后的二进制格式又分为很多种。
+
+tls 中,  native_tls 只支持 pks8 和 pks12 两种格式, 而 ruci 中目前又只写了pks8 一种情况(即不支持 rsa 和 ecc key);
+
+而默认的 rustls 则支持得更广泛一些, x509证书（后缀可能为 pem, cer 或 crt）, key(rsa, pks8, ecc) 都支持 , 但不支持 pks12 (pfx) 格式
+
+除了用 ruci-cmd utils gen-cer 命令 和 gen-ca 命令 生成自签名根证书, 还可以试图自行用 openssl 命令生成:
+
+生成自签名 key 和 证书:
+
+```sh
+# ec key
+openssl ecparam -genkey -name prime256v1 -out cert.key
+openssl req -new -x509 -days 7305 -key cert.key -out cert.pem
+
+# rsa key
+openssl req -x509 -sha256 -newkey rsa:4096 -keyout test2.key -out test2.crt -days 7305
+openssl rsa -in test2.key -out test2.key
+
+# 生成自签 根证书 (root-req.csr 为中间产物)
+
+openssl genrsa -out root.key 2048
+openssl req -new -out root-req.csr -key root.key -keyform PEM
+openssl x509 -req -in root-req.csr -out root-cert.cer -signkey root.key -CAcreateserial -days 3650  -extfile ext.ini
+```
+
+ext.ini:
+
+```ini
+basicConstraints = CA:FALSE
+keyUsage = nonRepudiation, digitalSignature, keyEncipherment
+subjectAltName = @alt_names
+ 
+[alt_names]
+DNS.1 = www.mytest.com
+DNS.2 = localhost
+```
+
+### alpn 的行为
+
+server:
+Protocol names we support, most preferred first. If empty we don't do ALPN at all.
+
+client:
+Which ALPN protocols we include in our client hello. If empty, no ALPN extension is sent
+
+如果任意一方的alpn 没给出, 则连接都通过；如果两方 alpn 都给出, 则只有匹配了才通过
+
+而 匹配的逻辑是，如果 client 给出的是 ["h2", "http/1.1"], 而 server 给出的是 ["http/1.1", "h2"],
+则 实际选用的是 http/1.1, 而 如果此时 server 给出的是 ["h2", "http/1.1"], 则实际选用的是 h2.
+
+native-tls 的 server 不支持手动设置 alpn
+
+注意 http/1.1 不要写成 http1.1 或 http
+
+## tproxy
+
+使用 tproxy 时, 确保是 linux 系统, 并 安装了 iptables (`apt install iptables`)
+
+若要 代理 局域网内其它设备, root 权限运行
+
+```sh
+echo net.ipv4.ip_forward=1 >> /etc/sysctl.conf && sysctl -p
+```
+
+该命令确保 /etc/sysctl.conf 文件中 包含 `net.ipv4.ip_forward=1` 且生效
+
+## tun
+
+tun 在 server 端使用时, 也必须要运行上面 tproxy 的 ip_forward 命令
+
+ip_forward 不仅用于转发局域网设备流量, 也用于从 本机的 tun 转发到 本机的 网卡
+
+### 动态链
+
+动态链分 有限动态链和 完全动态链
+
+动态链的 iter 每次调用时, 会动态地返回一种Map
+只有运行时才能知晓一条链是由哪些 Map 所组成, 所以无法用 Vec等类型表示,
+只能用 Iterator 表示
+
+不过, 有时会有这种情况: 动态链由几部分 静态链组成, 其中两个静态链之间的连接
+是动态的
+
+这里将这种链叫做 "Partial/Finite Dynamic Chain", 把完全动态的链叫做
+"Complete/Infinite Dynamic Chain"
+
+Partial 的状态是有限的 (即有限状态机 FSM),  Complete 的状态是无限的,
+(即无限状态机)
+
+比如, 一个 tcp 到一个 tls 监听 , 这部分是静态的, 之后根据 tls 的 alpn 结果
+, 进行分支, 两个子分支后面也是静态的, 但这个判断是动态的
+
+而完全动态链有最大的灵活性, 能实现所有一般情况下无法实现的效果. 它是图灵完备的
+
+比如 分支(分流与过滤), 多路复用, 负载均衡, 都可以用 完全动态链实现
+
+## 常见配置问题
+
+### udp 的监听
+
+udp 监听 可以用 BindDialer 也可以用 Listener
+
+BindDialer 监听 udp 本地 20800 端口:
+
+```lua
+
+BindDialer = {
+    bind_addr = "udp://127.0.0.1:20800"
+}
+```
+
+关于二者的不同，见下:
+
+### BindDialer 的 udp fixed_target_addr 转发 问题
+
+fixed_target_addr (dokodemo) 对于 udp BindDialer 有一个问题
+
+比如试图监听一个 20800 端口， 作为一个 dns 服务转发
+
+只有一个 client 询问 dns 时， 如 client1 问 www.1.com 的 ip 是什么，
+
+然后我们 20800 收到后，问 实际 dns, 得到答后，回复给 client1
+
+这没问题。
+
+但
+
+假设有 client1, client2 同时问问题， client1 问 www.1.com, client2 问 www.2.com
+
+然后我们都得到了实际dns 的答，但回复时，如何知道
+
+www.1.com 的答 是回复给 client1  还是 client2 呢？
+
+注意 实际dns 的答 是不一定按原问的顺序的
+
+注意 我们是不会探查 udp 的内容并记录的
+
+举个形象的例子
+
+一个课代表收作业，收了很多作业，作业有记名，老师批完了，发回课代表，但发回课代表的不是批过的作业，而是一个个 未记名的成绩和批语，请问课代表如何 发回 作业作者？
+
+不完美方案：
+
+1. 记录连接的顺序，然后按回答顺序回复给源。（如，记录交作业的顺序，按出成绩的顺序 回复）。问题：出成绩的顺序与交作业的顺序不一定一致
+2. 探查 udp 内容，按答案中的内容匹配后回复给源。问题：这样属于侵犯源的隐私, 且若不为已知协议则做不到
+3. 将回复 广播给所有 源。问题：这样属于侵犯源的隐私
+4. 独占性: 让用户自行确保同一段时间内只有唯一的客户端连接 ruci的 BindDialer
+
+都不完美. 绕过的方案是: 不用 BindDialer 做 udp 转发, 而是 使用 Listener
+
+Listener 在 监听 udp, 且 有 udp 的 fixed_target_addr 时, 会对每一个 inbound
+连接新建一个 udp 连接 , 建立了一对一的转发, 而不是 一对多的转发, 就没问题了
+
+有用户报告 用 BindDialer 的 fixed_target_addr 作 udp 转发会导致宕机(或卡住？我认为该用户的表述可能不正确), 所以一定要用 Listener
+
+### 报错示例: socks5 client only support tcplike stream, got NoStream
+
+注意几乎所有的 outbound 都要先有一个 "流发生器", 如 BindDialer, 如果直接是 socks5/trojan 的话, 
+没有流发生器, 是无法建立任何连接的。也就是说, 要有一个拨号环节。
+
+因此，如遇到此问题，检查配置文件，在需要之处加上 相应的 "Map"
+
+## chain 模式 与 verysimple 配置 (即 最初ruci版本中的 suit 模式, toml 格式配置文件) 的对比
+
+verysimple 有几个不清不楚的地方: 
+1. trojan 的 password 写在了 uuid 里
+2. grpc 的 service name 填在了 path 中, 然后没有 / 前缀; 但 ws写的path却要有 /, 
+3. vs 的 host 既用于 tls 的 sni, 又用于 websocket/grpc 的 http 请求中的 host (其实是 uri 中的authority, 包含端口号), 但实际上二者可以不同
+
+这些方面 ruci 分得更清楚, 因为用了链式架构
+
+ruci chain 模式中,  
+
+1. trojan 的 password 写在自己配置中的 password 项里
+2. grpc和 h2一样的, 没有 service name 一说, path直接写为 /service1/Tun 即可
+3. tls 的 sni 写的 tls 的配置中, ws/grpc 的 authority 写在 它们自己的配置中
+4. vs 中的 ws server 要加 early = true 才能支持 earlydata, 而 ruci 中的 ws server 是默认支持的, 只需要在 ws client 端打开use_early_data
+
+在ruci 中, 你可以:  dial 一个由 host1 解析得的ip, 然后 tls 里的 sni 写 host2, 然后 ws/grpc 的请求 url 中 写 host3
+
+## tun模式的一些实测信息
+
+tun 是用 如下配置启用
+
+```lua
+ inbounds = { 
+
+        --这里的 "24" 不是端口, 因为 ip 协议没有 端口的说法; 24 是 子网掩码的 CIDR 表示法,
+        -- 表示 255.255.255.0; ruci这里采用与 tcp 端口写法一致的格式, 便于处理
+
+        listen1 = { { BindDialer= { bind_addr = "ip://10.0.0.1:24#utun321" } } } ,
+    },
+```
+
+详见 local.lua 中对应示例
+
+windows 上需要 wintun.dll. 可用ruci-cmd `ruci-cmd utils wintun` 来自动下载 wintun.zip，wintun.zip 中还有子文件夹，
+一般要进入 amd64 文件夹中，解压出里面的 wintun.dll
+
+在windows上, 可以在控制面板中找到所建立的虚拟网卡
+
+实测, 在 windows 上, 就算不配置任何路由, 系统也会识别到它建立的虚拟网卡, 并向其发送一些信息；在 linux 和 macos 上, 也会收到少量信息（即会在log中显示一些输出）
+
+在 linux/macOS 上，运行要用 sudo , 在 windows 上，要用管理员权限运行程序，这样ruci-cmd 才能启动虚拟网卡。
+
+在  in_auto_route 的  ` original_dev_name = "en0"` 项 和  `sockopt` 的 `bind_to_device = "en0"` 项中,均要填写网卡名称信息
+
+在 linux/macOS 上用 ifconfig 查看, 在 windows 上用 ipconfig 查看。
+
+windows 上，根据系统语言不同，网卡名称也不同，比如 "ETHERNET" 在中文系统中为 "以太网"
+
+## smoltcp/lwip 与 tun
+
+smoltcp 和 lwip 是两种 tcp/ip stack 的实现
+
+二者均需要使用 tun 包 或 tun2 包来作为底层tun device.
+
+一开始，先有 tun包，后来作者不维护了，又出现了tun2包，但是到了 24年年底，
+tun2包的作者又开始维护 tun 包，因此 此时 tun 包就更新了。
+
+tun 包在 windows 平台使用 wintun, 而在 其它平台使用 系统调用。
+
+# dev note
+
+## route
+
+ruci中有三种 route 实现: fixed, tag, info; 
+
+而 rucimp 有一种完整的 route 实现: RuleSet
+
+## feature  
+
+rucimp 中有很多feature :
+
+lua, lua54, tun, sockopt, use-native-tls, native-tls-vendored, quinn, quic,smoltcp, lwip
+
+## is_tail_of_chain
+
+链式模式的一个特点是, 每一层都不知道上层和下层的确切信息, 它只做自己层做的事
+
+这会有一个现象: 无法直接在 ws,tls,trojan,vless 等协议的outbound中直接传递early data , 因为
+early data 必须由最末端的 outbound 传递
+
+不过, 我们可以做些操作, 给末端代理一个标记, 这样就能使用 earydata 功能了.
+
+通过使用 MapExt 和 NoMapExt 这两个derive 宏, 可以分别给 struct 实现 common行为
+和默认行为.
+
+MapExt 要 配合 map_ext_fields 宏一起使用
+
+用了 MapExt 后, 可以在方法内使用 self.is_tail_of_chain 判断是否在链尾, 如果在, 则可以发送ed, 
+如果不在, 不可以发送, 只能传递到下一级
+
+## async
+
+目前用起来tokio 和 async_std 的最大的区别是, tokio 的TcpStream 不支持 clone;
+async_std的 UdpSocket 少了 poll 方法 (until 24.2.18)
+
+## Cargo.lock
+
+本来作为类库是不应该有 Cargo.lock 的, 但我们同时也发布 ruci-cmd, 
+为保证其能正常编译, 还是提供了 lock 文件
+
+## 移除 static 借用的办法
+
+最初开发时, 采用了在 golang 上相同的思路, 但后来发现会越来越多地用到 static 和
+Box: leak, 进而进行手动管理内存, 这一定是有问题的. 
+
+从 commit  58cb71013036c2eab3e4a6898f6b43a5ac822fa4 一直到
+ba02e41a4f81e3cea9626a93f8cefd16a539e341
+
+都是在做重构代码的工作.
+
+具体移除的思路是, 
+
+1. 让 MIter trait 使用 `Arc<Box dyn>`, 而不是 `&'static dyn`
+2. 让 Engine 保有数据的所有权, 而不是使用借用.
+3. 不该由Engine 长期持有的数据就不持有, 而是通过init方法参数进行一次性使用
+4. Engine run的时候, 使用 Engine 数据的拷贝 而不是直接使用 Engine 数据本身; 如果是拷贝比较重, 就使用 Arc
+
+这样, 就保证了每一不同生命周期的部分都有自己数据的所有权, 就不再需要 static
+
+## MapResult 中的 "任意数据类型"
+
+在项目初期, 对其实现做了多种尝试, 一开始使用 enum `AnyData`, 后来将 enum 分成
+单体 `AnyData` 和 `Vec<AnyData>` 两部分, 再后来尝试使用`smallvec<[AnyData;1]>`
+
+最终使用了 `#[typetag::serde]` 的 trait 方式
+
+最初是将动态数据 `Arc<AtomicU64>`也放在 enum 中, 后来移出, 单独做处理, 因为
+动态数据不能也不应该做序列化
+
+## maxmind db 的 geoip
+
+在(24.2.28)测试中发现, 最新的 mmdb ,
+从 https://github.com/Loyalsoldier/geoip/releases 下载的,
+
+如 202402220055, 202310260055 , 202301050111 中, 它对一些知名互联网公司的 ip 的 iso 的返回值是 特殊的值, 如 GOOGLE, TWITTER
+
+重新从其下载旧的 mmdb, 发现旧的  202203250801,  202209150159
+ 版是正常的 ( 返回值为 US)
+
+这说明, mmdb 的的文件内容在2022年9月以后, 23年1月 以前 的某个时间上 发生了变化. (没全测, 时间有限)
+
+不过这些公司应该都是美国的
+
+我想这应该就是 Loyalsoldier/geoip 的readme 中说明了 添加了 "geoip:cloudflare" 等类别的原因
+
+### test 相关
+
+为了在github action 通过 测试, 将 需要 Country.mmdb 的几个 test 注释掉了
+
+## "trace" feature
+
+在0.0.3, 添加 "trace" feature, 对每条连接加以监视、记录, 其可能导处性能下降, 但
+又在另一些用例中有用, 所以要做
+
+trace 会将chain 中经过的每一个 Map的 name 记录下来, 放到 `Vec<String> ` 中. 它只对于动态链有用
+如果是静态链, 则记录一个 chain_tag 就能知道完整的 链信息
+
+trace 还会将 【每条连接】的【实时】 ub, db 信息记录下来, 这是最耗性能的
+
+## HttpFilter
+
+为了支持对 普通 http 请求的回落, 加一个 叫 HttpFilter 的 Map
+
+这样可以同时在 grpc 和 ws 中使用
+
+因为 tungstenite (websocket包) 对错误请求是自行返回 http 响应的, 而我们为了回落到其它 Map , 
+就要 绕过 tungstenite 的处理
+
+## quic 
+
+使用了 s2n-quic 包 或 quinn 包
+
+使用 quic 会给 ruci-cmd release 加 3-4MB 大小左右
+
+### quic 的两种不同实现的 多代理程序  互通性：
+ 
+截至 24.3.21
+
+s2n-quic (代码在 rucimp/src/map/quic):
+
+ruci 自己连自己，没问题
+ruci 作 客户端， verysimple 作 服务端，能通，能过trojan 得 target_addr, 但之后 relay 阶段卡住
+ruci 作 服务端， vs 作客户端，连不上，就像没运行ruci 一样.
+
+这个行为 在 s2n-quic 中使用 rustls 与 使用 s2n-tls 的效果是一样的
+
+quinn (代码在 rucimp/src/map/quinn):全没问题
+
+故 ruci 默认使用 quinn 作为 quic实现。
+
+（两个依赖包的接口代码几乎是相同的，只能说明s2n-quic 互通性还不完善)
+
+而且 s2n-quic 在 windows 无法编译通过
+
+## 编译运行问题
+
+tproxy,tun 要使用 管理员权限 运行
+
+### 1
+Cargo.toml 中的 profile 中 
+如果加了`panic = "abort"` ，则编译出的程序不能在 windows release 版中正常运行
+
+### 2
+windows上运行 gnu 版会报 应用程序无法正常启动, 0xc00007b
+
+这是因为它依赖 libstdc++-6.dll
+
+英文:
+
+`The application was unable to start correctly (0xc000007b).`
+
+此问题已在 ruci-cmd v0.0.7-alpha.3 及以后的版本解决，是使用 -Clink-self-contained=yes -Ctarget-feature=+crt-static 解决的
+
+### 3
+linux release 使用gnu 版可能会报 glibc 问题, 解决方法是
+
+1. 更新系统的glibc
+2. 使用 musl 版
+3. 自己编译
+4. 使用 docker
+
+更新系统的 glibc 是比较危险的做法, 此时推荐使用 musl 或者 docker
+
+## tproxy: Too many open files
+
+每打开一个网页后, ruci 进程新增 200-300个文件(socket)是很常见的现象, 主要都是 dns 
+的 udp 请求造成的. 一般linux 对一个进程的 NOFILE 上限的设定是1024, 这对代理来说太小了.
+
+在v0.0.5正式版中, 为 OptDirect 提供了 more_num_of_files 选项,
+以自动调用 linux 的 系统调用来提高 NOFILE 上限. 且 TproxyUdpListener 初始化时也会
+自动提高 NOFILE 上限
+
+同时, udp 的 timeout 默认设为 40 秒, 这样超时没有新信息产生就会断开连接, opened files
+就会自动减少恢复
+
+可用 `ls /proc/138471/fd/ | wc -l` 查看一个进程 打开文件的数量, 数字换成 进程的 pid
+
+run `ulimit -a` to see. run `ulimit -n 1000000` as root to set
+
+ruci-cmd tproxy 在启动监听后, 进程所打开的文件在12个左右.
+
+## ip relay
+
+在转发 ip 包时，如果通过tcp 传, 注意粘包问题. 可通过套 ws/h2 等 有 长度包头的 协议来解决
+
+### direct_list 路由问题记录(linux)
+
+发现不能是
+ip route add {v} via {router_ip} dev {original_dev_name} metric 1
+
+而要为
+
+ip route add {v} dev {original_dev_name} metric 100
+
+## dns 问题
+
+想法：
+
+在本项目原来的代码中，dns 的 resolve 属于 低级过程，是与链式配置无关的。
+这就意味着就算用户自定义 dns，也只能定义一个全局的dns，没法针对每一个链配置
+
+显然，每一个链都加一个 该链专属的 dns配置项，就可以达到最大的灵活性
+
+## Stream+Sink
+
+在 ruci: net: Stream 中，有 
+
+RW (AsyncRead,AsyncWrite), 
+Conn (AsyncRead+AsyncWrite), 
+AddrConn, Generator, None 这几种选择，
+
+不过，在rust + async 的 使用中，还有一种 Stream+Sink 的使用方式。
+这种方法也是较为通用的
+https://docs.rs/futures/latest/futures/index.html
+
+但是 ruci 中没有使用它们，因为它们使用了泛型，使得框架编写更加困难
+
+注：一个 `Framed` 结构可以 用 `futures::StreamExt::split` 分裂 为一个 `SplitSink<Framed>>` 和   `SplitStream<Framed>>`
+
+## 其它
+
+使用 anyhow 的 context 会导致变慢, 若有初始化开销 则要改用 with_context
+
+再比如, 要用 ok_or_else, 而不是 ok_or
+
+使用 mlua 跨线程时要用 Mutex锁, 否则mac 上报错会类似 zsh: trace trap 
+
+上传和下载的缩写代码中使用了 ub, db, 而不是 tx, rx, 是为了简单地与 channel 的Sender和 Receiver的缩写加以区分,
+而且还能看出是以字节为单位
+
+链的灵活顺序: 静态链, 有限动态链, 无限动态链
+
+### vscode 中为 rust-analyzer 启用feature:
+
+创建 .vscode/settings.json , 内容如下：
+
+```json
+{
+    "rust-analyzer.cargo.features": [
+    "api_server",
+    "api_client",
+    "utils",
+    "trace",
+    "sockopt",
+    "lua",
+    "use-native-tls",
+    "route",
+    "quinn",
+  ],
+  //"rust-analyzer.cargo.target": "aarch64-unknown-linux-gnu"
+}
+```
+
+### 其它 rust-analyzer 配置
+
+"rust-analyzer.check.command": "clippy",
+
+## 日志
+
+从0.0.6起，ruci 不再继续开发 suit 模式。
+从0.0.7起，ruci 移除了 suit 模式。同时对 chain 模式 启用 toml配置格式
+从0.0.8起，ruci 移除了 有限动态链 模式。同时移除了toml 格式，启用了json 格式。
+0.0.8 暂时移除了 quic feature (即 s2n-quic 的实现。不影响 quinn)
+
+### 名词
+
+suit模式为ruci对verysimple的模式的称呼。suit模式不是链式，而是一整套固定的模式。
+在 suit 模式中, 使用 server, client 这样的形式, 而在 chain 模式中, 使用 inbound 和 
+outbound 的形式. 这两者是一样的功能, 只是由于抽象的程度不同, 因此叫法不同。
+
+在 suit 模式中, server 的行为是 listen, client 的行为是 dial; 而在 chain 模式中, inbound
+和 outbound 行为都叫做 map (映射) 
+
+## 其它rust/lua代理项目
+
+https://github.com/shadowsocks/shadowsocks-rust
+
+https://github.com/eycorsican/leaf
+
+https://github.com/YtFlow/YtFlowApp
+https://github.com/YtFlow/YtFlowCore
+
+https://github.com/Watfaq/clash-rs
+
+https://github.com/Qv2ray/v2ray-rust
+
+https://github.com/lazytiger/trojan-rs
+
+https://github.com/zephyrchien/midori
+
+https://github.com/cfal/shoes
+
+https://github.com/Shadowrocket/lua-backend/tree/master
+
+### 项目对比,参考与评估
+
+注意，ruci 与 luci (openwrt's lua Configuration Interface) 完全无关。不过，都使用了lua.
+
+链式代理配置的想法来自 v2ray-rust, 但是 ruci中 的 Infinity 完全动态链 与 Dyn_Selectors 部分动态链 的实现是新的想法。
+
+ruci 中的基本结构 Map 的先例是 YtFlowCore 中的 Plugin，（ruci并未参考其对应代码）。不过它使用的是json配置，没有 lua配置灵活。
+
+v2ray-rust, YtFlowCore, ruci 三个项目 都是建立在 “链式结构” 的基础上的。
+
+要注意的是，链式结构 与 “链式代理” 是两个概念。链式代理 涉及多台中转机器，是用户级的情况。链式结构是 代码与配置文件的架构。
+采用链式结构的项目 是 必然可以实现 链式代理的。
+（相较而言，v2ray、verysimple 等项目是扁平结构，较难实现 链式代理，或实现配置麻烦，或曲线救国导致开销更大）
+
+lua自定义协议 先例是 小火箭的 lua-backend, （ruci并未参考其代码） 但是对比而言 ruci 中的lua协议写起来更复杂，因为使用了异步代码。
+
+要注意的是，lua协议与 lua配置是两个概念。ruci 中既有 lua 配置，又有 lua 协议。
+
+http2代码实现 参考了 midori，
+so_opts 代码参考了 trojan-rs 和 shadowsocks-rust . 
+smoltcp 代码参考了 trojan-rs.
+所有参考项目均使用 MIT 协议。
+
+ruci 项目架构与运行逻辑 参考了 ruci 的前身项目 verysimple。（ruci 乃 rucimple 缩写）
+
+没有ruci 所参考的其它项目 与引用的依赖，就不可能有 ruci 项目。在此对所有相关项目表示感谢。
+
+整个项目中所应用的 rust 代码较为初级，实属一个初学者所创建的个人项目，故错误、不良用法百出。
+且：
+代码文档中英混用，不是一个国际项目，
+todo 充斥代码行间，
+typo、不完整文档、bug、debug 日志 随处可见。
+
+故明显不应在真实的生产环境下使用，也不应对本项目作任何宣传。不过也许对一些看到本项目的人有一定的参考价值。
+当然，随着时间发展与问题的不断发现，项目会逐步正规化。
+如果您发现了本项目的任何问题，还望多发issue, 共同提高。

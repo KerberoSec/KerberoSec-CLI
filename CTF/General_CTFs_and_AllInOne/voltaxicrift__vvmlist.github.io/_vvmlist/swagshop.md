@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  swagshop:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  logical:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  swagshopwu:
+    -
+  swagshopvi:
+    -
+---

@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  runas:
+    -
+  runasac:
+    -
+  runascm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  lfi:
+    -
+
+wals:
+  runaswu:
+    -
+---

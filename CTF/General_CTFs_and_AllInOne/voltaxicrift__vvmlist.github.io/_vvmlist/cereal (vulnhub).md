@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  cerealvu:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  deser:
+    -
+  rce:
+    -
+  cron:
+    -
+  pspy:
+    -
+  sym:
+    -
+
+wals:
+  cerealvuwu:
+    -
+---

@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  editor:
+    -
+  editorac:
+    -
+  editorcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  passre:
+    -
+  tunnel:
+    -
+
+wals:
+  editorwu:
+    -
+  editorvi:
+    -
+---

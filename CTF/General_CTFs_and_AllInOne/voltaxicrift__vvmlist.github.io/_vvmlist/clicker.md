@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  clicker:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  nfs:
+    -
+  al:
+    -
+  source:
+    -
+  mass:
+    -
+  crlfj:
+    -
+  sqli:
+    -
+  rce:
+    -
+  rev:
+    -
+  pathtr:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  clickerwu:
+    -
+  clickervi:
+    -
+---

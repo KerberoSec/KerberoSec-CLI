@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  odin:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  decode:
+    -
+  wp:
+    -
+  bf:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+
+wals:
+  odinwu:
+    -
+---

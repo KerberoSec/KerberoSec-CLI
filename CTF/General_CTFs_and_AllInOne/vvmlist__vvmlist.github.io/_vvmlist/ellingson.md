@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  ellingson:
+    -
+  ellingsonac:
+    -
+  ellingsoncm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  rce:
+    -
+  groups:
+    -
+  hc:
+    -
+  suid:
+    -
+  bof:
+    -
+
+wals:
+  ellingsonwu:
+    -
+  ellingsonvi:
+    -
+---

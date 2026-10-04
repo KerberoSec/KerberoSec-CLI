@@ -1,0 +1,46 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  solarlab:
+    -
+  solarlabac:
+    -
+  solarlabcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  al:
+    -
+  smb:
+    -
+  creds:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  decode:
+    -
+  logical:
+    -
+
+wals:
+  solarlabwu:
+    -
+  solarlabvi:
+    -
+---

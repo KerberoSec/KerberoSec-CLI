@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  momentum:
+    -
+  momentumhmv:
+    -
+  momentumac:
+    -
+  momentumcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  xss:
+    -
+  creds:
+    -
+  coot:
+    -
+  decode:
+    -
+  sql:
+    -
+
+wals:
+  momentumwu:
+    -
+---

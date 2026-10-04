@@ -1,0 +1,40 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  dab:
+    -
+  dabac:
+    -
+  dabcm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  hc:
+    -
+  suid:
+    -
+  rev:
+    -
+  maldll:
+    -
+
+wals:
+  dabwu:
+    -
+  dabvi:
+    -
+---

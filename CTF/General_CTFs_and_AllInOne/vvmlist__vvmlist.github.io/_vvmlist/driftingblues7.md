@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  driftingblues7:
+    -
+  driftingblues7hmv:
+    -
+  driftingblues7ac:
+    -
+  driftingblues7cm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  hc:
+    -
+  creds:
+    -
+  cve:
+    -
+  rce:
+    -
+
+wals:
+  driftingblues7wu:
+    -
+---

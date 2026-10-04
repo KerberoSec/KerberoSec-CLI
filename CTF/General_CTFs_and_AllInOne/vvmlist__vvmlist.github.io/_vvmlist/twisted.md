@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  twisted:
+    -
+  twistedac:
+    -
+  twistedcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  steg:
+    -
+  creds:
+    -
+  suid:
+    -
+  rev:
+    -
+  decode:
+    -
+
+wals:
+  twistedwu:
+    -
+---

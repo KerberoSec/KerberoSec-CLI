@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  milk:
+    -
+  milkac:
+    -
+  milkcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  dcr:
+    -
+  cve:
+    -
+  rce:
+    -
+  cap:
+    -
+
+wals:
+  milkwu:
+    -
+---

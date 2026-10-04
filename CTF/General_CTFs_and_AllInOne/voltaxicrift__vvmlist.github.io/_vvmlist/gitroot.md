@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  gitroot:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  git:
+    -
+  bf:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  gitrootwu:
+    -
+---

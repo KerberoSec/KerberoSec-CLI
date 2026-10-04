@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  message:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  ci:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  messagewu:
+    -
+---

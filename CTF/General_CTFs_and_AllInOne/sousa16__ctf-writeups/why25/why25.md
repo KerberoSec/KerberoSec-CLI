@@ -1,0 +1,1 @@
+[Link to challenges](https://ctf.why2025.org/challenges)

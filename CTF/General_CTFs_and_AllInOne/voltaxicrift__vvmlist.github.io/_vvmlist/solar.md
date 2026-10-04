@@ -1,0 +1,54 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  solar:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  sql:
+    -
+  hc:
+    -
+  creds:
+    -
+  xss:
+    -
+  logical:
+    -
+  lfi:
+    -
+  rce:
+    -
+  sudo:
+    -
+  ssh:
+    -
+  pgp:
+    -
+  bf:
+    -
+  steg:
+    -
+  decode:
+    -
+  rev:
+    -
+  pathj:
+    -
+
+wals:
+  solarwu:
+    -
+---

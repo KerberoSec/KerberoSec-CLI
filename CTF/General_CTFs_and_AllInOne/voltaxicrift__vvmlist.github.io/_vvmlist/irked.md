@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  irked:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  steg:
+    -
+  logical:
+    -
+  suid:
+    -
+
+wals:
+  irkedwu:
+    -
+  irkedvi:
+    -
+---

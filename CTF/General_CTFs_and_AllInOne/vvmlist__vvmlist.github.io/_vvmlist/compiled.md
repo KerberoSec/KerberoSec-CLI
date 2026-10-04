@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  compiled:
+    -
+  compiledac:
+    -
+  compiledcm:
+    -
+functions:
+  win:
+    -
+  m:
+    -
+  htbvip:
+    -
+  git:
+    -
+  cve:
+    -
+  rce:
+    -
+  sql:
+    -
+  hc:
+    -
+
+wals:
+  compiledwu:
+    -
+  compiledvi:
+    -
+---

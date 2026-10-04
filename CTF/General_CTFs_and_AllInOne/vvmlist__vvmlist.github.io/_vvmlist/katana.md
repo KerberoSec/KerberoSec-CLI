@@ -1,0 +1,32 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  katana:
+    -
+  katanaac:
+    -
+  katanacm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  rce:
+    -
+  cap:
+    -
+
+wals:
+  katanawu:
+    -
+---

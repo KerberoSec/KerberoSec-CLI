@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  gofer:
+    -
+  goferac:
+    -
+  gofercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  htbvip:
+    -
+  al:
+    -
+  smb:
+    -
+  fuzz:
+    -
+  ssrf:
+    -
+  phish:
+    -
+  sniff:
+    -
+  suid:
+    -
+  sgid:
+    -
+  pathj:
+    -
+
+wals:
+  goferwu:
+    -
+  gofervi:
+    -
+---

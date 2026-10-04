@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  forest:
+    -
+  forestac:
+    -
+  forestcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  al:
+    -
+  asrep:
+    -
+  hc:
+    -
+  bhga:
+    -
+  dcsync:
+    -
+
+wals:
+  forestwu:
+    -
+  forestvi:
+    -
+---

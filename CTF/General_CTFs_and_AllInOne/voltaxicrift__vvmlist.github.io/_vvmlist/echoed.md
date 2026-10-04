@@ -1,0 +1,24 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  echoed:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  sudo:
+    -
+
+wals:
+  echoedwu:
+    -
+---

@@ -1,0 +1,38 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  attended:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  phish:
+    -
+  logical:
+    -
+  rce:
+    -
+  ssh:
+    -
+  rev:
+    -
+  bof:
+    -
+
+wals:
+  attendedwu:
+    -
+  attendedvi:
+    -
+---

@@ -1,0 +1,30 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnyx:
+    -
+curls:
+  slash:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnyx:
+    -
+  fuzz:
+    -
+  bf:
+    -
+  sudo:
+    -
+  lfi:
+    -
+
+wals:
+  slashwu:
+    -
+---

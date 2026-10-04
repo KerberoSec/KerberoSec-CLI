@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  logan:
+    -
+  loganac:
+    -
+  logancm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  pathtr:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  sudo:
+    -
+
+wals:
+  loganwu:
+    -
+---

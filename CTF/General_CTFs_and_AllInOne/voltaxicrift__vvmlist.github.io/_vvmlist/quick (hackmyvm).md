@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  quickh:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  lfi:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  quickhwu:
+    -
+---

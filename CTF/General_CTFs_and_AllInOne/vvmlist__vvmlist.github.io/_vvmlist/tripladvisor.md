@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tripladvisor:
+    -
+  tripladvisorac:
+    -
+  tripladvisorcm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  wp:
+    -
+  cve:
+    -
+  lfi:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  tsi:
+    -
+
+wals:
+  tripladvisorwu:
+    -
+---

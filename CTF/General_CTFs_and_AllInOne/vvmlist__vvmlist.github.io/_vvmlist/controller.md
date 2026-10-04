@@ -1,0 +1,46 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  controller:
+    -
+  controllerac:
+    -
+  controllercm:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  wp:
+    -
+  al:
+    -
+  smb:
+    -
+  logical:
+    -
+  phpmod:
+    -
+  cron:
+    -
+  pspy:
+    -
+  rwp:
+    -
+  sudo:
+    -
+
+wals:
+  controllerwu:
+    -
+---

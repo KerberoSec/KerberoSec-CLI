@@ -1,0 +1,1 @@
+1. directly set the luck to 1. paste basta.js on console

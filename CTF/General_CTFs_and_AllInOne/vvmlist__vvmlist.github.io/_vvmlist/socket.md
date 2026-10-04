@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  socket:
+    -
+  socketac:
+    -
+  socketcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  websocket:
+    -
+  sqli:
+    -
+  sql:
+    -
+  hc:
+    -
+  sudo:
+    -
+  logical:
+    -
+
+wals:
+  socketwu:
+    -
+  socketvi:
+    -
+---

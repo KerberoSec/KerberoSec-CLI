@@ -1,0 +1,32 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  doli:
+    -
+functions:
+  unix:
+    -
+  h:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  cve:
+    -
+  rce:
+    -
+  decode:
+    -
+  kern:
+    -
+
+wals:
+  doliwu:
+    -
+---

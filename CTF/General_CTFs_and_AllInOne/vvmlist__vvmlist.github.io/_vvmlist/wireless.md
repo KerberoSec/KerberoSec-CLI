@@ -1,0 +1,42 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  wireless:
+    -
+  wirelessac:
+    -
+  wirelesscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  vulnhub:
+    -
+  creds:
+    -
+  decode:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  rce:
+    -
+  bf:
+    -
+  groups:
+    -
+  lxd:
+    -
+
+wals:
+  wirelesswu:
+    -
+---

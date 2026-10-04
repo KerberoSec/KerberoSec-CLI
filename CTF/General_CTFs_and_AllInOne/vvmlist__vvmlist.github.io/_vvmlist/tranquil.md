@@ -1,0 +1,30 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  tranquil:
+    -
+  tranquilac:
+    -
+  tranquilcm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  decode:
+    -
+  logical:
+    -
+
+wals:
+  tranquilwu:
+    -
+---

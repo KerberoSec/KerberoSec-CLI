@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  clamp:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  sqli:
+    -
+  rce:
+    -
+  pcap:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  clampwu:
+    -
+---

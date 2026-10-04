@@ -98,6 +98,55 @@ describe("createAgentTeamsTools schema surface", () => {
 		expect(schema?.required).toEqual(["kind", "summary"]);
 	});
 
+	it("exposes no object schema without a required array", () => {
+		// Providers -- and the gateways in front of them -- reject the entire
+		// request when any tool schema omits `required` on an object node:
+		//   Invalid schema for function 'team_status': null is not of type "array"
+		// `team_status` is z.object({}), so it is the first team tool to fail.
+		const runtime = new AgentTeamsRuntime({ teamName: "test-team" });
+		const tools = createAgentTeamsTools({
+			runtime,
+			requesterId: "lead",
+			teammateConfigProvider: makeTeammateConfigProvider(),
+		});
+
+		const violations: string[] = [];
+		const inspect = (node: unknown, path: string): void => {
+			if (Array.isArray(node)) {
+				for (const [index, entry] of node.entries()) {
+					inspect(entry, `${path}[${index}]`);
+				}
+				return;
+			}
+			if (!node || typeof node !== "object") {
+				return;
+			}
+			const record = node as Record<string, unknown>;
+			const isObjectNode = record.type === "object" || "properties" in record;
+			if (isObjectNode) {
+				if (!Array.isArray(record.required)) {
+					violations.push(`${path}: object schema without required array`);
+				}
+				if (!record.properties || typeof record.properties !== "object") {
+					violations.push(`${path}: object schema without properties object`);
+				}
+			}
+			if (record.type === "array" && record.items === undefined) {
+				violations.push(`${path}: array schema without items`);
+			}
+			for (const [key, value] of Object.entries(record)) {
+				inspect(value, `${path}.${key}`);
+			}
+		};
+		for (const tool of tools) {
+			inspect(tool.inputSchema, tool.name);
+		}
+
+		expect(violations).toEqual([]);
+		const status = tools.find((tool) => tool.name === "team_status");
+		expect(status?.inputSchema.required).toEqual([]);
+	});
+
 	it("rejects extra fields for strict spawn schema", async () => {
 		const runtime = new AgentTeamsRuntime({ teamName: "test-team" });
 		const tools = createAgentTeamsTools({

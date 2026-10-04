@@ -1,0 +1,32 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  speed:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  cve:
+    -
+  rce:
+    -
+  creds:
+    -
+  ci:
+    -
+  groups:
+    -
+
+wals:
+  speedwu:
+    -
+---

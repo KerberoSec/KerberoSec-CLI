@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  assertion:
+    -
+  assertionac:
+    -
+  assertioncm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  lfi:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  assertionwu:
+    -
+---

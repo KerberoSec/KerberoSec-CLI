@@ -1,0 +1,36 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  crossbow:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  fuzz:
+    -
+  source:
+    -
+  hc:
+    -
+  pspy:
+    -
+  ssh:
+    -
+  cve:
+    -
+  rce:
+    -
+
+wals:
+  crossbowwu:
+    -
+---

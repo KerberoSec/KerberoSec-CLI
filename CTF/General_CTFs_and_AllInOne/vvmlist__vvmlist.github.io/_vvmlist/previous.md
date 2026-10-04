@@ -1,0 +1,38 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  previous:
+    -
+  previousac:
+    -
+  previouscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  htbvip:
+    -
+  cve:
+    -
+  authb:
+    -
+  pathtr:
+    -
+  creds:
+    -
+  sudo:
+    -
+
+wals:
+  previouswu:
+    -
+  previousvi:
+    -
+---

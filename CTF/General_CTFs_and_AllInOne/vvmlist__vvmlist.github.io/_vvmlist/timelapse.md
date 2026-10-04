@@ -1,0 +1,40 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  timelapse:
+    -
+  timelapseac:
+    -
+  timelapsecm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  ad:
+    -
+  smb:
+    -
+  al:
+    -
+  hc:
+    -
+  creds:
+    -
+  laps:
+    -
+
+wals:
+  timelapsewu:
+    -
+  timelapsevi:
+    -
+---

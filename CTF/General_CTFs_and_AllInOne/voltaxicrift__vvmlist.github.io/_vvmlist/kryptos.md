@@ -1,0 +1,44 @@
+---
+diffis:
+  i:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  kryptos:
+    -
+functions:
+  unix:
+    -
+  i:
+    -
+  htbvip:
+    -
+  logical:
+    -
+  sniff:
+    -
+  sql:
+    -
+  hc:
+    -
+  phpj:
+    -
+  rce:
+    -
+  creds:
+    -
+  decode:
+    -
+  tunnel:
+    -
+  source:
+    -
+
+wals:
+  kryptoswu:
+    -
+  kryptosvi:
+    -
+---

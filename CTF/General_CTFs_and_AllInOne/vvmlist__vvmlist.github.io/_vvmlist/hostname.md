@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  hostname:
+    -
+  hostnameac:
+    -
+  hostnamecm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  hackmyvm:
+    -
+  decode:
+    -
+  sudo:
+    -
+  cron:
+    -
+  pspy:
+    -
+  wildcard:
+    -
+
+wals:
+  hostnamewu:
+    -
+---

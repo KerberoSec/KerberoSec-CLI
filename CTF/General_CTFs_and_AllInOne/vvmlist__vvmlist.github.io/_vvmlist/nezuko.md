@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  nezuko:
+    -
+  nezukoac:
+    -
+  nezukocm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  cve:
+    -
+  rce:
+    -
+  hc:
+    -
+  rwp:
+    -
+
+wals:
+  nezukowu:
+    -
+---

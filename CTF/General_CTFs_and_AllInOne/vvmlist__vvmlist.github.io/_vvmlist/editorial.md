@@ -1,0 +1,38 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  editorial:
+    -
+  editorialac:
+    -
+  editorialcm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  htbvip:
+    -
+  fuzz:
+    -
+  creds:
+    -
+  git:
+    -
+  sudo:
+    -
+  cve:
+    -
+
+wals:
+  editorialwu:
+    -
+  editorialvi:
+    -
+---

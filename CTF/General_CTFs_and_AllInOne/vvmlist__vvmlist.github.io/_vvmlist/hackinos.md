@@ -1,0 +1,44 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  hackinos:
+    -
+  hackinosac:
+    -
+  hackinoscm:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  ep:
+    -
+  rce:
+    -
+  suid:
+    -
+  hc:
+    -
+  bre:
+    -
+  creds:
+    -
+  sql:
+    -
+  groups:
+    -
+  docker:
+    -
+
+wals:
+  hackinoswu:
+    -
+---

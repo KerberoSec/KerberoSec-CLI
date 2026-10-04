@@ -1,0 +1,34 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  g0rmint:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  fuzz:
+    -
+  source:
+    -
+  logpoi:
+    -
+  rce:
+    -
+  creds:
+    -
+  hc:
+    -
+
+wals:
+  g0rmintwu:
+    -
+---

@@ -1,0 +1,30 @@
+---
+diffis:
+  h:
+    -
+platfs:
+  vulnlab:
+    -
+curls:
+  job2:
+    -
+functions:
+  win:
+    -
+  h:
+    -
+  vulnlab:
+    -
+  phish:
+    -
+  bf:
+    -
+  cve:
+    -
+  rce:
+    -
+
+wals:
+  job2wu:
+    -
+---

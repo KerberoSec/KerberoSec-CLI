@@ -1,0 +1,63 @@
+---
+title: whoami
+description: 
+date: '2025-12-12'
+aliases:
+  - about-us
+  - about-hugo
+  - contact
+lastmod: '2025-12-12'
+menu:
+    main: 
+        weight: -90
+        params:
+            icon: user
+---
+
+in realm of digital whispers i dwell, traverse through labyrinth of web.i play with intrinsic design of ctfs for my futile efforts to let myself be sane.
+
+see you in `cyberia` 
+
+```
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+
+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
+1/QpDA0z
+=y88I
+-----END PGP PUBLIC KEY BLOCK-----
+```

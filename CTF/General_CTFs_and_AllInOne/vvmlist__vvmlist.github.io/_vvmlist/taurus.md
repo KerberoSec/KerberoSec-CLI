@@ -1,0 +1,34 @@
+---
+diffis:
+  m:
+    -
+platfs:
+  hackmyvm:
+    -
+curls:
+  taurus:
+    -
+  taurusac:
+    -
+  tauruscm:
+    -
+functions:
+  unix:
+    -
+  m:
+    -
+  hackmyvm:
+    -
+  bf:
+    -
+  ftp:
+    -
+  sniff:
+    -
+  sudo:
+    -
+
+wals:
+  tauruswu:
+    -
+---

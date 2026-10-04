@@ -1,0 +1,13 @@
+---
+curls:
+  cherry:
+    -
+  cherrycm:
+    -
+functions:
+  cherry:
+    -
+wals:
+  cherry:
+    -
+---

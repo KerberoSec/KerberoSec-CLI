@@ -1,0 +1,36 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  htbvip:
+    -
+curls:
+  bastion:
+    -
+  bastionac:
+    -
+  bastioncm:
+    -
+functions:
+  win:
+    -
+  e:
+    -
+  htbvip:
+    -
+  al:
+    -
+  mbck:
+    -
+  logical:
+    -
+  decode:
+    -
+
+wals:
+  bastionwu:
+    -
+  bastionvi:
+    -
+---

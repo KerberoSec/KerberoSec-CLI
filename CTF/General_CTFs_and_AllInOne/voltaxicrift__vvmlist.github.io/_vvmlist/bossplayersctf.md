@@ -1,0 +1,28 @@
+---
+diffis:
+  e:
+    -
+platfs:
+  vulnhub:
+    -
+curls:
+  bossplayersctf:
+    -
+functions:
+  unix:
+    -
+  e:
+    -
+  vulnhub:
+    -
+  ci:
+    -
+  rce:
+    -
+  suid:
+    -
+
+wals:
+  bossplayersctfwu:
+    -
+---

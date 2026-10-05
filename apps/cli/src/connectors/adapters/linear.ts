@@ -23,7 +23,7 @@ import {
 	enqueueThreadTurn,
 	startConnectorWebhookServer,
 } from "../chat-runtime";
-import { isProcessRunning } from "../common";
+import { isProcessRunning, resolveConnectorPort } from "../common";
 import {
 	type ActiveConnectorTurn,
 	handleConnectorUserTurn,
@@ -386,10 +386,9 @@ class LinearConnector extends ConnectorBase<
 				"connect linear requires LINEAR_API_KEY, LINEAR_ACCESS_TOKEN, or both LINEAR_CLIENT_ID and LINEAR_CLIENT_SECRET",
 			);
 		}
-		const parsedPort =
+		const port =
 			this.parseOptionalInteger(opts.port, "port") ??
-			Number.parseInt(process.env.PORT ?? "8787", 10);
-		const port = Number.isFinite(parsedPort) ? parsedPort : 8787;
+			resolveConnectorPort(process.env.PORT);
 		return {
 			userName:
 				opts.userName?.trim() ||

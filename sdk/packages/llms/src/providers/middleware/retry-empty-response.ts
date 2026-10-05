@@ -566,7 +566,13 @@ export function createRetryEmptyResponseMiddleware(
 						});
 
 						if (retryDelayMs > 0) {
-							await sleep(retryDelayMs);
+							await sleep(retryDelayMs, abortSignal);
+						}
+						if (abortSignal?.aborted) {
+							controller.error(
+								abortSignal.reason ?? new Error("Request aborted"),
+							);
+							return;
 						}
 						try {
 							result = await doStream();

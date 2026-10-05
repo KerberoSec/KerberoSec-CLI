@@ -14,8 +14,14 @@ const DASHBOARD_PORT_ENV = "KERBEROSEC_HUB_DASHBOARD_PORT";
 
 function parsePort(value: string | undefined): number {
 	if (!value?.trim()) return DEFAULT_PORT;
-	const port = Number.parseInt(value, 10);
-	if (!Number.isInteger(port) || port < 1 || port > 65535) {
+	const raw = value.trim();
+	const port = Number(raw);
+	if (
+		!/^\d+$/.test(raw) ||
+		!Number.isInteger(port) ||
+		port < 1 ||
+		port > 65535
+	) {
 		throw new Error(
 			`${DASHBOARD_PORT_ENV} must be an integer from 1 to 65535, got ${value}`,
 		);

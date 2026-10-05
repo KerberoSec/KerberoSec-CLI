@@ -123,34 +123,39 @@ export async function runZen(
 		// Wait for the hub to acknowledge `session.send_input` before closing the
 		// socket. That confirms the prompt frame reached the hub and was accepted
 		// for execution, avoiding silent drops on slow or loaded systems.
-		await Promise.race([
-			sessionClient.sendRuntimeSession(started.sessionId, {
-				config: startRequest,
-				prompt: userInput,
-				attachments:
-					userImages.length > 0 || userFiles.length > 0
-						? {
-								userImages: userImages.length > 0 ? userImages : undefined,
-								userFiles:
-									userFiles.length > 0
-										? userFiles.map((content, index) => ({
-												name: `attachment-${index + 1}`,
-												content,
-											}))
-										: undefined,
-							}
-						: undefined,
-			}),
-			new Promise<never>((_, reject) => {
-				setTimeout(() => {
-					reject(
-						new Error(
-							`timed out waiting for hub to acknowledge zen dispatch after ${ZEN_DISPATCH_ACK_TIMEOUT_MS} ms`,
-						),
-					);
-				}, ZEN_DISPATCH_ACK_TIMEOUT_MS);
-			}),
-		]);
+		let ackTimeout: ReturnType<typeof setTimeout> | undefined;
+		try {
+			await Promise.race([
+				sessionClient.sendRuntimeSession(started.sessionId, {
+					config: startRequest,
+					prompt: userInput,
+					attachments:
+						userImages.length > 0 || userFiles.length > 0
+							? {
+									userImages: userImages.length > 0 ? userImages : undefined,
+									userFiles:
+										userFiles.length > 0
+											? userFiles.map((content, index) => ({
+													name: `attachment-${index + 1}`,
+													content,
+												}))
+											: undefined,
+								}
+							: undefined,
+				}),
+				new Promise<never>((_, reject) => {
+					ackTimeout = setTimeout(() => {
+						reject(
+							new Error(
+								`timed out waiting for hub to acknowledge zen dispatch after ${ZEN_DISPATCH_ACK_TIMEOUT_MS} ms`,
+							),
+						);
+					}, ZEN_DISPATCH_ACK_TIMEOUT_MS);
+				}),
+			]);
+		} finally {
+			if (ackTimeout) clearTimeout(ackTimeout);
+		}
 
 		if (config.outputMode === "json") {
 			emitJsonLine("stdout", {

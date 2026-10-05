@@ -1,7 +1,22 @@
 import { execFile, spawn } from "node:child_process";
-import { existsSync, readdirSync, rmSync, statSync } from "node:fs";
+import {
+	existsSync,
+	readdirSync,
+	realpathSync,
+	rmSync,
+	statSync,
+} from "node:fs";
 import { homedir } from "node:os";
-import { basename, dirname, extname, isAbsolute, join } from "node:path";
+import {
+	basename,
+	dirname,
+	extname,
+	isAbsolute,
+	join,
+	relative,
+	resolve,
+	sep,
+} from "node:path";
 import { promisify } from "node:util";
 import type {
 	CoreSettingsSnapshot,
@@ -284,14 +299,55 @@ function mcpTransportIdentity(name: string, record: JsonRecord): string {
 	return `${normalizedType}\u0000${url}`;
 }
 
+function resolvePathInsideDirectory(root: string, path: string): string | null {
+	try {
+		const resolvedRoot = resolve(root);
+		const resolvedPath = resolve(path);
+		const relativePath = relative(resolvedRoot, resolvedPath);
+		if (
+			!relativePath ||
+			relativePath === ".." ||
+			relativePath.startsWith(`..${sep}`) ||
+			isAbsolute(relativePath) ||
+			!existsSync(resolvedRoot) ||
+			!existsSync(resolvedPath)
+		) {
+			return null;
+		}
+
+		// Session paths come from persistent metadata as well as trusted defaults.
+		// Check the canonical paths too so a symlink cannot redirect recursive
+		// cleanup outside the session data directory.
+		const canonicalRoot = realpathSync(resolvedRoot);
+		const canonicalPath = realpathSync(resolvedPath);
+		const canonicalRelativePath = relative(canonicalRoot, canonicalPath);
+		if (
+			!canonicalRelativePath ||
+			canonicalRelativePath === ".." ||
+			canonicalRelativePath.startsWith(`..${sep}`) ||
+			isAbsolute(canonicalRelativePath)
+		) {
+			return null;
+		}
+		return resolvedPath;
+	} catch {
+		return null;
+	}
+}
+
 function removePathIfExists(
 	path: string,
+	allowedRoot: string,
 	options?: { recursive?: boolean },
 ): boolean {
-	if (!path || !existsSync(path)) {
+	const safePath = resolvePathInsideDirectory(allowedRoot, path);
+	if (!safePath) {
 		return false;
 	}
-	rmSync(path, {
+	if (options?.recursive !== true && statSync(safePath).isDirectory()) {
+		return false;
+	}
+	rmSync(safePath, {
 		force: true,
 		recursive: options?.recursive === true,
 	});
@@ -1571,8 +1627,6 @@ export async function handleCommand(
 		if (!sessionId) throw new Error("session id is required");
 		ctx.logger?.log("Deleting desktop chat session", { command, sessionId });
 		const store = new SqliteSessionStore();
-		const row = store.get(sessionId);
-		const manifest = readSessionManifest(sessionId);
 		let deleted = false;
 		let deleteError: Error | null = null;
 		try {
@@ -1601,48 +1655,37 @@ export async function handleCommand(
 			deleted = true;
 		}
 		ctx.liveSessions.delete(sessionId);
+		const sessionDataRoot = sharedSessionDataDir();
 		const directoryCandidates = new Set<string>([
-			join(sharedSessionDataDir(), sessionId),
+			join(sessionDataRoot, sessionId),
 		]);
-		for (const path of [
-			row?.messagesPath,
-			typeof manifest?.messages_path === "string"
-				? manifest.messages_path
-				: null,
-		]) {
-			if (typeof path === "string" && path.trim().length > 0) {
-				directoryCandidates.add(dirname(path));
-			}
-		}
-		for (const path of [sessionLogPath(sessionId)]) {
-			if (removePathIfExists(path, { recursive: true })) {
-				deleted = true;
-			}
+		const logPath = sessionLogPath(sessionId);
+		const sessionLogRoot = dirname(sessionLogPath("session-log-root"));
+		if (removePathIfExists(logPath, sessionLogRoot)) {
+			deleted = true;
 		}
 		for (const dir of directoryCandidates) {
-			if (removePathIfExists(dir, { recursive: true })) {
+			if (removePathIfExists(dir, sessionDataRoot, { recursive: true })) {
 				deleted = true;
 			}
 		}
 		for (const path of [
-			row?.messagesPath,
-			typeof manifest?.messages_path === "string"
-				? manifest.messages_path
-				: null,
-			join(sharedSessionDataDir(), sessionId, `${sessionId}.json`),
-		].filter((v): v is string => typeof v === "string" && v.length > 0)) {
-			if (removePathIfExists(path)) {
+			join(sessionDataRoot, sessionId, `${sessionId}.json`),
+		]) {
+			if (removePathIfExists(path, sessionDataRoot)) {
 				deleted = true;
 			}
 		}
 		for (const suffix of ["messages.json"]) {
 			const fileName = `${sessionId}.${suffix}`;
-			const found = findArtifactUnderDir(
-				join(sharedSessionDataDir(), rootSessionIdFrom(sessionId)),
-				fileName,
-				4,
+			const artifactRoot = resolvePathInsideDirectory(
+				sessionDataRoot,
+				join(sessionDataRoot, rootSessionIdFrom(sessionId)),
 			);
-			if (found && removePathIfExists(found)) {
+			const found = artifactRoot
+				? findArtifactUnderDir(artifactRoot, fileName, 4)
+				: null;
+			if (found && removePathIfExists(found, sessionDataRoot)) {
 				deleted = true;
 			}
 		}

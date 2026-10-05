@@ -1,6 +1,6 @@
 import type { AgentEvent, TeamEvent } from "@kerberosec/core";
 import { formatDisplayUserInput } from "@kerberosec/shared";
-import { useCallback, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import type {
 	PendingPromptSnapshot,
 	PendingPromptSubmittedEvent,
@@ -35,6 +35,7 @@ interface AgentEventDeps {
 }
 
 export function useAgentEventHandlers(deps: AgentEventDeps) {
+	const STREAM_UPDATE_INTERVAL_MS = 33;
 	const openCompactionEntryRef = useRef(false);
 	const {
 		appendEntry,
@@ -56,6 +57,70 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 	// fragmenting thoughts and responses into multiple disconnected blocks.
 	// They are held until the active inline content block ends (or the turn ends).
 	const pendingSideEntriesRef = useRef<ChatEntry[]>([]);
+	const pendingInlineChunksRef = useRef<string[]>([]);
+	const pendingInlineKindRef = useRef<"text" | "reasoning" | undefined>(
+		undefined,
+	);
+	const inlineUpdateTimerRef = useRef<
+		ReturnType<typeof setTimeout> | undefined
+	>(undefined);
+
+	const flushInlineChunks = useCallback(() => {
+		if (inlineUpdateTimerRef.current) {
+			clearTimeout(inlineUpdateTimerRef.current);
+			inlineUpdateTimerRef.current = undefined;
+		}
+		const chunks = pendingInlineChunksRef.current;
+		if (chunks.length === 0) return;
+		pendingInlineChunksRef.current = [];
+		const kind = pendingInlineKindRef.current;
+		pendingInlineKindRef.current = undefined;
+		const text = chunks.join("");
+		if (kind === "text") {
+			updateLastEntry((prev) =>
+				prev.kind === "assistant_text"
+					? { ...prev, text: prev.text + text }
+					: prev,
+			);
+		} else if (kind === "reasoning") {
+			updateLastEntry((prev) =>
+				prev.kind === "reasoning" ? { ...prev, text: prev.text + text } : prev,
+			);
+		}
+	}, [updateLastEntry]);
+
+	const queueInlineChunk = useCallback(
+		(kind: "text" | "reasoning", text: string) => {
+			if (!text) return;
+			if (pendingInlineKindRef.current !== kind) {
+				flushInlineChunks();
+				pendingInlineKindRef.current = kind;
+			}
+			pendingInlineChunksRef.current.push(text);
+			if (!inlineUpdateTimerRef.current) {
+				inlineUpdateTimerRef.current = setTimeout(
+					flushInlineChunks,
+					STREAM_UPDATE_INTERVAL_MS,
+				);
+			}
+		},
+		[flushInlineChunks],
+	);
+
+	const closeActiveInlineStream = useCallback(() => {
+		flushInlineChunks();
+		closeInlineStream();
+	}, [closeInlineStream, flushInlineChunks]);
+
+	useEffect(
+		() => () => {
+			if (inlineUpdateTimerRef.current) {
+				clearTimeout(inlineUpdateTimerRef.current);
+			}
+			pendingInlineChunksRef.current = [];
+		},
+		[],
+	);
 
 	const flushPendingSideEntries = useCallback(() => {
 		const pending = pendingSideEntriesRef.current;
@@ -137,12 +202,12 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "iteration_start":
 					setIsRunning(true);
 					setIsStreaming(true);
-					closeInlineStream();
+					closeActiveInlineStream();
 					flushPendingSideEntries();
 					break;
 				case "iteration_end":
 					setIsStreaming(false);
-					closeInlineStream();
+					closeActiveInlineStream();
 					flushPendingSideEntries();
 					break;
 				case "content_start": {
@@ -150,13 +215,9 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					switch (event.contentType) {
 						case "text": {
 							if (activeInlineStreamRef.current === "text") {
-								updateLastEntry((prev) =>
-									prev.kind === "assistant_text"
-										? { ...prev, text: prev.text + (event.text ?? "") }
-										: prev,
-								);
+								queueInlineChunk("text", event.text ?? "");
 							} else {
-								closeInlineStream();
+								closeActiveInlineStream();
 								flushPendingSideEntries();
 								activeInlineStreamRef.current = "text";
 								appendEntry({
@@ -173,13 +234,9 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 									? "[redacted]"
 									: (event.reasoning ?? "");
 							if (activeInlineStreamRef.current === "reasoning") {
-								updateLastEntry((prev) =>
-									prev.kind === "reasoning"
-										? { ...prev, text: prev.text + chunk }
-										: prev,
-								);
+								queueInlineChunk("reasoning", chunk);
 							} else {
-								closeInlineStream();
+								closeActiveInlineStream();
 								flushPendingSideEntries();
 								activeInlineStreamRef.current = "reasoning";
 								appendEntry({
@@ -191,7 +248,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 							break;
 						}
 						case "tool": {
-							closeInlineStream();
+							closeActiveInlineStream();
 							flushPendingSideEntries();
 							const toolName = event.toolName ?? "unknown_tool";
 							appendEntry({
@@ -210,7 +267,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "content_end": {
 					switch (event.contentType) {
 						case "text": {
-							closeInlineStream();
+							closeActiveInlineStream();
 							if (event.text !== undefined) {
 								updateLastEntry((prev) =>
 									prev.kind === "assistant_text"
@@ -222,7 +279,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 							break;
 						}
 						case "reasoning":
-							closeInlineStream();
+							closeActiveInlineStream();
 							if (event.reasoning !== undefined) {
 								updateLastEntry((prev) =>
 									prev.kind === "reasoning"
@@ -233,13 +290,13 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 							flushPendingSideEntries();
 							break;
 						case "tool": {
-							closeInlineStream();
+							closeActiveInlineStream();
 							closeToolEntry(event);
 							flushPendingSideEntries();
 							break;
 						}
 						case "media": {
-							closeInlineStream();
+							closeActiveInlineStream();
 							const media = event.media;
 							if (media) {
 								const saved = materializeGeneratedMedia(media);
@@ -266,7 +323,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 				case "done":
 					setIsRunning(false);
 					setIsStreaming(false);
-					closeInlineStream();
+					closeActiveInlineStream();
 					flushPendingSideEntries();
 					finalizeDanglingCompactionEntry("cancelled");
 					break;
@@ -292,7 +349,7 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 					}
 					setIsRunning(false);
 					setIsStreaming(false);
-					closeInlineStream();
+					closeActiveInlineStream();
 					flushPendingSideEntries();
 					finalizeDanglingCompactionEntry("failed");
 					turnErrorReportedRef.current = true;
@@ -368,6 +425,8 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 			closeToolEntry,
 			finalizeDanglingCompactionEntry,
 			flushPendingSideEntries,
+			queueInlineChunk,
+			closeActiveInlineStream,
 		],
 	);
 

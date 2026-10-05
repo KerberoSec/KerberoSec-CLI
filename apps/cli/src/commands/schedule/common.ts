@@ -29,8 +29,9 @@ export function toPositiveInt(
 	value: string | undefined,
 	fallback: number,
 ): number {
-	const parsed = Number.parseInt(value ?? "", 10);
-	if (!Number.isFinite(parsed) || parsed <= 0) {
+	const raw = value?.trim() ?? "";
+	const parsed = Number(raw);
+	if (!/^\d+$/.test(raw) || !Number.isSafeInteger(parsed) || parsed <= 0) {
 		return fallback;
 	}
 	return parsed;

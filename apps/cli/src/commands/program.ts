@@ -8,6 +8,8 @@ import type { ParsedArgs } from "../utils/types";
 
 export { CommanderError };
 
+const MAX_TIMEOUT_SECONDS = Math.floor(2_147_483_647 / 1000);
+
 function normalizeAutoApproveValue(
 	value: string | boolean | undefined,
 ): string {
@@ -15,6 +17,18 @@ function normalizeAutoApproveValue(
 		return "true";
 	}
 	return String(value);
+}
+
+function parsePositiveInteger(
+	value: string,
+	maximum = Number.MAX_SAFE_INTEGER,
+): number | undefined {
+	const raw = value.trim();
+	if (!/^\d+$/.test(raw)) return undefined;
+	const parsed = Number(raw);
+	return Number.isSafeInteger(parsed) && parsed >= 1 && parsed <= maximum
+		? parsed
+		: undefined;
 }
 
 /**
@@ -108,7 +122,11 @@ export function addRootOptions(cmd: Command): Command {
 	);
 }
 
-export function createProgram(): Command {
+export interface CreateProgramOptions {
+	withSubcommands?: boolean;
+}
+
+export function createProgram(options?: CreateProgramOptions): Command {
 	const program = new Command("kerberosec")
 		.description("KerberoSec CLI - AI coding assistant in your terminal")
 		.version(version, "-V, --version", "Output the version number")
@@ -125,6 +143,26 @@ export function createProgram(): Command {
 		);
 
 	addRootOptions(program);
+
+	if (options?.withSubcommands) {
+		program.command("auth [provider]").description("Authenticate a provider and configure what model is used");
+		program.command("config").description("View and update persistent configuration");
+		program.command("connect").description("Connect this terminal to an external chat platform");
+		program.command("dashboard").description("Open the web dashboard in your browser");
+		program.command("doctor").description("Check health of local hub daemon, connectors, and background processes");
+		program.command("history").description("Browse and resume past sessions");
+		program.command("hook").description("Manage runtime hooks");
+		program.command("hub").description("Manage the background hub daemon");
+		program.command("kanban").description("Launch the kanban board");
+		program.command("logout").description("Clear stored credentials for a provider");
+		program.command("mcp").description("Manage MCP servers");
+		program.command("ollama").description("Manage local Ollama installation and models");
+		program.command("plugin").description("Manage plugins");
+		program.command("schedule").description("Manage scheduled tasks");
+		program.command("skill").description("Manage custom skills");
+		program.command("update").description("Check for updates and install if available");
+		program.command("version").description("Print detailed version information");
+	}
 
 	return program;
 }
@@ -167,8 +205,8 @@ export function commanderToParsedArgs(program: Command): ParsedArgs {
 	// Timeout validation
 	if (opts.timeout !== undefined) {
 		const raw = opts.timeout.trim();
-		const parsed = Number.parseInt(raw, 10);
-		if (raw && Number.isInteger(parsed) && parsed >= 1) {
+		const parsed = parsePositiveInteger(raw, MAX_TIMEOUT_SECONDS);
+		if (parsed !== undefined) {
 			result.timeoutSeconds = parsed;
 		} else if (raw) {
 			result.invalidTimeoutSeconds = raw;
@@ -210,8 +248,8 @@ export function commanderToParsedArgs(program: Command): ParsedArgs {
 	// Retries (max consecutive mistakes) validation
 	if (opts.retries !== undefined) {
 		const raw = opts.retries.trim();
-		const parsed = Number.parseInt(raw, 10);
-		if (raw && Number.isInteger(parsed) && parsed >= 1) {
+		const parsed = parsePositiveInteger(raw);
+		if (parsed !== undefined) {
 			result.retries = parsed;
 		} else if (raw) {
 			result.invalidRetries = raw;

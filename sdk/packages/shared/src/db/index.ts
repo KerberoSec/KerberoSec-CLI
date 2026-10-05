@@ -12,9 +12,12 @@ export {
 export type {
 	SessionSchemaOptions,
 	SqliteDb,
+	SqliteDbOptions,
+	SqlitePragmaOptions,
 	SqliteStatement,
 } from "./sqlite-db";
 export {
+	applySqlitePragmas,
 	asBool,
 	asOptionalString,
 	asString,

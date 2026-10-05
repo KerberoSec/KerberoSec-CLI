@@ -8,6 +8,10 @@ const CLINE_NOT_SUBSCRIBED_FORMATTED_MESSAGE_PREFIX =
 	"no access to clinepass subscription models yet. subscribe to clinepass";
 export const KERBEROSEC_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_RESPONSE_MESSAGE =
 	"organization accounts cannot use individual model inference subscriptions";
+const KERBEROSEC_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_FORMATTED_PREFIX =
+	"organization accounts cannot use kerberosecpass subscriptions";
+const CLINE_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_FORMATTED_PREFIX =
+	"organization accounts cannot use clinepass subscriptions";
 
 const KERBEROSEC_PASS_LIMIT_PREFIX = "you have reached your";
 const KERBEROSEC_PASS_LIMIT_MARKER = "kerberosecpass limit";
@@ -65,7 +69,7 @@ export class KerberoSecNotSubscribedError extends Error {
 }
 
 export function getKerberoSecOrgIndividualInferenceSubscriptionMessage(): string {
-	return "Organization accounts cannot use ClinePass subscriptions. Go to /account -> change account to switch to your personal account for ClinePass";
+	return "Organization accounts cannot use KerberoSecPass subscriptions. Go to /account -> change account to switch to your personal account for KerberoSecPass";
 }
 
 export class KerberoSecOrgIndividualInferenceSubscriptionError extends Error {
@@ -134,11 +138,18 @@ export function isKerberoSecNotSubscribedMessage(text: string): boolean {
 export function isKerberoSecOrgIndividualInferenceSubscriptionMessage(
 	text: string,
 ): boolean {
-	return text
-		.toLowerCase()
-		.includes(
+	const normalized = text.toLowerCase();
+	return (
+		normalized.includes(
 			KERBEROSEC_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_RESPONSE_MESSAGE,
-		);
+		) ||
+		normalized.includes(
+			KERBEROSEC_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_FORMATTED_PREFIX,
+		) ||
+		normalized.includes(
+			CLINE_ORG_INDIVIDUAL_INFERENCE_SUBSCRIPTION_FORMATTED_PREFIX,
+		)
+	);
 }
 
 export function isKerberoSecPassLimitMessage(text: string): boolean {

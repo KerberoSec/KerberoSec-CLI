@@ -52,6 +52,10 @@ export class HookDiscoveryCache {
 	// Cache: hookName -> discovered script paths
 	private cache = new Map<HookName, HookCacheEntry>()
 
+	// The directories included in each cache entry, including when no scripts
+	// were found. This lets watcher events invalidate empty results too.
+	private scannedDirsByHook = new Map<HookName, Set<string>>()
+
 	// Watchers: directory path -> file watcher
 	private watchers = new Map<string, FileWatcher>()
 
@@ -60,6 +64,7 @@ export class HookDiscoveryCache {
 
 	// Currently scanning promises (to prevent concurrent scans)
 	private scanningPromises = new Map<HookName, Promise<string[]>>()
+	private cacheRevision = 0
 
 	// For disposal
 	private context: ExtensionContext | null = null
@@ -95,6 +100,7 @@ export class HookDiscoveryCache {
 				onWorkspaceFoldersChanged(() => {
 					this.log("Workspace folders changed, invalidating cache")
 					this.invalidateAll()
+					this.disposeDirectoryWatchers()
 				}),
 			)
 		}
@@ -162,12 +168,17 @@ export class HookDiscoveryCache {
 		}
 
 		// Create a new scan promise
-		const scanPromise = (async () => {
+		const scanRevision = this.cacheRevision
+		let scanPromise: Promise<string[]> = Promise.resolve([])
+		scanPromise = Promise.resolve().then(async () => {
 			try {
 				// Use the caller's hooks-dir snapshot when provided, otherwise
 				// resolve the current hooks directories
 				const hooksDirs = knownHooksDirs ?? (await getAllHooksDirs())
 				this.log(`Scanning ${hooksDirs.length} directories for ${hookName}`)
+				if (scanRevision === this.cacheRevision) {
+					this.scannedDirsByHook.set(hookName, new Set(hooksDirs))
+				}
 
 				// Ensure watchers are set up for each directory (lazy initialization)
 				for (const dir of hooksDirs) {
@@ -183,10 +194,12 @@ export class HookDiscoveryCache {
 				this.log(`Found ${scripts.length} scripts for ${hookName}`)
 
 				// Cache the result
-				this.cache.set(hookName, {
-					scriptPaths: scripts,
-					timestamp: Date.now(),
-				})
+				if (scanRevision === this.cacheRevision) {
+					this.cache.set(hookName, {
+						scriptPaths: scripts,
+						timestamp: Date.now(),
+					})
+				}
 
 				return scripts
 			} catch (error) {
@@ -195,9 +208,11 @@ export class HookDiscoveryCache {
 				return []
 			} finally {
 				// Remove from scanning promises map
-				this.scanningPromises.delete(hookName)
+				if (this.scanningPromises.get(hookName) === scanPromise) {
+					this.scanningPromises.delete(hookName)
+				}
 			}
-		})()
+		})
 
 		// Store the promise so concurrent calls can await it
 		this.scanningPromises.set(hookName, scanPromise)
@@ -260,16 +275,22 @@ export class HookDiscoveryCache {
 	}
 
 	/**
-	 * Invalidate all cached hooks that have scripts in this directory
+	 * Invalidate every hook cache whose scan included this directory, even when
+	 * that scan found no scripts there.
 	 */
 	private invalidateDirectory(dir: string): void {
 		let invalidated = 0
 
-		for (const [hookName, entry] of this.cache) {
-			if (entry.scriptPaths.some((scriptPath) => scriptPath.startsWith(dir))) {
+		for (const [hookName, scannedDirs] of this.scannedDirsByHook) {
+			if (scannedDirs.has(dir)) {
 				this.cache.delete(hookName)
+				this.scannedDirsByHook.delete(hookName)
 				invalidated++
 			}
+		}
+		if (invalidated > 0) {
+			this.cacheRevision++
+			this.scanningPromises.clear()
 		}
 
 		this.log(`Invalidated ${invalidated} hooks for directory ${dir}`)
@@ -280,8 +301,27 @@ export class HookDiscoveryCache {
 	 */
 	invalidateAll(): void {
 		const size = this.cache.size
+		this.cacheRevision++
 		this.cache.clear()
+		this.scannedDirsByHook.clear()
+		this.scanningPromises.clear()
 		this.log(`Invalidated entire cache (${size} entries)`)
+	}
+
+	private disposeDirectoryWatchers(): void {
+		for (const watcher of this.watchers.values()) {
+			try {
+				watcher.dispose()
+			} catch (error) {
+				this.log(`Failed to dispose hook directory watcher: ${error}`)
+			}
+			const subscriptionIndex = this.context?.subscriptions.indexOf(watcher) ?? -1
+			if (subscriptionIndex >= 0) {
+				this.context?.subscriptions.splice(subscriptionIndex, 1)
+			}
+		}
+		this.watchers.clear()
+		this.watchedDirs.clear()
 	}
 
 	/**
@@ -314,13 +354,10 @@ export class HookDiscoveryCache {
 
 		this.log(`Disposing cache (${this.watchers.size} watchers)`)
 
-		for (const watcher of this.watchers.values()) {
-			watcher.dispose()
-		}
-
-		this.watchers.clear()
-		this.watchedDirs.clear()
+		this.disposeDirectoryWatchers()
 		this.cache.clear()
+		this.scannedDirsByHook.clear()
+		this.scanningPromises.clear()
 		this.disposed = true
 	}
 

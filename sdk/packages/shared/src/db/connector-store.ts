@@ -4,6 +4,7 @@ import {
 	resolveConnectorsDbPath,
 } from "../storage/paths";
 import {
+	applySqlitePragmas,
 	asOptionalString,
 	asString,
 	loadSqliteDb,
@@ -60,8 +61,7 @@ const CONNECTOR_CONNECTION_SCHEMA = `CREATE TABLE IF NOT EXISTS connector_connec
 );`;
 
 export function ensureConnectorSchema(db: SqliteDb): void {
-	db.exec("PRAGMA journal_mode = WAL;");
-	db.exec("PRAGMA busy_timeout = 5000;");
+	applySqlitePragmas(db);
 	db.exec(CONNECTOR_CONFIG_SCHEMA);
 	db.exec(CONNECTOR_CONNECTION_SCHEMA);
 }

@@ -1,0 +1,133 @@
+import { existsSync, readFileSync } from "node:fs";
+import { homedir } from "node:os";
+import { join } from "node:path";
+import { isMainThread } from "node:worker_threads";
+import {
+	claimHubDaemonProcess,
+	claimSupervisedConnectorProcess,
+	disposeAll,
+	initVcr,
+	setConnectorCliLaunchSpec,
+} from "@kerberosec/shared";
+import { logCliProcessError } from "./logging/errors";
+import {
+	abortActiveRuntime,
+	cleanupActiveRuntime,
+	isAbortInProgress,
+} from "./runtime/active-runtime";
+import { resolveCliLaunchSpec } from "./utils/internal-launch";
+import { writeErr } from "./utils/output";
+
+// Auto-configure Ollama context window based on hardware calibration if not explicitly set
+if (!process.env.OLLAMA_NUM_CTX) {
+	try {
+		const calibratedPath = join(homedir(), ".kerberosec", "ollama_num_ctx");
+		if (existsSync(calibratedPath)) {
+			const val = readFileSync(calibratedPath, "utf-8").trim();
+			if (val && !Number.isNaN(Number(val))) {
+				process.env.OLLAMA_NUM_CTX = val;
+			}
+		} else {
+			process.env.OLLAMA_NUM_CTX = "4096";
+		}
+	} catch {
+		process.env.OLLAMA_NUM_CTX = "4096";
+	}
+}
+
+// Initialize VCR before any HTTP requests are made.
+// Set KERBEROSEC_VCR=record|playback and KERBEROSEC_VCR_CASSETTE=<path> to enable.
+initVcr(process.env.KERBEROSEC_VCR);
+
+if (!isMainThread) {
+	// Worker imports of the bundled CLI entrypoint should not start the CLI.
+} else if (claimHubDaemonProcess()) {
+	// Claim rather than read: the sentinel is consumed here so the processes a
+	// daemon-hosted session spawns do not inherit it and try to become daemons.
+	// The hub daemon owns its process-level abort handling. Installing the CLI's
+	// fatal rejection handler first would make expected abort rejections exit it.
+	void import("@kerberosec/core/hub/daemon-entry");
+} else {
+	// Same reasoning as the daemon sentinel above: consume the supervised-connector
+	// marker so the processes an agent session spawns cannot inherit it and mistake
+	// themselves for the connector the hub is tracking.
+	claimSupervisedConnectorProcess();
+
+	const cliLaunchSpec = resolveCliLaunchSpec({ debugRole: "connector" });
+	if (cliLaunchSpec) {
+		setConnectorCliLaunchSpec({
+			launcher: cliLaunchSpec.launcher,
+			connectArgsPrefix: [...cliLaunchSpec.childArgsPrefix, "connect"],
+			cwd: process.cwd(),
+		});
+	}
+
+	let shuttingDown = false;
+	let handlingFatalProcessError = false;
+	const forwardSignalToRuntime = () => {
+		if (shuttingDown) {
+			process.exit(1);
+		}
+		shuttingDown = true;
+		abortActiveRuntime();
+	};
+	process.on("SIGINT", forwardSignalToRuntime);
+	process.on("SIGTERM", forwardSignalToRuntime);
+	const handleFatalProcessError = (kind: string, error: unknown) => {
+		if (handlingFatalProcessError) {
+			process.exit(1);
+		}
+		handlingFatalProcessError = true;
+		logCliProcessError(kind, error);
+		writeErr(
+			error instanceof Error ? (error.stack ?? error.message) : String(error),
+		);
+		cleanupActiveRuntime();
+		abortActiveRuntime();
+		void disposeAll().finally(() => {
+			process.exit(1);
+		});
+	};
+	process.on("uncaughtException", (error) => {
+		handleFatalProcessError("uncaughtException", error);
+	});
+	process.on("unhandledRejection", (reason, promise) => {
+		if (isAbortInProgress()) {
+			// Mark the promise as handled so OpenTUI's error overlay
+			// does not surface expected abort-related rejections.
+			promise.catch(() => {});
+			return;
+		}
+		// Validation errors (e.g. ZodError from an empty provider after
+		// logout or token expiry) are recoverable — log them but do not
+		// kill the process so the interactive session stays alive.
+		if (
+			reason != null &&
+			typeof reason === "object" &&
+			"name" in reason &&
+			(reason as { name?: string }).name === "ZodError"
+		) {
+			logCliProcessError("unhandledRejection", reason);
+			promise.catch(() => {});
+			return;
+		}
+		handleFatalProcessError("unhandledRejection", reason);
+	});
+
+	void (async () => {
+		let exitCode = 0;
+		try {
+			const { runCli } = await import("./main");
+			await runCli();
+		} catch (err) {
+			logCliProcessError("runCli", err);
+			writeErr(err instanceof Error ? err.message : String(err));
+			cleanupActiveRuntime();
+			abortActiveRuntime();
+			exitCode = 1;
+		} finally {
+			await disposeAll();
+		}
+		process.exit(exitCode || (process.exitCode as number) || 0);
+	})();
+}

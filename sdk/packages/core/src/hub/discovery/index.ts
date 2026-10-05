@@ -547,12 +547,14 @@ export async function probeHubServer(
 	options?: { authToken?: string },
 ): Promise<HubServerProbeRecord | undefined> {
 	try {
+		const signal = AbortSignal.timeout(3_000);
 		const response = await fetch(
 			options?.authToken ? toHubStatusUrl(url) : toHubHealthUrl(url),
 			{
 				headers: options?.authToken
 					? { authorization: `Bearer ${options.authToken}` }
 					: undefined,
+				signal,
 			},
 		);
 		if (!response.ok) {

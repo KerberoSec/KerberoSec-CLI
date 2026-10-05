@@ -78,182 +78,190 @@ export async function startKerberoSecHubDashboardServer(): Promise<KerberoSecHub
 	const assets = new WebviewAssets(webviewDistDir);
 	const syncClientsAndSessions = () => syncHubClientsAndSessions(ctx);
 	let stopped = false;
+	let healthInterval: ReturnType<typeof setInterval> | undefined;
+	let server: ReturnType<typeof Bun.serve<BrowserPeer>>;
 
-	await attachHub(ctx);
-	const healthInterval = setInterval(() => {
-		void (async () => {
-			await syncHubHealth(ctx);
-			broadcastHubState(ctx);
-		})();
-	}, 5_000);
-
-	const server = Bun.serve<BrowserPeer>({
-		port,
-		hostname: host,
-		async fetch(req, server) {
-			const url = new URL(req.url);
-			if (
-				!isAuthorizedBrowserToDesktopRequest(
-					req,
-					url,
-					{
-						bindHost: host,
-						port,
-						publicUrl,
-						roomSecret,
-					},
-					isPublicBrowserRoute,
-				)
-			) {
-				return createJsonResponse({ error: "unauthorized_browser" }, 403);
-			}
-			if (url.pathname === "/version") {
-				return createJsonResponse({ coreVersion: CORE_BUILD_VERSION });
-			}
-			if (url.pathname === "/health") {
+	try {
+		await attachHub(ctx);
+		healthInterval = setInterval(() => {
+			void (async () => {
 				await syncHubHealth(ctx);
-				return createJsonResponse(hubStatusPayload(ctx));
-			}
-			if (url.pathname === "/browser") {
-				const displayName = `Browser ${Math.random().toString(36).slice(2, 6)}`;
-				const data = {
-					socket: undefined as never,
-					displayName,
-					sending: false,
-				};
-				if (server.upgrade(req, { data })) return undefined;
-				return new Response("upgrade failed", { status: 400 });
-			}
-			if (url.pathname === "/config.json") {
-				return createJsonResponse(browserConfig);
-			}
-			if (url.pathname === "/api/marketplace/catalog") {
-				try {
-					return createJsonResponse(await fetchMarketplaceCatalog());
-				} catch (error) {
-					return createJsonResponse(
+				broadcastHubState(ctx);
+			})();
+		}, 5_000);
+
+		server = Bun.serve<BrowserPeer>({
+			port,
+			hostname: host,
+			async fetch(req, server) {
+				const url = new URL(req.url);
+				if (
+					!isAuthorizedBrowserToDesktopRequest(
+						req,
+						url,
 						{
-							error:
-								error instanceof Error
-									? error.message
-									: "Failed to fetch marketplace catalog",
+							bindHost: host,
+							port,
+							publicUrl,
+							roomSecret,
 						},
-						502,
-					);
+						isPublicBrowserRoute,
+					)
+				) {
+					return createJsonResponse({ error: "unauthorized_browser" }, 403);
 				}
-			}
-			return assets.serve(url.pathname);
-		},
-		websocket: {
-			async open(socket) {
-				const peer = socket.data;
-				peer.socket = socket;
-				ctx.peers.add(peer);
+				if (url.pathname === "/version") {
+					return createJsonResponse({ coreVersion: CORE_BUILD_VERSION });
+				}
+				if (url.pathname === "/health") {
+					await syncHubHealth(ctx);
+					return createJsonResponse(hubStatusPayload(ctx));
+				}
+				if (url.pathname === "/browser") {
+					const displayName = `Browser ${Math.random().toString(36).slice(2, 6)}`;
+					const data = {
+						socket: undefined as never,
+						displayName,
+						sending: false,
+					};
+					if (server.upgrade(req, { data })) return undefined;
+					return new Response("upgrade failed", { status: 400 });
+				}
+				if (url.pathname === "/config.json") {
+					return createJsonResponse(browserConfig);
+				}
+				if (url.pathname === "/api/marketplace/catalog") {
+					try {
+						return createJsonResponse(await fetchMarketplaceCatalog());
+					} catch (error) {
+						return createJsonResponse(
+							{
+								error:
+									error instanceof Error
+										? error.message
+										: "Failed to fetch marketplace catalog",
+							},
+							502,
+						);
+					}
+				}
+				return assets.serve(url.pathname);
 			},
-			async message(socket, raw) {
-				const peer = socket.data;
-				try {
-					const frame = JSON.parse(String(raw)) as BrowserFrame;
-					if (frame.type === "desktopCommand") {
-						try {
-							const result = await handleDesktopCommand(
-								ctx,
-								frame.command,
-								frame.args,
-							);
-							ctx.send(peer, {
-								type: "desktopCommandResult",
-								id: frame.id,
-								ok: true,
-								result,
+			websocket: {
+				async open(socket) {
+					const peer = socket.data;
+					peer.socket = socket;
+					ctx.peers.add(peer);
+				},
+				async message(socket, raw) {
+					const peer = socket.data;
+					try {
+						const frame = JSON.parse(String(raw)) as BrowserFrame;
+						if (frame.type === "desktopCommand") {
+							try {
+								const result = await handleDesktopCommand(
+									ctx,
+									frame.command,
+									frame.args,
+								);
+								ctx.send(peer, {
+									type: "desktopCommandResult",
+									id: frame.id,
+									ok: true,
+									result,
+								});
+							} catch (error) {
+								ctx.send(peer, {
+									type: "desktopCommandResult",
+									id: frame.id,
+									ok: false,
+									error: error instanceof Error ? error.message : String(error),
+								});
+							}
+						} else if (frame.type === "ready") {
+							await initializePeer(ctx, peer, syncClientsAndSessions);
+						} else if (frame.type === "loadModels") {
+							await loadModels(ctx, peer, frame.providerId);
+						} else if (frame.type === "loadProviderCatalog") {
+							await sendProviderCatalog(ctx, peer);
+						} else if (frame.type === "saveProviderSettings") {
+							await saveProviderSettings(ctx, peer, frame);
+						} else if (frame.type === "runProviderOAuthLogin") {
+							await runProviderOAuthLogin(ctx, peer, frame.providerId);
+						} else if (frame.type === "attachSession") {
+							await selectSession(ctx, peer, frame.sessionId);
+						} else if (frame.type === "deleteSession") {
+							await deleteSession(ctx, peer, frame.sessionId);
+						} else if (frame.type === "updateSessionMetadata") {
+							if (!ctx.kerberosec) throw new Error("Hub is not connected.");
+							const session = await ctx.kerberosec.get(frame.sessionId);
+							const metadata =
+								session?.metadata && typeof session.metadata === "object"
+									? (session.metadata as Record<string, unknown>)
+									: {};
+							await ctx.kerberosec.update(frame.sessionId, {
+								metadata: { ...metadata, ...frame.metadata },
 							});
-						} catch (error) {
-							ctx.send(peer, {
-								type: "desktopCommandResult",
-								id: frame.id,
-								ok: false,
-								error: error instanceof Error ? error.message : String(error),
-							});
-						}
-					} else if (frame.type === "ready") {
-						await initializePeer(ctx, peer, syncClientsAndSessions);
-					} else if (frame.type === "loadModels") {
-						await loadModels(ctx, peer, frame.providerId);
-					} else if (frame.type === "loadProviderCatalog") {
-						await sendProviderCatalog(ctx, peer);
-					} else if (frame.type === "saveProviderSettings") {
-						await saveProviderSettings(ctx, peer, frame);
-					} else if (frame.type === "runProviderOAuthLogin") {
-						await runProviderOAuthLogin(ctx, peer, frame.providerId);
-					} else if (frame.type === "attachSession") {
-						await selectSession(ctx, peer, frame.sessionId);
-					} else if (frame.type === "deleteSession") {
-						await deleteSession(ctx, peer, frame.sessionId);
-					} else if (frame.type === "updateSessionMetadata") {
-						if (!ctx.kerberosec) throw new Error("Hub is not connected.");
-						const session = await ctx.kerberosec.get(frame.sessionId);
-						const metadata =
-							session?.metadata && typeof session.metadata === "object"
-								? (session.metadata as Record<string, unknown>)
-								: {};
-						await ctx.kerberosec.update(frame.sessionId, {
-							metadata: { ...metadata, ...frame.metadata },
-						});
-						await syncHubClientsAndSessions(ctx);
-						broadcastHubState(ctx);
-					} else if (frame.type === "approval_response") {
-						handleToolApprovalResponse(ctx, frame);
-					} else if (frame.type === "abort") {
-						await abortPeerTurn(ctx, peer);
-					} else if (frame.type === "reset") {
-						await resetPeer(ctx, peer);
-					} else if (frame.type === "send") {
-						if (peer.sending) {
-							ctx.send(peer, {
-								type: "status",
-								text: "A turn is already in progress.",
-							});
-							return;
-						}
-						peer.sending = true;
-						try {
-							await sendMessage(
+							await syncHubClientsAndSessions(ctx);
+							broadcastHubState(ctx);
+						} else if (frame.type === "approval_response") {
+							handleToolApprovalResponse(ctx, frame);
+						} else if (frame.type === "abort") {
+							await abortPeerTurn(ctx, peer);
+						} else if (frame.type === "reset") {
+							await resetPeer(ctx, peer);
+						} else if (frame.type === "send") {
+							if (peer.sending) {
+								ctx.send(peer, {
+									type: "status",
+									text: "A turn is already in progress.",
+								});
+								return;
+							}
+							peer.sending = true;
+							try {
+								await sendMessage(
+									ctx,
+									peer,
+									frame.prompt,
+									frame.config,
+									frame.attachments,
+								);
+							} finally {
+								peer.sending = false;
+							}
+						} else if (frame.type === "forkSession") {
+							await forkPeerSession(ctx, peer, syncClientsAndSessions);
+						} else if (frame.type === "restore") {
+							await restorePeerSession(
 								ctx,
 								peer,
-								frame.prompt,
-								frame.config,
-								frame.attachments,
+								frame.checkpointRunCount,
+								syncClientsAndSessions,
 							);
-						} finally {
-							peer.sending = false;
+						} else if (frame.type === "restart_hub") {
+							await restartHub(ctx);
 						}
-					} else if (frame.type === "forkSession") {
-						await forkPeerSession(ctx, peer, syncClientsAndSessions);
-					} else if (frame.type === "restore") {
-						await restorePeerSession(
-							ctx,
-							peer,
-							frame.checkpointRunCount,
-							syncClientsAndSessions,
-						);
-					} else if (frame.type === "restart_hub") {
-						await restartHub(ctx);
+					} catch (error) {
+						ctx.send(peer, {
+							type: "error",
+							text: error instanceof Error ? error.message : String(error),
+						});
 					}
-				} catch (error) {
-					ctx.send(peer, {
-						type: "error",
-						text: error instanceof Error ? error.message : String(error),
-					});
-				}
+				},
+				close(socket) {
+					const peer = socket.data;
+					peer.unsubscribeEvents?.();
+					ctx.peers.delete(peer);
+					rejectOrphanedApprovals(ctx);
+				},
 			},
-			close(socket) {
-				const peer = socket.data;
-				peer.unsubscribeEvents?.();
-				ctx.peers.delete(peer);
-				rejectOrphanedApprovals(ctx);
-			},
-		},
-	});
+		});
+	} catch (error) {
+		if (healthInterval) clearInterval(healthInterval);
+		await detachHub(ctx);
+		throw error;
+	}
 
 	return {
 		listenUrl: server.url.toString(),
@@ -265,7 +273,7 @@ export async function startKerberoSecHubDashboardServer(): Promise<KerberoSecHub
 		stop: async () => {
 			if (stopped) return;
 			stopped = true;
-			clearInterval(healthInterval);
+			if (healthInterval) clearInterval(healthInterval);
 			try {
 				server.stop(true);
 			} finally {

@@ -56,10 +56,18 @@ async function runHistoryUpdate(
 		return 1;
 	}
 
-	let metadata: Record<string, unknown> | undefined;
+	let metadata: Record<string, unknown> | null | undefined;
 	if (metadataStr) {
 		try {
-			metadata = JSON.parse(metadataStr);
+			const parsed: unknown = JSON.parse(metadataStr);
+			if (parsed === null) {
+				metadata = null;
+			} else if (typeof parsed === "object" && !Array.isArray(parsed)) {
+				metadata = parsed as Record<string, unknown>;
+			} else {
+				io.writeErr("Metadata JSON must be an object or null");
+				return 1;
+			}
 		} catch (error) {
 			io.writeErr(
 				`Invalid metadata JSON: ${error instanceof Error ? error.message : String(error)}`,
@@ -68,7 +76,7 @@ async function runHistoryUpdate(
 		}
 	}
 	if (title !== undefined) {
-		if (metadata) {
+		if (metadata !== null && metadata !== undefined) {
 			delete metadata.title;
 		}
 	}
@@ -139,6 +147,7 @@ async function runHistoryExport(
 
 export async function runHistoryList(input: {
 	limit: number;
+	page?: number;
 	outputMode: CliOutputMode;
 	workspaceRoot?: string;
 	io?: HistoryIo;
@@ -147,13 +156,24 @@ export async function runHistoryList(input: {
 		writeln,
 		writeErr: (text: string) => process.stderr.write(`${text}\n`),
 	};
-	const limit = Number.isFinite(input.limit) ? input.limit : 50;
+	const limit =
+		Number.isSafeInteger(input.limit) && input.limit > 0 ? input.limit : 50;
+	const page =
+		Number.isSafeInteger(input.page) && (input.page ?? 1) > 0
+			? (input.page ?? 1)
+			: 1;
+	const offset = (page - 1) * limit;
+	if (!Number.isSafeInteger(offset + limit)) {
+		io.writeErr("--page and --limit are too large");
+		return 1;
+	}
 
-	const rows = await listSessions(limit, {
+	const rows = await listSessions(offset + limit, {
 		workspaceRoot: input.workspaceRoot,
 		hydrate: input.outputMode !== "json",
 	});
-	if (rows.length === 0) {
+	const pageRows = rows.slice(offset, offset + limit);
+	if (pageRows.length === 0) {
 		if (input.outputMode === "json") {
 			process.stdout.write(JSON.stringify([]));
 		} else {
@@ -163,11 +183,11 @@ export async function runHistoryList(input: {
 	}
 
 	if (input.outputMode === "json") {
-		process.stdout.write(JSON.stringify(rows));
+		process.stdout.write(JSON.stringify(pageRows));
 		return 0;
 	}
 
-	for (const row of rows) {
+	for (const row of pageRows) {
 		io.writeln(formatHistoryListLine(row));
 	}
 	return 0;

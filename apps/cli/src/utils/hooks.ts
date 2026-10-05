@@ -103,15 +103,32 @@ function isAbortReason(reason?: string): boolean {
 	);
 }
 
-function serializeHookError(error: Error): {
+function serializeHookError(error: unknown): {
 	name: string;
 	message: string;
 	stack?: string;
 } {
+	const details =
+		error && typeof error === "object"
+			? (error as { name?: unknown; message?: unknown; stack?: unknown })
+			: undefined;
+	const name =
+		typeof details?.name === "string" && details.name.trim()
+			? details.name
+			: "Error";
+	const message =
+		typeof details?.message === "string" && details.message.trim()
+			? details.message
+			: typeof error === "string" && error.trim()
+				? error
+				: error instanceof Error && error.message.trim()
+					? error.message
+					: "Agent run failed";
+	const stack = typeof details?.stack === "string" ? details.stack : undefined;
 	return {
-		name: error.name,
-		message: error.message,
-		stack: error.stack,
+		name,
+		message,
+		...(stack ? { stack } : {}),
 	};
 }
 

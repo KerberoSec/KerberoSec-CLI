@@ -67,6 +67,7 @@ const result = await Bun.build({
 	target: "node",
 	format: "esm",
 	sourcemap,
+	minify: true,
 	packages: "bundle", // Keep private workspace packages bundled so npm consumers do not need @kerberosec/* at runtime.
 	external: [
 		// OpenTUI resolves a platform-specific native package at runtime.

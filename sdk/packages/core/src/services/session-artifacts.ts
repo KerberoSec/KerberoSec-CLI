@@ -1,12 +1,13 @@
 import {
 	existsSync,
+	lstatSync,
 	mkdirSync,
 	readdirSync,
 	rmdirSync,
 	rmSync,
 	unlinkSync,
 } from "node:fs";
-import { dirname, join } from "node:path";
+import { basename, dirname, join, resolve } from "node:path";
 import {
 	parseSubSessionId,
 	parseTeamTaskSubSessionId,
@@ -14,6 +15,18 @@ import {
 
 export function nowIso(): string {
 	return new Date().toISOString();
+}
+
+function assertSafeSessionToken(value: string): void {
+	if (
+		!value ||
+		value === "." ||
+		value === ".." ||
+		!/^[A-Za-z0-9._-]+$/.test(value) ||
+		basename(value) !== value
+	) {
+		throw new Error("session id contains an invalid path segment");
+	}
 }
 
 export function unlinkIfExists(path: string | null | undefined): void {
@@ -60,8 +73,24 @@ function childArtifactFileStem(sessionId: string): {
 export class SessionArtifacts {
 	constructor(private readonly ensureSessionsDir: () => string) {}
 
+	public assertValidSessionId(sessionId: string): void {
+		assertSafeSessionToken(sessionId);
+	}
+
 	public sessionArtifactsDir(sessionId: string): string {
+		this.assertValidSessionId(sessionId);
 		return join(this.ensureSessionsDir(), sessionId);
+	}
+
+	private existingSessionArtifactsDir(sessionId: string): string | undefined {
+		const dir = this.sessionArtifactsDir(sessionId);
+		try {
+			const info = lstatSync(dir);
+			if (!info.isDirectory() || info.isSymbolicLink()) return undefined;
+			return dir;
+		} catch {
+			return undefined;
+		}
 	}
 
 	public ensureSessionArtifactsDir(sessionId: string): string {
@@ -73,10 +102,63 @@ export class SessionArtifacts {
 	}
 
 	public sessionMessagesPath(sessionId: string): string {
+		assertSafeSessionToken(sessionId);
 		return join(
 			this.sessionArtifactsDir(sessionId),
 			`${sessionId}.messages.json`,
 		);
+	}
+
+	public messagesArtifactPath(sessionId: string, isSubagent: boolean): string {
+		if (!isSubagent) return this.sessionMessagesPath(sessionId);
+
+		const { rootSessionId, fileStem } = childArtifactFileStem(sessionId);
+		assertSafeSessionToken(rootSessionId);
+		assertSafeSessionToken(fileStem);
+		return join(
+			this.sessionArtifactsDir(rootSessionId),
+			`${fileStem}.messages.json`,
+		);
+	}
+
+	/** Remove only the canonical messages artifact for this session. */
+	public removeMessagesFile(sessionId: string, isSubagent: boolean): void {
+		const path = this.messagesArtifactPath(sessionId, isSubagent);
+		const rootSessionId = isSubagent
+			? (parseTeamTaskSubSessionId(sessionId)?.rootSessionId ??
+				parseSubSessionId(sessionId)?.rootSessionId)
+			: sessionId;
+		if (!rootSessionId || !this.existingSessionArtifactsDir(rootSessionId))
+			return;
+		try {
+			// unlink removes a leaf symlink itself, so it cannot follow a malicious
+			// messages-file symlink to delete its target.
+			unlinkSync(path);
+		} catch {
+			// Best-effort cleanup.
+		}
+	}
+
+	/** Remove a manifest only from its non-symlink session directory. */
+	public removeManifestFile(sessionId: string): void {
+		const dir = this.existingSessionArtifactsDir(sessionId);
+		if (!dir) return;
+		try {
+			unlinkSync(join(dir, `${sessionId}.json`));
+		} catch {
+			// Best-effort cleanup.
+		}
+	}
+
+	/** Remove the canonical compaction sidecar from its session directory. */
+	public removeCompactionFile(sessionId: string): void {
+		const dir = this.existingSessionArtifactsDir(sessionId);
+		if (!dir) return;
+		try {
+			unlinkSync(join(dir, `${sessionId}.compaction.json`));
+		} catch {
+			// Best-effort cleanup.
+		}
 	}
 
 	public sessionCompactionPath(sessionId: string): string {
@@ -94,14 +176,17 @@ export class SessionArtifacts {
 	}
 
 	public removeSessionDirIfEmpty(sessionId: string): void {
-		let dir = this.sessionArtifactsDir(sessionId);
-		const sessionsDir = this.ensureSessionsDir();
-		while (dir.startsWith(sessionsDir) && dir !== sessionsDir) {
+		let dir = resolve(this.sessionArtifactsDir(sessionId));
+		const sessionsDir = resolve(this.ensureSessionsDir());
+		if (dirname(dir) !== sessionsDir) return;
+		while (dir !== sessionsDir) {
 			if (!existsSync(dir)) {
 				dir = dirname(dir);
 				continue;
 			}
 			try {
+				const info = lstatSync(dir);
+				if (info.isSymbolicLink() || !info.isDirectory()) break;
 				if (readdirSync(dir).length > 0) {
 					break;
 				}
@@ -115,18 +200,22 @@ export class SessionArtifacts {
 	}
 
 	public removeSessionDir(sessionId: string): void {
-		this.removeDir(this.sessionArtifactsDir(sessionId));
-	}
-
-	public removeDir(dir: string): void {
-		if (!existsSync(dir)) {
-			return;
-		}
+		const dir = this.existingSessionArtifactsDir(sessionId);
+		if (!dir) return;
 		try {
 			rmSync(dir, { recursive: true, force: true });
 		} catch {
 			// Best-effort cleanup.
 		}
+	}
+
+	public removeDir(dir: string): void {
+		const resolvedDir = resolve(dir);
+		const sessionsDir = resolve(this.ensureSessionsDir());
+		const sessionId = basename(resolvedDir);
+		if (dirname(resolvedDir) !== sessionsDir) return;
+		assertSafeSessionToken(sessionId);
+		this.removeSessionDir(sessionId);
 	}
 
 	public subagentArtifactPaths(
@@ -137,6 +226,8 @@ export class SessionArtifacts {
 		void subAgentId;
 		void activeTeamTaskSessionId;
 		const { rootSessionId, fileStem } = childArtifactFileStem(sessionId);
+		assertSafeSessionToken(rootSessionId);
+		assertSafeSessionToken(fileStem);
 		const dir = this.sessionArtifactsDir(rootSessionId);
 		return {
 			messagesPath: join(dir, `${fileStem}.messages.json`),

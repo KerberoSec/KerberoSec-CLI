@@ -8,6 +8,8 @@
 import { v4 as uuidv4 } from "uuid"
 import { PLATFORM_CONFIG } from "../config/platform.config"
 
+const UNARY_REQUEST_TIMEOUT_MS = 120_000
+
 export interface Callbacks<TResponse> {
 	onResponse: (response: TResponse) => void
 	onError: (error: Error) => void
@@ -25,35 +27,72 @@ export abstract class ProtoBusClient {
 	): Promise<TResponse> {
 		return new Promise((resolve, reject) => {
 			const requestId = uuidv4()
+			let timeoutId: ReturnType<typeof setTimeout> | undefined
 
-			// Set up one-time listener for this specific request
-			const handleResponse = (event: MessageEvent) => {
-				const message = event.data
-				if (message.type === "grpc_response" && message.grpc_response?.request_id === requestId) {
-					// Remove listener once we get our response
-					window.removeEventListener("message", handleResponse)
-					if (message.grpc_response.message) {
-						const response = PLATFORM_CONFIG.decodeMessage(message.grpc_response.message, decodeResponse)
-						resolve(response)
-					} else if (message.grpc_response.error) {
-						reject(new Error(message.grpc_response.error))
-					} else {
-						console.error("Received ProtoBus message with no response or error ", JSON.stringify(message))
-					}
+			const cleanup = () => {
+				window.removeEventListener("message", handleResponse)
+				if (timeoutId !== undefined) {
+					clearTimeout(timeoutId)
 				}
 			}
 
-			window.addEventListener("message", handleResponse)
-			PLATFORM_CONFIG.postMessage({
-				type: "grpc_request",
-				grpc_request: {
-					service: this.serviceName,
-					method: methodName,
-					message: PLATFORM_CONFIG.encodeMessage(request, encodeRequest),
-					request_id: requestId,
-					is_streaming: false,
-				},
-			})
+			// Set up one-time listener for this specific request
+			const handleResponse = (event: MessageEvent) => {
+				const message = event.data as {
+					type?: unknown
+					grpc_response?: {
+						request_id?: unknown
+						message?: unknown
+						error?: unknown
+					}
+				} | null
+				if (
+					!message ||
+					typeof message !== "object" ||
+					message.type !== "grpc_response" ||
+					message.grpc_response?.request_id !== requestId
+				) {
+					return
+				}
+
+				cleanup()
+				const response = message.grpc_response
+				if (response.message) {
+					try {
+						resolve(PLATFORM_CONFIG.decodeMessage(response.message, decodeResponse))
+					} catch (error) {
+						reject(error instanceof Error ? error : new Error(String(error)))
+					}
+				} else if (typeof response.error === "string" && response.error) {
+					reject(new Error(response.error))
+				} else {
+					reject(new Error(`ProtoBus returned no response or error for ${this.serviceName}.${methodName}`))
+				}
+			}
+
+			const fail = (error: Error) => {
+				cleanup()
+				reject(error)
+			}
+			timeoutId = setTimeout(
+				() => fail(new Error(`Timed out waiting for ${this.serviceName}.${methodName} response`)),
+				UNARY_REQUEST_TIMEOUT_MS,
+			)
+			try {
+				window.addEventListener("message", handleResponse)
+				PLATFORM_CONFIG.postMessage({
+					type: "grpc_request",
+					grpc_request: {
+						service: this.serviceName,
+						method: methodName,
+						message: PLATFORM_CONFIG.encodeMessage(request, encodeRequest),
+						request_id: requestId,
+						is_streaming: false,
+					},
+				})
+			} catch (error) {
+				fail(error instanceof Error ? error : new Error(String(error)))
+			}
 		})
 	}
 

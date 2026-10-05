@@ -143,7 +143,7 @@ async function generateVscodeProtobusServers(protobusServices) {
 				streamingMethods.push(`    "kerberosec.${serviceName}.${rpcName}",`);
 			}
 		}
-		servers.push(`} \n`);
+		servers.push(`}\n`);
 		serviceMap.push(`    "kerberosec.${serviceName}": ${serviceName}Handlers,`);
 		imports.push("");
 	}

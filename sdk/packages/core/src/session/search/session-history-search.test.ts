@@ -404,4 +404,33 @@ describe("SessionHistorySearchService", () => {
 		}
 		await service.dispose();
 	});
+
+	it("allows custom SQLite options and releases all resources on dispose", async () => {
+		const dir = await mkdtemp(join(tmpdir(), "kerberosec-session-search-"));
+		tempDirs.push(dir);
+		const service = new SessionHistorySearchService(
+			{
+				listSessions: async () => [session()],
+				readSessionMessages: async () => [
+					{ role: "user", content: "Optimize pragmas" },
+				],
+			},
+			{
+				dbPath: join(dir, "search.db"),
+				sqliteOptions: { cacheSizeKb: 1000 },
+			},
+		);
+
+		await service.refreshNow();
+		expect(service.isAvailable()).toBe(true);
+		expect(service.search({ query: "Optimize" })).toHaveLength(1);
+
+		// Disposing should clean up resources
+		await service.dispose();
+		expect(service.isAvailable()).toBe(false);
+		expect(service.search({ query: "Optimize" })).toEqual([]);
+
+		// Repeated dispose should be safe and idempotent
+		await expect(service.dispose()).resolves.toBeUndefined();
+	});
 });

@@ -144,7 +144,7 @@ export async function askQuestionInTerminal(
 		rl.question("", (value) => {
 			rl.close();
 			const trimmed = value.trim();
-			const numeric = Number.parseInt(trimmed, 10);
+			const numeric = /^\d+$/.test(trimmed) ? Number(trimmed) : Number.NaN;
 			if (
 				Number.isInteger(numeric) &&
 				numeric >= 1 &&

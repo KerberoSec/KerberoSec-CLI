@@ -2,8 +2,8 @@ syntax = "proto3";
 
 package kerberosec;
 
-import "kerberosec/common.proto";
 import "google/protobuf/field_mask.proto";
+import "kerberosec/common.proto";
 
 option go_package = "github.com/kerberosec/grpc-go/kerberosec";
 option java_multiple_files = true;

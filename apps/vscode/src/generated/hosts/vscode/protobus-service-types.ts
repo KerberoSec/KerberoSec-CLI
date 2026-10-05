@@ -4,81 +4,6 @@ import * as proto from "@shared/proto/index"
 import { Controller } from "@core/controller"
 import { StreamingResponseHandler } from "@/core/controller/grpc-handler"
 
-// Account Service Handler Types
-export type AccountServiceHandlers = {
-     accountLoginClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
-     accountLogoutClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     subscribeToAuthStatusUpdate:(controller: Controller, request: proto.kerberosec.EmptyRequest, responseStream: StreamingResponseHandler<proto.kerberosec.AuthState>, requestId?: string) => Promise<void>
-     authStateChanged:(controller: Controller, request: proto.kerberosec.AuthStateChangedRequest) => Promise<proto.kerberosec.AuthState>
-     getUserCredits:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.UserCreditsData>
-     getOrganizationCredits:(controller: Controller, request: proto.kerberosec.GetOrganizationCreditsRequest) => Promise<proto.kerberosec.OrganizationCreditsData>
-     getUserOrganizations:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.UserOrganizationsResponse>
-     setUserOrganization:(controller: Controller, request: proto.kerberosec.UserOrganizationUpdateRequest) => Promise<proto.kerberosec.Empty>
-     openrouterAuthClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     requestyAuthClicked:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     hicapAuthClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     getRedirectUrl:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
-     openAiCodexSignIn:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     openAiCodexSignOut:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     submitLimitIncreaseRequest:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.SubmitLimitIncreaseResponse>
-}
-
-// Browser Service Handler Types
-export type BrowserServiceHandlers = {
-     getBrowserConnectionInfo:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.BrowserConnectionInfo>
-     testBrowserConnection:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.BrowserConnection>
-     discoverBrowser:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.BrowserConnection>
-     getDetectedChromePath:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.ChromePath>
-     relaunchChromeDebugMode:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
-}
-
-// Checkpoints Service Handler Types
-export type CheckpointsServiceHandlers = {
-     checkpointRestore:(controller: Controller, request: proto.kerberosec.CheckpointRestoreRequest) => Promise<proto.kerberosec.Empty>
-     checkpointViewLatestChanges:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     checkpointLatestChangesCount:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Int64>
-}
-
-// Commands Service Handler Types
-export type CommandsServiceHandlers = {
-     addToKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
-     fixWithKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
-     explainWithKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
-     improveWithKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
-}
-
-// File Service Handler Types
-export type FileServiceHandlers = {
-     copyToClipboard:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     openFile:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     openImage:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     openMention:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     deleteRuleFile:(controller: Controller, request: proto.kerberosec.RuleFileRequest) => Promise<proto.kerberosec.RuleFile>
-     createRuleFile:(controller: Controller, request: proto.kerberosec.RuleFileRequest) => Promise<proto.kerberosec.RuleFile>
-     searchCommits:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.GitCommits>
-     selectFiles:(controller: Controller, request: proto.kerberosec.BooleanRequest) => Promise<proto.kerberosec.StringArrays>
-     getRelativePaths:(controller: Controller, request: proto.kerberosec.RelativePathsRequest) => Promise<proto.kerberosec.RelativePaths>
-     searchFiles:(controller: Controller, request: proto.kerberosec.FileSearchRequest) => Promise<proto.kerberosec.FileSearchResults>
-     toggleKerberoSecRule:(controller: Controller, request: proto.kerberosec.ToggleKerberoSecRuleRequest) => Promise<proto.kerberosec.ToggleKerberoSecRules>
-     toggleCursorRule:(controller: Controller, request: proto.kerberosec.ToggleCursorRuleRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
-     toggleWindsurfRule:(controller: Controller, request: proto.kerberosec.ToggleWindsurfRuleRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
-     toggleAgentsRule:(controller: Controller, request: proto.kerberosec.ToggleAgentsRuleRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
-     refreshRules:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.RefreshedRules>
-     openDiskConversationHistory:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     toggleWorkflow:(controller: Controller, request: proto.kerberosec.ToggleWorkflowRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
-     ifFileExistsRelativePath:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.BooleanResponse>
-     openFileRelativePath:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     openFocusChainFile:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     refreshHooks:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.HooksToggles>
-     toggleHook:(controller: Controller, request: proto.kerberosec.ToggleHookRequest) => Promise<proto.kerberosec.ToggleHookResponse>
-     createHook:(controller: Controller, request: proto.kerberosec.CreateHookRequest) => Promise<proto.kerberosec.CreateHookResponse>
-     deleteHook:(controller: Controller, request: proto.kerberosec.DeleteHookRequest) => Promise<proto.kerberosec.DeleteHookResponse>
-     refreshSkills:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.RefreshedSkills>
-     toggleSkill:(controller: Controller, request: proto.kerberosec.ToggleSkillRequest) => Promise<proto.kerberosec.SkillsToggles>
-     createSkillFile:(controller: Controller, request: proto.kerberosec.CreateSkillRequest) => Promise<proto.kerberosec.SkillsToggles>
-     deleteSkillFile:(controller: Controller, request: proto.kerberosec.DeleteSkillRequest) => Promise<proto.kerberosec.SkillsToggles>
-}
-
 // Marketplace Service Handler Types
 export type MarketplaceServiceHandlers = {
      getMarketplaceCatalog:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.MarketplaceCatalog>
@@ -90,18 +15,20 @@ export type MarketplaceServiceHandlers = {
      uninstallMarketplaceLocalInstalledEntry:(controller: Controller, request: proto.kerberosec.MarketplaceLocalInstalledEntryRequest) => Promise<proto.kerberosec.MarketplaceInstallResult>
 }
 
-// Mcp Service Handler Types
-export type McpServiceHandlers = {
-     toggleMcpServer:(controller: Controller, request: proto.kerberosec.ToggleMcpServerRequest) => Promise<proto.kerberosec.McpServers>
-     updateMcpTimeout:(controller: Controller, request: proto.kerberosec.UpdateMcpTimeoutRequest) => Promise<proto.kerberosec.McpServers>
-     addRemoteMcpServer:(controller: Controller, request: proto.kerberosec.AddRemoteMcpServerRequest) => Promise<proto.kerberosec.McpServers>
-     restartMcpServer:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.McpServers>
-     deleteMcpServer:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.McpServers>
-     toggleToolAutoApprove:(controller: Controller, request: proto.kerberosec.ToggleToolAutoApproveRequest) => Promise<proto.kerberosec.McpServers>
-     openMcpSettings:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     authenticateMcpServer:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     getLatestMcpServers:(controller: Controller, request: proto.kerberosec.Empty) => Promise<proto.kerberosec.McpServers>
-     subscribeToMcpServers:(controller: Controller, request: proto.kerberosec.EmptyRequest, responseStream: StreamingResponseHandler<proto.kerberosec.McpServers>, requestId?: string) => Promise<void>
+// OcaAccount Service Handler Types
+export type OcaAccountServiceHandlers = {
+     ocaAccountLoginClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
+     ocaAccountLogoutClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     ocaSubscribeToAuthStatusUpdate:(controller: Controller, request: proto.kerberosec.EmptyRequest, responseStream: StreamingResponseHandler<proto.kerberosec.OcaAuthState>, requestId?: string) => Promise<void>
+}
+
+// Browser Service Handler Types
+export type BrowserServiceHandlers = {
+     getBrowserConnectionInfo:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.BrowserConnectionInfo>
+     testBrowserConnection:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.BrowserConnection>
+     discoverBrowser:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.BrowserConnection>
+     getDetectedChromePath:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.ChromePath>
+     relaunchChromeDebugMode:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
 }
 
 // Models Service Handler Types
@@ -133,26 +60,6 @@ export type ModelsServiceHandlers = {
      readProviderConfig:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.ProviderConfigResponse>
      writeProviderConfig:(controller: Controller, request: proto.kerberosec.WriteProviderConfigRequest) => Promise<proto.kerberosec.ProviderConfigResponse>
      commitModelSelection:(controller: Controller, request: proto.kerberosec.CommitModelSelectionRequest) => Promise<proto.kerberosec.Empty>
-}
-
-// OcaAccount Service Handler Types
-export type OcaAccountServiceHandlers = {
-     ocaAccountLoginClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
-     ocaAccountLogoutClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
-     ocaSubscribeToAuthStatusUpdate:(controller: Controller, request: proto.kerberosec.EmptyRequest, responseStream: StreamingResponseHandler<proto.kerberosec.OcaAuthState>, requestId?: string) => Promise<void>
-}
-
-// RemoteConfig Service Handler Types
-export type RemoteConfigServiceHandlers = {
-     getRemoteConfigSettings:(controller: Controller, request: proto.kerberosec.Empty) => Promise<proto.kerberosec.RemoteConfigSettingsResponse>
-     toggleRemoteConfigSetting:(controller: Controller, request: proto.kerberosec.ToggleRemoteConfigSettingRequest) => Promise<proto.kerberosec.RemoteConfigSetting>
-}
-
-// Slash Service Handler Types
-export type SlashServiceHandlers = {
-     reportBug:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     condense:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
-     getAvailableSlashCommands:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.SlashCommandsResponse>
 }
 
 // State Service Handler Types
@@ -207,6 +114,21 @@ export type TaskServiceHandlers = {
      deleteAllTaskHistory:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.DeleteAllTaskHistoryCount>
 }
 
+// Worktree Service Handler Types
+export type WorktreeServiceHandlers = {
+     listWorktrees:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.WorktreeList>
+     createWorktree:(controller: Controller, request: proto.kerberosec.CreateWorktreeRequest) => Promise<proto.kerberosec.WorktreeResult>
+     deleteWorktree:(controller: Controller, request: proto.kerberosec.DeleteWorktreeRequest) => Promise<proto.kerberosec.WorktreeResult>
+     switchWorktree:(controller: Controller, request: proto.kerberosec.SwitchWorktreeRequest) => Promise<proto.kerberosec.WorktreeResult>
+     getAvailableBranches:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.BranchList>
+     getWorktreeDefaults:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.WorktreeDefaults>
+     getWorktreeIncludeStatus:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.WorktreeIncludeStatus>
+     createWorktreeInclude:(controller: Controller, request: proto.kerberosec.CreateWorktreeIncludeRequest) => Promise<proto.kerberosec.WorktreeResult>
+     checkoutBranch:(controller: Controller, request: proto.kerberosec.CheckoutBranchRequest) => Promise<proto.kerberosec.WorktreeResult>
+     mergeWorktree:(controller: Controller, request: proto.kerberosec.MergeWorktreeRequest) => Promise<proto.kerberosec.MergeWorktreeResult>
+     trackWorktreeViewOpened:(controller: Controller, request: proto.kerberosec.TrackWorktreeViewOpenedRequest) => Promise<proto.kerberosec.Empty>
+}
+
 // Ui Service Handler Types
 export type UiServiceHandlers = {
      scrollToSettings:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.KeyValuePair>
@@ -230,6 +152,27 @@ export type UiServiceHandlers = {
      trackIntent:(controller: Controller, request: proto.kerberosec.IntentEvent) => Promise<proto.kerberosec.Empty>
 }
 
+// Commands Service Handler Types
+export type CommandsServiceHandlers = {
+     addToKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
+     fixWithKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
+     explainWithKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
+     improveWithKerberoSec:(controller: Controller, request: proto.kerberosec.CommandContext) => Promise<proto.kerberosec.Empty>
+}
+
+// Slash Service Handler Types
+export type SlashServiceHandlers = {
+     reportBug:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     condense:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     getAvailableSlashCommands:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.SlashCommandsResponse>
+}
+
+// RemoteConfig Service Handler Types
+export type RemoteConfigServiceHandlers = {
+     getRemoteConfigSettings:(controller: Controller, request: proto.kerberosec.Empty) => Promise<proto.kerberosec.RemoteConfigSettingsResponse>
+     toggleRemoteConfigSetting:(controller: Controller, request: proto.kerberosec.ToggleRemoteConfigSettingRequest) => Promise<proto.kerberosec.RemoteConfigSetting>
+}
+
 // Web Service Handler Types
 export type WebServiceHandlers = {
      checkIsImageUrl:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.IsImageUrl>
@@ -237,18 +180,75 @@ export type WebServiceHandlers = {
      openInBrowser:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
 }
 
-// Worktree Service Handler Types
-export type WorktreeServiceHandlers = {
-     listWorktrees:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.WorktreeList>
-     createWorktree:(controller: Controller, request: proto.kerberosec.CreateWorktreeRequest) => Promise<proto.kerberosec.WorktreeResult>
-     deleteWorktree:(controller: Controller, request: proto.kerberosec.DeleteWorktreeRequest) => Promise<proto.kerberosec.WorktreeResult>
-     switchWorktree:(controller: Controller, request: proto.kerberosec.SwitchWorktreeRequest) => Promise<proto.kerberosec.WorktreeResult>
-     getAvailableBranches:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.BranchList>
-     getWorktreeDefaults:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.WorktreeDefaults>
-     getWorktreeIncludeStatus:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.WorktreeIncludeStatus>
-     createWorktreeInclude:(controller: Controller, request: proto.kerberosec.CreateWorktreeIncludeRequest) => Promise<proto.kerberosec.WorktreeResult>
-     checkoutBranch:(controller: Controller, request: proto.kerberosec.CheckoutBranchRequest) => Promise<proto.kerberosec.WorktreeResult>
-     mergeWorktree:(controller: Controller, request: proto.kerberosec.MergeWorktreeRequest) => Promise<proto.kerberosec.MergeWorktreeResult>
-     trackWorktreeViewOpened:(controller: Controller, request: proto.kerberosec.TrackWorktreeViewOpenedRequest) => Promise<proto.kerberosec.Empty>
+// Account Service Handler Types
+export type AccountServiceHandlers = {
+     accountLoginClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
+     accountLogoutClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     subscribeToAuthStatusUpdate:(controller: Controller, request: proto.kerberosec.EmptyRequest, responseStream: StreamingResponseHandler<proto.kerberosec.AuthState>, requestId?: string) => Promise<void>
+     authStateChanged:(controller: Controller, request: proto.kerberosec.AuthStateChangedRequest) => Promise<proto.kerberosec.AuthState>
+     getUserCredits:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.UserCreditsData>
+     getOrganizationCredits:(controller: Controller, request: proto.kerberosec.GetOrganizationCreditsRequest) => Promise<proto.kerberosec.OrganizationCreditsData>
+     getUserOrganizations:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.UserOrganizationsResponse>
+     setUserOrganization:(controller: Controller, request: proto.kerberosec.UserOrganizationUpdateRequest) => Promise<proto.kerberosec.Empty>
+     openrouterAuthClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     requestyAuthClicked:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     hicapAuthClicked:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     getRedirectUrl:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.String>
+     openAiCodexSignIn:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     openAiCodexSignOut:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     submitLimitIncreaseRequest:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.SubmitLimitIncreaseResponse>
+}
+
+// Checkpoints Service Handler Types
+export type CheckpointsServiceHandlers = {
+     checkpointRestore:(controller: Controller, request: proto.kerberosec.CheckpointRestoreRequest) => Promise<proto.kerberosec.Empty>
+     checkpointViewLatestChanges:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     checkpointLatestChangesCount:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Int64>
+}
+
+// File Service Handler Types
+export type FileServiceHandlers = {
+     copyToClipboard:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     openFile:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     openImage:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     openMention:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     deleteRuleFile:(controller: Controller, request: proto.kerberosec.RuleFileRequest) => Promise<proto.kerberosec.RuleFile>
+     createRuleFile:(controller: Controller, request: proto.kerberosec.RuleFileRequest) => Promise<proto.kerberosec.RuleFile>
+     searchCommits:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.GitCommits>
+     selectFiles:(controller: Controller, request: proto.kerberosec.BooleanRequest) => Promise<proto.kerberosec.StringArrays>
+     getRelativePaths:(controller: Controller, request: proto.kerberosec.RelativePathsRequest) => Promise<proto.kerberosec.RelativePaths>
+     searchFiles:(controller: Controller, request: proto.kerberosec.FileSearchRequest) => Promise<proto.kerberosec.FileSearchResults>
+     toggleKerberoSecRule:(controller: Controller, request: proto.kerberosec.ToggleKerberoSecRuleRequest) => Promise<proto.kerberosec.ToggleKerberoSecRules>
+     toggleCursorRule:(controller: Controller, request: proto.kerberosec.ToggleCursorRuleRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
+     toggleWindsurfRule:(controller: Controller, request: proto.kerberosec.ToggleWindsurfRuleRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
+     toggleAgentsRule:(controller: Controller, request: proto.kerberosec.ToggleAgentsRuleRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
+     refreshRules:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.RefreshedRules>
+     openDiskConversationHistory:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     toggleWorkflow:(controller: Controller, request: proto.kerberosec.ToggleWorkflowRequest) => Promise<proto.kerberosec.KerberoSecRulesToggles>
+     ifFileExistsRelativePath:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.BooleanResponse>
+     openFileRelativePath:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     openFocusChainFile:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     refreshHooks:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.HooksToggles>
+     toggleHook:(controller: Controller, request: proto.kerberosec.ToggleHookRequest) => Promise<proto.kerberosec.ToggleHookResponse>
+     createHook:(controller: Controller, request: proto.kerberosec.CreateHookRequest) => Promise<proto.kerberosec.CreateHookResponse>
+     deleteHook:(controller: Controller, request: proto.kerberosec.DeleteHookRequest) => Promise<proto.kerberosec.DeleteHookResponse>
+     refreshSkills:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.RefreshedSkills>
+     toggleSkill:(controller: Controller, request: proto.kerberosec.ToggleSkillRequest) => Promise<proto.kerberosec.SkillsToggles>
+     createSkillFile:(controller: Controller, request: proto.kerberosec.CreateSkillRequest) => Promise<proto.kerberosec.SkillsToggles>
+     deleteSkillFile:(controller: Controller, request: proto.kerberosec.DeleteSkillRequest) => Promise<proto.kerberosec.SkillsToggles>
+}
+
+// Mcp Service Handler Types
+export type McpServiceHandlers = {
+     toggleMcpServer:(controller: Controller, request: proto.kerberosec.ToggleMcpServerRequest) => Promise<proto.kerberosec.McpServers>
+     updateMcpTimeout:(controller: Controller, request: proto.kerberosec.UpdateMcpTimeoutRequest) => Promise<proto.kerberosec.McpServers>
+     addRemoteMcpServer:(controller: Controller, request: proto.kerberosec.AddRemoteMcpServerRequest) => Promise<proto.kerberosec.McpServers>
+     restartMcpServer:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.McpServers>
+     deleteMcpServer:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.McpServers>
+     toggleToolAutoApprove:(controller: Controller, request: proto.kerberosec.ToggleToolAutoApproveRequest) => Promise<proto.kerberosec.McpServers>
+     openMcpSettings:(controller: Controller, request: proto.kerberosec.EmptyRequest) => Promise<proto.kerberosec.Empty>
+     authenticateMcpServer:(controller: Controller, request: proto.kerberosec.StringRequest) => Promise<proto.kerberosec.Empty>
+     getLatestMcpServers:(controller: Controller, request: proto.kerberosec.Empty) => Promise<proto.kerberosec.McpServers>
+     subscribeToMcpServers:(controller: Controller, request: proto.kerberosec.EmptyRequest, responseStream: StreamingResponseHandler<proto.kerberosec.McpServers>, requestId?: string) => Promise<void>
 }
 

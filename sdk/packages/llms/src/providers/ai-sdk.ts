@@ -721,24 +721,32 @@ function toAiSdkMessages(
 					continue;
 				}
 				const metadata = part.metadata as Record<string, unknown> | undefined;
-				const signature = metadata?.signature;
-				const redactedData = metadata?.redactedData;
-				content.push({
-					type: "reasoning",
-					text: sanitizeSurrogates(part.text),
-					...(typeof signature === "string" || typeof redactedData === "string"
-						? {
-								providerOptions: {
-									anthropic: {
-										...(typeof signature === "string" ? { signature } : {}),
-										...(typeof redactedData === "string"
-											? { redactedData }
-											: {}),
-									},
-								},
-							}
-						: {}),
-				});
+				const signature =
+					typeof metadata?.signature === "string"
+						? metadata.signature
+						: undefined;
+				const redactedData =
+					typeof metadata?.redactedData === "string"
+						? metadata.redactedData
+						: undefined;
+				if (signature !== undefined || redactedData !== undefined) {
+					const anthropicOptions: Record<string, string> = {};
+					if (signature !== undefined) anthropicOptions.signature = signature;
+					if (redactedData !== undefined)
+						anthropicOptions.redactedData = redactedData;
+					content.push({
+						type: "reasoning",
+						text: sanitizeSurrogates(part.text),
+						providerOptions: {
+							anthropic: anthropicOptions,
+						},
+					});
+				} else {
+					content.push({
+						type: "reasoning",
+						text: sanitizeSurrogates(part.text),
+					});
+				}
 				continue;
 			}
 
@@ -771,19 +779,24 @@ function toAiSdkMessages(
 					metadata?.thoughtSignature ??
 					metadata?.signature ??
 					metadata?.thought_signature;
-				content.push({
-					type: "tool-call",
-					toolCallId: part.toolCallId,
-					toolName: part.toolName,
-					input: part.input,
-					...(typeof thoughtSignature === "string"
-						? {
-								providerOptions: {
-									google: { thoughtSignature },
-								},
-							}
-						: {}),
-				});
+				if (typeof thoughtSignature === "string") {
+					content.push({
+						type: "tool-call",
+						toolCallId: part.toolCallId,
+						toolName: part.toolName,
+						input: part.input,
+						providerOptions: {
+							google: { thoughtSignature },
+						},
+					});
+				} else {
+					content.push({
+						type: "tool-call",
+						toolCallId: part.toolCallId,
+						toolName: part.toolName,
+						input: part.input,
+					});
+				}
 				continue;
 			}
 
@@ -843,11 +856,13 @@ function mergeAiSdkTools(
 	runtimeTools: ToolSet | undefined,
 	providerTools: ToolSet | undefined,
 ): ToolSet | undefined {
+	if (!runtimeTools) return providerTools;
+	if (!providerTools) return runtimeTools;
 	// Runtime tools carry the caller's executor contract, so they retain
 	// ownership when a provider happens to register the same public name.
 	const tools = {
-		...(providerTools ?? {}),
-		...(runtimeTools ?? {}),
+		...providerTools,
+		...runtimeTools,
 	};
 	return Object.keys(tools).length > 0 ? tools : undefined;
 }
@@ -879,7 +894,11 @@ export async function repairMalformedToolCall<T extends RepairableToolCall>({
 	if (NoSuchToolError.isInstance(error)) {
 		return null;
 	}
-	if (typeof toolCall.input !== "string" || toolCall.input.trim() === "") {
+	if (
+		typeof toolCall.input !== "string" ||
+		toolCall.input.length === 0 ||
+		/^\s*$/.test(toolCall.input)
+	) {
 		return null;
 	}
 	try {
@@ -986,26 +1005,6 @@ function mapFinishReason(
 	return "stop";
 }
 
-function getUsageValue(
-	usage: Record<string, unknown>,
-	...keys: string[]
-): number {
-	for (const key of keys) {
-		const value = usage[key];
-		if (typeof value === "number" && Number.isFinite(value)) {
-			return value;
-		}
-		if (
-			typeof value === "string" &&
-			value.trim().length > 0 &&
-			Number.isFinite(Number(value))
-		) {
-			return Number(value);
-		}
-	}
-	return 0;
-}
-
 function getNumericValue(value: unknown): number | undefined {
 	if (typeof value === "number" && Number.isFinite(value)) {
 		return value;
@@ -1020,18 +1019,58 @@ function getNumericValue(value: unknown): number | undefined {
 	return undefined;
 }
 
-function getNestedUsageValue(
+function getUsageValue1(usage: Record<string, unknown>, k1: string): number {
+	return getNumericValue(usage[k1]) ?? 0;
+}
+
+function getUsageValue2(
 	usage: Record<string, unknown>,
-	...path: string[]
+	k1: string,
+	k2: string,
 ): number {
-	let current: unknown = usage;
-	for (const key of path) {
-		if (!current || typeof current !== "object") {
-			return 0;
-		}
-		current = (current as Record<string, unknown>)[key];
+	return getNumericValue(usage[k1]) ?? getNumericValue(usage[k2]) ?? 0;
+}
+
+function getUsageValue3(
+	usage: Record<string, unknown>,
+	k1: string,
+	k2: string,
+	k3: string,
+): number {
+	return (
+		getNumericValue(usage[k1]) ??
+		getNumericValue(usage[k2]) ??
+		getNumericValue(usage[k3]) ??
+		0
+	);
+}
+
+function getUsageValue4(
+	usage: Record<string, unknown>,
+	k1: string,
+	k2: string,
+	k3: string,
+	k4: string,
+): number {
+	return (
+		getNumericValue(usage[k1]) ??
+		getNumericValue(usage[k2]) ??
+		getNumericValue(usage[k3]) ??
+		getNumericValue(usage[k4]) ??
+		0
+	);
+}
+
+function getNestedUsageValue2(
+	usage: Record<string, unknown>,
+	k1: string,
+	k2: string,
+): number {
+	const nested = usage[k1];
+	if (!nested || typeof nested !== "object") {
+		return 0;
 	}
-	return getNumericValue(current) ?? 0;
+	return getNumericValue((nested as Record<string, unknown>)[k2]) ?? 0;
 }
 
 type UsagePath = readonly [string] | readonly [string, string];
@@ -1055,8 +1094,12 @@ function getUsageValueByPath(source: unknown, path: UsagePath): number {
 	return getNumericValue(current) ?? 0;
 }
 
-function firstUsageValue(sources: unknown[], paths: UsagePath[]): number {
+function firstUsageValue(
+	sources: readonly unknown[],
+	paths: UsagePath[],
+): number {
 	for (const source of sources) {
+		if (!source || typeof source !== "object") continue;
 		for (const path of paths) {
 			const value = getUsageValueByPath(source, path);
 			if (value > 0) {
@@ -1198,72 +1241,84 @@ export function normalizeUsage(
 			: (marketCost ?? billedCost);
 	const normalizedUsage = {
 		inputTokens:
-			getNestedUsageValue(usage, "inputTokens", "total") ||
-			getUsageValue(usage, "inputTokens", "input_tokens", "prompt_tokens") ||
-			getUsageValue(rawUsage, "promptTokenCount", "prompt_token_count"),
+			getNestedUsageValue2(usage, "inputTokens", "total") ||
+			getUsageValue3(usage, "inputTokens", "input_tokens", "prompt_tokens") ||
+			getUsageValue2(rawUsage, "promptTokenCount", "prompt_token_count"),
 		outputTokens:
-			getNestedUsageValue(usage, "outputTokens", "total") ||
-			getUsageValue(
+			getNestedUsageValue2(usage, "outputTokens", "total") ||
+			getUsageValue3(
 				usage,
 				"outputTokens",
 				"output_tokens",
 				"completion_tokens",
 			) ||
-			getUsageValue(rawUsage, "candidatesTokenCount", "candidates_token_count"),
+			getUsageValue2(
+				rawUsage,
+				"candidatesTokenCount",
+				"candidates_token_count",
+			),
 		cacheReadTokens:
-			getNestedUsageValue(usage, "inputTokens", "cacheRead") ||
-			getNestedUsageValue(usage, "inputTokenDetails", "cacheReadTokens") ||
-			getUsageValue(
+			getNestedUsageValue2(usage, "inputTokens", "cacheRead") ||
+			getNestedUsageValue2(usage, "inputTokenDetails", "cacheReadTokens") ||
+			getUsageValue4(
 				usage,
 				"cachedInputTokens",
 				"cacheReadTokens",
 				"cache_read_tokens",
 				"cache_read_input_tokens",
 			) ||
-			getNestedUsageValue(usage, "prompt_tokens_details", "cached_tokens") ||
-			getNestedUsageValue(rawUsage, "prompt_tokens_details", "cached_tokens") ||
-			getUsageValue(rawUsage, "cachedContentTokenCount") ||
-			getUsageValue(
-				providerUsage ?? {},
-				"cachedInputTokens",
-				"cacheReadTokens",
-				"cache_read_tokens",
-				"cache_read_input_tokens",
-			),
+			getNestedUsageValue2(usage, "prompt_tokens_details", "cached_tokens") ||
+			getNestedUsageValue2(
+				rawUsage,
+				"prompt_tokens_details",
+				"cached_tokens",
+			) ||
+			getUsageValue1(rawUsage, "cachedContentTokenCount") ||
+			(providerUsage
+				? getUsageValue4(
+						providerUsage,
+						"cachedInputTokens",
+						"cacheReadTokens",
+						"cache_read_tokens",
+						"cache_read_input_tokens",
+					)
+				: 0),
 		cacheWriteTokens:
-			getNestedUsageValue(usage, "inputTokens", "cacheWrite") ||
-			getNestedUsageValue(usage, "inputTokenDetails", "cacheWriteTokens") ||
-			getNestedUsageValue(
+			getNestedUsageValue2(usage, "inputTokens", "cacheWrite") ||
+			getNestedUsageValue2(usage, "inputTokenDetails", "cacheWriteTokens") ||
+			getNestedUsageValue2(
 				usage,
 				"prompt_tokens_details",
 				"cache_write_tokens",
 			) ||
-			getUsageValue(
+			getUsageValue3(
 				usage,
 				"cacheWriteTokens",
 				"cache_write_tokens",
 				"cache_creation_input_tokens",
 			) ||
-			getNestedUsageValue(
+			getNestedUsageValue2(
 				rawUsage,
 				"prompt_tokens_details",
 				"cache_write_tokens",
 			) ||
-			getUsageValue(
+			getUsageValue3(
 				rawUsage,
 				"cacheWriteTokens",
 				"cache_write_tokens",
 				"cache_creation_input_tokens",
 			) ||
-			getUsageValue(
-				providerUsage ?? {},
-				"cacheWriteTokens",
-				"cache_write_tokens",
-				"cache_creation_input_tokens",
-			),
+			(providerUsage
+				? getUsageValue3(
+						providerUsage,
+						"cacheWriteTokens",
+						"cache_write_tokens",
+						"cache_creation_input_tokens",
+					)
+				: 0),
 	};
 	const reasoningTokenCount = firstUsageValue(
-		[usage, rawUsage, providerUsage ?? {}],
+		providerUsage ? [usage, rawUsage, providerUsage] : [usage, rawUsage],
 		REASONING_TOKEN_PATHS,
 	);
 	const resolvedTotalCost =
@@ -1292,24 +1347,21 @@ export function normalizeUsage(
  * each getter to obtain the promise and attach a no-op rejection handler before Bun/Node
  * surfaces them as unhandled rejections.
  */
+const NOOP = () => {};
+function suppressPromiseCatch(val: unknown): void {
+	if (val && typeof (val as Promise<unknown>).catch === "function") {
+		(val as Promise<unknown>).catch(NOOP);
+	}
+}
+
 function suppressDanglingStreamPromises(
 	stream: AiSdkStreamResult | undefined,
 ): void {
 	if (!stream) return;
-	const noop = () => {};
-	const suppress = (val: unknown) => {
-		if (val && typeof (val as Promise<unknown>).catch === "function") {
-			(val as Promise<unknown>).catch(noop);
-		}
-	};
-
-	// Access known lazy promise getters on the AI SDK StreamTextResult object.
 	const s = stream as Record<string, unknown>;
-
-	// Catch-all for any remaining promise-valued own properties.
-	for (const key of Object.keys(stream)) {
+	for (const key in s) {
 		try {
-			suppress(s[key]);
+			suppressPromiseCatch(s[key]);
 		} catch {
 			// ignore
 		}
@@ -1319,45 +1371,55 @@ function suppressDanglingStreamPromises(
 function extractGoogleThoughtMetadata(
 	part: AiSdkStreamPart,
 ): Record<string, unknown> | undefined {
-	const metadata: Record<string, unknown> = {};
-
-	if (typeof part.thoughtSignature === "string") {
-		metadata.thoughtSignature = part.thoughtSignature;
-	}
-	if (typeof part.thought_signature === "string") {
-		metadata.thought_signature = part.thought_signature;
-	}
+	const directSignature =
+		typeof part.thoughtSignature === "string"
+			? part.thoughtSignature
+			: undefined;
+	const directSnakeSignature =
+		typeof part.thought_signature === "string"
+			? part.thought_signature
+			: undefined;
 
 	const providerMetadata =
 		part.providerMetadata && typeof part.providerMetadata === "object"
 			? (part.providerMetadata as Record<string, unknown>)
 			: undefined;
-	const googleMetadata =
-		providerMetadata?.google && typeof providerMetadata.google === "object"
-			? (providerMetadata.google as Record<string, unknown>)
-			: undefined;
-	const vertexMetadata =
-		providerMetadata?.vertex && typeof providerMetadata.vertex === "object"
-			? (providerMetadata.vertex as Record<string, unknown>)
-			: undefined;
 
-	if (
-		typeof metadata.thoughtSignature !== "string" &&
-		typeof (
-			googleMetadata?.thoughtSignature ?? vertexMetadata?.thoughtSignature
-		) === "string"
-	) {
-		metadata.thoughtSignature =
-			googleMetadata?.thoughtSignature ?? vertexMetadata?.thoughtSignature;
-	}
-	if (
-		typeof metadata.thought_signature !== "string" &&
-		typeof googleMetadata?.thought_signature === "string"
-	) {
-		metadata.thought_signature = googleMetadata.thought_signature;
+	let googleSignature: string | undefined;
+	let googleSnakeSignature: string | undefined;
+
+	if (providerMetadata) {
+		const google = providerMetadata.google as
+			| Record<string, unknown>
+			| undefined;
+		const vertex = providerMetadata.vertex as
+			| Record<string, unknown>
+			| undefined;
+		const gSig = google?.thoughtSignature ?? vertex?.thoughtSignature;
+		if (typeof gSig === "string") {
+			googleSignature = gSig;
+		}
+		const gSnake = google?.thought_signature;
+		if (typeof gSnake === "string") {
+			googleSnakeSignature = gSnake;
+		}
 	}
 
-	return Object.keys(metadata).length > 0 ? metadata : undefined;
+	const thoughtSignature = directSignature ?? googleSignature;
+	const thoughtSnakeSignature = directSnakeSignature ?? googleSnakeSignature;
+
+	if (!thoughtSignature && !thoughtSnakeSignature) {
+		return undefined;
+	}
+
+	const metadata: Record<string, unknown> = {};
+	if (thoughtSignature) {
+		metadata.thoughtSignature = thoughtSignature;
+	}
+	if (thoughtSnakeSignature) {
+		metadata.thought_signature = thoughtSnakeSignature;
+	}
+	return metadata;
 }
 
 /**

@@ -1,12 +1,6 @@
 import type { Command } from "commander";
 import type { TuiStartupTarget } from "../tui/types";
 import type { CliOutputMode } from "../utils/types";
-import {
-	runHistoryDelete,
-	runHistoryExport,
-	runHistoryList,
-	runHistoryUpdate,
-} from "./history";
 
 type HistoryCommandIo = {
 	writeln: (text?: string) => void;
@@ -28,6 +22,14 @@ function resolveHistoryOutputMode(
 	return program.opts().json || historyCmd.opts().json ? "json" : "text";
 }
 
+function parsePositiveInteger(value: unknown): number | undefined {
+	if (typeof value !== "string" || !/^\d+$/.test(value.trim())) {
+		return undefined;
+	}
+	const parsed = Number(value);
+	return Number.isSafeInteger(parsed) && parsed > 0 ? parsed : undefined;
+}
+
 export function registerHistoryCommand({
 	program,
 	io,
@@ -46,15 +48,38 @@ export function registerHistoryCommand({
 		.option("--config <dir>", "configuration directory")
 		.action(async () => {
 			const opts = historyCmd.opts();
-			const limit = Number.parseInt(opts.limit, 10);
+			const limit = parsePositiveInteger(opts.limit);
+			if (limit === undefined) {
+				io.writeErr("--limit must be a positive whole number");
+				setExitCode(1);
+				return;
+			}
+			const page =
+				opts.page === undefined ? 1 : parsePositiveInteger(opts.page);
+			if (page === undefined) {
+				io.writeErr("--page must be a positive whole number");
+				setExitCode(1);
+				return;
+			}
+			if (!Number.isSafeInteger(limit * page)) {
+				io.writeErr("--page and --limit are too large");
+				setExitCode(1);
+				return;
+			}
 			const outputMode = resolveHistoryOutputMode(program, historyCmd);
-			if (outputMode === "text" && isInteractiveTTY()) {
+			if (
+				outputMode === "text" &&
+				isInteractiveTTY() &&
+				opts.page === undefined
+			) {
 				setStartupTarget("history");
 				return;
 			}
+			const { runHistoryList } = await import("./history");
 			setExitCode(
 				await runHistoryList({
 					limit,
+					...(opts.page === undefined ? {} : { page }),
 					outputMode,
 					io,
 				}),
@@ -73,6 +98,7 @@ export function registerHistoryCommand({
 				return;
 			}
 			const outputMode = resolveHistoryOutputMode(program, historyCmd);
+			const { runHistoryDelete } = await import("./history");
 			setExitCode(await runHistoryDelete(opts.sessionId, outputMode, io));
 		});
 
@@ -91,6 +117,7 @@ export function registerHistoryCommand({
 				return;
 			}
 			const outputMode = resolveHistoryOutputMode(program, historyCmd);
+			const { runHistoryUpdate } = await import("./history");
 			setExitCode(
 				await runHistoryUpdate(
 					opts.sessionId,
@@ -110,6 +137,7 @@ export function registerHistoryCommand({
 		.action(async (sessionId: string) => {
 			const opts = historyExportCmd.opts();
 			const outputMode = resolveHistoryOutputMode(program, historyCmd);
+			const { runHistoryExport } = await import("./history");
 			setExitCode(
 				await runHistoryExport(sessionId, opts.output, outputMode, io),
 			);

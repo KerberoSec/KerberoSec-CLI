@@ -7,17 +7,60 @@ import * as proto from "@shared/proto/index"
 import { Channel, createClient } from "nice-grpc"
 import { BaseGrpcClient } from "@/hosts/external/grpc-types"
 
+import { WorkspaceServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
 import { DiffServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
-import { EnvServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
 import { TestingServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
 import { WindowServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
-import { WorkspaceServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
+import { EnvServiceClientInterface } from "@generated/hosts/host-bridge-client-types"
+
+/**
+ * Type-safe client implementation for WorkspaceService.
+ */
+export class WorkspaceServiceClientImpl
+	extends BaseGrpcClient<niceGrpc.host.WorkspaceServiceClient>
+	implements WorkspaceServiceClientInterface {
+
+	protected createClient(channel: Channel): niceGrpc.host.WorkspaceServiceClient {
+		return createClient(niceGrpc.host.WorkspaceServiceDefinition, channel)
+	}
+
+    getWorkspacePaths(request: proto.host.GetWorkspacePathsRequest): Promise<proto.host.GetWorkspacePathsResponse> {
+      return this.makeRequest((client) => client.getWorkspacePaths(request))
+    }
+    saveOpenDocumentIfDirty(request: proto.host.SaveOpenDocumentIfDirtyRequest): Promise<proto.host.SaveOpenDocumentIfDirtyResponse> {
+      return this.makeRequest((client) => client.saveOpenDocumentIfDirty(request))
+    }
+    getDiagnostics(request: proto.host.GetDiagnosticsRequest): Promise<proto.host.GetDiagnosticsResponse> {
+      return this.makeRequest((client) => client.getDiagnostics(request))
+    }
+    openProblemsPanel(request: proto.host.OpenProblemsPanelRequest): Promise<proto.host.OpenProblemsPanelResponse> {
+      return this.makeRequest((client) => client.openProblemsPanel(request))
+    }
+    openInFileExplorerPanel(request: proto.host.OpenInFileExplorerPanelRequest): Promise<proto.host.OpenInFileExplorerPanelResponse> {
+      return this.makeRequest((client) => client.openInFileExplorerPanel(request))
+    }
+    openKerberoSecSidebarPanel(request: proto.host.OpenKerberoSecSidebarPanelRequest): Promise<proto.host.OpenKerberoSecSidebarPanelResponse> {
+      return this.makeRequest((client) => client.openKerberoSecSidebarPanel(request))
+    }
+    openTerminalPanel(request: proto.host.OpenTerminalRequest): Promise<proto.host.OpenTerminalResponse> {
+      return this.makeRequest((client) => client.openTerminalPanel(request))
+    }
+    executeCommandInTerminal(request: proto.host.ExecuteCommandInTerminalRequest): Promise<proto.host.ExecuteCommandInTerminalResponse> {
+      return this.makeRequest((client) => client.executeCommandInTerminal(request))
+    }
+    openFolder(request: proto.host.OpenFolderRequest): Promise<proto.host.OpenFolderResponse> {
+      return this.makeRequest((client) => client.openFolder(request))
+    }
+    searchWorkspaceItems(request: proto.host.SearchWorkspaceItemsRequest): Promise<proto.host.SearchWorkspaceItemsResponse> {
+      return this.makeRequest((client) => client.searchWorkspaceItems(request))
+    }
+}
 
 /**
  * Type-safe client implementation for DiffService.
  */
-export class DiffServiceClientImpl 
-	extends BaseGrpcClient<niceGrpc.host.DiffServiceClient> 
+export class DiffServiceClientImpl
+	extends BaseGrpcClient<niceGrpc.host.DiffServiceClient>
 	implements DiffServiceClientInterface {
 
 	protected createClient(channel: Channel): niceGrpc.host.DiffServiceClient {
@@ -51,10 +94,69 @@ export class DiffServiceClientImpl
 }
 
 /**
+ * Type-safe client implementation for TestingService.
+ */
+export class TestingServiceClientImpl
+	extends BaseGrpcClient<niceGrpc.host.TestingServiceClient>
+	implements TestingServiceClientInterface {
+
+	protected createClient(channel: Channel): niceGrpc.host.TestingServiceClient {
+		return createClient(niceGrpc.host.TestingServiceDefinition, channel)
+	}
+
+    getWebviewHtml(request: proto.host.GetWebviewHtmlRequest): Promise<proto.host.GetWebviewHtmlResponse> {
+      return this.makeRequest((client) => client.getWebviewHtml(request))
+    }
+}
+
+/**
+ * Type-safe client implementation for WindowService.
+ */
+export class WindowServiceClientImpl
+	extends BaseGrpcClient<niceGrpc.host.WindowServiceClient>
+	implements WindowServiceClientInterface {
+
+	protected createClient(channel: Channel): niceGrpc.host.WindowServiceClient {
+		return createClient(niceGrpc.host.WindowServiceDefinition, channel)
+	}
+
+    showTextDocument(request: proto.host.ShowTextDocumentRequest): Promise<proto.host.TextEditorInfo> {
+      return this.makeRequest((client) => client.showTextDocument(request))
+    }
+    showOpenDialogue(request: proto.host.ShowOpenDialogueRequest): Promise<proto.host.SelectedResources> {
+      return this.makeRequest((client) => client.showOpenDialogue(request))
+    }
+    showMessage(request: proto.host.ShowMessageRequest): Promise<proto.host.SelectedResponse> {
+      return this.makeRequest((client) => client.showMessage(request))
+    }
+    showInputBox(request: proto.host.ShowInputBoxRequest): Promise<proto.host.ShowInputBoxResponse> {
+      return this.makeRequest((client) => client.showInputBox(request))
+    }
+    showSaveDialog(request: proto.host.ShowSaveDialogRequest): Promise<proto.host.ShowSaveDialogResponse> {
+      return this.makeRequest((client) => client.showSaveDialog(request))
+    }
+    openFile(request: proto.host.OpenFileRequest): Promise<proto.host.OpenFileResponse> {
+      return this.makeRequest((client) => client.openFile(request))
+    }
+    openSettings(request: proto.host.OpenSettingsRequest): Promise<proto.host.OpenSettingsResponse> {
+      return this.makeRequest((client) => client.openSettings(request))
+    }
+    getOpenTabs(request: proto.host.GetOpenTabsRequest): Promise<proto.host.GetOpenTabsResponse> {
+      return this.makeRequest((client) => client.getOpenTabs(request))
+    }
+    getVisibleTabs(request: proto.host.GetVisibleTabsRequest): Promise<proto.host.GetVisibleTabsResponse> {
+      return this.makeRequest((client) => client.getVisibleTabs(request))
+    }
+    getActiveEditor(request: proto.host.GetActiveEditorRequest): Promise<proto.host.GetActiveEditorResponse> {
+      return this.makeRequest((client) => client.getActiveEditor(request))
+    }
+}
+
+/**
  * Type-safe client implementation for EnvService.
  */
-export class EnvServiceClientImpl 
-	extends BaseGrpcClient<niceGrpc.host.EnvServiceClient> 
+export class EnvServiceClientImpl
+	extends BaseGrpcClient<niceGrpc.host.EnvServiceClient>
 	implements EnvServiceClientInterface {
 
 	protected createClient(channel: Channel): niceGrpc.host.EnvServiceClient {
@@ -108,107 +210,5 @@ export class EnvServiceClientImpl
     }
     openExternal(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
       return this.makeRequest((client) => client.openExternal(request))
-    }
-}
-
-/**
- * Type-safe client implementation for TestingService.
- */
-export class TestingServiceClientImpl 
-	extends BaseGrpcClient<niceGrpc.host.TestingServiceClient> 
-	implements TestingServiceClientInterface {
-
-	protected createClient(channel: Channel): niceGrpc.host.TestingServiceClient {
-		return createClient(niceGrpc.host.TestingServiceDefinition, channel)
-	}
-
-    getWebviewHtml(request: proto.host.GetWebviewHtmlRequest): Promise<proto.host.GetWebviewHtmlResponse> {
-      return this.makeRequest((client) => client.getWebviewHtml(request))
-    }
-}
-
-/**
- * Type-safe client implementation for WindowService.
- */
-export class WindowServiceClientImpl 
-	extends BaseGrpcClient<niceGrpc.host.WindowServiceClient> 
-	implements WindowServiceClientInterface {
-
-	protected createClient(channel: Channel): niceGrpc.host.WindowServiceClient {
-		return createClient(niceGrpc.host.WindowServiceDefinition, channel)
-	}
-
-    showTextDocument(request: proto.host.ShowTextDocumentRequest): Promise<proto.host.TextEditorInfo> {
-      return this.makeRequest((client) => client.showTextDocument(request))
-    }
-    showOpenDialogue(request: proto.host.ShowOpenDialogueRequest): Promise<proto.host.SelectedResources> {
-      return this.makeRequest((client) => client.showOpenDialogue(request))
-    }
-    showMessage(request: proto.host.ShowMessageRequest): Promise<proto.host.SelectedResponse> {
-      return this.makeRequest((client) => client.showMessage(request))
-    }
-    showInputBox(request: proto.host.ShowInputBoxRequest): Promise<proto.host.ShowInputBoxResponse> {
-      return this.makeRequest((client) => client.showInputBox(request))
-    }
-    showSaveDialog(request: proto.host.ShowSaveDialogRequest): Promise<proto.host.ShowSaveDialogResponse> {
-      return this.makeRequest((client) => client.showSaveDialog(request))
-    }
-    openFile(request: proto.host.OpenFileRequest): Promise<proto.host.OpenFileResponse> {
-      return this.makeRequest((client) => client.openFile(request))
-    }
-    openSettings(request: proto.host.OpenSettingsRequest): Promise<proto.host.OpenSettingsResponse> {
-      return this.makeRequest((client) => client.openSettings(request))
-    }
-    getOpenTabs(request: proto.host.GetOpenTabsRequest): Promise<proto.host.GetOpenTabsResponse> {
-      return this.makeRequest((client) => client.getOpenTabs(request))
-    }
-    getVisibleTabs(request: proto.host.GetVisibleTabsRequest): Promise<proto.host.GetVisibleTabsResponse> {
-      return this.makeRequest((client) => client.getVisibleTabs(request))
-    }
-    getActiveEditor(request: proto.host.GetActiveEditorRequest): Promise<proto.host.GetActiveEditorResponse> {
-      return this.makeRequest((client) => client.getActiveEditor(request))
-    }
-}
-
-/**
- * Type-safe client implementation for WorkspaceService.
- */
-export class WorkspaceServiceClientImpl 
-	extends BaseGrpcClient<niceGrpc.host.WorkspaceServiceClient> 
-	implements WorkspaceServiceClientInterface {
-
-	protected createClient(channel: Channel): niceGrpc.host.WorkspaceServiceClient {
-		return createClient(niceGrpc.host.WorkspaceServiceDefinition, channel)
-	}
-
-    getWorkspacePaths(request: proto.host.GetWorkspacePathsRequest): Promise<proto.host.GetWorkspacePathsResponse> {
-      return this.makeRequest((client) => client.getWorkspacePaths(request))
-    }
-    saveOpenDocumentIfDirty(request: proto.host.SaveOpenDocumentIfDirtyRequest): Promise<proto.host.SaveOpenDocumentIfDirtyResponse> {
-      return this.makeRequest((client) => client.saveOpenDocumentIfDirty(request))
-    }
-    getDiagnostics(request: proto.host.GetDiagnosticsRequest): Promise<proto.host.GetDiagnosticsResponse> {
-      return this.makeRequest((client) => client.getDiagnostics(request))
-    }
-    openProblemsPanel(request: proto.host.OpenProblemsPanelRequest): Promise<proto.host.OpenProblemsPanelResponse> {
-      return this.makeRequest((client) => client.openProblemsPanel(request))
-    }
-    openInFileExplorerPanel(request: proto.host.OpenInFileExplorerPanelRequest): Promise<proto.host.OpenInFileExplorerPanelResponse> {
-      return this.makeRequest((client) => client.openInFileExplorerPanel(request))
-    }
-    openKerberoSecSidebarPanel(request: proto.host.OpenKerberoSecSidebarPanelRequest): Promise<proto.host.OpenKerberoSecSidebarPanelResponse> {
-      return this.makeRequest((client) => client.openKerberoSecSidebarPanel(request))
-    }
-    openTerminalPanel(request: proto.host.OpenTerminalRequest): Promise<proto.host.OpenTerminalResponse> {
-      return this.makeRequest((client) => client.openTerminalPanel(request))
-    }
-    executeCommandInTerminal(request: proto.host.ExecuteCommandInTerminalRequest): Promise<proto.host.ExecuteCommandInTerminalResponse> {
-      return this.makeRequest((client) => client.executeCommandInTerminal(request))
-    }
-    openFolder(request: proto.host.OpenFolderRequest): Promise<proto.host.OpenFolderResponse> {
-      return this.makeRequest((client) => client.openFolder(request))
-    }
-    searchWorkspaceItems(request: proto.host.SearchWorkspaceItemsRequest): Promise<proto.host.SearchWorkspaceItemsResponse> {
-      return this.makeRequest((client) => client.searchWorkspaceItems(request))
     }
 }

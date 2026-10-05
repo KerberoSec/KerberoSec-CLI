@@ -129,7 +129,9 @@ export function RobotAnimation(props: {
 	}, [props.cursorX, props.cursorY, faceX, trackStartY, height]);
 
 	useEffect(() => {
-		const interval = setInterval(() => {
+		if (frameIndex === targetFrame) return;
+
+		const timeout = setTimeout(() => {
 			setFrameIndex((current) => {
 				if (current === targetFrame) return current;
 				const diff = targetFrame - current;
@@ -146,8 +148,8 @@ export function RobotAnimation(props: {
 			});
 		}, 12);
 
-		return () => clearInterval(interval);
-	}, [targetFrame]);
+		return () => clearTimeout(timeout);
+	}, [frameIndex, targetFrame]);
 
 	const safeIndex = Math.max(0, Math.min(frameIndex, FRAMES.length - 1));
 	const frame = FRAMES[safeIndex];

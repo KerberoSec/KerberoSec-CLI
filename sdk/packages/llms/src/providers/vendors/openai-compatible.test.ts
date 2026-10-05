@@ -9,7 +9,9 @@ import {
 	createOpenAICompatibleProviderModule,
 	sanitizeModerationRequestBody,
 	sanitizeModerationTriggerText,
+	sanitizeSseStream,
 	withMaxCompletionTokensForReasoningModels,
+	wrapResponseWithSseSanitizer,
 } from "./openai-compatible";
 
 describe("isOpenAIReasoningEraModelId", () => {
@@ -536,3 +538,73 @@ function context(): GatewayProviderContext {
 		config: config(),
 	} as unknown as GatewayProviderContext;
 }
+
+describe("sanitizeSseStream", () => {
+	it("replaces bare 'data: null' lines with comment lines so AI SDK does not fail type validation", async () => {
+		const rawSse = [
+			'data: {"id":"1","choices":[{"delta":{"content":"Hi"}}]}',
+			"data: null",
+			'data: {"id":"2","choices":[{"delta":{"content":" there"}}]}',
+			"data:null",
+			"data: [DONE]",
+			"",
+		].join("\n\n");
+
+		const stream = new ReadableStream<Uint8Array>({
+			start(controller) {
+				controller.enqueue(new TextEncoder().encode(rawSse));
+				controller.close();
+			},
+		});
+
+		const sanitized = sanitizeSseStream(stream);
+		const reader = sanitized.getReader();
+		const decoder = new TextDecoder();
+		let output = "";
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			output += decoder.decode(value, { stream: true });
+		}
+
+		expect(output).not.toContain("data: null");
+		expect(output).not.toContain("data:null");
+		expect(output).toContain(": sse-null-skip");
+		expect(output).toContain('data: {"id":"1"');
+		expect(output).toContain('data: {"id":"2"');
+		expect(output).toContain("data: [DONE]");
+	});
+
+	it("preserves CR-only SSE separators and UTF-8 split across chunks", async () => {
+		const encoded = new TextEncoder().encode("data: null\rdata: café\r");
+		const accentStart = encoded.indexOf(0xc3);
+		const stream = new ReadableStream<Uint8Array>({
+			start(controller) {
+				controller.enqueue(encoded.slice(0, accentStart));
+				controller.enqueue(encoded.slice(accentStart, accentStart + 1));
+				controller.enqueue(encoded.slice(accentStart + 1));
+				controller.close();
+			},
+		});
+		const reader = sanitizeSseStream(stream).getReader();
+		const decoder = new TextDecoder();
+		let output = "";
+		while (true) {
+			const { done, value } = await reader.read();
+			if (done) break;
+			output += decoder.decode(value, { stream: true });
+		}
+		output += decoder.decode();
+
+		expect(output).toBe(": sse-null-skip\rdata: café\r");
+	});
+
+	it("preserves non-event-stream responses untouched", () => {
+		const jsonResponse = new Response(JSON.stringify({ ok: true }), {
+			status: 200,
+			headers: { "content-type": "application/json" },
+		});
+		const result = wrapResponseWithSseSanitizer(jsonResponse);
+		expect(result).toBe(jsonResponse);
+	});
+});

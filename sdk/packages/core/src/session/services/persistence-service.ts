@@ -1,4 +1,3 @@
-import { dirname } from "node:path";
 import type * as LlmsProviders from "@kerberosec/llms";
 import type { AgentResult, BasicLogger } from "@kerberosec/shared";
 import { nanoid } from "nanoid";
@@ -8,7 +7,7 @@ import type {
 } from "../../extensions/tools/team";
 import type { HookEventPayload } from "../../hooks";
 import { deleteCheckpointRefs } from "../../hooks/checkpoint-hooks";
-import { nowIso, unlinkIfExists } from "../../services/session-artifacts";
+import { nowIso } from "../../services/session-artifacts";
 import {
 	buildManifestFromRow,
 	deriveTitleFromPrompt,
@@ -554,6 +553,7 @@ export class UnifiedSessionPersistenceService {
 	async deleteSession(sessionId: string): Promise<{ deleted: boolean }> {
 		const id = sessionId.trim();
 		if (!id) throw new Error("session id is required");
+		this.manifestStore.artifacts.assertValidSessionId(id);
 
 		const row = await this.adapter.getSession(id);
 		if (!row) return { deleted: false };
@@ -569,14 +569,12 @@ export class UnifiedSessionPersistenceService {
 			await Promise.allSettled(
 				children.map(async (child) => {
 					await deleteCheckpointRefs(child.cwd, child.sessionId);
-					unlinkIfExists(child.messagesPath);
-					await this.deleteSessionCompactionStateIfExists(child.sessionId);
-					unlinkIfExists(
-						this.manifestStore.artifacts.sessionManifestPath(
-							child.sessionId,
-							false,
-						),
+					this.manifestStore.artifacts.removeMessagesFile(
+						child.sessionId,
+						child.isSubagent,
 					);
+					await this.deleteSessionCompactionStateIfExists(child.sessionId);
+					this.manifestStore.artifacts.removeManifestFile(child.sessionId);
 					this.manifestStore.artifacts.removeSessionDirIfEmpty(child.sessionId);
 				}),
 			);
@@ -584,23 +582,13 @@ export class UnifiedSessionPersistenceService {
 
 		await deleteCheckpointRefs(row.cwd, id);
 
-		unlinkIfExists(row.messagesPath);
+		this.manifestStore.artifacts.removeMessagesFile(id, row.isSubagent);
 		await this.deleteSessionCompactionStateIfExists(id);
-		unlinkIfExists(this.manifestStore.artifacts.sessionManifestPath(id, false));
+		this.manifestStore.artifacts.removeManifestFile(id);
 		if (row.isSubagent) {
 			this.manifestStore.artifacts.removeSessionDirIfEmpty(id);
 		} else {
-			const candidateDirs = new Set<string>([
-				this.manifestStore.artifacts.sessionArtifactsDir(id),
-			]);
-			for (const path of [row.messagesPath]) {
-				if (typeof path === "string" && path.trim().length > 0) {
-					candidateDirs.add(dirname(path));
-				}
-			}
-			for (const dir of candidateDirs) {
-				this.manifestStore.artifacts.removeDir(dir);
-			}
+			this.manifestStore.artifacts.removeSessionDir(id);
 		}
 		return { deleted: true };
 	}

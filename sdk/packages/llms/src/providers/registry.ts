@@ -25,10 +25,13 @@ interface ProviderConfigRecord extends GatewayResolvedProviderConfig {
 
 function cloneManifest(
 	manifest: GatewayProviderManifest,
+	models: readonly GatewayModelDefinition[] = manifest.models.map((model) => ({
+		...model,
+	})),
 ): GatewayProviderManifest {
 	return {
 		...manifest,
-		models: manifest.models.map((model) => ({ ...model })),
+		models,
 		modelOperationCapabilities: manifest.modelOperationCapabilities?.map(
 			(capability) => ({
 				...capability,
@@ -238,7 +241,7 @@ export class GatewayRegistry {
 		}
 
 		return {
-			...cloneManifest(record.manifest),
+			...cloneManifest(record.manifest, models),
 			defaultModelId,
 			models,
 			metadata: mergeProviderMetadata(
@@ -268,13 +271,16 @@ export class GatewayRegistry {
 	}
 
 	async createProvider(providerId: string): Promise<{
-		manifest: GatewayProviderManifest;
 		config: GatewayResolvedProviderConfig;
 		createProvider: GatewayProviderFactory;
 	}> {
 		const record = this.providers.get(providerId);
 		if (!record) {
 			throw new Error(`Unknown provider "${providerId}".`);
+		}
+		const config = this.providerConfigs.get(providerId);
+		if (config && !config.enabled) {
+			throw new Error(`Provider "${providerId}" is disabled.`);
 		}
 
 		if (!record.createProvider) {
@@ -284,13 +290,6 @@ export class GatewayRegistry {
 			}
 			record.createProvider = loaded.createProvider;
 		}
-
-		const manifest = this.getManifest(providerId);
-		if (!manifest) {
-			throw new Error(`Provider "${providerId}" is disabled.`);
-		}
-
-		const config = this.providerConfigs.get(providerId);
 		const metadata = mergeProviderMetadata(
 			record.defaults?.metadata,
 			config?.metadata,
@@ -301,7 +300,6 @@ export class GatewayRegistry {
 		};
 
 		return {
-			manifest,
 			config: {
 				providerId,
 				apiKey: config?.apiKey ?? record.defaults?.apiKey,

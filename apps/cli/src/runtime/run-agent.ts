@@ -230,16 +230,40 @@ export async function runAgent(
 	let abortRequested = false;
 	let timedOut = false;
 	let activeSessionId: string | undefined;
+	let sessionStartPending = false;
+	let abortRetryTimer: ReturnType<typeof setInterval> | undefined;
+	let runTimeoutTimer: ReturnType<typeof setTimeout> | undefined;
+	const abortReason = new Error("Run-agent runtime abort requested");
+	const requestSessionAbort = () => {
+		void sessionManager
+			.abort(activeSessionId ?? plannedSessionId, abortReason)
+			.catch(() => {});
+	};
+	const clearAbortRetry = () => {
+		if (abortRetryTimer) {
+			clearInterval(abortRetryTimer);
+			abortRetryTimer = undefined;
+		}
+	};
+	const ensureAbortRetry = () => {
+		if (sessionStartPending && !abortRetryTimer) {
+			abortRetryTimer = setInterval(requestSessionAbort, 250);
+			abortRetryTimer.unref?.();
+		}
+	};
 
 	const abortAll = () => {
 		if (abortRequested) return false;
 		abortRequested = true;
-		if (activeSessionId) {
-			sessionManager
-				.abort(activeSessionId, new Error("Run-agent runtime abort requested"))
-				.catch(() => {});
-		}
+		requestSessionAbort();
+		ensureAbortRetry();
 		return true;
+	};
+	const clearRunTimeout = () => {
+		if (runTimeoutTimer) {
+			clearTimeout(runTimeoutTimer);
+			runTimeoutTimer = undefined;
+		}
 	};
 	setActiveRuntimeAbort(abortAll);
 
@@ -248,6 +272,8 @@ export async function runAgent(
 		cleanupDone ??= (async () => {
 			process.off("SIGINT", handleSigint);
 			process.off("SIGTERM", handleSigterm);
+			clearRunTimeout();
+			clearAbortRetry();
 			unsubscribe();
 			await runtimeHooks.shutdown().catch(() => {});
 			if (activeSessionId) {
@@ -289,6 +315,25 @@ export async function runAgent(
 		} = await buildUserInputMessage(prompt, userInstructionService, {
 			mode: config.mode,
 		});
+		const timeoutMs =
+			typeof config.timeoutSeconds === "number" &&
+			Number.isFinite(config.timeoutSeconds) &&
+			config.timeoutSeconds > 0
+				? config.timeoutSeconds * 1000
+				: undefined;
+		if (timeoutMs) {
+			// Local SessionManager.start() runs the initial turn before it resolves,
+			// so start the deadline before creating the session.
+			runTimeoutTimer = setTimeout(() => {
+				timedOut = true;
+				abortAll();
+			}, timeoutMs);
+		}
+		sessionStartPending = true;
+		if (abortRequested) {
+			requestSessionAbort();
+			ensureAbortRetry();
+		}
 		const started = await sessionManager.start({
 			source: SessionSource.CLI,
 			config: {
@@ -314,28 +359,16 @@ export async function runAgent(
 				onTeamRestored: () => emitTeamRestored(config),
 			},
 		});
+		sessionStartPending = false;
+		clearAbortRetry();
 
 		activeSessionId = started.sessionId;
+		if (abortRequested) {
+			requestSessionAbort();
+		}
 		setActiveCliSession({
 			manifest: started.manifest,
 		});
-
-		// Schedule timeout abort if configured.
-		const timeoutMs =
-			typeof config.timeoutSeconds === "number" &&
-			Number.isFinite(config.timeoutSeconds) &&
-			config.timeoutSeconds > 0
-				? config.timeoutSeconds * 1000
-				: undefined;
-		const timeoutId = timeoutMs
-			? setTimeout(() => {
-					timedOut = true;
-					abortAll();
-				}, timeoutMs)
-			: undefined;
-		const clearRunTimeout = () => {
-			if (timeoutId) clearTimeout(timeoutId);
-		};
 
 		// When start() already ran the first turn (non-interactive with prompt),
 		// the session is finalized before start() returns. Use that result
@@ -345,14 +378,19 @@ export async function runAgent(
 			clearRunTimeout();
 			result = started.result;
 		} else {
-			result = await sessionManager
-				.send({
-					sessionId: started.sessionId,
-					prompt: userInput,
-					userImages: userImages.length > 0 ? userImages : undefined,
-					userFiles: userFiles.length > 0 ? userFiles : undefined,
-				})
-				.finally(clearRunTimeout);
+			const sendPromise = sessionManager.send({
+				sessionId: started.sessionId,
+				prompt: userInput,
+				userImages: userImages.length > 0 ? userImages : undefined,
+				userFiles: userFiles.length > 0 ? userFiles : undefined,
+			});
+			if (abortRequested) {
+				requestSessionAbort();
+			}
+			result = await sendPromise.finally(clearRunTimeout);
+		}
+		if (timedOut) {
+			throw new Error("run timed out");
 		}
 		if (!result) {
 			throw new Error("session manager did not return a result");
@@ -426,6 +464,11 @@ export async function runAgent(
 		);
 		process.exitCode = 0;
 	} catch (err) {
+		if (timedOut) {
+			writeErr(`run timed out after ${config.timeoutSeconds}s`);
+			process.exitCode = 1;
+			return;
+		}
 		const message = formatCliErrorMessage(err, { modelId: config.modelId });
 		logCliError(config.logger, "CLI task run failed", { error: err });
 		writeErr(message);

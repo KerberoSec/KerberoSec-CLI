@@ -75,11 +75,11 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 			FileServiceClient.refreshRules({} as EmptyRequest)
 				.then((response: RefreshedRules) => {
 					// Update state with the response data using all available setters
-					if (response.globalKerberoSecRulesToggles?.toggles) {
-						setGlobalKerberoSecRulesToggles(response.globalKerberoSecRulesToggles.toggles)
+					if (response.globalKerberosecRulesToggles?.toggles) {
+						setGlobalKerberoSecRulesToggles(response.globalKerberosecRulesToggles.toggles)
 					}
-					if (response.localKerberoSecRulesToggles?.toggles) {
-						setLocalKerberoSecRulesToggles(response.localKerberoSecRulesToggles.toggles)
+					if (response.localKerberosecRulesToggles?.toggles) {
+						setLocalKerberoSecRulesToggles(response.localKerberosecRulesToggles.toggles)
 					}
 					if (response.localCursorRulesToggles?.toggles) {
 						setLocalCursorRulesToggles(response.localCursorRulesToggles.toggles)
@@ -118,30 +118,32 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 		}
 
 		const abortController = new AbortController()
+		let refreshInFlight = false
 
 		// Initial refresh when tab opens
-		const refreshHooks = () => {
-			if (abortController.signal.aborted) return
-
-			FileServiceClient.refreshHooks({} as EmptyRequest)
-				.then((response) => {
-					if (!abortController.signal.aborted) {
-						setGlobalHooks(response.globalHooks || [])
-						setWorkspaceHooks(response.workspaceHooks || [])
-					}
-				})
-				.catch((error) => {
-					if (!abortController.signal.aborted) {
-						console.error("Failed to refresh hooks:", error)
-					}
-				})
+		const refreshHooks = async () => {
+			if (abortController.signal.aborted || refreshInFlight) return
+			refreshInFlight = true
+			try {
+				const response = await FileServiceClient.refreshHooks({} as EmptyRequest)
+				if (!abortController.signal.aborted) {
+					setGlobalHooks(response.globalHooks || [])
+					setWorkspaceHooks(response.workspaceHooks || [])
+				}
+			} catch (error) {
+				if (!abortController.signal.aborted) {
+					console.error("Failed to refresh hooks:", error)
+				}
+			} finally {
+				refreshInFlight = false
+			}
 		}
 
 		// Refresh immediately
-		refreshHooks()
+		void refreshHooks()
 
-		// Poll every 1 second to detect filesystem changes
-		const pollInterval = setInterval(refreshHooks, 1000)
+		// Detect external filesystem changes without overlapping slow scans.
+		const pollInterval = setInterval(() => void refreshHooks(), 5000)
 
 		return () => {
 			abortController.abort()
@@ -156,29 +158,31 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 		}
 
 		let isCancelled = false
+		let refreshInFlight = false
 
-		const refreshSkills = () => {
-			if (isCancelled) return
-
-			FileServiceClient.refreshSkills({} as EmptyRequest)
-				.then((response) => {
-					if (!isCancelled) {
-						setGlobalSkills(response.globalSkills || [])
-						setLocalSkills(response.localSkills || [])
-					}
-				})
-				.catch((error) => {
-					if (!isCancelled) {
-						console.error("Failed to refresh skills:", error)
-					}
-				})
+		const refreshSkills = async () => {
+			if (isCancelled || refreshInFlight) return
+			refreshInFlight = true
+			try {
+				const response = await FileServiceClient.refreshSkills({} as EmptyRequest)
+				if (!isCancelled) {
+					setGlobalSkills(response.globalSkills || [])
+					setLocalSkills(response.localSkills || [])
+				}
+			} catch (error) {
+				if (!isCancelled) {
+					console.error("Failed to refresh skills:", error)
+				}
+			} finally {
+				refreshInFlight = false
+			}
 		}
 
 		// Refresh immediately
-		refreshSkills()
+		void refreshSkills()
 
-		// Poll every 1 second to detect filesystem changes
-		const pollInterval = setInterval(refreshSkills, 1000)
+		// Detect external filesystem changes without overlapping slow scans.
+		const pollInterval = setInterval(() => void refreshSkills(), 5000)
 
 		return () => {
 			isCancelled = true
@@ -239,11 +243,11 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 		)
 			.then((response) => {
 				// Update the local state with the response
-				if (response.globalKerberoSecRulesToggles?.toggles) {
-					setGlobalKerberoSecRulesToggles(response.globalKerberoSecRulesToggles.toggles)
+				if (response.globalKerberosecRulesToggles?.toggles) {
+					setGlobalKerberoSecRulesToggles(response.globalKerberosecRulesToggles.toggles)
 				}
-				if (response.localKerberoSecRulesToggles?.toggles) {
-					setLocalKerberoSecRulesToggles(response.localKerberoSecRulesToggles.toggles)
+				if (response.localKerberosecRulesToggles?.toggles) {
+					setLocalKerberoSecRulesToggles(response.localKerberosecRulesToggles.toggles)
 				}
 				if (response.remoteRulesToggles?.toggles) {
 					setRemoteRulesToggles(response.remoteRulesToggles.toggles)
@@ -467,8 +471,9 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 						<div className="text-xs text-description mb-4">
 							{currentView === "rules" ? (
 								<p>
-									Rules allow you to provide KerberoSec with system-level guidance. Think of them as a persistent way
-									to include context and preferences for your projects or globally for every conversation.{" "}
+									Rules allow you to provide KerberoSec with system-level guidance. Think of them as a
+									persistent way to include context and preferences for your projects or globally for every
+									conversation.{" "}
 									<VSCodeLink
 										className="text-xs"
 										href="https://docs.cline.bot/features/kerberosec-rules"
@@ -478,8 +483,8 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 								</p>
 							) : currentView === "workflows" ? (
 								<p>
-									Workflows allow you to define a series of steps to guide KerberoSec through a repetitive set of
-									tasks, such as deploying a service or submitting a PR. To invoke a workflow, type{" "}
+									Workflows allow you to define a series of steps to guide KerberoSec through a repetitive set
+									of tasks, such as deploying a service or submitting a PR. To invoke a workflow, type{" "}
 									<span className="text-foreground font-bold">/workflow-name</span> in the chat.{" "}
 									<VSCodeLink
 										className="text-xs inline"
@@ -489,14 +494,14 @@ const KerberoSecRulesToggleModal: React.FC = () => {
 								</p>
 							) : currentView === "skills" ? (
 								<p>
-									Skills are reusable instruction sets that KerberoSec can activate on-demand. When a task matches a
-									skill's description, KerberoSec uses the <span className="font-bold">use_skill</span> tool to load
-									the full instructions.
+									Skills are reusable instruction sets that KerberoSec can activate on-demand. When a task
+									matches a skill's description, KerberoSec uses the{" "}
+									<span className="font-bold">use_skill</span> tool to load the full instructions.
 								</p>
 							) : (
 								<p>
-									Hooks allow you to execute custom scripts at specific points in KerberoSec's execution lifecycle,
-									enabling automation and integration with external tools.
+									Hooks allow you to execute custom scripts at specific points in KerberoSec's execution
+									lifecycle, enabling automation and integration with external tools.
 								</p>
 							)}
 						</div>

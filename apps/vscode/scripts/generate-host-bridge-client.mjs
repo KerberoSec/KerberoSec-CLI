@@ -173,8 +173,8 @@ function generateExternalClientSetup(serviceName, serviceDefinition) {
 	return `/**
  * Type-safe client implementation for ${serviceName}.
  */
-export class ${serviceName}ClientImpl 
-	extends BaseGrpcClient<niceGrpc.host.${serviceName}Client> 
+export class ${serviceName}ClientImpl
+	extends BaseGrpcClient<niceGrpc.host.${serviceName}Client>
 	implements ${serviceName}ClientInterface {
 
 	protected createClient(channel: Channel): niceGrpc.host.${serviceName}Client {

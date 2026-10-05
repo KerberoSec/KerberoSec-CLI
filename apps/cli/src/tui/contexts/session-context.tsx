@@ -9,11 +9,16 @@ import {
 } from "react";
 import { getCliCompactionMode } from "../../utils/compaction-mode";
 import type { CliCompactionMode } from "../../utils/types";
-import type { ChatEntry, InlineStream, TuiProps } from "../types";
+import type {
+	ChatEntry,
+	InlineStream,
+	StableChatEntry,
+	TuiProps,
+} from "../types";
 import { MAX_BUFFERED_LINES } from "../types";
 
 interface SessionContextValue {
-	entries: ChatEntry[];
+	entries: StableChatEntry[];
 	isRunning: boolean;
 	isStreaming: boolean;
 	abortRequested: boolean;
@@ -52,6 +57,32 @@ type UsageDelta = {
 	outputTokens?: number;
 	cost?: number;
 };
+
+function assignEntryId(
+	entry: ChatEntry,
+	nextEntryIdRef: React.MutableRefObject<number>,
+): StableChatEntry {
+	return {
+		...entry,
+		entryId: nextEntryIdRef.current++,
+	};
+}
+
+function assignEntryIds(
+	entries: ChatEntry[],
+	nextEntryIdRef: React.MutableRefObject<number>,
+): StableChatEntry[] {
+	return entries.map((entry) => assignEntryId(entry, nextEntryIdRef));
+}
+
+function preserveEntryId(
+	entry: ChatEntry,
+	previous: StableChatEntry,
+): StableChatEntry {
+	return entry.entryId === previous.entryId
+		? (entry as StableChatEntry)
+		: { ...entry, entryId: previous.entryId };
+}
 
 const SessionContext = createContext<SessionContextValue | null>(null);
 
@@ -92,11 +123,14 @@ export function SessionProvider(props: {
 		onExit,
 	} = props;
 
-	const [entries, setEntries] = useState<ChatEntry[]>(() =>
-		initialEntries && initialEntries.length > MAX_BUFFERED_LINES
-			? initialEntries.slice(initialEntries.length - MAX_BUFFERED_LINES)
-			: (initialEntries ?? []),
-	);
+	const nextEntryIdRef = useRef(1);
+	const [entries, setEntries] = useState<StableChatEntry[]>(() => {
+		const visibleEntries =
+			initialEntries && initialEntries.length > MAX_BUFFERED_LINES
+				? initialEntries.slice(initialEntries.length - MAX_BUFFERED_LINES)
+				: (initialEntries ?? []);
+		return assignEntryIds(visibleEntries, nextEntryIdRef);
+	});
 	const [isRunning, _setIsRunning] = useState(false);
 	const [isStreaming, setIsStreaming] = useState(false);
 	const [abortRequested, setAbortRequested] = useState(false);
@@ -142,7 +176,10 @@ export function SessionProvider(props: {
 	);
 
 	const appendEntry = useCallback((entry: ChatEntry) => {
-		const stamped = entry.mode ? entry : { ...entry, mode: uiModeRef.current };
+		const modeStamped = entry.mode
+			? entry
+			: { ...entry, mode: uiModeRef.current };
+		const stamped = assignEntryId(modeStamped, nextEntryIdRef);
 		setEntries((prev) => {
 			if (prev.length > 0) {
 				const last = prev[prev.length - 1];
@@ -192,7 +229,8 @@ export function SessionProvider(props: {
 			setEntries((prev) => {
 				if (prev.length === 0) return prev;
 				const next = [...prev];
-				next[next.length - 1] = updater(next[next.length - 1] as ChatEntry);
+				const previous = next[next.length - 1] as StableChatEntry;
+				next[next.length - 1] = preserveEntryId(updater(previous), previous);
 				return next;
 			});
 		},
@@ -204,7 +242,7 @@ export function SessionProvider(props: {
 			setEntries((prev) => {
 				let changed = false;
 				const next = prev.map((entry) => {
-					const updated = updater(entry);
+					const updated = preserveEntryId(updater(entry), entry);
 					if (updated !== entry) changed = true;
 					return updated;
 				});
@@ -227,7 +265,7 @@ export function SessionProvider(props: {
 					entry.streaming
 				) {
 					changed = true;
-					return { ...entry, streaming: false } as ChatEntry;
+					return { ...entry, streaming: false, entryId: entry.entryId };
 				}
 				return entry;
 			});
@@ -281,11 +319,11 @@ export function SessionProvider(props: {
 	}, []);
 
 	const replaceEntries = useCallback((nextEntries: ChatEntry[]) => {
-		setEntries(
+		const visibleEntries =
 			nextEntries.length > MAX_BUFFERED_LINES
 				? nextEntries.slice(nextEntries.length - MAX_BUFFERED_LINES)
-				: nextEntries,
-		);
+				: nextEntries;
+		setEntries(assignEntryIds(visibleEntries, nextEntryIdRef));
 	}, []);
 
 	const value: SessionContextValue = {

@@ -47,6 +47,63 @@ export interface WebFetchExecutorOptions {
 	maxRedirects?: number;
 }
 
+const REDIRECT_STATUSES = new Set([301, 302, 303, 307, 308]);
+
+async function fetchWithRedirectLimit(
+	url: URL,
+	headers: Headers,
+	signal: AbortSignal,
+	followRedirects: boolean,
+	maxRedirects: number,
+): Promise<Response> {
+	let currentUrl = url;
+	let redirectCount = 0;
+	while (true) {
+		const response = await fetch(currentUrl, {
+			method: "GET",
+			headers,
+			redirect: "manual",
+			signal,
+		});
+		if (!followRedirects || !REDIRECT_STATUSES.has(response.status)) {
+			return response;
+		}
+
+		const location = response.headers.get("location");
+		if (!location) return response;
+		if (redirectCount >= maxRedirects) {
+			await response.body?.cancel();
+			throw new Error(`Too many redirects: exceeded ${maxRedirects}`);
+		}
+
+		let nextUrl: URL;
+		try {
+			nextUrl = new URL(location, currentUrl);
+		} catch {
+			await response.body?.cancel();
+			throw new Error(`Invalid redirect URL: ${location}`);
+		}
+		if (nextUrl.protocol !== "http:" && nextUrl.protocol !== "https:") {
+			await response.body?.cancel();
+			throw new Error(`Invalid redirect protocol: ${nextUrl.protocol}`);
+		}
+
+		await response.body?.cancel();
+		if (nextUrl.origin !== currentUrl.origin) {
+			for (const header of [
+				"authorization",
+				"proxy-authorization",
+				"cookie",
+				"cookie2",
+			]) {
+				headers.delete(header);
+			}
+		}
+		currentUrl = nextUrl;
+		redirectCount += 1;
+	}
+}
+
 /**
  * Extract text content from HTML
  * Simple implementation - strips tags and normalizes whitespace
@@ -104,8 +161,11 @@ export function createWebFetchExecutor(
 		userAgent = "Mozilla/5.0 (compatible; AgentBot/1.0)",
 		headers = {},
 		followRedirects = true,
-		// maxRedirects is available in options but native fetch handles it automatically
+		maxRedirects = 5,
 	} = options;
+	if (!Number.isSafeInteger(maxRedirects) || maxRedirects < 0) {
+		throw new RangeError("maxRedirects must be a non-negative integer");
+	}
 
 	return async (
 		url: string,
@@ -135,24 +195,29 @@ export function createWebFetchExecutor(
 		// Combine with context abort signal
 		if (context.signal) {
 			contextAbortHandler = () => controller.abort();
-			context.signal.addEventListener("abort", contextAbortHandler);
+			if (context.signal.aborted) {
+				contextAbortHandler();
+			} else {
+				context.signal.addEventListener("abort", contextAbortHandler, {
+					once: true,
+				});
+			}
 		}
 
 		try {
-			const response = await fetch(url, {
-				method: "GET",
-				headers: {
+			const response = await fetchWithRedirectLimit(
+				parsedUrl,
+				new Headers({
 					"User-Agent": userAgent,
 					Accept:
 						"text/html,application/xhtml+xml,application/xml;q=0.9,text/plain;q=0.8,*/*;q=0.7",
 					"Accept-Language": "en-US,en;q=0.9",
 					...headers,
-				},
-				redirect: followRedirects ? "follow" : "manual",
-				signal: controller.signal,
-			});
-
-			clearTimeout(timeout);
+				}),
+				controller.signal,
+				followRedirects,
+				maxRedirects,
+			);
 
 			// Check for redirect limit (if we're checking manually)
 			if (!followRedirects && response.status >= 300 && response.status < 400) {
@@ -251,6 +316,7 @@ export function createWebFetchExecutor(
 			}
 			throw new Error(`Fetch failed: ${String(error)}`);
 		} finally {
+			clearTimeout(timeout);
 			if (context.signal && contextAbortHandler) {
 				context.signal.removeEventListener("abort", contextAbortHandler);
 			}

@@ -955,6 +955,10 @@ export {
 	truncateCommandOutput,
 } from "./extensions/tools";
 export {
+	resolveHubBuildEpochMs,
+	resolveHubBuildId,
+} from "./hub/discovery/index";
+export {
 	applyKerberoSecFeaturedModels,
 	FALLBACK_KERBEROSEC_RECOMMENDED_MODELS,
 	type FetchKerberoSecRecommendedModelsOptions,

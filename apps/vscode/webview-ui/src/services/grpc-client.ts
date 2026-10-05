@@ -3,473 +3,6 @@
 import * as proto from "@shared/proto/index"
 import { ProtoBusClient, Callbacks } from "./grpc-client-base"
 
-export class AccountServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.AccountService"
-	static async accountLoginClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
-		return this.makeUnaryRequest(
-			"accountLoginClicked",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.String.fromJSON,
-		)
-	}
-	static async accountLogoutClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"accountLogoutClicked",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static subscribeToAuthStatusUpdate(
-		request: proto.kerberosec.EmptyRequest,
-		callbacks: Callbacks<proto.kerberosec.AuthState>,
-	): () => void {
-		return this.makeStreamingRequest(
-			"subscribeToAuthStatusUpdate",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.AuthState.fromJSON,
-			callbacks,
-		)
-	}
-	static async authStateChanged(request: proto.kerberosec.AuthStateChangedRequest): Promise<proto.kerberosec.AuthState> {
-		return this.makeUnaryRequest(
-			"authStateChanged",
-			request,
-			proto.kerberosec.AuthStateChangedRequest.toJSON,
-			proto.kerberosec.AuthState.fromJSON,
-		)
-	}
-	static async getUserCredits(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.UserCreditsData> {
-		return this.makeUnaryRequest(
-			"getUserCredits",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.UserCreditsData.fromJSON,
-		)
-	}
-	static async getOrganizationCredits(
-		request: proto.kerberosec.GetOrganizationCreditsRequest,
-	): Promise<proto.kerberosec.OrganizationCreditsData> {
-		return this.makeUnaryRequest(
-			"getOrganizationCredits",
-			request,
-			proto.kerberosec.GetOrganizationCreditsRequest.toJSON,
-			proto.kerberosec.OrganizationCreditsData.fromJSON,
-		)
-	}
-	static async getUserOrganizations(
-		request: proto.kerberosec.EmptyRequest,
-	): Promise<proto.kerberosec.UserOrganizationsResponse> {
-		return this.makeUnaryRequest(
-			"getUserOrganizations",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.UserOrganizationsResponse.fromJSON,
-		)
-	}
-	static async setUserOrganization(request: proto.kerberosec.UserOrganizationUpdateRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"setUserOrganization",
-			request,
-			proto.kerberosec.UserOrganizationUpdateRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async openrouterAuthClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openrouterAuthClicked",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async requestyAuthClicked(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"requestyAuthClicked",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async hicapAuthClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"hicapAuthClicked",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async getRedirectUrl(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
-		return this.makeUnaryRequest(
-			"getRedirectUrl",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.String.fromJSON,
-		)
-	}
-	static async openAiCodexSignIn(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openAiCodexSignIn",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async openAiCodexSignOut(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openAiCodexSignOut",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async submitLimitIncreaseRequest(
-		request: proto.kerberosec.EmptyRequest,
-	): Promise<proto.kerberosec.SubmitLimitIncreaseResponse> {
-		return this.makeUnaryRequest(
-			"submitLimitIncreaseRequest",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.SubmitLimitIncreaseResponse.fromJSON,
-		)
-	}
-}
-export class BrowserServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.BrowserService"
-	static async getBrowserConnectionInfo(
-		request: proto.kerberosec.EmptyRequest,
-	): Promise<proto.kerberosec.BrowserConnectionInfo> {
-		return this.makeUnaryRequest(
-			"getBrowserConnectionInfo",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.BrowserConnectionInfo.fromJSON,
-		)
-	}
-	static async testBrowserConnection(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.BrowserConnection> {
-		return this.makeUnaryRequest(
-			"testBrowserConnection",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.BrowserConnection.fromJSON,
-		)
-	}
-	static async discoverBrowser(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.BrowserConnection> {
-		return this.makeUnaryRequest(
-			"discoverBrowser",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.BrowserConnection.fromJSON,
-		)
-	}
-	static async getDetectedChromePath(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.ChromePath> {
-		return this.makeUnaryRequest(
-			"getDetectedChromePath",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.ChromePath.fromJSON,
-		)
-	}
-	static async relaunchChromeDebugMode(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
-		return this.makeUnaryRequest(
-			"relaunchChromeDebugMode",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.String.fromJSON,
-		)
-	}
-}
-export class CheckpointsServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.CheckpointsService"
-	static async checkpointRestore(request: proto.kerberosec.CheckpointRestoreRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"checkpointRestore",
-			request,
-			proto.kerberosec.CheckpointRestoreRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async checkpointViewLatestChanges(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"checkpointViewLatestChanges",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async checkpointLatestChangesCount(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Int64> {
-		return this.makeUnaryRequest(
-			"checkpointLatestChangesCount",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Int64.fromJSON,
-		)
-	}
-}
-export class CommandsServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.CommandsService"
-	static async addToKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"addToKerberoSec",
-			request,
-			proto.kerberosec.CommandContext.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async fixWithKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"fixWithKerberoSec",
-			request,
-			proto.kerberosec.CommandContext.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async explainWithKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"explainWithKerberoSec",
-			request,
-			proto.kerberosec.CommandContext.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async improveWithKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"improveWithKerberoSec",
-			request,
-			proto.kerberosec.CommandContext.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-}
-export class FileServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.FileService"
-	static async copyToClipboard(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"copyToClipboard",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async openFile(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest("openFile", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
-	}
-	static async openImage(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest("openImage", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
-	}
-	static async openMention(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openMention",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async deleteRuleFile(request: proto.kerberosec.RuleFileRequest): Promise<proto.kerberosec.RuleFile> {
-		return this.makeUnaryRequest(
-			"deleteRuleFile",
-			request,
-			proto.kerberosec.RuleFileRequest.toJSON,
-			proto.kerberosec.RuleFile.fromJSON,
-		)
-	}
-	static async createRuleFile(request: proto.kerberosec.RuleFileRequest): Promise<proto.kerberosec.RuleFile> {
-		return this.makeUnaryRequest(
-			"createRuleFile",
-			request,
-			proto.kerberosec.RuleFileRequest.toJSON,
-			proto.kerberosec.RuleFile.fromJSON,
-		)
-	}
-	static async searchCommits(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.GitCommits> {
-		return this.makeUnaryRequest(
-			"searchCommits",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.GitCommits.fromJSON,
-		)
-	}
-	static async selectFiles(request: proto.kerberosec.BooleanRequest): Promise<proto.kerberosec.StringArrays> {
-		return this.makeUnaryRequest(
-			"selectFiles",
-			request,
-			proto.kerberosec.BooleanRequest.toJSON,
-			proto.kerberosec.StringArrays.fromJSON,
-		)
-	}
-	static async getRelativePaths(request: proto.kerberosec.RelativePathsRequest): Promise<proto.kerberosec.RelativePaths> {
-		return this.makeUnaryRequest(
-			"getRelativePaths",
-			request,
-			proto.kerberosec.RelativePathsRequest.toJSON,
-			proto.kerberosec.RelativePaths.fromJSON,
-		)
-	}
-	static async searchFiles(request: proto.kerberosec.FileSearchRequest): Promise<proto.kerberosec.FileSearchResults> {
-		return this.makeUnaryRequest(
-			"searchFiles",
-			request,
-			proto.kerberosec.FileSearchRequest.toJSON,
-			proto.kerberosec.FileSearchResults.fromJSON,
-		)
-	}
-	static async toggleKerberoSecRule(
-		request: proto.kerberosec.ToggleKerberoSecRuleRequest,
-	): Promise<proto.kerberosec.ToggleKerberoSecRules> {
-		return this.makeUnaryRequest(
-			"toggleKerberoSecRule",
-			request,
-			proto.kerberosec.ToggleKerberoSecRuleRequest.toJSON,
-			proto.kerberosec.ToggleKerberoSecRules.fromJSON,
-		)
-	}
-	static async toggleCursorRule(
-		request: proto.kerberosec.ToggleCursorRuleRequest,
-	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
-		return this.makeUnaryRequest(
-			"toggleCursorRule",
-			request,
-			proto.kerberosec.ToggleCursorRuleRequest.toJSON,
-			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
-		)
-	}
-	static async toggleWindsurfRule(
-		request: proto.kerberosec.ToggleWindsurfRuleRequest,
-	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
-		return this.makeUnaryRequest(
-			"toggleWindsurfRule",
-			request,
-			proto.kerberosec.ToggleWindsurfRuleRequest.toJSON,
-			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
-		)
-	}
-	static async toggleAgentsRule(
-		request: proto.kerberosec.ToggleAgentsRuleRequest,
-	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
-		return this.makeUnaryRequest(
-			"toggleAgentsRule",
-			request,
-			proto.kerberosec.ToggleAgentsRuleRequest.toJSON,
-			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
-		)
-	}
-	static async refreshRules(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.RefreshedRules> {
-		return this.makeUnaryRequest(
-			"refreshRules",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.RefreshedRules.fromJSON,
-		)
-	}
-	static async openDiskConversationHistory(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openDiskConversationHistory",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async toggleWorkflow(
-		request: proto.kerberosec.ToggleWorkflowRequest,
-	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
-		return this.makeUnaryRequest(
-			"toggleWorkflow",
-			request,
-			proto.kerberosec.ToggleWorkflowRequest.toJSON,
-			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
-		)
-	}
-	static async ifFileExistsRelativePath(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.BooleanResponse> {
-		return this.makeUnaryRequest(
-			"ifFileExistsRelativePath",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.BooleanResponse.fromJSON,
-		)
-	}
-	static async openFileRelativePath(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openFileRelativePath",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async openFocusChainFile(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openFocusChainFile",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async refreshHooks(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.HooksToggles> {
-		return this.makeUnaryRequest(
-			"refreshHooks",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.HooksToggles.fromJSON,
-		)
-	}
-	static async toggleHook(request: proto.kerberosec.ToggleHookRequest): Promise<proto.kerberosec.ToggleHookResponse> {
-		return this.makeUnaryRequest(
-			"toggleHook",
-			request,
-			proto.kerberosec.ToggleHookRequest.toJSON,
-			proto.kerberosec.ToggleHookResponse.fromJSON,
-		)
-	}
-	static async createHook(request: proto.kerberosec.CreateHookRequest): Promise<proto.kerberosec.CreateHookResponse> {
-		return this.makeUnaryRequest(
-			"createHook",
-			request,
-			proto.kerberosec.CreateHookRequest.toJSON,
-			proto.kerberosec.CreateHookResponse.fromJSON,
-		)
-	}
-	static async deleteHook(request: proto.kerberosec.DeleteHookRequest): Promise<proto.kerberosec.DeleteHookResponse> {
-		return this.makeUnaryRequest(
-			"deleteHook",
-			request,
-			proto.kerberosec.DeleteHookRequest.toJSON,
-			proto.kerberosec.DeleteHookResponse.fromJSON,
-		)
-	}
-	static async refreshSkills(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.RefreshedSkills> {
-		return this.makeUnaryRequest(
-			"refreshSkills",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.RefreshedSkills.fromJSON,
-		)
-	}
-	static async toggleSkill(request: proto.kerberosec.ToggleSkillRequest): Promise<proto.kerberosec.SkillsToggles> {
-		return this.makeUnaryRequest(
-			"toggleSkill",
-			request,
-			proto.kerberosec.ToggleSkillRequest.toJSON,
-			proto.kerberosec.SkillsToggles.fromJSON,
-		)
-	}
-	static async createSkillFile(request: proto.kerberosec.CreateSkillRequest): Promise<proto.kerberosec.SkillsToggles> {
-		return this.makeUnaryRequest(
-			"createSkillFile",
-			request,
-			proto.kerberosec.CreateSkillRequest.toJSON,
-			proto.kerberosec.SkillsToggles.fromJSON,
-		)
-	}
-	static async deleteSkillFile(request: proto.kerberosec.DeleteSkillRequest): Promise<proto.kerberosec.SkillsToggles> {
-		return this.makeUnaryRequest(
-			"deleteSkillFile",
-			request,
-			proto.kerberosec.DeleteSkillRequest.toJSON,
-			proto.kerberosec.SkillsToggles.fromJSON,
-		)
-	}
-}
 export class MarketplaceServiceClient extends ProtoBusClient {
 	static override serviceName: string = "kerberosec.MarketplaceService"
 	static async getMarketplaceCatalog(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.MarketplaceCatalog> {
@@ -541,92 +74,79 @@ export class MarketplaceServiceClient extends ProtoBusClient {
 		)
 	}
 }
-export class McpServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.McpService"
-	static async toggleMcpServer(request: proto.kerberosec.ToggleMcpServerRequest): Promise<proto.kerberosec.McpServers> {
+export class OcaAccountServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.OcaAccountService"
+	static async ocaAccountLoginClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
 		return this.makeUnaryRequest(
-			"toggleMcpServer",
+			"ocaAccountLoginClicked",
 			request,
-			proto.kerberosec.ToggleMcpServerRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.String.fromJSON,
 		)
 	}
-	static async updateMcpTimeout(request: proto.kerberosec.UpdateMcpTimeoutRequest): Promise<proto.kerberosec.McpServers> {
+	static async ocaAccountLogoutClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
 		return this.makeUnaryRequest(
-			"updateMcpTimeout",
-			request,
-			proto.kerberosec.UpdateMcpTimeoutRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
-		)
-	}
-	static async addRemoteMcpServer(request: proto.kerberosec.AddRemoteMcpServerRequest): Promise<proto.kerberosec.McpServers> {
-		return this.makeUnaryRequest(
-			"addRemoteMcpServer",
-			request,
-			proto.kerberosec.AddRemoteMcpServerRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
-		)
-	}
-	static async restartMcpServer(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.McpServers> {
-		return this.makeUnaryRequest(
-			"restartMcpServer",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
-		)
-	}
-	static async deleteMcpServer(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.McpServers> {
-		return this.makeUnaryRequest(
-			"deleteMcpServer",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
-		)
-	}
-	static async toggleToolAutoApprove(
-		request: proto.kerberosec.ToggleToolAutoApproveRequest,
-	): Promise<proto.kerberosec.McpServers> {
-		return this.makeUnaryRequest(
-			"toggleToolAutoApprove",
-			request,
-			proto.kerberosec.ToggleToolAutoApproveRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
-		)
-	}
-	static async openMcpSettings(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"openMcpSettings",
+			"ocaAccountLogoutClicked",
 			request,
 			proto.kerberosec.EmptyRequest.toJSON,
 			proto.kerberosec.Empty.fromJSON,
 		)
 	}
-	static async authenticateMcpServer(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"authenticateMcpServer",
-			request,
-			proto.kerberosec.StringRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static async getLatestMcpServers(request: proto.kerberosec.Empty): Promise<proto.kerberosec.McpServers> {
-		return this.makeUnaryRequest(
-			"getLatestMcpServers",
-			request,
-			proto.kerberosec.Empty.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
-		)
-	}
-	static subscribeToMcpServers(
+	static ocaSubscribeToAuthStatusUpdate(
 		request: proto.kerberosec.EmptyRequest,
-		callbacks: Callbacks<proto.kerberosec.McpServers>,
+		callbacks: Callbacks<proto.kerberosec.OcaAuthState>,
 	): () => void {
 		return this.makeStreamingRequest(
-			"subscribeToMcpServers",
+			"ocaSubscribeToAuthStatusUpdate",
 			request,
 			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.McpServers.fromJSON,
+			proto.kerberosec.OcaAuthState.fromJSON,
 			callbacks,
+		)
+	}
+}
+export class BrowserServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.BrowserService"
+	static async getBrowserConnectionInfo(
+		request: proto.kerberosec.EmptyRequest,
+	): Promise<proto.kerberosec.BrowserConnectionInfo> {
+		return this.makeUnaryRequest(
+			"getBrowserConnectionInfo",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.BrowserConnectionInfo.fromJSON,
+		)
+	}
+	static async testBrowserConnection(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.BrowserConnection> {
+		return this.makeUnaryRequest(
+			"testBrowserConnection",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.BrowserConnection.fromJSON,
+		)
+	}
+	static async discoverBrowser(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.BrowserConnection> {
+		return this.makeUnaryRequest(
+			"discoverBrowser",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.BrowserConnection.fromJSON,
+		)
+	}
+	static async getDetectedChromePath(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.ChromePath> {
+		return this.makeUnaryRequest(
+			"getDetectedChromePath",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.ChromePath.fromJSON,
+		)
+	}
+	static async relaunchChromeDebugMode(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
+		return this.makeUnaryRequest(
+			"relaunchChromeDebugMode",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.String.fromJSON,
 		)
 	}
 }
@@ -888,79 +408,6 @@ export class ModelsServiceClient extends ProtoBusClient {
 			request,
 			proto.kerberosec.CommitModelSelectionRequest.toJSON,
 			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-}
-export class OcaAccountServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.OcaAccountService"
-	static async ocaAccountLoginClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
-		return this.makeUnaryRequest(
-			"ocaAccountLoginClicked",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.String.fromJSON,
-		)
-	}
-	static async ocaAccountLogoutClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"ocaAccountLogoutClicked",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.Empty.fromJSON,
-		)
-	}
-	static ocaSubscribeToAuthStatusUpdate(
-		request: proto.kerberosec.EmptyRequest,
-		callbacks: Callbacks<proto.kerberosec.OcaAuthState>,
-	): () => void {
-		return this.makeStreamingRequest(
-			"ocaSubscribeToAuthStatusUpdate",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.OcaAuthState.fromJSON,
-			callbacks,
-		)
-	}
-}
-export class RemoteConfigServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.RemoteConfigService"
-	static async getRemoteConfigSettings(
-		request: proto.kerberosec.Empty,
-	): Promise<proto.kerberosec.RemoteConfigSettingsResponse> {
-		return this.makeUnaryRequest(
-			"getRemoteConfigSettings",
-			request,
-			proto.kerberosec.Empty.toJSON,
-			proto.kerberosec.RemoteConfigSettingsResponse.fromJSON,
-		)
-	}
-	static async toggleRemoteConfigSetting(
-		request: proto.kerberosec.ToggleRemoteConfigSettingRequest,
-	): Promise<proto.kerberosec.RemoteConfigSetting> {
-		return this.makeUnaryRequest(
-			"toggleRemoteConfigSetting",
-			request,
-			proto.kerberosec.ToggleRemoteConfigSettingRequest.toJSON,
-			proto.kerberosec.RemoteConfigSetting.fromJSON,
-		)
-	}
-}
-export class SlashServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.SlashService"
-	static async reportBug(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest("reportBug", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
-	}
-	static async condense(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest("condense", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
-	}
-	static async getAvailableSlashCommands(
-		request: proto.kerberosec.EmptyRequest,
-	): Promise<proto.kerberosec.SlashCommandsResponse> {
-		return this.makeUnaryRequest(
-			"getAvailableSlashCommands",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.SlashCommandsResponse.fromJSON,
 		)
 	}
 }
@@ -1318,6 +765,103 @@ export class TaskServiceClient extends ProtoBusClient {
 		)
 	}
 }
+export class WorktreeServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.WorktreeService"
+	static async listWorktrees(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.WorktreeList> {
+		return this.makeUnaryRequest(
+			"listWorktrees",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.WorktreeList.fromJSON,
+		)
+	}
+	static async createWorktree(request: proto.kerberosec.CreateWorktreeRequest): Promise<proto.kerberosec.WorktreeResult> {
+		return this.makeUnaryRequest(
+			"createWorktree",
+			request,
+			proto.kerberosec.CreateWorktreeRequest.toJSON,
+			proto.kerberosec.WorktreeResult.fromJSON,
+		)
+	}
+	static async deleteWorktree(request: proto.kerberosec.DeleteWorktreeRequest): Promise<proto.kerberosec.WorktreeResult> {
+		return this.makeUnaryRequest(
+			"deleteWorktree",
+			request,
+			proto.kerberosec.DeleteWorktreeRequest.toJSON,
+			proto.kerberosec.WorktreeResult.fromJSON,
+		)
+	}
+	static async switchWorktree(request: proto.kerberosec.SwitchWorktreeRequest): Promise<proto.kerberosec.WorktreeResult> {
+		return this.makeUnaryRequest(
+			"switchWorktree",
+			request,
+			proto.kerberosec.SwitchWorktreeRequest.toJSON,
+			proto.kerberosec.WorktreeResult.fromJSON,
+		)
+	}
+	static async getAvailableBranches(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.BranchList> {
+		return this.makeUnaryRequest(
+			"getAvailableBranches",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.BranchList.fromJSON,
+		)
+	}
+	static async getWorktreeDefaults(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.WorktreeDefaults> {
+		return this.makeUnaryRequest(
+			"getWorktreeDefaults",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.WorktreeDefaults.fromJSON,
+		)
+	}
+	static async getWorktreeIncludeStatus(
+		request: proto.kerberosec.EmptyRequest,
+	): Promise<proto.kerberosec.WorktreeIncludeStatus> {
+		return this.makeUnaryRequest(
+			"getWorktreeIncludeStatus",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.WorktreeIncludeStatus.fromJSON,
+		)
+	}
+	static async createWorktreeInclude(
+		request: proto.kerberosec.CreateWorktreeIncludeRequest,
+	): Promise<proto.kerberosec.WorktreeResult> {
+		return this.makeUnaryRequest(
+			"createWorktreeInclude",
+			request,
+			proto.kerberosec.CreateWorktreeIncludeRequest.toJSON,
+			proto.kerberosec.WorktreeResult.fromJSON,
+		)
+	}
+	static async checkoutBranch(request: proto.kerberosec.CheckoutBranchRequest): Promise<proto.kerberosec.WorktreeResult> {
+		return this.makeUnaryRequest(
+			"checkoutBranch",
+			request,
+			proto.kerberosec.CheckoutBranchRequest.toJSON,
+			proto.kerberosec.WorktreeResult.fromJSON,
+		)
+	}
+	static async mergeWorktree(request: proto.kerberosec.MergeWorktreeRequest): Promise<proto.kerberosec.MergeWorktreeResult> {
+		return this.makeUnaryRequest(
+			"mergeWorktree",
+			request,
+			proto.kerberosec.MergeWorktreeRequest.toJSON,
+			proto.kerberosec.MergeWorktreeResult.fromJSON,
+		)
+	}
+	static async trackWorktreeViewOpened(
+		request: proto.kerberosec.TrackWorktreeViewOpenedRequest,
+	): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"trackWorktreeViewOpened",
+			request,
+			proto.kerberosec.TrackWorktreeViewOpenedRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+}
 export class UiServiceClient extends ProtoBusClient {
 	static override serviceName: string = "kerberosec.UiService"
 	static async scrollToSettings(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.KeyValuePair> {
@@ -1507,6 +1051,83 @@ export class UiServiceClient extends ProtoBusClient {
 		return this.makeUnaryRequest("trackIntent", request, proto.kerberosec.IntentEvent.toJSON, proto.kerberosec.Empty.fromJSON)
 	}
 }
+export class CommandsServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.CommandsService"
+	static async addToKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"addToKerberoSec",
+			request,
+			proto.kerberosec.CommandContext.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async fixWithKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"fixWithKerberoSec",
+			request,
+			proto.kerberosec.CommandContext.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async explainWithKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"explainWithKerberoSec",
+			request,
+			proto.kerberosec.CommandContext.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async improveWithKerberoSec(request: proto.kerberosec.CommandContext): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"improveWithKerberoSec",
+			request,
+			proto.kerberosec.CommandContext.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+}
+export class SlashServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.SlashService"
+	static async reportBug(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest("reportBug", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
+	}
+	static async condense(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest("condense", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
+	}
+	static async getAvailableSlashCommands(
+		request: proto.kerberosec.EmptyRequest,
+	): Promise<proto.kerberosec.SlashCommandsResponse> {
+		return this.makeUnaryRequest(
+			"getAvailableSlashCommands",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.SlashCommandsResponse.fromJSON,
+		)
+	}
+}
+export class RemoteConfigServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.RemoteConfigService"
+	static async getRemoteConfigSettings(
+		request: proto.kerberosec.Empty,
+	): Promise<proto.kerberosec.RemoteConfigSettingsResponse> {
+		return this.makeUnaryRequest(
+			"getRemoteConfigSettings",
+			request,
+			proto.kerberosec.Empty.toJSON,
+			proto.kerberosec.RemoteConfigSettingsResponse.fromJSON,
+		)
+	}
+	static async toggleRemoteConfigSetting(
+		request: proto.kerberosec.ToggleRemoteConfigSettingRequest,
+	): Promise<proto.kerberosec.RemoteConfigSetting> {
+		return this.makeUnaryRequest(
+			"toggleRemoteConfigSetting",
+			request,
+			proto.kerberosec.ToggleRemoteConfigSettingRequest.toJSON,
+			proto.kerberosec.RemoteConfigSetting.fromJSON,
+		)
+	}
+}
 export class WebServiceClient extends ProtoBusClient {
 	static override serviceName: string = "kerberosec.WebService"
 	static async checkIsImageUrl(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.IsImageUrl> {
@@ -1534,100 +1155,479 @@ export class WebServiceClient extends ProtoBusClient {
 		)
 	}
 }
-export class WorktreeServiceClient extends ProtoBusClient {
-	static override serviceName: string = "kerberosec.WorktreeService"
-	static async listWorktrees(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.WorktreeList> {
+export class AccountServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.AccountService"
+	static async accountLoginClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
 		return this.makeUnaryRequest(
-			"listWorktrees",
+			"accountLoginClicked",
 			request,
 			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.WorktreeList.fromJSON,
+			proto.kerberosec.String.fromJSON,
 		)
 	}
-	static async createWorktree(request: proto.kerberosec.CreateWorktreeRequest): Promise<proto.kerberosec.WorktreeResult> {
+	static async accountLogoutClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
 		return this.makeUnaryRequest(
-			"createWorktree",
-			request,
-			proto.kerberosec.CreateWorktreeRequest.toJSON,
-			proto.kerberosec.WorktreeResult.fromJSON,
-		)
-	}
-	static async deleteWorktree(request: proto.kerberosec.DeleteWorktreeRequest): Promise<proto.kerberosec.WorktreeResult> {
-		return this.makeUnaryRequest(
-			"deleteWorktree",
-			request,
-			proto.kerberosec.DeleteWorktreeRequest.toJSON,
-			proto.kerberosec.WorktreeResult.fromJSON,
-		)
-	}
-	static async switchWorktree(request: proto.kerberosec.SwitchWorktreeRequest): Promise<proto.kerberosec.WorktreeResult> {
-		return this.makeUnaryRequest(
-			"switchWorktree",
-			request,
-			proto.kerberosec.SwitchWorktreeRequest.toJSON,
-			proto.kerberosec.WorktreeResult.fromJSON,
-		)
-	}
-	static async getAvailableBranches(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.BranchList> {
-		return this.makeUnaryRequest(
-			"getAvailableBranches",
+			"accountLogoutClicked",
 			request,
 			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.BranchList.fromJSON,
-		)
-	}
-	static async getWorktreeDefaults(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.WorktreeDefaults> {
-		return this.makeUnaryRequest(
-			"getWorktreeDefaults",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.WorktreeDefaults.fromJSON,
-		)
-	}
-	static async getWorktreeIncludeStatus(
-		request: proto.kerberosec.EmptyRequest,
-	): Promise<proto.kerberosec.WorktreeIncludeStatus> {
-		return this.makeUnaryRequest(
-			"getWorktreeIncludeStatus",
-			request,
-			proto.kerberosec.EmptyRequest.toJSON,
-			proto.kerberosec.WorktreeIncludeStatus.fromJSON,
-		)
-	}
-	static async createWorktreeInclude(
-		request: proto.kerberosec.CreateWorktreeIncludeRequest,
-	): Promise<proto.kerberosec.WorktreeResult> {
-		return this.makeUnaryRequest(
-			"createWorktreeInclude",
-			request,
-			proto.kerberosec.CreateWorktreeIncludeRequest.toJSON,
-			proto.kerberosec.WorktreeResult.fromJSON,
-		)
-	}
-	static async checkoutBranch(request: proto.kerberosec.CheckoutBranchRequest): Promise<proto.kerberosec.WorktreeResult> {
-		return this.makeUnaryRequest(
-			"checkoutBranch",
-			request,
-			proto.kerberosec.CheckoutBranchRequest.toJSON,
-			proto.kerberosec.WorktreeResult.fromJSON,
-		)
-	}
-	static async mergeWorktree(request: proto.kerberosec.MergeWorktreeRequest): Promise<proto.kerberosec.MergeWorktreeResult> {
-		return this.makeUnaryRequest(
-			"mergeWorktree",
-			request,
-			proto.kerberosec.MergeWorktreeRequest.toJSON,
-			proto.kerberosec.MergeWorktreeResult.fromJSON,
-		)
-	}
-	static async trackWorktreeViewOpened(
-		request: proto.kerberosec.TrackWorktreeViewOpenedRequest,
-	): Promise<proto.kerberosec.Empty> {
-		return this.makeUnaryRequest(
-			"trackWorktreeViewOpened",
-			request,
-			proto.kerberosec.TrackWorktreeViewOpenedRequest.toJSON,
 			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static subscribeToAuthStatusUpdate(
+		request: proto.kerberosec.EmptyRequest,
+		callbacks: Callbacks<proto.kerberosec.AuthState>,
+	): () => void {
+		return this.makeStreamingRequest(
+			"subscribeToAuthStatusUpdate",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.AuthState.fromJSON,
+			callbacks,
+		)
+	}
+	static async authStateChanged(request: proto.kerberosec.AuthStateChangedRequest): Promise<proto.kerberosec.AuthState> {
+		return this.makeUnaryRequest(
+			"authStateChanged",
+			request,
+			proto.kerberosec.AuthStateChangedRequest.toJSON,
+			proto.kerberosec.AuthState.fromJSON,
+		)
+	}
+	static async getUserCredits(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.UserCreditsData> {
+		return this.makeUnaryRequest(
+			"getUserCredits",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.UserCreditsData.fromJSON,
+		)
+	}
+	static async getOrganizationCredits(
+		request: proto.kerberosec.GetOrganizationCreditsRequest,
+	): Promise<proto.kerberosec.OrganizationCreditsData> {
+		return this.makeUnaryRequest(
+			"getOrganizationCredits",
+			request,
+			proto.kerberosec.GetOrganizationCreditsRequest.toJSON,
+			proto.kerberosec.OrganizationCreditsData.fromJSON,
+		)
+	}
+	static async getUserOrganizations(
+		request: proto.kerberosec.EmptyRequest,
+	): Promise<proto.kerberosec.UserOrganizationsResponse> {
+		return this.makeUnaryRequest(
+			"getUserOrganizations",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.UserOrganizationsResponse.fromJSON,
+		)
+	}
+	static async setUserOrganization(request: proto.kerberosec.UserOrganizationUpdateRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"setUserOrganization",
+			request,
+			proto.kerberosec.UserOrganizationUpdateRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async openrouterAuthClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openrouterAuthClicked",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async requestyAuthClicked(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"requestyAuthClicked",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async hicapAuthClicked(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"hicapAuthClicked",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async getRedirectUrl(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String> {
+		return this.makeUnaryRequest(
+			"getRedirectUrl",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.String.fromJSON,
+		)
+	}
+	static async openAiCodexSignIn(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openAiCodexSignIn",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async openAiCodexSignOut(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openAiCodexSignOut",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async submitLimitIncreaseRequest(
+		request: proto.kerberosec.EmptyRequest,
+	): Promise<proto.kerberosec.SubmitLimitIncreaseResponse> {
+		return this.makeUnaryRequest(
+			"submitLimitIncreaseRequest",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.SubmitLimitIncreaseResponse.fromJSON,
+		)
+	}
+}
+export class CheckpointsServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.CheckpointsService"
+	static async checkpointRestore(request: proto.kerberosec.CheckpointRestoreRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"checkpointRestore",
+			request,
+			proto.kerberosec.CheckpointRestoreRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async checkpointViewLatestChanges(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"checkpointViewLatestChanges",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async checkpointLatestChangesCount(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Int64> {
+		return this.makeUnaryRequest(
+			"checkpointLatestChangesCount",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Int64.fromJSON,
+		)
+	}
+}
+export class FileServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.FileService"
+	static async copyToClipboard(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"copyToClipboard",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async openFile(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest("openFile", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
+	}
+	static async openImage(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest("openImage", request, proto.kerberosec.StringRequest.toJSON, proto.kerberosec.Empty.fromJSON)
+	}
+	static async openMention(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openMention",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async deleteRuleFile(request: proto.kerberosec.RuleFileRequest): Promise<proto.kerberosec.RuleFile> {
+		return this.makeUnaryRequest(
+			"deleteRuleFile",
+			request,
+			proto.kerberosec.RuleFileRequest.toJSON,
+			proto.kerberosec.RuleFile.fromJSON,
+		)
+	}
+	static async createRuleFile(request: proto.kerberosec.RuleFileRequest): Promise<proto.kerberosec.RuleFile> {
+		return this.makeUnaryRequest(
+			"createRuleFile",
+			request,
+			proto.kerberosec.RuleFileRequest.toJSON,
+			proto.kerberosec.RuleFile.fromJSON,
+		)
+	}
+	static async searchCommits(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.GitCommits> {
+		return this.makeUnaryRequest(
+			"searchCommits",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.GitCommits.fromJSON,
+		)
+	}
+	static async selectFiles(request: proto.kerberosec.BooleanRequest): Promise<proto.kerberosec.StringArrays> {
+		return this.makeUnaryRequest(
+			"selectFiles",
+			request,
+			proto.kerberosec.BooleanRequest.toJSON,
+			proto.kerberosec.StringArrays.fromJSON,
+		)
+	}
+	static async getRelativePaths(request: proto.kerberosec.RelativePathsRequest): Promise<proto.kerberosec.RelativePaths> {
+		return this.makeUnaryRequest(
+			"getRelativePaths",
+			request,
+			proto.kerberosec.RelativePathsRequest.toJSON,
+			proto.kerberosec.RelativePaths.fromJSON,
+		)
+	}
+	static async searchFiles(request: proto.kerberosec.FileSearchRequest): Promise<proto.kerberosec.FileSearchResults> {
+		return this.makeUnaryRequest(
+			"searchFiles",
+			request,
+			proto.kerberosec.FileSearchRequest.toJSON,
+			proto.kerberosec.FileSearchResults.fromJSON,
+		)
+	}
+	static async toggleKerberoSecRule(
+		request: proto.kerberosec.ToggleKerberoSecRuleRequest,
+	): Promise<proto.kerberosec.ToggleKerberoSecRules> {
+		return this.makeUnaryRequest(
+			"toggleKerberoSecRule",
+			request,
+			proto.kerberosec.ToggleKerberoSecRuleRequest.toJSON,
+			proto.kerberosec.ToggleKerberoSecRules.fromJSON,
+		)
+	}
+	static async toggleCursorRule(
+		request: proto.kerberosec.ToggleCursorRuleRequest,
+	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
+		return this.makeUnaryRequest(
+			"toggleCursorRule",
+			request,
+			proto.kerberosec.ToggleCursorRuleRequest.toJSON,
+			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
+		)
+	}
+	static async toggleWindsurfRule(
+		request: proto.kerberosec.ToggleWindsurfRuleRequest,
+	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
+		return this.makeUnaryRequest(
+			"toggleWindsurfRule",
+			request,
+			proto.kerberosec.ToggleWindsurfRuleRequest.toJSON,
+			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
+		)
+	}
+	static async toggleAgentsRule(
+		request: proto.kerberosec.ToggleAgentsRuleRequest,
+	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
+		return this.makeUnaryRequest(
+			"toggleAgentsRule",
+			request,
+			proto.kerberosec.ToggleAgentsRuleRequest.toJSON,
+			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
+		)
+	}
+	static async refreshRules(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.RefreshedRules> {
+		return this.makeUnaryRequest(
+			"refreshRules",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.RefreshedRules.fromJSON,
+		)
+	}
+	static async openDiskConversationHistory(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openDiskConversationHistory",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async toggleWorkflow(
+		request: proto.kerberosec.ToggleWorkflowRequest,
+	): Promise<proto.kerberosec.KerberoSecRulesToggles> {
+		return this.makeUnaryRequest(
+			"toggleWorkflow",
+			request,
+			proto.kerberosec.ToggleWorkflowRequest.toJSON,
+			proto.kerberosec.KerberoSecRulesToggles.fromJSON,
+		)
+	}
+	static async ifFileExistsRelativePath(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.BooleanResponse> {
+		return this.makeUnaryRequest(
+			"ifFileExistsRelativePath",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.BooleanResponse.fromJSON,
+		)
+	}
+	static async openFileRelativePath(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openFileRelativePath",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async openFocusChainFile(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openFocusChainFile",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async refreshHooks(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.HooksToggles> {
+		return this.makeUnaryRequest(
+			"refreshHooks",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.HooksToggles.fromJSON,
+		)
+	}
+	static async toggleHook(request: proto.kerberosec.ToggleHookRequest): Promise<proto.kerberosec.ToggleHookResponse> {
+		return this.makeUnaryRequest(
+			"toggleHook",
+			request,
+			proto.kerberosec.ToggleHookRequest.toJSON,
+			proto.kerberosec.ToggleHookResponse.fromJSON,
+		)
+	}
+	static async createHook(request: proto.kerberosec.CreateHookRequest): Promise<proto.kerberosec.CreateHookResponse> {
+		return this.makeUnaryRequest(
+			"createHook",
+			request,
+			proto.kerberosec.CreateHookRequest.toJSON,
+			proto.kerberosec.CreateHookResponse.fromJSON,
+		)
+	}
+	static async deleteHook(request: proto.kerberosec.DeleteHookRequest): Promise<proto.kerberosec.DeleteHookResponse> {
+		return this.makeUnaryRequest(
+			"deleteHook",
+			request,
+			proto.kerberosec.DeleteHookRequest.toJSON,
+			proto.kerberosec.DeleteHookResponse.fromJSON,
+		)
+	}
+	static async refreshSkills(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.RefreshedSkills> {
+		return this.makeUnaryRequest(
+			"refreshSkills",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.RefreshedSkills.fromJSON,
+		)
+	}
+	static async toggleSkill(request: proto.kerberosec.ToggleSkillRequest): Promise<proto.kerberosec.SkillsToggles> {
+		return this.makeUnaryRequest(
+			"toggleSkill",
+			request,
+			proto.kerberosec.ToggleSkillRequest.toJSON,
+			proto.kerberosec.SkillsToggles.fromJSON,
+		)
+	}
+	static async createSkillFile(request: proto.kerberosec.CreateSkillRequest): Promise<proto.kerberosec.SkillsToggles> {
+		return this.makeUnaryRequest(
+			"createSkillFile",
+			request,
+			proto.kerberosec.CreateSkillRequest.toJSON,
+			proto.kerberosec.SkillsToggles.fromJSON,
+		)
+	}
+	static async deleteSkillFile(request: proto.kerberosec.DeleteSkillRequest): Promise<proto.kerberosec.SkillsToggles> {
+		return this.makeUnaryRequest(
+			"deleteSkillFile",
+			request,
+			proto.kerberosec.DeleteSkillRequest.toJSON,
+			proto.kerberosec.SkillsToggles.fromJSON,
+		)
+	}
+}
+export class McpServiceClient extends ProtoBusClient {
+	static override serviceName: string = "kerberosec.McpService"
+	static async toggleMcpServer(request: proto.kerberosec.ToggleMcpServerRequest): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"toggleMcpServer",
+			request,
+			proto.kerberosec.ToggleMcpServerRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static async updateMcpTimeout(request: proto.kerberosec.UpdateMcpTimeoutRequest): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"updateMcpTimeout",
+			request,
+			proto.kerberosec.UpdateMcpTimeoutRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static async addRemoteMcpServer(request: proto.kerberosec.AddRemoteMcpServerRequest): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"addRemoteMcpServer",
+			request,
+			proto.kerberosec.AddRemoteMcpServerRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static async restartMcpServer(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"restartMcpServer",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static async deleteMcpServer(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"deleteMcpServer",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static async toggleToolAutoApprove(
+		request: proto.kerberosec.ToggleToolAutoApproveRequest,
+	): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"toggleToolAutoApprove",
+			request,
+			proto.kerberosec.ToggleToolAutoApproveRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static async openMcpSettings(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"openMcpSettings",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async authenticateMcpServer(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty> {
+		return this.makeUnaryRequest(
+			"authenticateMcpServer",
+			request,
+			proto.kerberosec.StringRequest.toJSON,
+			proto.kerberosec.Empty.fromJSON,
+		)
+	}
+	static async getLatestMcpServers(request: proto.kerberosec.Empty): Promise<proto.kerberosec.McpServers> {
+		return this.makeUnaryRequest(
+			"getLatestMcpServers",
+			request,
+			proto.kerberosec.Empty.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+		)
+	}
+	static subscribeToMcpServers(
+		request: proto.kerberosec.EmptyRequest,
+		callbacks: Callbacks<proto.kerberosec.McpServers>,
+	): () => void {
+		return this.makeStreamingRequest(
+			"subscribeToMcpServers",
+			request,
+			proto.kerberosec.EmptyRequest.toJSON,
+			proto.kerberosec.McpServers.fromJSON,
+			callbacks,
 		)
 	}
 }

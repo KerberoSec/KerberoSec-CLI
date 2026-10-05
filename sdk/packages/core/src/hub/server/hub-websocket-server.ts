@@ -1,5 +1,6 @@
 import { timingSafeEqual } from "node:crypto";
 import http from "node:http";
+import type { Socket } from "node:net";
 import { URL } from "node:url";
 import {
 	CURRENT_HUB_PROTOCOL_VERSION,
@@ -399,6 +400,7 @@ export async function startHubWebSocketServer(
 		startedAt,
 	} as const;
 	const sockets = new Set<TrackedNodeWebSocket>();
+	const httpSockets = new Set<Socket>();
 	let heartbeatTimer: ReturnType<typeof setInterval> | undefined;
 	let closeHandle: HubWebSocketServerClose | undefined;
 	let exposedServer: HubWebSocketServer | undefined;
@@ -436,6 +438,11 @@ export async function startHubWebSocketServer(
 				}
 				resolve();
 			});
+			server.closeAllConnections?.();
+			for (const socket of httpSockets) {
+				socket.destroy();
+			}
+			httpSockets.clear();
 		});
 		const transportStopped = Promise.resolve().then(() => transport.stop());
 		const discoveryRetired = transportStopped.then(async () => {
@@ -640,6 +647,12 @@ export async function startHubWebSocketServer(
 		}
 		res.statusCode = 404;
 		res.end("Not found");
+	});
+	server.on("connection", (socket) => {
+		httpSockets.add(socket);
+		socket.once("close", () => {
+			httpSockets.delete(socket);
+		});
 	});
 	const wss = new WebSocketServer({ noServer: true });
 	heartbeatTimer = setInterval(() => {

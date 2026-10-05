@@ -4,6 +4,32 @@ import * as proto from "@shared/proto/index"
 import { StreamingCallbacks } from "@hosts/host-provider-types"
 
 /**
+ * Interface for WorkspaceService client.
+ */
+export interface WorkspaceServiceClientInterface {
+
+	getWorkspacePaths(request: proto.host.GetWorkspacePathsRequest): Promise<proto.host.GetWorkspacePathsResponse>;
+
+	saveOpenDocumentIfDirty(request: proto.host.SaveOpenDocumentIfDirtyRequest): Promise<proto.host.SaveOpenDocumentIfDirtyResponse>;
+
+	getDiagnostics(request: proto.host.GetDiagnosticsRequest): Promise<proto.host.GetDiagnosticsResponse>;
+
+	openProblemsPanel(request: proto.host.OpenProblemsPanelRequest): Promise<proto.host.OpenProblemsPanelResponse>;
+
+	openInFileExplorerPanel(request: proto.host.OpenInFileExplorerPanelRequest): Promise<proto.host.OpenInFileExplorerPanelResponse>;
+
+	openKerberoSecSidebarPanel(request: proto.host.OpenKerberoSecSidebarPanelRequest): Promise<proto.host.OpenKerberoSecSidebarPanelResponse>;
+
+	openTerminalPanel(request: proto.host.OpenTerminalRequest): Promise<proto.host.OpenTerminalResponse>;
+
+	executeCommandInTerminal(request: proto.host.ExecuteCommandInTerminalRequest): Promise<proto.host.ExecuteCommandInTerminalResponse>;
+
+	openFolder(request: proto.host.OpenFolderRequest): Promise<proto.host.OpenFolderResponse>;
+
+	searchWorkspaceItems(request: proto.host.SearchWorkspaceItemsRequest): Promise<proto.host.SearchWorkspaceItemsResponse>;
+}
+
+/**
  * Interface for DiffService client.
  */
 export interface DiffServiceClientInterface {
@@ -23,30 +49,6 @@ export interface DiffServiceClientInterface {
 	closeAllDiffs(request: proto.host.CloseAllDiffsRequest): Promise<proto.host.CloseAllDiffsResponse>;
 
 	openMultiFileDiff(request: proto.host.OpenMultiFileDiffRequest): Promise<proto.host.OpenMultiFileDiffResponse>;
-}
-
-/**
- * Interface for EnvService client.
- */
-export interface EnvServiceClientInterface {
-
-	clipboardWriteText(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty>;
-
-	clipboardReadText(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String>;
-
-	getHostVersion(request: proto.kerberosec.EmptyRequest): Promise<proto.host.GetHostVersionResponse>;
-
-	getIdeRedirectUri(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String>;
-
-	getTelemetrySettings(request: proto.kerberosec.EmptyRequest): Promise<proto.host.GetTelemetrySettingsResponse>;
-
-	subscribeToTelemetrySettings(request: proto.kerberosec.EmptyRequest, callbacks: StreamingCallbacks<proto.host.TelemetrySettingsEvent>): () => void;
-
-	shutdown(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty>;
-
-	debugLog(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty>;
-
-	openExternal(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty>;
 }
 
 /**
@@ -84,27 +86,25 @@ export interface WindowServiceClientInterface {
 }
 
 /**
- * Interface for WorkspaceService client.
+ * Interface for EnvService client.
  */
-export interface WorkspaceServiceClientInterface {
+export interface EnvServiceClientInterface {
 
-	getWorkspacePaths(request: proto.host.GetWorkspacePathsRequest): Promise<proto.host.GetWorkspacePathsResponse>;
+	clipboardWriteText(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty>;
 
-	saveOpenDocumentIfDirty(request: proto.host.SaveOpenDocumentIfDirtyRequest): Promise<proto.host.SaveOpenDocumentIfDirtyResponse>;
+	clipboardReadText(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String>;
 
-	getDiagnostics(request: proto.host.GetDiagnosticsRequest): Promise<proto.host.GetDiagnosticsResponse>;
+	getHostVersion(request: proto.kerberosec.EmptyRequest): Promise<proto.host.GetHostVersionResponse>;
 
-	openProblemsPanel(request: proto.host.OpenProblemsPanelRequest): Promise<proto.host.OpenProblemsPanelResponse>;
+	getIdeRedirectUri(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.String>;
 
-	openInFileExplorerPanel(request: proto.host.OpenInFileExplorerPanelRequest): Promise<proto.host.OpenInFileExplorerPanelResponse>;
+	getTelemetrySettings(request: proto.kerberosec.EmptyRequest): Promise<proto.host.GetTelemetrySettingsResponse>;
 
-	openKerberoSecSidebarPanel(request: proto.host.OpenKerberoSecSidebarPanelRequest): Promise<proto.host.OpenKerberoSecSidebarPanelResponse>;
+	subscribeToTelemetrySettings(request: proto.kerberosec.EmptyRequest, callbacks: StreamingCallbacks<proto.host.TelemetrySettingsEvent>): () => void;
 
-	openTerminalPanel(request: proto.host.OpenTerminalRequest): Promise<proto.host.OpenTerminalResponse>;
+	shutdown(request: proto.kerberosec.EmptyRequest): Promise<proto.kerberosec.Empty>;
 
-	executeCommandInTerminal(request: proto.host.ExecuteCommandInTerminalRequest): Promise<proto.host.ExecuteCommandInTerminalResponse>;
+	debugLog(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty>;
 
-	openFolder(request: proto.host.OpenFolderRequest): Promise<proto.host.OpenFolderResponse>;
-
-	searchWorkspaceItems(request: proto.host.SearchWorkspaceItemsRequest): Promise<proto.host.SearchWorkspaceItemsResponse>;
+	openExternal(request: proto.kerberosec.StringRequest): Promise<proto.kerberosec.Empty>;
 }

@@ -9,6 +9,7 @@ import { desktopClient, isTauriAvailable } from "@/lib/desktop-client";
 const DESKTOP_NOTIFICATION_SETTINGS_STORAGE_KEY =
 	"kerberosec:desktop-notification-settings:v1";
 const MAX_SEEN_REQUESTS = 500;
+const MAX_TRACKED_SESSIONS = 500;
 
 export const DESKTOP_NOTIFICATION_EVENT_TYPES = [
 	"taskCompletion",
@@ -264,6 +265,21 @@ function addSeenRequest(seen: Set<string>, requestId: string): boolean {
 	return true;
 }
 
+function setBoundedSessionValue<T>(
+	values: Map<string, T>,
+	sessionId: string,
+	value: T,
+): void {
+	values.delete(sessionId);
+	values.set(sessionId, value);
+	if (values.size > MAX_TRACKED_SESSIONS) {
+		const oldest = values.keys().next().value;
+		if (typeof oldest === "string") {
+			values.delete(oldest);
+		}
+	}
+}
+
 export function watchDesktopNotifications(): () => void {
 	if (!isTauriAvailable()) {
 		return () => {};
@@ -316,7 +332,7 @@ export function watchDesktopNotifications(): () => void {
 		if (!sessionId || terminalBySession.get(sessionId) === kind) {
 			return;
 		}
-		terminalBySession.set(sessionId, kind);
+		setBoundedSessionValue(terminalBySession, sessionId, kind);
 		if (kind === "cancelled") {
 			return;
 		}
@@ -347,10 +363,18 @@ export function watchDesktopNotifications(): () => void {
 			const record = payload as { sessionId?: unknown; items?: unknown };
 			const sessionId = asNonEmptyString(record.sessionId);
 			if (!sessionId) return;
-			queuedPromptsBySession.set(
-				sessionId,
-				Array.isArray(record.items) ? record.items.length : 0,
-			);
+			const queuedPromptCount = Array.isArray(record.items)
+				? record.items.length
+				: 0;
+			if (queuedPromptCount > 0) {
+				setBoundedSessionValue(
+					queuedPromptsBySession,
+					sessionId,
+					queuedPromptCount,
+				);
+			} else {
+				queuedPromptsBySession.delete(sessionId);
+			}
 		}),
 		desktopClient.subscribe("chat_event", (payload) => {
 			if (!payload || typeof payload !== "object") return;

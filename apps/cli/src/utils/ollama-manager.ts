@@ -75,14 +75,9 @@ export function detectHardwareProfile(): HardwareProfile {
 	let reason = "Default lightweight model suitable for CPU & laptop inference";
 
 	if (gpuFound && gpuName) {
-		const lowerName = gpuName.toLowerCase();
 		const vram = vramMb ?? 0;
 
-		if (lowerName.includes("3050")) {
-			// RTX 3050 (laptop / desktop)
-			recommendedModel = "qwen2.5-coder:14b";
-			reason = `Detected ${gpuName} (${vram}MB VRAM) - Optimized for 14B coding model`;
-		} else if (vram >= 12000) {
+		if (vram >= 12000) {
 			// High VRAM (12GB+)
 			recommendedModel = "qwen2.5-coder:14b";
 			reason = `Detected ${gpuName} with high VRAM (${vram}MB) - Excellent for 14B coding model`;
@@ -193,16 +188,20 @@ export async function installOllama(
 export async function isOllamaServerRunning(
 	baseUrl = "http://127.0.0.1:11434",
 ): Promise<boolean> {
+	const controller = new AbortController();
+	const timeout = setTimeout(() => controller.abort(), 2000);
 	try {
-		const controller = new AbortController();
-		const timeout = setTimeout(() => controller.abort(), 2000);
 		const res = await fetch(`${baseUrl}/api/tags`, {
 			signal: controller.signal,
 		});
-		clearTimeout(timeout);
+		// This is a health check; drain the response so repeated startup polls do
+		// not leave unread response bodies holding keep-alive sockets.
+		await res.body?.cancel().catch(() => {});
 		return res.ok;
 	} catch {
 		return false;
+	} finally {
+		clearTimeout(timeout);
 	}
 }
 
@@ -238,10 +237,20 @@ export async function ensureOllamaServerRunning(
 			detached: true,
 			stdio: "ignore",
 		});
+		let spawnError: Error | undefined;
+		child.once("error", (error) => {
+			spawnError = error;
+		});
 		child.unref();
 
 		// Wait up to 10 seconds for server to start
 		for (let i = 0; i < 20; i++) {
+			if (spawnError) {
+				return {
+					running: false,
+					error: `Failed to launch Ollama server: ${spawnError.message}`,
+				};
+			}
 			await new Promise((r) => setTimeout(r, 500));
 			if (await isOllamaServerRunning(baseUrl)) {
 				onProgress?.("Ollama server is now active.");
@@ -318,6 +327,33 @@ export async function pullOllamaModel(
 		const reader = res.body.getReader();
 		const decoder = new TextDecoder();
 		let buffer = "";
+		let pullError: string | undefined;
+		const processLine = (line: string) => {
+			const trimmed = line.trim();
+			if (!trimmed) return;
+			try {
+				const json = JSON.parse(trimmed) as {
+					status?: string;
+					completed?: number;
+					total?: number;
+					error?: string;
+				};
+
+				if (json.error) {
+					pullError = json.error;
+					return;
+				}
+
+				let percent: number | undefined;
+				if (json.completed && json.total && json.total > 0) {
+					percent = Math.round((json.completed / json.total) * 100);
+				}
+
+				onProgress?.(json.status ?? "Downloading...", percent);
+			} catch {
+				// Ignore line JSON parse errors
+			}
+		};
 
 		while (true) {
 			const { done, value } = await reader.read();
@@ -328,30 +364,19 @@ export async function pullOllamaModel(
 			buffer = lines.pop() ?? "";
 
 			for (const line of lines) {
-				const trimmed = line.trim();
-				if (!trimmed) continue;
-				try {
-					const json = JSON.parse(trimmed) as {
-						status?: string;
-						completed?: number;
-						total?: number;
-						error?: string;
-					};
-
-					if (json.error) {
-						return { success: false, error: json.error };
-					}
-
-					let percent: number | undefined;
-					if (json.completed && json.total && json.total > 0) {
-						percent = Math.round((json.completed / json.total) * 100);
-					}
-
-					onProgress?.(json.status ?? "Downloading...", percent);
-				} catch {
-					// Ignore line JSON parse errors
+				processLine(line);
+				if (pullError) {
+					await reader.cancel().catch(() => {});
+					return { success: false, error: pullError };
 				}
 			}
+		}
+
+		// NDJSON streams usually end with a newline, but the final record is
+		// valid without one and still needs to be checked for an error status.
+		processLine(buffer + decoder.decode());
+		if (pullError) {
+			return { success: false, error: pullError };
 		}
 
 		onProgress?.(
@@ -376,21 +401,14 @@ export async function ensureOllamaModel(
 	onProgress?: (status: string, percent?: number) => void,
 ): Promise<{ modelId: string; success: boolean; error?: string }> {
 	const models = await listInstalledOllamaModels(baseUrl);
-	const targetBase = targetModel.split(":")[0];
 
-	// Check exact match or base match
+	// Reuse only the requested model. A different tag from the same family can
+	// be much larger than the hardware recommendation and fail at inference.
 	const exact = models.find(
 		(m) => m.name === targetModel || m.model === targetModel,
 	);
 	if (exact) {
 		return { modelId: exact.name, success: true };
-	}
-
-	// Check if any matching family model is installed
-	const familyMatch = models.find((m) => m.name.startsWith(targetBase));
-	if (familyMatch) {
-		onProgress?.(`Found existing installed model: ${familyMatch.name}`);
-		return { modelId: familyMatch.name, success: true };
 	}
 
 	// Pull the recommended model

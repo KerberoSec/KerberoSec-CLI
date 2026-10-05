@@ -49,11 +49,11 @@ export async function updateApiConfigurationProto(
 			planModeOpenRouterModelInfo: protoApiConfiguration.planModeOpenRouterModelInfo
 				? fromProtobufModelInfo(protoApiConfiguration.planModeOpenRouterModelInfo)
 				: undefined,
-			planModeKerberoSecModelInfo: protoApiConfiguration.planModeKerberoSecModelInfo
-				? fromProtobufModelInfo(protoApiConfiguration.planModeKerberoSecModelInfo)
+			planModeKerberoSecModelInfo: protoApiConfiguration.planModeKerberosecModelInfo
+				? fromProtobufModelInfo(protoApiConfiguration.planModeKerberosecModelInfo)
 				: undefined,
-			planModeKerberoSecPassModelInfo: protoApiConfiguration.planModeKerberoSecPassModelInfo
-				? fromProtobufModelInfo(protoApiConfiguration.planModeKerberoSecPassModelInfo)
+			planModeKerberoSecPassModelInfo: protoApiConfiguration.planModeKerberosecPassModelInfo
+				? fromProtobufModelInfo(protoApiConfiguration.planModeKerberosecPassModelInfo)
 				: undefined,
 			planModeOpenAiModelInfo: protoApiConfiguration.planModeOpenAiModelInfo
 				? fromProtobufOpenAiCompatibleModelInfo(protoApiConfiguration.planModeOpenAiModelInfo)
@@ -90,11 +90,11 @@ export async function updateApiConfigurationProto(
 			actModeOpenRouterModelInfo: protoApiConfiguration.actModeOpenRouterModelInfo
 				? fromProtobufModelInfo(protoApiConfiguration.actModeOpenRouterModelInfo)
 				: undefined,
-			actModeKerberoSecModelInfo: protoApiConfiguration.actModeKerberoSecModelInfo
-				? fromProtobufModelInfo(protoApiConfiguration.actModeKerberoSecModelInfo)
+			actModeKerberoSecModelInfo: protoApiConfiguration.actModeKerberosecModelInfo
+				? fromProtobufModelInfo(protoApiConfiguration.actModeKerberosecModelInfo)
 				: undefined,
-			actModeKerberoSecPassModelInfo: protoApiConfiguration.actModeKerberoSecPassModelInfo
-				? fromProtobufModelInfo(protoApiConfiguration.actModeKerberoSecPassModelInfo)
+			actModeKerberoSecPassModelInfo: protoApiConfiguration.actModeKerberosecPassModelInfo
+				? fromProtobufModelInfo(protoApiConfiguration.actModeKerberosecPassModelInfo)
 				: undefined,
 			actModeOpenAiModelInfo: protoApiConfiguration.actModeOpenAiModelInfo
 				? fromProtobufOpenAiCompatibleModelInfo(protoApiConfiguration.actModeOpenAiModelInfo)

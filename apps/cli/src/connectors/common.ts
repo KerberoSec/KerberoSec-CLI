@@ -68,8 +68,8 @@ export function parseIntegerFlag(
 	if (!raw) {
 		return undefined;
 	}
-	const parsed = Number.parseInt(raw, 10);
-	return Number.isFinite(parsed) ? parsed : undefined;
+	const parsed = Number(raw);
+	return /^\d+$/.test(raw) && Number.isSafeInteger(parsed) ? parsed : undefined;
 }
 
 export function isProcessRunning(pid: number): boolean {
@@ -382,6 +382,18 @@ export function tryClaimConnectorStateFile(
 	)
 		? { claimId }
 		: undefined;
+}
+
+export function resolveConnectorPort(
+	value: string | undefined,
+	fallback = 8787,
+): number {
+	const raw = value?.trim() ?? "";
+	if (!/^\d+$/.test(raw)) return fallback;
+	const parsed = Number(raw);
+	return Number.isInteger(parsed) && parsed >= 1 && parsed <= 65_535
+		? parsed
+		: fallback;
 }
 
 function tryCreateConnectorStateFile(

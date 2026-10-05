@@ -5,6 +5,6 @@
 
 /* eslint-disable */
 
-export * as host from "./index.host";
 export * as kerberosec from "./index.kerberosec";
+export * as host from "./index.host";
 export * as google from "./index.google";

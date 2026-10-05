@@ -3,6 +3,7 @@ import { createHash } from "node:crypto";
 import {
 	existsSync,
 	mkdirSync,
+	realpathSync,
 	rmSync,
 	statSync,
 	unlinkSync,
@@ -498,6 +499,13 @@ function resolveUserInstructionRemovalTarget(input: {
 	const stats = statSync(filePath, { throwIfNoEntry: false });
 	if (!stats?.isFile()) {
 		throw new Error(`${input.type} file does not exist: ${filePath}`);
+	}
+	const canonicalRoot = realpathSync(containingRoot);
+	const canonicalFilePath = realpathSync(filePath);
+	if (!isInsidePath(canonicalFilePath, canonicalRoot)) {
+		throw new Error(
+			`${input.type} uninstall path must resolve inside a configured ${input.type} directory.`,
+		);
 	}
 	if (input.type === "workflow") {
 		return filePath;

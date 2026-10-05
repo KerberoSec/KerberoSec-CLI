@@ -2648,8 +2648,7 @@ export class LocalRuntimeHost implements RuntimeHost {
 	private async getRow(sessionId: string): Promise<SessionRow | undefined> {
 		const target = sessionId.trim();
 		if (!target) return undefined;
-		const rows = await this.listRows(MAX_SCAN_LIMIT);
-		return rows.find((row) => row.sessionId === target);
+		return await this.invokeOptionalValue<SessionRow>("getSession", target);
 	}
 
 	private async readManifest(

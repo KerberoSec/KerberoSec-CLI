@@ -10,6 +10,7 @@ export type SqliteStatement = {
 	};
 	get: (...params: unknown[]) => Record<string, unknown> | null;
 	all: (...params: unknown[]) => Record<string, unknown>[];
+	finalize?: () => void;
 };
 
 export type SqliteDb = {
@@ -20,6 +21,18 @@ export type SqliteDb = {
 
 const SQLITE_BUSY_RETRY_LIMIT = 3;
 const SQLITE_BUSY_RETRY_BASE_DELAY_MS = 50;
+const DEFAULT_STATEMENT_CACHE_CAPACITY = 100;
+
+export interface SqlitePragmaOptions {
+	cacheSizeKb?: number;
+	mmapSizeBytes?: number;
+	journalSizeLimitBytes?: number;
+	busyTimeoutMs?: number;
+}
+
+export interface SqliteDbOptions extends SqlitePragmaOptions {
+	maxStatements?: number;
+}
 
 export function nowIso(): string {
 	return new Date().toISOString();
@@ -86,52 +99,241 @@ export function withSqliteBusyRetry<T>(operation: () => T): T {
 	}
 }
 
-function wrapBunDb(db: {
-	query: (sql: string) => SqliteStatement;
-	exec: (sql: string) => void;
-	close?: () => void;
-}): SqliteDb {
-	return {
-		prepare: (sql) => {
-			const stmt = db.query(sql);
-			return {
-				run: (...params) => withSqliteBusyRetry(() => stmt.run(...params)),
-				get: (...params) => withSqliteBusyRetry(() => stmt.get(...params)),
-				all: (...params) => withSqliteBusyRetry(() => stmt.all(...params)),
+function wrapBunDb(
+	db: {
+		query: (sql: string) => {
+			run: (...params: unknown[]) => {
+				changes?: number;
+				lastInsertRowid?: number | bigint;
 			};
-		},
-		exec: (sql) => withSqliteBusyRetry(() => db.exec(sql)),
-		close: () => db.close?.(),
-	};
-}
+			get: (...params: unknown[]) => Record<string, unknown> | null;
+			all: (...params: unknown[]) => Record<string, unknown>[];
+			finalize?: () => void;
+			isFinalized?: boolean;
+		};
+		exec: (sql: string) => void;
+		close?: () => void;
+	},
+	maxStatements = DEFAULT_STATEMENT_CACHE_CAPACITY,
+): SqliteDb {
+	let isClosed = false;
+	const statementCache = new Map<
+		string,
+		{
+			run: (...params: unknown[]) => {
+				changes?: number;
+				lastInsertRowid?: number | bigint;
+			};
+			get: (...params: unknown[]) => Record<string, unknown> | null;
+			all: (...params: unknown[]) => Record<string, unknown>[];
+			finalize?: () => void;
+			isFinalized?: boolean;
+		}
+	>();
 
-function wrapNodeDb(db: {
-	prepare: (sql: string) => {
-		run: (...params: unknown[]) => { changes?: number };
-		get: (...params: unknown[]) => Record<string, unknown> | undefined;
-		all: (...params: unknown[]) => Record<string, unknown>[];
-	};
-	exec: (sql: string) => void;
-	close?: () => void;
-}): SqliteDb {
+	function getOrCompile(sql: string) {
+		if (isClosed) {
+			throw new Error("Cannot prepare statement: database is closed");
+		}
+		let stmt = statementCache.get(sql);
+		if (stmt) {
+			if (stmt.isFinalized) {
+				statementCache.delete(sql);
+			} else {
+				statementCache.delete(sql);
+				statementCache.set(sql, stmt);
+				return stmt;
+			}
+		}
+		if (statementCache.size >= maxStatements) {
+			const oldest = statementCache.keys().next().value;
+			if (oldest !== undefined) {
+				const evicted = statementCache.get(oldest);
+				statementCache.delete(oldest);
+				try {
+					evicted?.finalize?.();
+				} catch {
+					// Best-effort cleanup on eviction.
+				}
+			}
+		}
+		stmt = db.query(sql);
+		statementCache.set(sql, stmt);
+		return stmt;
+	}
+
 	return {
 		prepare: (sql) => {
-			const stmt = db.prepare(sql);
 			return {
-				run: (...params) => withSqliteBusyRetry(() => stmt.run(...params)),
+				run: (...params) =>
+					withSqliteBusyRetry(() => getOrCompile(sql).run(...params)),
 				get: (...params) =>
-					withSqliteBusyRetry(() => stmt.get(...params) ?? null),
-				all: (...params) => withSqliteBusyRetry(() => stmt.all(...params)),
+					withSqliteBusyRetry(() => getOrCompile(sql).get(...params)),
+				all: (...params) =>
+					withSqliteBusyRetry(() => getOrCompile(sql).all(...params)),
+				finalize: () => {
+					const stmt = statementCache.get(sql);
+					if (stmt) {
+						statementCache.delete(sql);
+						try {
+							stmt.finalize?.();
+						} catch {
+							// Ignore finalization error
+						}
+					}
+				},
 			};
 		},
-		exec: (sql) => withSqliteBusyRetry(() => db.exec(sql)),
-		close: () => db.close?.(),
+		exec: (sql) => {
+			if (isClosed) {
+				throw new Error("Cannot execute query: database is closed");
+			}
+			return withSqliteBusyRetry(() => db.exec(sql));
+		},
+		close: () => {
+			if (isClosed) return;
+			isClosed = true;
+			for (const stmt of statementCache.values()) {
+				try {
+					stmt.finalize?.();
+				} catch {
+					// Best-effort cleanup
+				}
+			}
+			statementCache.clear();
+			try {
+				db.close?.();
+			} catch {
+				// Best-effort cleanup
+			}
+		},
 	};
 }
 
-export function loadSqliteDb(filePath: string): SqliteDb {
+function wrapNodeDb(
+	db: {
+		prepare: (sql: string) => {
+			run: (...params: unknown[]) => { changes?: number };
+			get: (...params: unknown[]) => Record<string, unknown> | undefined;
+			all: (...params: unknown[]) => Record<string, unknown>[];
+			finalize?: () => void;
+		};
+		exec: (sql: string) => void;
+		close?: () => void;
+	},
+	maxStatements = DEFAULT_STATEMENT_CACHE_CAPACITY,
+): SqliteDb {
+	let isClosed = false;
+	const statementCache = new Map<
+		string,
+		{
+			run: (...params: unknown[]) => { changes?: number };
+			get: (...params: unknown[]) => Record<string, unknown> | undefined;
+			all: (...params: unknown[]) => Record<string, unknown>[];
+			finalize?: () => void;
+		}
+	>();
+
+	function getOrCompile(sql: string) {
+		if (isClosed) {
+			throw new Error("Cannot prepare statement: database is closed");
+		}
+		let stmt = statementCache.get(sql);
+		if (stmt) {
+			statementCache.delete(sql);
+			statementCache.set(sql, stmt);
+			return stmt;
+		}
+		if (statementCache.size >= maxStatements) {
+			const oldest = statementCache.keys().next().value;
+			if (oldest !== undefined) {
+				const evicted = statementCache.get(oldest);
+				statementCache.delete(oldest);
+				try {
+					evicted?.finalize?.();
+				} catch {
+					// Best-effort cleanup on eviction.
+				}
+			}
+		}
+		stmt = db.prepare(sql);
+		statementCache.set(sql, stmt);
+		return stmt;
+	}
+
+	return {
+		prepare: (sql) => {
+			return {
+				run: (...params) =>
+					withSqliteBusyRetry(() => getOrCompile(sql).run(...params)),
+				get: (...params) =>
+					withSqliteBusyRetry(() => getOrCompile(sql).get(...params) ?? null),
+				all: (...params) =>
+					withSqliteBusyRetry(() => getOrCompile(sql).all(...params)),
+				finalize: () => {
+					const stmt = statementCache.get(sql);
+					if (stmt) {
+						statementCache.delete(sql);
+						try {
+							stmt.finalize?.();
+						} catch {
+							// Ignore finalization error
+						}
+					}
+				},
+			};
+		},
+		exec: (sql) => {
+			if (isClosed) {
+				throw new Error("Cannot execute query: database is closed");
+			}
+			return withSqliteBusyRetry(() => db.exec(sql));
+		},
+		close: () => {
+			if (isClosed) return;
+			isClosed = true;
+			for (const stmt of statementCache.values()) {
+				try {
+					stmt.finalize?.();
+				} catch {
+					// Best-effort cleanup
+				}
+			}
+			statementCache.clear();
+			try {
+				db.close?.();
+			} catch {
+				// Best-effort cleanup
+			}
+		},
+	};
+}
+
+export function applySqlitePragmas(
+	db: SqliteDb | { exec: (sql: string) => void },
+	options?: SqlitePragmaOptions,
+): void {
+	const cacheSize = -(options?.cacheSizeKb ?? 2000);
+	const mmapSizeBytes = options?.mmapSizeBytes ?? 67108864;
+	const journalSizeLimitBytes = options?.journalSizeLimitBytes ?? 16777216;
+	const busyTimeoutMs = options?.busyTimeoutMs ?? 5000;
+
+	db.exec("PRAGMA journal_mode = WAL;");
+	db.exec("PRAGMA synchronous = NORMAL;");
+	db.exec(`PRAGMA cache_size = ${cacheSize};`);
+	db.exec("PRAGMA temp_store = MEMORY;");
+	db.exec(`PRAGMA busy_timeout = ${busyTimeoutMs};`);
+	db.exec(`PRAGMA mmap_size = ${mmapSizeBytes};`);
+	db.exec(`PRAGMA journal_size_limit = ${journalSizeLimitBytes};`);
+}
+
+export function loadSqliteDb(
+	filePath: string,
+	options?: SqliteDbOptions,
+): SqliteDb {
 	mkdirSync(dirname(filePath), { recursive: true });
 	const require = createRequire(import.meta.url);
+	let db: SqliteDb;
 
 	if (typeof (globalThis as { Bun?: unknown }).Bun !== "undefined") {
 		const { Database } = require("bun:sqlite") as {
@@ -139,48 +341,64 @@ export function loadSqliteDb(filePath: string): SqliteDb {
 				path: string,
 				options?: { create?: boolean },
 			) => {
-				query: (sql: string) => SqliteStatement;
-				exec: (sql: string) => void;
-				close?: () => void;
-			};
-		};
-		return wrapBunDb(new Database(filePath, { create: true }));
-	}
-
-	// Suppress "ExperimentalWarning: SQLite is an experimental feature"
-	const originalEmit = process.emitWarning;
-	process.emitWarning = ((warning: string | Error, ...args: unknown[]) => {
-		const msg =
-			typeof warning === "string" ? warning : (warning?.message ?? "");
-		if (msg.includes("SQLite")) return;
-		return (originalEmit as (...args: unknown[]) => void).call(
-			process,
-			warning,
-			...args,
-		);
-	}) as typeof process.emitWarning;
-
-	try {
-		const { DatabaseSync } = require(["node", ":sqlite"].join("")) as {
-			DatabaseSync: new (
-				path: string,
-			) => {
-				prepare: (sql: string) => {
-					run: (...params: unknown[]) => { changes?: number };
-					get: (...params: unknown[]) => Record<string, unknown> | undefined;
+				query: (sql: string) => {
+					run: (...params: unknown[]) => {
+						changes?: number;
+						lastInsertRowid?: number | bigint;
+					};
+					get: (...params: unknown[]) => Record<string, unknown> | null;
 					all: (...params: unknown[]) => Record<string, unknown>[];
+					finalize?: () => void;
+					isFinalized?: boolean;
 				};
 				exec: (sql: string) => void;
 				close?: () => void;
 			};
 		};
-		return wrapNodeDb(new DatabaseSync(filePath));
-	} finally {
-		process.emitWarning = originalEmit;
+		db = wrapBunDb(
+			new Database(filePath, { create: true }),
+			options?.maxStatements,
+		);
+	} else {
+		// Suppress "ExperimentalWarning: SQLite is an experimental feature"
+		const originalEmit = process.emitWarning;
+		process.emitWarning = ((warning: string | Error, ...args: unknown[]) => {
+			const msg =
+				typeof warning === "string" ? warning : (warning?.message ?? "");
+			if (msg.includes("SQLite")) return;
+			return (originalEmit as (...args: unknown[]) => void).call(
+				process,
+				warning,
+				...args,
+			);
+		}) as typeof process.emitWarning;
+
+		try {
+			const { DatabaseSync } = require(["node", ":sqlite"].join("")) as {
+				DatabaseSync: new (
+					path: string,
+				) => {
+					prepare: (sql: string) => {
+						run: (...params: unknown[]) => { changes?: number };
+						get: (...params: unknown[]) => Record<string, unknown> | undefined;
+						all: (...params: unknown[]) => Record<string, unknown>[];
+						finalize?: () => void;
+					};
+					exec: (sql: string) => void;
+					close?: () => void;
+				};
+			};
+			db = wrapNodeDb(new DatabaseSync(filePath), options?.maxStatements);
+		} finally {
+			process.emitWarning = originalEmit;
+		}
 	}
+
+	applySqlitePragmas(db, options);
+	return db;
 }
 
-export interface SessionSchemaOptions {
+export interface SessionSchemaOptions extends SqlitePragmaOptions {
 	includeLegacyMigrations?: boolean;
 }
 
@@ -272,6 +490,13 @@ const SCHEMA_STATEMENTS = [
 	ON schedules(enabled, next_run_at);`,
 ];
 
+const SESSION_INDEX_STATEMENTS = [
+	`CREATE INDEX IF NOT EXISTS idx_sessions_started_at
+	ON sessions(started_at DESC);`,
+	`CREATE INDEX IF NOT EXISTS idx_sessions_parent
+	ON sessions(parent_session_id);`,
+];
+
 const LEGACY_MIGRATIONS: Array<{
 	table: string;
 	column: string;
@@ -352,33 +577,43 @@ export function ensureSessionSchema(
 	db: SqliteDb,
 	options: SessionSchemaOptions = {},
 ): void {
-	db.exec("PRAGMA journal_mode = WAL;");
-	db.exec("PRAGMA busy_timeout = 5000;");
+	applySqlitePragmas(db, options);
 	for (const stmt of SCHEMA_STATEMENTS) {
 		db.exec(stmt);
 	}
 
-	if (!options.includeLegacyMigrations) return;
-
-	const columnCache = new Map<string, Set<string>>();
-	const getColumns = (table: string) => {
-		let cols = columnCache.get(table);
-		if (!cols) {
-			cols = getColumnNames(db, table);
-			columnCache.set(table, cols);
-		}
-		return cols;
-	};
-
-	for (const migration of LEGACY_MIGRATIONS) {
-		if (!getColumns(migration.table).has(migration.column)) {
-			db.exec(migration.sql);
-			if (migration.column === "workspace_root") {
-				db.exec(
-					"UPDATE sessions SET workspace_root = cwd WHERE workspace_root IS NULL OR workspace_root = '';",
-				);
+	if (options.includeLegacyMigrations) {
+		const columnCache = new Map<string, Set<string>>();
+		const getColumns = (table: string) => {
+			let cols = columnCache.get(table);
+			if (!cols) {
+				cols = getColumnNames(db, table);
+				columnCache.set(table, cols);
 			}
-			columnCache.delete(migration.table);
+			return cols;
+		};
+
+		for (const migration of LEGACY_MIGRATIONS) {
+			if (!getColumns(migration.table).has(migration.column)) {
+				db.exec(migration.sql);
+				if (migration.column === "workspace_root") {
+					db.exec(
+						"UPDATE sessions SET workspace_root = cwd WHERE workspace_root IS NULL OR workspace_root = '';",
+					);
+				}
+				columnCache.delete(migration.table);
+			}
 		}
+	}
+
+	// These indexes include columns added by legacy migrations, so create them
+	// only after those migrations have completed. If migration was explicitly
+	// disabled for a legacy database, skip indexes for columns it does not have.
+	const sessionColumns = getColumnNames(db, "sessions");
+	if (sessionColumns.has("started_at")) {
+		db.exec(SESSION_INDEX_STATEMENTS[0]);
+	}
+	if (sessionColumns.has("parent_session_id")) {
+		db.exec(SESSION_INDEX_STATEMENTS[1]);
 	}
 }

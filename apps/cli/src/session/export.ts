@@ -727,7 +727,7 @@ function renderGeneratedMediaHTML(media: {
 		media.source.type === "base64"
 			? `data:${media.mediaType};base64,${media.source.data}`
 			: media.source.type === "url"
-				? media.source.url
+				? resolveSafeMediaUrl(media.source.url)
 				: undefined;
 	if (!source) {
 		return `<p class="generated-media">Generated ${escapeHtml(media.modality)} (${escapeHtml(media.mediaType)})</p>`;
@@ -743,6 +743,17 @@ function renderGeneratedMediaHTML(media: {
 			return `<video class="generated-media" controls src="${escapedSource}" type="${escapedType}"></video>`;
 		case "file":
 			return `<a class="generated-media" href="${escapedSource}" download>Generated file (${escapedType})</a>`;
+	}
+}
+
+function resolveSafeMediaUrl(value: string): string | undefined {
+	try {
+		const url = new URL(value);
+		return url.protocol === "http:" || url.protocol === "https:"
+			? url.href
+			: undefined;
+	} catch {
+		return undefined;
 	}
 }
 
@@ -875,7 +886,7 @@ function renderDiffHTML(
       <div class="diff-header">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><path d="m10 13-2 2 2 2"/><path d="m14 17 2-2-2-2"/></svg>
         <span>${escapeHtml(filePath)}</span>
-        ${ext ? `<span class="badge">${ext}</span>` : ""}
+        ${ext ? `<span class="badge">${escapeHtml(ext)}</span>` : ""}
         ${isNewFile ? '<span class="badge new-file">New File</span>' : ""}
         <div class="diff-stats">
           ${addedCount > 0 ? `<span class="added">+${addedCount}</span>` : ""}

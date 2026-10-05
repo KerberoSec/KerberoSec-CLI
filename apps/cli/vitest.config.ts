@@ -48,7 +48,17 @@ export default defineConfig({
 			},
 		],
 	},
+	server: {
+		deps: {
+			inline: ["zod"],
+		},
+	},
 	test: {
+		server: {
+			deps: {
+				inline: ["zod"],
+			},
+		},
 		environment: "node",
 		setupFiles: ["./vitest.setup.ts"],
 		include: ["src/**/*.test.ts"],

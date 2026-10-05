@@ -5,9 +5,9 @@
 
 /* eslint-disable */
 
-export * from "./host/core_connection";
+export * from "./host/workspace";
 export * from "./host/diff";
-export * from "./host/env";
+export * from "./host/core_connection";
 export * from "./host/testing";
 export * from "./host/window";
-export * from "./host/workspace";
+export * from "./host/env";

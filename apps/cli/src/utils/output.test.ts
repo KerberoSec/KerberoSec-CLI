@@ -21,7 +21,17 @@ describe("installStreamErrorGuards", () => {
 	});
 
 	afterEach(() => {
-		process.exitCode = originalExitCode;
+		process.exitCode = originalExitCode ?? 0;
+	});
+
+	it("defaults to a successful exit code when none is set", () => {
+		installStreamErrorGuards();
+
+		expect(() => {
+			process.stderr.emit("error", { code: "EPIPE" });
+		}).toThrow("exit:0");
+
+		expect(exitSpy).toHaveBeenCalledWith(0);
 	});
 
 	it("preserves a failing process exit code on stdout broken pipe", () => {
@@ -33,16 +43,6 @@ describe("installStreamErrorGuards", () => {
 		}).toThrow("exit:1");
 
 		expect(exitSpy).toHaveBeenCalledWith(1);
-	});
-
-	it("defaults to a successful exit code when none is set", () => {
-		installStreamErrorGuards();
-
-		expect(() => {
-			process.stderr.emit("error", { code: "EPIPE" });
-		}).toThrow("exit:0");
-
-		expect(exitSpy).toHaveBeenCalledWith(0);
 	});
 });
 

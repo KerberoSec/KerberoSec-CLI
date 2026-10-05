@@ -218,7 +218,7 @@ async function buildCompiledBinary(input: {
 		process.exit(1);
 	}
 
-	await $`cp ${tmpOutfile} ${input.outfile} && chmod 755 ${input.outfile}`;
+	await $`rm -f ${input.outfile} && cp ${tmpOutfile} ${input.outfile} && chmod 755 ${input.outfile}`;
 	await $`rm -rf ${tmpDir}`;
 }
 

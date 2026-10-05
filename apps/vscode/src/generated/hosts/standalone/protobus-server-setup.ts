@@ -5,71 +5,6 @@ import { kerberosec } from "@generated/grpc-js"
 import { Controller } from "@core/controller"
 import { GrpcHandlerWrapper, GrpcStreamingResponseHandlerWrapper } from "@hosts/external/grpc-types"
 
-// Account Service
-import { accountLoginClicked } from "@core/controller/account/accountLoginClicked"
-import { accountLogoutClicked } from "@core/controller/account/accountLogoutClicked"
-import { subscribeToAuthStatusUpdate } from "@core/controller/account/subscribeToAuthStatusUpdate"
-import { authStateChanged } from "@core/controller/account/authStateChanged"
-import { getUserCredits } from "@core/controller/account/getUserCredits"
-import { getOrganizationCredits } from "@core/controller/account/getOrganizationCredits"
-import { getUserOrganizations } from "@core/controller/account/getUserOrganizations"
-import { setUserOrganization } from "@core/controller/account/setUserOrganization"
-import { openrouterAuthClicked } from "@core/controller/account/openrouterAuthClicked"
-import { requestyAuthClicked } from "@core/controller/account/requestyAuthClicked"
-import { hicapAuthClicked } from "@core/controller/account/hicapAuthClicked"
-import { getRedirectUrl } from "@core/controller/account/getRedirectUrl"
-import { openAiCodexSignIn } from "@core/controller/account/openAiCodexSignIn"
-import { openAiCodexSignOut } from "@core/controller/account/openAiCodexSignOut"
-import { submitLimitIncreaseRequest } from "@core/controller/account/submitLimitIncreaseRequest"
-
-// Browser Service
-import { getBrowserConnectionInfo } from "@core/controller/browser/getBrowserConnectionInfo"
-import { testBrowserConnection } from "@core/controller/browser/testBrowserConnection"
-import { discoverBrowser } from "@core/controller/browser/discoverBrowser"
-import { getDetectedChromePath } from "@core/controller/browser/getDetectedChromePath"
-import { relaunchChromeDebugMode } from "@core/controller/browser/relaunchChromeDebugMode"
-
-// Checkpoints Service
-import { checkpointRestore } from "@core/controller/checkpoints/checkpointRestore"
-import { checkpointViewLatestChanges } from "@core/controller/checkpoints/checkpointViewLatestChanges"
-import { checkpointLatestChangesCount } from "@core/controller/checkpoints/checkpointLatestChangesCount"
-
-// Commands Service
-import { addToKerberoSec } from "@core/controller/commands/addToKerberoSec"
-import { fixWithKerberoSec } from "@core/controller/commands/fixWithKerberoSec"
-import { explainWithKerberoSec } from "@core/controller/commands/explainWithKerberoSec"
-import { improveWithKerberoSec } from "@core/controller/commands/improveWithKerberoSec"
-
-// File Service
-import { copyToClipboard } from "@core/controller/file/copyToClipboard"
-import { openFile } from "@core/controller/file/openFile"
-import { openImage } from "@core/controller/file/openImage"
-import { openMention } from "@core/controller/file/openMention"
-import { deleteRuleFile } from "@core/controller/file/deleteRuleFile"
-import { createRuleFile } from "@core/controller/file/createRuleFile"
-import { searchCommits } from "@core/controller/file/searchCommits"
-import { selectFiles } from "@core/controller/file/selectFiles"
-import { getRelativePaths } from "@core/controller/file/getRelativePaths"
-import { searchFiles } from "@core/controller/file/searchFiles"
-import { toggleKerberoSecRule } from "@core/controller/file/toggleKerberoSecRule"
-import { toggleCursorRule } from "@core/controller/file/toggleCursorRule"
-import { toggleWindsurfRule } from "@core/controller/file/toggleWindsurfRule"
-import { toggleAgentsRule } from "@core/controller/file/toggleAgentsRule"
-import { refreshRules } from "@core/controller/file/refreshRules"
-import { openDiskConversationHistory } from "@core/controller/file/openDiskConversationHistory"
-import { toggleWorkflow } from "@core/controller/file/toggleWorkflow"
-import { ifFileExistsRelativePath } from "@core/controller/file/ifFileExistsRelativePath"
-import { openFileRelativePath } from "@core/controller/file/openFileRelativePath"
-import { openFocusChainFile } from "@core/controller/file/openFocusChainFile"
-import { refreshHooks } from "@core/controller/file/refreshHooks"
-import { toggleHook } from "@core/controller/file/toggleHook"
-import { createHook } from "@core/controller/file/createHook"
-import { deleteHook } from "@core/controller/file/deleteHook"
-import { refreshSkills } from "@core/controller/file/refreshSkills"
-import { toggleSkill } from "@core/controller/file/toggleSkill"
-import { createSkillFile } from "@core/controller/file/createSkillFile"
-import { deleteSkillFile } from "@core/controller/file/deleteSkillFile"
-
 // Marketplace Service
 import { getMarketplaceCatalog } from "@core/controller/marketplace/getMarketplaceCatalog"
 import { listMarketplaceLocalInstalledEntries } from "@core/controller/marketplace/listMarketplaceLocalInstalledEntries"
@@ -79,17 +14,17 @@ import { uninstallMarketplaceEntry } from "@core/controller/marketplace/uninstal
 import { toggleMarketplaceLocalInstalledEntry } from "@core/controller/marketplace/toggleMarketplaceLocalInstalledEntry"
 import { uninstallMarketplaceLocalInstalledEntry } from "@core/controller/marketplace/uninstallMarketplaceLocalInstalledEntry"
 
-// Mcp Service
-import { toggleMcpServer } from "@core/controller/mcp/toggleMcpServer"
-import { updateMcpTimeout } from "@core/controller/mcp/updateMcpTimeout"
-import { addRemoteMcpServer } from "@core/controller/mcp/addRemoteMcpServer"
-import { restartMcpServer } from "@core/controller/mcp/restartMcpServer"
-import { deleteMcpServer } from "@core/controller/mcp/deleteMcpServer"
-import { toggleToolAutoApprove } from "@core/controller/mcp/toggleToolAutoApprove"
-import { openMcpSettings } from "@core/controller/mcp/openMcpSettings"
-import { authenticateMcpServer } from "@core/controller/mcp/authenticateMcpServer"
-import { getLatestMcpServers } from "@core/controller/mcp/getLatestMcpServers"
-import { subscribeToMcpServers } from "@core/controller/mcp/subscribeToMcpServers"
+// OcaAccount Service
+import { ocaAccountLoginClicked } from "@core/controller/ocaAccount/ocaAccountLoginClicked"
+import { ocaAccountLogoutClicked } from "@core/controller/ocaAccount/ocaAccountLogoutClicked"
+import { ocaSubscribeToAuthStatusUpdate } from "@core/controller/ocaAccount/ocaSubscribeToAuthStatusUpdate"
+
+// Browser Service
+import { getBrowserConnectionInfo } from "@core/controller/browser/getBrowserConnectionInfo"
+import { testBrowserConnection } from "@core/controller/browser/testBrowserConnection"
+import { discoverBrowser } from "@core/controller/browser/discoverBrowser"
+import { getDetectedChromePath } from "@core/controller/browser/getDetectedChromePath"
+import { relaunchChromeDebugMode } from "@core/controller/browser/relaunchChromeDebugMode"
 
 // Models Service
 import { getOllamaModels } from "@core/controller/models/getOllamaModels"
@@ -119,20 +54,6 @@ import { resolveModelInfo } from "@core/controller/models/resolveModelInfo"
 import { readProviderConfig } from "@core/controller/models/readProviderConfig"
 import { writeProviderConfig } from "@core/controller/models/writeProviderConfig"
 import { commitModelSelection } from "@core/controller/models/commitModelSelection"
-
-// OcaAccount Service
-import { ocaAccountLoginClicked } from "@core/controller/ocaAccount/ocaAccountLoginClicked"
-import { ocaAccountLogoutClicked } from "@core/controller/ocaAccount/ocaAccountLogoutClicked"
-import { ocaSubscribeToAuthStatusUpdate } from "@core/controller/ocaAccount/ocaSubscribeToAuthStatusUpdate"
-
-// RemoteConfig Service
-import { getRemoteConfigSettings } from "@core/controller/remoteConfig/getRemoteConfigSettings"
-import { toggleRemoteConfigSetting } from "@core/controller/remoteConfig/toggleRemoteConfigSetting"
-
-// Slash Service
-import { reportBug } from "@core/controller/slash/reportBug"
-import { condense } from "@core/controller/slash/condense"
-import { getAvailableSlashCommands } from "@core/controller/slash/getAvailableSlashCommands"
 
 // State Service
 import { getLatestState } from "@core/controller/state/getLatestState"
@@ -182,6 +103,19 @@ import { taskFeedback } from "@core/controller/task/taskFeedback"
 import { executeQuickWin } from "@core/controller/task/executeQuickWin"
 import { deleteAllTaskHistory } from "@core/controller/task/deleteAllTaskHistory"
 
+// Worktree Service
+import { listWorktrees } from "@core/controller/worktree/listWorktrees"
+import { createWorktree } from "@core/controller/worktree/createWorktree"
+import { deleteWorktree } from "@core/controller/worktree/deleteWorktree"
+import { switchWorktree } from "@core/controller/worktree/switchWorktree"
+import { getAvailableBranches } from "@core/controller/worktree/getAvailableBranches"
+import { getWorktreeDefaults } from "@core/controller/worktree/getWorktreeDefaults"
+import { getWorktreeIncludeStatus } from "@core/controller/worktree/getWorktreeIncludeStatus"
+import { createWorktreeInclude } from "@core/controller/worktree/createWorktreeInclude"
+import { checkoutBranch } from "@core/controller/worktree/checkoutBranch"
+import { mergeWorktree } from "@core/controller/worktree/mergeWorktree"
+import { trackWorktreeViewOpened } from "@core/controller/worktree/trackWorktreeViewOpened"
+
 // Ui Service
 import { scrollToSettings } from "@core/controller/ui/scrollToSettings"
 import { setTerminalExecutionMode } from "@core/controller/ui/setTerminalExecutionMode"
@@ -203,23 +137,89 @@ import { openUrl } from "@core/controller/ui/openUrl"
 import { openWalkthrough } from "@core/controller/ui/openWalkthrough"
 import { trackIntent } from "@core/controller/ui/trackIntent"
 
+// Commands Service
+import { addToKerberoSec } from "@core/controller/commands/addToKerberoSec"
+import { fixWithKerberoSec } from "@core/controller/commands/fixWithKerberoSec"
+import { explainWithKerberoSec } from "@core/controller/commands/explainWithKerberoSec"
+import { improveWithKerberoSec } from "@core/controller/commands/improveWithKerberoSec"
+
+// Slash Service
+import { reportBug } from "@core/controller/slash/reportBug"
+import { condense } from "@core/controller/slash/condense"
+import { getAvailableSlashCommands } from "@core/controller/slash/getAvailableSlashCommands"
+
+// RemoteConfig Service
+import { getRemoteConfigSettings } from "@core/controller/remoteConfig/getRemoteConfigSettings"
+import { toggleRemoteConfigSetting } from "@core/controller/remoteConfig/toggleRemoteConfigSetting"
+
 // Web Service
 import { checkIsImageUrl } from "@core/controller/web/checkIsImageUrl"
 import { fetchOpenGraphData } from "@core/controller/web/fetchOpenGraphData"
 import { openInBrowser } from "@core/controller/web/openInBrowser"
 
-// Worktree Service
-import { listWorktrees } from "@core/controller/worktree/listWorktrees"
-import { createWorktree } from "@core/controller/worktree/createWorktree"
-import { deleteWorktree } from "@core/controller/worktree/deleteWorktree"
-import { switchWorktree } from "@core/controller/worktree/switchWorktree"
-import { getAvailableBranches } from "@core/controller/worktree/getAvailableBranches"
-import { getWorktreeDefaults } from "@core/controller/worktree/getWorktreeDefaults"
-import { getWorktreeIncludeStatus } from "@core/controller/worktree/getWorktreeIncludeStatus"
-import { createWorktreeInclude } from "@core/controller/worktree/createWorktreeInclude"
-import { checkoutBranch } from "@core/controller/worktree/checkoutBranch"
-import { mergeWorktree } from "@core/controller/worktree/mergeWorktree"
-import { trackWorktreeViewOpened } from "@core/controller/worktree/trackWorktreeViewOpened"
+// Account Service
+import { accountLoginClicked } from "@core/controller/account/accountLoginClicked"
+import { accountLogoutClicked } from "@core/controller/account/accountLogoutClicked"
+import { subscribeToAuthStatusUpdate } from "@core/controller/account/subscribeToAuthStatusUpdate"
+import { authStateChanged } from "@core/controller/account/authStateChanged"
+import { getUserCredits } from "@core/controller/account/getUserCredits"
+import { getOrganizationCredits } from "@core/controller/account/getOrganizationCredits"
+import { getUserOrganizations } from "@core/controller/account/getUserOrganizations"
+import { setUserOrganization } from "@core/controller/account/setUserOrganization"
+import { openrouterAuthClicked } from "@core/controller/account/openrouterAuthClicked"
+import { requestyAuthClicked } from "@core/controller/account/requestyAuthClicked"
+import { hicapAuthClicked } from "@core/controller/account/hicapAuthClicked"
+import { getRedirectUrl } from "@core/controller/account/getRedirectUrl"
+import { openAiCodexSignIn } from "@core/controller/account/openAiCodexSignIn"
+import { openAiCodexSignOut } from "@core/controller/account/openAiCodexSignOut"
+import { submitLimitIncreaseRequest } from "@core/controller/account/submitLimitIncreaseRequest"
+
+// Checkpoints Service
+import { checkpointRestore } from "@core/controller/checkpoints/checkpointRestore"
+import { checkpointViewLatestChanges } from "@core/controller/checkpoints/checkpointViewLatestChanges"
+import { checkpointLatestChangesCount } from "@core/controller/checkpoints/checkpointLatestChangesCount"
+
+// File Service
+import { copyToClipboard } from "@core/controller/file/copyToClipboard"
+import { openFile } from "@core/controller/file/openFile"
+import { openImage } from "@core/controller/file/openImage"
+import { openMention } from "@core/controller/file/openMention"
+import { deleteRuleFile } from "@core/controller/file/deleteRuleFile"
+import { createRuleFile } from "@core/controller/file/createRuleFile"
+import { searchCommits } from "@core/controller/file/searchCommits"
+import { selectFiles } from "@core/controller/file/selectFiles"
+import { getRelativePaths } from "@core/controller/file/getRelativePaths"
+import { searchFiles } from "@core/controller/file/searchFiles"
+import { toggleKerberoSecRule } from "@core/controller/file/toggleKerberoSecRule"
+import { toggleCursorRule } from "@core/controller/file/toggleCursorRule"
+import { toggleWindsurfRule } from "@core/controller/file/toggleWindsurfRule"
+import { toggleAgentsRule } from "@core/controller/file/toggleAgentsRule"
+import { refreshRules } from "@core/controller/file/refreshRules"
+import { openDiskConversationHistory } from "@core/controller/file/openDiskConversationHistory"
+import { toggleWorkflow } from "@core/controller/file/toggleWorkflow"
+import { ifFileExistsRelativePath } from "@core/controller/file/ifFileExistsRelativePath"
+import { openFileRelativePath } from "@core/controller/file/openFileRelativePath"
+import { openFocusChainFile } from "@core/controller/file/openFocusChainFile"
+import { refreshHooks } from "@core/controller/file/refreshHooks"
+import { toggleHook } from "@core/controller/file/toggleHook"
+import { createHook } from "@core/controller/file/createHook"
+import { deleteHook } from "@core/controller/file/deleteHook"
+import { refreshSkills } from "@core/controller/file/refreshSkills"
+import { toggleSkill } from "@core/controller/file/toggleSkill"
+import { createSkillFile } from "@core/controller/file/createSkillFile"
+import { deleteSkillFile } from "@core/controller/file/deleteSkillFile"
+
+// Mcp Service
+import { toggleMcpServer } from "@core/controller/mcp/toggleMcpServer"
+import { updateMcpTimeout } from "@core/controller/mcp/updateMcpTimeout"
+import { addRemoteMcpServer } from "@core/controller/mcp/addRemoteMcpServer"
+import { restartMcpServer } from "@core/controller/mcp/restartMcpServer"
+import { deleteMcpServer } from "@core/controller/mcp/deleteMcpServer"
+import { toggleToolAutoApprove } from "@core/controller/mcp/toggleToolAutoApprove"
+import { openMcpSettings } from "@core/controller/mcp/openMcpSettings"
+import { authenticateMcpServer } from "@core/controller/mcp/authenticateMcpServer"
+import { getLatestMcpServers } from "@core/controller/mcp/getLatestMcpServers"
+import { subscribeToMcpServers } from "@core/controller/mcp/subscribeToMcpServers"
 
 export function addProtobusServices(
 	server: grpc.Server,
@@ -227,81 +227,6 @@ export function addProtobusServices(
 	wrapper: GrpcHandlerWrapper,
 	wrapStreamingResponse: GrpcStreamingResponseHandlerWrapper,
 ): void {
-    // Account Service
-    server.addService(kerberosec.AccountServiceService, {
-         accountLoginClicked: wrapper<kerberosec.EmptyRequest,kerberosec.String>(accountLoginClicked, controller),
-         accountLogoutClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(accountLogoutClicked, controller),
-        subscribeToAuthStatusUpdate: wrapStreamingResponse<kerberosec.EmptyRequest,kerberosec.AuthState>(subscribeToAuthStatusUpdate, controller),
-         authStateChanged: wrapper<kerberosec.AuthStateChangedRequest,kerberosec.AuthState>(authStateChanged, controller),
-         getUserCredits: wrapper<kerberosec.EmptyRequest,kerberosec.UserCreditsData>(getUserCredits, controller),
-         getOrganizationCredits: wrapper<kerberosec.GetOrganizationCreditsRequest,kerberosec.OrganizationCreditsData>(getOrganizationCredits, controller),
-         getUserOrganizations: wrapper<kerberosec.EmptyRequest,kerberosec.UserOrganizationsResponse>(getUserOrganizations, controller),
-         setUserOrganization: wrapper<kerberosec.UserOrganizationUpdateRequest,kerberosec.Empty>(setUserOrganization, controller),
-         openrouterAuthClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openrouterAuthClicked, controller),
-         requestyAuthClicked: wrapper<kerberosec.StringRequest,kerberosec.Empty>(requestyAuthClicked, controller),
-         hicapAuthClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(hicapAuthClicked, controller),
-         getRedirectUrl: wrapper<kerberosec.EmptyRequest,kerberosec.String>(getRedirectUrl, controller),
-         openAiCodexSignIn: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openAiCodexSignIn, controller),
-         openAiCodexSignOut: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openAiCodexSignOut, controller),
-         submitLimitIncreaseRequest: wrapper<kerberosec.EmptyRequest,kerberosec.SubmitLimitIncreaseResponse>(submitLimitIncreaseRequest, controller),
-    });
-
-    // Browser Service
-    server.addService(kerberosec.BrowserServiceService, {
-         getBrowserConnectionInfo: wrapper<kerberosec.EmptyRequest,kerberosec.BrowserConnectionInfo>(getBrowserConnectionInfo, controller),
-         testBrowserConnection: wrapper<kerberosec.StringRequest,kerberosec.BrowserConnection>(testBrowserConnection, controller),
-         discoverBrowser: wrapper<kerberosec.EmptyRequest,kerberosec.BrowserConnection>(discoverBrowser, controller),
-         getDetectedChromePath: wrapper<kerberosec.EmptyRequest,kerberosec.ChromePath>(getDetectedChromePath, controller),
-         relaunchChromeDebugMode: wrapper<kerberosec.EmptyRequest,kerberosec.String>(relaunchChromeDebugMode, controller),
-    });
-
-    // Checkpoints Service
-    server.addService(kerberosec.CheckpointsServiceService, {
-         checkpointRestore: wrapper<kerberosec.CheckpointRestoreRequest,kerberosec.Empty>(checkpointRestore, controller),
-         checkpointViewLatestChanges: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(checkpointViewLatestChanges, controller),
-         checkpointLatestChangesCount: wrapper<kerberosec.EmptyRequest,kerberosec.Int64>(checkpointLatestChangesCount, controller),
-    });
-
-    // Commands Service
-    server.addService(kerberosec.CommandsServiceService, {
-         addToKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(addToKerberoSec, controller),
-         fixWithKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(fixWithKerberoSec, controller),
-         explainWithKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(explainWithKerberoSec, controller),
-         improveWithKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(improveWithKerberoSec, controller),
-    });
-
-    // File Service
-    server.addService(kerberosec.FileServiceService, {
-         copyToClipboard: wrapper<kerberosec.StringRequest,kerberosec.Empty>(copyToClipboard, controller),
-         openFile: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openFile, controller),
-         openImage: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openImage, controller),
-         openMention: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openMention, controller),
-         deleteRuleFile: wrapper<kerberosec.RuleFileRequest,kerberosec.RuleFile>(deleteRuleFile, controller),
-         createRuleFile: wrapper<kerberosec.RuleFileRequest,kerberosec.RuleFile>(createRuleFile, controller),
-         searchCommits: wrapper<kerberosec.StringRequest,kerberosec.GitCommits>(searchCommits, controller),
-         selectFiles: wrapper<kerberosec.BooleanRequest,kerberosec.StringArrays>(selectFiles, controller),
-         getRelativePaths: wrapper<kerberosec.RelativePathsRequest,kerberosec.RelativePaths>(getRelativePaths, controller),
-         searchFiles: wrapper<kerberosec.FileSearchRequest,kerberosec.FileSearchResults>(searchFiles, controller),
-         toggleKerberoSecRule: wrapper<kerberosec.ToggleKerberoSecRuleRequest,kerberosec.ToggleKerberoSecRules>(toggleKerberoSecRule, controller),
-         toggleCursorRule: wrapper<kerberosec.ToggleCursorRuleRequest,kerberosec.KerberoSecRulesToggles>(toggleCursorRule, controller),
-         toggleWindsurfRule: wrapper<kerberosec.ToggleWindsurfRuleRequest,kerberosec.KerberoSecRulesToggles>(toggleWindsurfRule, controller),
-         toggleAgentsRule: wrapper<kerberosec.ToggleAgentsRuleRequest,kerberosec.KerberoSecRulesToggles>(toggleAgentsRule, controller),
-         refreshRules: wrapper<kerberosec.EmptyRequest,kerberosec.RefreshedRules>(refreshRules, controller),
-         openDiskConversationHistory: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openDiskConversationHistory, controller),
-         toggleWorkflow: wrapper<kerberosec.ToggleWorkflowRequest,kerberosec.KerberoSecRulesToggles>(toggleWorkflow, controller),
-         ifFileExistsRelativePath: wrapper<kerberosec.StringRequest,kerberosec.BooleanResponse>(ifFileExistsRelativePath, controller),
-         openFileRelativePath: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openFileRelativePath, controller),
-         openFocusChainFile: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openFocusChainFile, controller),
-         refreshHooks: wrapper<kerberosec.EmptyRequest,kerberosec.HooksToggles>(refreshHooks, controller),
-         toggleHook: wrapper<kerberosec.ToggleHookRequest,kerberosec.ToggleHookResponse>(toggleHook, controller),
-         createHook: wrapper<kerberosec.CreateHookRequest,kerberosec.CreateHookResponse>(createHook, controller),
-         deleteHook: wrapper<kerberosec.DeleteHookRequest,kerberosec.DeleteHookResponse>(deleteHook, controller),
-         refreshSkills: wrapper<kerberosec.EmptyRequest,kerberosec.RefreshedSkills>(refreshSkills, controller),
-         toggleSkill: wrapper<kerberosec.ToggleSkillRequest,kerberosec.SkillsToggles>(toggleSkill, controller),
-         createSkillFile: wrapper<kerberosec.CreateSkillRequest,kerberosec.SkillsToggles>(createSkillFile, controller),
-         deleteSkillFile: wrapper<kerberosec.DeleteSkillRequest,kerberosec.SkillsToggles>(deleteSkillFile, controller),
-    });
-
     // Marketplace Service
     server.addService(kerberosec.MarketplaceServiceService, {
          getMarketplaceCatalog: wrapper<kerberosec.EmptyRequest,kerberosec.MarketplaceCatalog>(getMarketplaceCatalog, controller),
@@ -313,18 +238,20 @@ export function addProtobusServices(
          uninstallMarketplaceLocalInstalledEntry: wrapper<kerberosec.MarketplaceLocalInstalledEntryRequest,kerberosec.MarketplaceInstallResult>(uninstallMarketplaceLocalInstalledEntry, controller),
     });
 
-    // Mcp Service
-    server.addService(kerberosec.McpServiceService, {
-         toggleMcpServer: wrapper<kerberosec.ToggleMcpServerRequest,kerberosec.McpServers>(toggleMcpServer, controller),
-         updateMcpTimeout: wrapper<kerberosec.UpdateMcpTimeoutRequest,kerberosec.McpServers>(updateMcpTimeout, controller),
-         addRemoteMcpServer: wrapper<kerberosec.AddRemoteMcpServerRequest,kerberosec.McpServers>(addRemoteMcpServer, controller),
-         restartMcpServer: wrapper<kerberosec.StringRequest,kerberosec.McpServers>(restartMcpServer, controller),
-         deleteMcpServer: wrapper<kerberosec.StringRequest,kerberosec.McpServers>(deleteMcpServer, controller),
-         toggleToolAutoApprove: wrapper<kerberosec.ToggleToolAutoApproveRequest,kerberosec.McpServers>(toggleToolAutoApprove, controller),
-         openMcpSettings: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openMcpSettings, controller),
-         authenticateMcpServer: wrapper<kerberosec.StringRequest,kerberosec.Empty>(authenticateMcpServer, controller),
-         getLatestMcpServers: wrapper<kerberosec.Empty,kerberosec.McpServers>(getLatestMcpServers, controller),
-        subscribeToMcpServers: wrapStreamingResponse<kerberosec.EmptyRequest,kerberosec.McpServers>(subscribeToMcpServers, controller),
+    // OcaAccount Service
+    server.addService(kerberosec.OcaAccountServiceService, {
+         ocaAccountLoginClicked: wrapper<kerberosec.EmptyRequest,kerberosec.String>(ocaAccountLoginClicked, controller),
+         ocaAccountLogoutClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(ocaAccountLogoutClicked, controller),
+        ocaSubscribeToAuthStatusUpdate: wrapStreamingResponse<kerberosec.EmptyRequest,kerberosec.OcaAuthState>(ocaSubscribeToAuthStatusUpdate, controller),
+    });
+
+    // Browser Service
+    server.addService(kerberosec.BrowserServiceService, {
+         getBrowserConnectionInfo: wrapper<kerberosec.EmptyRequest,kerberosec.BrowserConnectionInfo>(getBrowserConnectionInfo, controller),
+         testBrowserConnection: wrapper<kerberosec.StringRequest,kerberosec.BrowserConnection>(testBrowserConnection, controller),
+         discoverBrowser: wrapper<kerberosec.EmptyRequest,kerberosec.BrowserConnection>(discoverBrowser, controller),
+         getDetectedChromePath: wrapper<kerberosec.EmptyRequest,kerberosec.ChromePath>(getDetectedChromePath, controller),
+         relaunchChromeDebugMode: wrapper<kerberosec.EmptyRequest,kerberosec.String>(relaunchChromeDebugMode, controller),
     });
 
     // Models Service
@@ -356,26 +283,6 @@ export function addProtobusServices(
          readProviderConfig: wrapper<kerberosec.StringRequest,kerberosec.ProviderConfigResponse>(readProviderConfig, controller),
          writeProviderConfig: wrapper<kerberosec.WriteProviderConfigRequest,kerberosec.ProviderConfigResponse>(writeProviderConfig, controller),
          commitModelSelection: wrapper<kerberosec.CommitModelSelectionRequest,kerberosec.Empty>(commitModelSelection, controller),
-    });
-
-    // OcaAccount Service
-    server.addService(kerberosec.OcaAccountServiceService, {
-         ocaAccountLoginClicked: wrapper<kerberosec.EmptyRequest,kerberosec.String>(ocaAccountLoginClicked, controller),
-         ocaAccountLogoutClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(ocaAccountLogoutClicked, controller),
-        ocaSubscribeToAuthStatusUpdate: wrapStreamingResponse<kerberosec.EmptyRequest,kerberosec.OcaAuthState>(ocaSubscribeToAuthStatusUpdate, controller),
-    });
-
-    // RemoteConfig Service
-    server.addService(kerberosec.RemoteConfigServiceService, {
-         getRemoteConfigSettings: wrapper<kerberosec.Empty,kerberosec.RemoteConfigSettingsResponse>(getRemoteConfigSettings, controller),
-         toggleRemoteConfigSetting: wrapper<kerberosec.ToggleRemoteConfigSettingRequest,kerberosec.RemoteConfigSetting>(toggleRemoteConfigSetting, controller),
-    });
-
-    // Slash Service
-    server.addService(kerberosec.SlashServiceService, {
-         reportBug: wrapper<kerberosec.StringRequest,kerberosec.Empty>(reportBug, controller),
-         condense: wrapper<kerberosec.StringRequest,kerberosec.Empty>(condense, controller),
-         getAvailableSlashCommands: wrapper<kerberosec.EmptyRequest,kerberosec.SlashCommandsResponse>(getAvailableSlashCommands, controller),
     });
 
     // State Service
@@ -430,6 +337,21 @@ export function addProtobusServices(
          deleteAllTaskHistory: wrapper<kerberosec.EmptyRequest,kerberosec.DeleteAllTaskHistoryCount>(deleteAllTaskHistory, controller),
     });
 
+    // Worktree Service
+    server.addService(kerberosec.WorktreeServiceService, {
+         listWorktrees: wrapper<kerberosec.EmptyRequest,kerberosec.WorktreeList>(listWorktrees, controller),
+         createWorktree: wrapper<kerberosec.CreateWorktreeRequest,kerberosec.WorktreeResult>(createWorktree, controller),
+         deleteWorktree: wrapper<kerberosec.DeleteWorktreeRequest,kerberosec.WorktreeResult>(deleteWorktree, controller),
+         switchWorktree: wrapper<kerberosec.SwitchWorktreeRequest,kerberosec.WorktreeResult>(switchWorktree, controller),
+         getAvailableBranches: wrapper<kerberosec.EmptyRequest,kerberosec.BranchList>(getAvailableBranches, controller),
+         getWorktreeDefaults: wrapper<kerberosec.EmptyRequest,kerberosec.WorktreeDefaults>(getWorktreeDefaults, controller),
+         getWorktreeIncludeStatus: wrapper<kerberosec.EmptyRequest,kerberosec.WorktreeIncludeStatus>(getWorktreeIncludeStatus, controller),
+         createWorktreeInclude: wrapper<kerberosec.CreateWorktreeIncludeRequest,kerberosec.WorktreeResult>(createWorktreeInclude, controller),
+         checkoutBranch: wrapper<kerberosec.CheckoutBranchRequest,kerberosec.WorktreeResult>(checkoutBranch, controller),
+         mergeWorktree: wrapper<kerberosec.MergeWorktreeRequest,kerberosec.MergeWorktreeResult>(mergeWorktree, controller),
+         trackWorktreeViewOpened: wrapper<kerberosec.TrackWorktreeViewOpenedRequest,kerberosec.Empty>(trackWorktreeViewOpened, controller),
+    });
+
     // Ui Service
     server.addService(kerberosec.UiServiceService, {
          scrollToSettings: wrapper<kerberosec.StringRequest,kerberosec.KeyValuePair>(scrollToSettings, controller),
@@ -453,6 +375,27 @@ export function addProtobusServices(
          trackIntent: wrapper<kerberosec.IntentEvent,kerberosec.Empty>(trackIntent, controller),
     });
 
+    // Commands Service
+    server.addService(kerberosec.CommandsServiceService, {
+         addToKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(addToKerberoSec, controller),
+         fixWithKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(fixWithKerberoSec, controller),
+         explainWithKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(explainWithKerberoSec, controller),
+         improveWithKerberoSec: wrapper<kerberosec.CommandContext,kerberosec.Empty>(improveWithKerberoSec, controller),
+    });
+
+    // Slash Service
+    server.addService(kerberosec.SlashServiceService, {
+         reportBug: wrapper<kerberosec.StringRequest,kerberosec.Empty>(reportBug, controller),
+         condense: wrapper<kerberosec.StringRequest,kerberosec.Empty>(condense, controller),
+         getAvailableSlashCommands: wrapper<kerberosec.EmptyRequest,kerberosec.SlashCommandsResponse>(getAvailableSlashCommands, controller),
+    });
+
+    // RemoteConfig Service
+    server.addService(kerberosec.RemoteConfigServiceService, {
+         getRemoteConfigSettings: wrapper<kerberosec.Empty,kerberosec.RemoteConfigSettingsResponse>(getRemoteConfigSettings, controller),
+         toggleRemoteConfigSetting: wrapper<kerberosec.ToggleRemoteConfigSettingRequest,kerberosec.RemoteConfigSetting>(toggleRemoteConfigSetting, controller),
+    });
+
     // Web Service
     server.addService(kerberosec.WebServiceService, {
          checkIsImageUrl: wrapper<kerberosec.StringRequest,kerberosec.IsImageUrl>(checkIsImageUrl, controller),
@@ -460,19 +403,76 @@ export function addProtobusServices(
          openInBrowser: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openInBrowser, controller),
     });
 
-    // Worktree Service
-    server.addService(kerberosec.WorktreeServiceService, {
-         listWorktrees: wrapper<kerberosec.EmptyRequest,kerberosec.WorktreeList>(listWorktrees, controller),
-         createWorktree: wrapper<kerberosec.CreateWorktreeRequest,kerberosec.WorktreeResult>(createWorktree, controller),
-         deleteWorktree: wrapper<kerberosec.DeleteWorktreeRequest,kerberosec.WorktreeResult>(deleteWorktree, controller),
-         switchWorktree: wrapper<kerberosec.SwitchWorktreeRequest,kerberosec.WorktreeResult>(switchWorktree, controller),
-         getAvailableBranches: wrapper<kerberosec.EmptyRequest,kerberosec.BranchList>(getAvailableBranches, controller),
-         getWorktreeDefaults: wrapper<kerberosec.EmptyRequest,kerberosec.WorktreeDefaults>(getWorktreeDefaults, controller),
-         getWorktreeIncludeStatus: wrapper<kerberosec.EmptyRequest,kerberosec.WorktreeIncludeStatus>(getWorktreeIncludeStatus, controller),
-         createWorktreeInclude: wrapper<kerberosec.CreateWorktreeIncludeRequest,kerberosec.WorktreeResult>(createWorktreeInclude, controller),
-         checkoutBranch: wrapper<kerberosec.CheckoutBranchRequest,kerberosec.WorktreeResult>(checkoutBranch, controller),
-         mergeWorktree: wrapper<kerberosec.MergeWorktreeRequest,kerberosec.MergeWorktreeResult>(mergeWorktree, controller),
-         trackWorktreeViewOpened: wrapper<kerberosec.TrackWorktreeViewOpenedRequest,kerberosec.Empty>(trackWorktreeViewOpened, controller),
+    // Account Service
+    server.addService(kerberosec.AccountServiceService, {
+         accountLoginClicked: wrapper<kerberosec.EmptyRequest,kerberosec.String>(accountLoginClicked, controller),
+         accountLogoutClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(accountLogoutClicked, controller),
+        subscribeToAuthStatusUpdate: wrapStreamingResponse<kerberosec.EmptyRequest,kerberosec.AuthState>(subscribeToAuthStatusUpdate, controller),
+         authStateChanged: wrapper<kerberosec.AuthStateChangedRequest,kerberosec.AuthState>(authStateChanged, controller),
+         getUserCredits: wrapper<kerberosec.EmptyRequest,kerberosec.UserCreditsData>(getUserCredits, controller),
+         getOrganizationCredits: wrapper<kerberosec.GetOrganizationCreditsRequest,kerberosec.OrganizationCreditsData>(getOrganizationCredits, controller),
+         getUserOrganizations: wrapper<kerberosec.EmptyRequest,kerberosec.UserOrganizationsResponse>(getUserOrganizations, controller),
+         setUserOrganization: wrapper<kerberosec.UserOrganizationUpdateRequest,kerberosec.Empty>(setUserOrganization, controller),
+         openrouterAuthClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openrouterAuthClicked, controller),
+         requestyAuthClicked: wrapper<kerberosec.StringRequest,kerberosec.Empty>(requestyAuthClicked, controller),
+         hicapAuthClicked: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(hicapAuthClicked, controller),
+         getRedirectUrl: wrapper<kerberosec.EmptyRequest,kerberosec.String>(getRedirectUrl, controller),
+         openAiCodexSignIn: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openAiCodexSignIn, controller),
+         openAiCodexSignOut: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openAiCodexSignOut, controller),
+         submitLimitIncreaseRequest: wrapper<kerberosec.EmptyRequest,kerberosec.SubmitLimitIncreaseResponse>(submitLimitIncreaseRequest, controller),
+    });
+
+    // Checkpoints Service
+    server.addService(kerberosec.CheckpointsServiceService, {
+         checkpointRestore: wrapper<kerberosec.CheckpointRestoreRequest,kerberosec.Empty>(checkpointRestore, controller),
+         checkpointViewLatestChanges: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(checkpointViewLatestChanges, controller),
+         checkpointLatestChangesCount: wrapper<kerberosec.EmptyRequest,kerberosec.Int64>(checkpointLatestChangesCount, controller),
+    });
+
+    // File Service
+    server.addService(kerberosec.FileServiceService, {
+         copyToClipboard: wrapper<kerberosec.StringRequest,kerberosec.Empty>(copyToClipboard, controller),
+         openFile: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openFile, controller),
+         openImage: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openImage, controller),
+         openMention: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openMention, controller),
+         deleteRuleFile: wrapper<kerberosec.RuleFileRequest,kerberosec.RuleFile>(deleteRuleFile, controller),
+         createRuleFile: wrapper<kerberosec.RuleFileRequest,kerberosec.RuleFile>(createRuleFile, controller),
+         searchCommits: wrapper<kerberosec.StringRequest,kerberosec.GitCommits>(searchCommits, controller),
+         selectFiles: wrapper<kerberosec.BooleanRequest,kerberosec.StringArrays>(selectFiles, controller),
+         getRelativePaths: wrapper<kerberosec.RelativePathsRequest,kerberosec.RelativePaths>(getRelativePaths, controller),
+         searchFiles: wrapper<kerberosec.FileSearchRequest,kerberosec.FileSearchResults>(searchFiles, controller),
+         toggleKerberoSecRule: wrapper<kerberosec.ToggleKerberoSecRuleRequest,kerberosec.ToggleKerberoSecRules>(toggleKerberoSecRule, controller),
+         toggleCursorRule: wrapper<kerberosec.ToggleCursorRuleRequest,kerberosec.KerberoSecRulesToggles>(toggleCursorRule, controller),
+         toggleWindsurfRule: wrapper<kerberosec.ToggleWindsurfRuleRequest,kerberosec.KerberoSecRulesToggles>(toggleWindsurfRule, controller),
+         toggleAgentsRule: wrapper<kerberosec.ToggleAgentsRuleRequest,kerberosec.KerberoSecRulesToggles>(toggleAgentsRule, controller),
+         refreshRules: wrapper<kerberosec.EmptyRequest,kerberosec.RefreshedRules>(refreshRules, controller),
+         openDiskConversationHistory: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openDiskConversationHistory, controller),
+         toggleWorkflow: wrapper<kerberosec.ToggleWorkflowRequest,kerberosec.KerberoSecRulesToggles>(toggleWorkflow, controller),
+         ifFileExistsRelativePath: wrapper<kerberosec.StringRequest,kerberosec.BooleanResponse>(ifFileExistsRelativePath, controller),
+         openFileRelativePath: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openFileRelativePath, controller),
+         openFocusChainFile: wrapper<kerberosec.StringRequest,kerberosec.Empty>(openFocusChainFile, controller),
+         refreshHooks: wrapper<kerberosec.EmptyRequest,kerberosec.HooksToggles>(refreshHooks, controller),
+         toggleHook: wrapper<kerberosec.ToggleHookRequest,kerberosec.ToggleHookResponse>(toggleHook, controller),
+         createHook: wrapper<kerberosec.CreateHookRequest,kerberosec.CreateHookResponse>(createHook, controller),
+         deleteHook: wrapper<kerberosec.DeleteHookRequest,kerberosec.DeleteHookResponse>(deleteHook, controller),
+         refreshSkills: wrapper<kerberosec.EmptyRequest,kerberosec.RefreshedSkills>(refreshSkills, controller),
+         toggleSkill: wrapper<kerberosec.ToggleSkillRequest,kerberosec.SkillsToggles>(toggleSkill, controller),
+         createSkillFile: wrapper<kerberosec.CreateSkillRequest,kerberosec.SkillsToggles>(createSkillFile, controller),
+         deleteSkillFile: wrapper<kerberosec.DeleteSkillRequest,kerberosec.SkillsToggles>(deleteSkillFile, controller),
+    });
+
+    // Mcp Service
+    server.addService(kerberosec.McpServiceService, {
+         toggleMcpServer: wrapper<kerberosec.ToggleMcpServerRequest,kerberosec.McpServers>(toggleMcpServer, controller),
+         updateMcpTimeout: wrapper<kerberosec.UpdateMcpTimeoutRequest,kerberosec.McpServers>(updateMcpTimeout, controller),
+         addRemoteMcpServer: wrapper<kerberosec.AddRemoteMcpServerRequest,kerberosec.McpServers>(addRemoteMcpServer, controller),
+         restartMcpServer: wrapper<kerberosec.StringRequest,kerberosec.McpServers>(restartMcpServer, controller),
+         deleteMcpServer: wrapper<kerberosec.StringRequest,kerberosec.McpServers>(deleteMcpServer, controller),
+         toggleToolAutoApprove: wrapper<kerberosec.ToggleToolAutoApproveRequest,kerberosec.McpServers>(toggleToolAutoApprove, controller),
+         openMcpSettings: wrapper<kerberosec.EmptyRequest,kerberosec.Empty>(openMcpSettings, controller),
+         authenticateMcpServer: wrapper<kerberosec.StringRequest,kerberosec.Empty>(authenticateMcpServer, controller),
+         getLatestMcpServers: wrapper<kerberosec.Empty,kerberosec.McpServers>(getLatestMcpServers, controller),
+        subscribeToMcpServers: wrapStreamingResponse<kerberosec.EmptyRequest,kerberosec.McpServers>(subscribeToMcpServers, controller),
     });
 
 }

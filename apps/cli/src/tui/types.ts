@@ -71,6 +71,8 @@ export type ChatEntry = (
 			iterations: number;
 	  }
 ) & {
+	/** Stable identity for rendering and reconciliation within the CLI transcript. */
+	entryId?: number;
 	/**
 	 * Agent mode active when the entry was produced. Stamped by appendEntry
 	 * (live sessions) and hydrateSessionMessages (resumed sessions) so the
@@ -80,6 +82,9 @@ export type ChatEntry = (
 	 */
 	mode?: AgentMode;
 };
+
+/** A chat entry after it has been assigned an ID by the session store. */
+export type StableChatEntry = ChatEntry & { entryId: number };
 
 export interface InteractiveTurnResult {
 	usage: {

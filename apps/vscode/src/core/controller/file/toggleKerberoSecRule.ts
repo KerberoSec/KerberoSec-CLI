@@ -64,8 +64,8 @@ export async function toggleKerberoSecRule(
 	const remoteToggles = controller.stateManager.getGlobalStateKey("remoteRulesToggles")
 
 	return ToggleKerberoSecRules.create({
-		globalKerberoSecRulesToggles: { toggles: globalToggles },
-		localKerberoSecRulesToggles: { toggles: localToggles },
+		globalKerberosecRulesToggles: { toggles: globalToggles },
+		localKerberosecRulesToggles: { toggles: localToggles },
 		remoteRulesToggles: { toggles: remoteToggles },
 	})
 }

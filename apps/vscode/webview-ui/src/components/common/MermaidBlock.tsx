@@ -38,7 +38,7 @@ const MERMAID_THEME = {
 
 mermaid.initialize({
 	startOnLoad: false,
-	securityLevel: "loose",
+	securityLevel: "strict",
 	theme: "dark",
 	themeVariables: {
 		...MERMAID_THEME,
@@ -82,40 +82,48 @@ interface MermaidBlockProps {
 
 export default function MermaidBlock({ code }: MermaidBlockProps) {
 	const containerRef = useRef<HTMLDivElement>(null)
+	const renderVersionRef = useRef(0)
 	const [isLoading, setIsLoading] = useState(false)
 
 	// 1) Whenever `code` changes, mark that we need to re-render a new chart
 	useEffect(() => {
+		renderVersionRef.current += 1
+		const renderVersion = renderVersionRef.current
 		setIsLoading(true)
+		return () => {
+			if (renderVersionRef.current === renderVersion) {
+				renderVersionRef.current += 1
+			}
+		}
 	}, [code])
 
 	// 2) Debounce the actual parse/render
 	useDebounceEffect(
 		() => {
-			if (containerRef.current) {
-				containerRef.current.innerHTML = ""
-			}
-			mermaid
-				.parse(code, { suppressErrors: true })
-				.then((isValid) => {
+			const renderVersion = renderVersionRef.current
+			containerRef.current?.replaceChildren()
+			void (async () => {
+				try {
+					const isValid = await mermaid.parse(code, { suppressErrors: true })
 					if (!isValid) {
 						throw new Error("Invalid or incomplete Mermaid code")
 					}
 					const id = `mermaid-${Math.random().toString(36).substring(2)}`
-					return mermaid.render(id, code)
-				})
-				.then(({ svg }) => {
-					if (containerRef.current) {
-						containerRef.current.innerHTML = svg
+					const { svg } = await mermaid.render(id, code)
+					if (renderVersionRef.current === renderVersion) {
+						containerRef.current?.insertAdjacentHTML("beforeend", svg)
 					}
-				})
-				.catch((err) => {
+				} catch (err) {
 					console.warn("Mermaid parse/render failed:", err)
-					containerRef.current!.innerHTML = code.replace(/</g, "&lt;").replace(/>/g, "&gt;")
-				})
-				.finally(() => {
-					setIsLoading(false)
-				})
+					if (renderVersionRef.current === renderVersion && containerRef.current) {
+						containerRef.current.textContent = code
+					}
+				} finally {
+					if (renderVersionRef.current === renderVersion) {
+						setIsLoading(false)
+					}
+				}
+			})()
 		},
 		500, // Delay 500ms
 		[code], // Dependencies for scheduling

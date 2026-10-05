@@ -30,6 +30,11 @@ export type DiscoveryChatContext = {
 	>;
 };
 
+type PersistedChatSessionCandidate = {
+	record: JsonRecord;
+	manifest: JsonRecord;
+};
+
 function trimKnownString(value: unknown): string | undefined {
 	if (typeof value !== "string") {
 		return undefined;
@@ -46,6 +51,8 @@ export function discoverChatSessions(
 	limit = 300,
 ): unknown[] {
 	const out: JsonRecord[] = [];
+	const persistedCandidates: PersistedChatSessionCandidate[] = [];
+	const seenSessionIds = new Set<string>();
 	const store = new SqliteSessionStore();
 	for (const [sessionId, session] of ctx.liveSessions.entries()) {
 		if (!session.busy && !session.prompt && session.messages.length === 0) {
@@ -74,6 +81,7 @@ export function discoverChatSessions(
 				title: resolvedTitle,
 			},
 		});
+		seenSessionIds.add(sessionId);
 	}
 
 	const base = sharedSessionDataDir();
@@ -83,7 +91,7 @@ export function discoverChatSessions(
 				continue;
 			}
 			const sessionId = entry.name.trim();
-			if (!sessionId || out.some((item) => item.sessionId === sessionId)) {
+			if (!sessionId || seenSessionIds.has(sessionId)) {
 				continue;
 			}
 			// Skip subagent / team-task child sessions — they are shown
@@ -109,13 +117,58 @@ export function discoverChatSessions(
 			if (!provider || !model) {
 				continue;
 			}
+			const startedAt = String(
+				manifest.started_at ?? manifest.startedAt ?? Date.now(),
+			);
+			persistedCandidates.push({
+				record: {
+					sessionId,
+					status: "completed",
+					provider,
+					model,
+					cwd: manifest.cwd ?? "",
+					workspaceRoot:
+						manifest.workspace_root ??
+						manifest.workspaceRoot ??
+						manifest.cwd ??
+						"",
+					startedAt,
+					endedAt:
+						(manifest.ended_at ?? manifest.endedAt)
+							? String(manifest.ended_at ?? manifest.endedAt)
+							: undefined,
+				},
+				manifest,
+			});
+			seenSessionIds.add(sessionId);
+		}
+	}
+
+	// Persisted transcripts can contain large image payloads. Sort their small
+	// metadata records together with live sessions first, then read messages only
+	// for entries that can actually appear in the requested result page.
+	const orderedEntries = [
+		...out.map((record) => ({ record, manifest: undefined })),
+		...persistedCandidates,
+	].sort((left, right) =>
+		compareSessionRecordsByStartedAtDesc(left.record, right.record),
+	);
+	const result: JsonRecord[] = [];
+	const resultLimit = Number.isNaN(limit)
+		? 300
+		: Math.max(1, Math.floor(limit));
+	for (const entry of orderedEntries) {
+		if (!entry.manifest) {
+			result.push(entry.record);
+		} else {
+			const sessionId = String(entry.record.sessionId);
 			const messages = readPersistedChatMessages(sessionId) ?? [];
 			if (messages.length === 0) {
 				continue;
 			}
 			const metadata =
-				manifest.metadata && typeof manifest.metadata === "object"
-					? { ...(manifest.metadata as JsonRecord) }
+				entry.manifest.metadata && typeof entry.manifest.metadata === "object"
+					? { ...(entry.manifest.metadata as JsonRecord) }
 					: undefined;
 			const prompt = derivePromptFromMessages(messages);
 			const resolvedTitle = resolveSessionListTitle({
@@ -124,35 +177,19 @@ export function discoverChatSessions(
 				prompt,
 				messages,
 			});
-			out.push({
-				sessionId,
-				status: "completed",
-				provider,
-				model,
-				cwd: manifest.cwd ?? "",
-				workspaceRoot:
-					manifest.workspace_root ??
-					manifest.workspaceRoot ??
-					manifest.cwd ??
-					"",
+			result.push({
+				...entry.record,
 				prompt,
-				startedAt: String(
-					manifest.started_at ?? manifest.startedAt ?? Date.now(),
-				),
-				endedAt:
-					(manifest.ended_at ?? manifest.endedAt)
-						? String(manifest.ended_at ?? manifest.endedAt)
-						: undefined,
 				metadata: {
 					...(metadata ?? {}),
 					title: resolvedTitle,
 				},
 			});
 		}
+		if (result.length >= resultLimit) break;
 	}
 
-	out.sort(compareSessionRecordsByStartedAtDesc);
-	return out.slice(0, Math.max(1, limit));
+	return result;
 }
 
 export function mergeDiscoveredSessionLists(

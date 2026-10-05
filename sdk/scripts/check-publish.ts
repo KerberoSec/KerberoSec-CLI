@@ -217,15 +217,20 @@ async function main(): Promise<number> {
 			JSON.stringify(testPkg, null, 2),
 		);
 
-		await runCommandOrThrow(["bun", "install", "--ignore-scripts"], {
-			cwd: testDir,
-			env: {
-				...process.env,
-				BUN_INSTALL_CACHE_DIR: bunCacheDir,
+		await runCommandOrThrow(
+			["bun", "install", "--ignore-scripts", "--prefer-offline"],
+			{
+				cwd: testDir,
+				env: {
+					...process.env,
+					BUN_INSTALL_CACHE_DIR:
+						process.env.BUN_INSTALL_CACHE_DIR ??
+						join(process.env.HOME ?? "/home/Kali", ".bun", "install", "cache"),
+				},
+				stdout: "pipe",
+				stderr: "pipe",
 			},
-			stdout: "pipe",
-			stderr: "pipe",
-		});
+		);
 		console.log("  OK - bun install succeeded\n");
 
 		console.log("--- Verifying module resolution ---");

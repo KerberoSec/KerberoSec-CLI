@@ -194,6 +194,31 @@ const DEFAULT_HUB_CLOSED_MESSAGE = "Hub connection closed";
 const HUB_RECONNECT_INITIAL_DELAY_MS = 250;
 const HUB_RECONNECT_MAX_DELAY_MS = 5_000;
 const HUB_RECONNECT_JITTER_RATIO = 0.5;
+const RETRY_SAFE_HUB_COMMANDS = new Set<HubCommandEnvelope["command"]>([
+	"catalog.list",
+	"client.list",
+	"connector.channels",
+	"connector.supervised",
+	"hub.status",
+	"peer.list_sessions",
+	"run.list",
+	"schedule.active",
+	"schedule.get",
+	"schedule.list",
+	"schedule.list_executions",
+	"schedule.stats",
+	"schedule.upcoming",
+	"session.compaction.get",
+	"session.get",
+	"session.list",
+	"session.messages",
+	"session.pending_prompts",
+	"session.search",
+	"settings.get",
+	"settings.list",
+	"task.get",
+	"task.list",
+]);
 
 export type HubTransportErrorCode =
 	| "hub_connect_timeout"
@@ -294,6 +319,7 @@ export function rememberRecoverableLocalHubUrl(
 export class NodeHubClient {
 	private socket: WebSocketLike | undefined;
 	private connectPromise: Promise<void> | undefined;
+	private registrationPromise: Promise<void> | undefined;
 	private readonly clientId: string;
 	private currentUrl: string;
 	private recoveryPromise: Promise<boolean> | undefined;
@@ -358,7 +384,8 @@ export class NodeHubClient {
 			this.socket &&
 			(this.socket.readyState === 1 || this.socket.readyState === 0)
 		) {
-			return this.connectPromise ?? Promise.resolve();
+			await (this.connectPromise ?? Promise.resolve());
+			return this.ensureRegistered();
 		}
 		this.closedByClient = false;
 		this.clearReconnectTimer();
@@ -451,6 +478,7 @@ export class NodeHubClient {
 				this.sawSocketClose = true;
 			}
 			this.registered = false;
+			this.registrationPromise = undefined;
 			for (const pending of this.pendingReplies.values()) {
 				pending.reject(this.lastCloseError);
 			}
@@ -463,26 +491,58 @@ export class NodeHubClient {
 		});
 
 		await this.connectPromise;
-		await this.command("client.register", {
-			clientId: this.clientId,
-			clientType: this.options.clientType ?? "core",
-			displayName: this.options.displayName ?? "core",
-			transport: "native",
-			actorKind: "client",
-			capabilities: this.capabilities,
-			workspaceContext: {
-				workspaceRoot: this.options.workspaceRoot,
-				cwd: this.options.cwd,
-			},
-		} satisfies HubClientRegistration);
-		this.registered = true;
-		for (const key of this.subscriptionCounts.keys()) {
-			this.sendSubscriptionFrame(
-				"stream.subscribe",
-				this.subscriptionSessionIdFromKey(key),
-			);
+		await this.ensureRegistered();
+	}
+
+	private async ensureRegistered(): Promise<void> {
+		if (this.registered) return;
+		if (this.registrationPromise) return this.registrationPromise;
+
+		const socket = this.socket;
+		if (!socket || socket.readyState !== 1) {
+			throw this.lastCloseError;
 		}
-		this.reconnectAttempt = 0;
+		// Commands must not overtake registration when several callers share the
+		// first socket connection. `connectPromise` only covers the WebSocket open.
+		const registrationPromise = this.commandOnce(
+			"client.register",
+			{
+				clientId: this.clientId,
+				clientType: this.options.clientType ?? "core",
+				displayName: this.options.displayName ?? "core",
+				transport: "native",
+				actorKind: "client",
+				capabilities: this.capabilities,
+				workspaceContext: {
+					workspaceRoot: this.options.workspaceRoot,
+					cwd: this.options.cwd,
+				},
+			} satisfies HubClientRegistration,
+			undefined,
+			undefined,
+			false,
+		).then(() => {
+			if (this.socket !== socket || socket.readyState !== 1) {
+				throw this.lastCloseError;
+			}
+			for (const key of this.subscriptionCounts.keys()) {
+				this.sendSubscriptionFrame(
+					"stream.subscribe",
+					this.subscriptionSessionIdFromKey(key),
+				);
+			}
+			this.registered = true;
+			this.reconnectAttempt = 0;
+		});
+		this.registrationPromise = registrationPromise;
+		try {
+			await registrationPromise;
+		} catch (error) {
+			if (this.registrationPromise === registrationPromise) {
+				this.registrationPromise = undefined;
+			}
+			throw error;
+		}
 	}
 
 	subscribe(
@@ -508,8 +568,10 @@ export class NodeHubClient {
 		options?: { timeoutMs?: number | null },
 	): Promise<HubReplyEnvelope> {
 		let attempt = 0;
-		const canRecoverTransport =
-			command !== "client.register" && command !== "client.unregister";
+		// If the socket drops after the Hub accepts a mutation, we cannot tell
+		// whether it ran. Retrying with a new request id could duplicate a model
+		// turn, tool action, or other side effect, so only retry read-only calls.
+		const canRecoverTransport = RETRY_SAFE_HUB_COMMANDS.has(command);
 		while (true) {
 			try {
 				return await this.commandOnce(command, payload, sessionId, options);
@@ -531,8 +593,9 @@ export class NodeHubClient {
 		payload?: Record<string, unknown>,
 		sessionId?: string,
 		options?: { timeoutMs?: number | null },
+		ensureConnected = true,
 	): Promise<HubReplyEnvelope> {
-		await this.connect();
+		if (ensureConnected) await this.connect();
 		const requestId = createSessionId("hubreq_");
 		const effectiveTimeoutMs = resolveHubCommandTimeoutMs(
 			command,
@@ -703,6 +766,7 @@ export class NodeHubClient {
 		this.closedByClient = true;
 		this.clearReconnectTimer();
 		this.registered = false;
+		this.registrationPromise = undefined;
 		if (!socket) {
 			return;
 		}

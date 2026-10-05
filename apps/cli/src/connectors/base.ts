@@ -447,8 +447,13 @@ export abstract class ConnectorBase<Options, State>
 		if (value === undefined) {
 			return undefined;
 		}
-		const parsed = Number.parseInt(value, 10);
-		if (!Number.isFinite(parsed)) {
+		const raw = value.trim();
+		const parsed = Number(raw);
+		if (
+			!/^\d+$/.test(raw) ||
+			!Number.isSafeInteger(parsed) ||
+			(label === "port" && (parsed < 1 || parsed > 65_535))
+		) {
 			throw new Error(`invalid ${label} "${value}"`);
 		}
 		return parsed;

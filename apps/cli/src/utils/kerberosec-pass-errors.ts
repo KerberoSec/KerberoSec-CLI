@@ -329,7 +329,7 @@ export function getCliBudgetPoolQuotaExhaustedMessage(
 		"The selected model belongs to a budget pool whose quota is exhausted on AgentRouter.",
 		"",
 		"Suggestions:",
-		"1. Switch to an active model such as GLM 5.3 (`/model agent-router:glm-5.3` or `--model glm-5.3`).",
+		"1. Choose a model with an active route for your AgentRouter account (`/model agent-router:<model-id>` or `--model <model-id>`).",
 		"2. Request a quota increase or add balance at https://agentrouter.org.",
 	].join("\n");
 }
@@ -351,7 +351,7 @@ export function getCliUpstreamUnavailableMessage(_error?: unknown): string {
 		"",
 		"Suggestions:",
 		"1. The selected model's backend node may be offline or overloaded at AgentRouter.",
-		"2. Switch to an active, responsive model like GLM 5.3 (`/model agent-router:glm-5.3` or `--model glm-5.3`).",
+		"2. Choose another model with an active route for your AgentRouter account.",
 		"3. Retry your request in a moment if the gateway was temporarily restarting.",
 	].join("\n");
 }

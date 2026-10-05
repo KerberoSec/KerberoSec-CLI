@@ -57,13 +57,30 @@ function resolveCliHubOwnerContext() {
 }
 
 function parseWaitSeconds(value: string): number {
-	const parsed = Number.parseInt(value, 10);
-	if (Number.isNaN(parsed) || parsed < 0) {
+	const raw = value.trim();
+	const parsed = Number(raw);
+	if (!/^\d+$/.test(raw) || !Number.isSafeInteger(parsed)) {
 		throw new InvalidArgumentError(
 			"--wait requires a non-negative number of seconds.",
 		);
 	}
 	return parsed;
+}
+
+function parseHubPort(value: string): number {
+	const raw = value.trim();
+	const port = Number(raw);
+	if (
+		!/^\d+$/.test(raw) ||
+		!Number.isInteger(port) ||
+		port < 1 ||
+		port > 65_535
+	) {
+		throw new InvalidArgumentError(
+			"--port requires an integer from 1 to 65535.",
+		);
+	}
+	return port;
 }
 
 export function createHubCommand(
@@ -93,7 +110,7 @@ export function createHubCommand(
 		})
 		.option("--cwd <path>", "Workspace root", process.cwd())
 		.option("--host <host>", "Hub host")
-		.option("--port <port>", "Hub port", (value) => Number.parseInt(value, 10))
+		.option("--port <port>", "Hub port", parseHubPort)
 		.option("--pathname <path>", "Hub websocket path");
 
 	hub.command("ensure").action(

@@ -18,6 +18,12 @@ import {
 import type { SessionRecord } from "../../types/sessions";
 import type { SessionStore } from "../../types/storage";
 
+const SESSION_RECORD_SELECT_COLUMNS = `session_id, source, pid, started_at, ended_at, exit_code, status, interactive,
+	provider, model, cwd, workspace_root, team_name,
+	enable_tools, enable_spawn, enable_teams,
+	parent_session_id, parent_agent_id, agent_id, conversation_id, is_subagent,
+	prompt, metadata_json, hook_path, messages_path, updated_at`;
+
 export interface SqliteSessionStoreOptions {
 	sessionsDir?: string;
 }
@@ -190,17 +196,13 @@ export class SqliteSessionStore implements SessionStore {
 
 	get(sessionId: string): SessionRecord | undefined {
 		const row = this.queryOne<Record<string, unknown>>(
-			`SELECT session_id, source, pid, started_at, ended_at, exit_code, status, interactive,
-				provider, model, cwd, workspace_root, team_name,
-				enable_tools, enable_spawn, enable_teams,
-				parent_session_id, parent_agent_id, agent_id, conversation_id, is_subagent,
-				prompt, metadata_json, hook_path, messages_path, updated_at
-			 FROM sessions WHERE session_id = ?`,
+			`SELECT ${SESSION_RECORD_SELECT_COLUMNS} FROM sessions WHERE session_id = ?`,
 			[sessionId],
 		);
-		if (!row) {
-			return undefined;
-		}
+		return row ? this.mapSessionRow(row) : undefined;
+	}
+
+	private mapSessionRow(row: Record<string, unknown>): SessionRecord {
 		return {
 			sessionId: asString(row.session_id),
 			source: asString(row.source) as SessionRecord["source"],
@@ -246,18 +248,11 @@ export class SqliteSessionStore implements SessionStore {
 	}
 
 	list(limit = 200): SessionRecord[] {
-		const rows = this.queryAll<Record<string, unknown>>(
-			`SELECT session_id FROM sessions ORDER BY started_at DESC LIMIT ?`,
+		return this.queryAll<Record<string, unknown>>(
+			`SELECT ${SESSION_RECORD_SELECT_COLUMNS}
+			 FROM sessions ORDER BY started_at DESC LIMIT ?`,
 			[limit],
-		);
-		const result: SessionRecord[] = [];
-		for (const row of rows) {
-			const item = this.get(asString(row.session_id));
-			if (item) {
-				result.push(item);
-			}
-		}
-		return result;
+		).map((row) => this.mapSessionRow(row));
 	}
 
 	/**
@@ -265,19 +260,11 @@ export class SqliteSessionStore implements SessionStore {
 	 * parent, oldest first so a caller can present them in spawn order.
 	 */
 	listChildren(parentSessionId: string, limit = 200): SessionRecord[] {
-		const rows = this.queryAll<Record<string, unknown>>(
-			`SELECT session_id FROM sessions WHERE parent_session_id = ?
+		return this.queryAll<Record<string, unknown>>(
+			`SELECT ${SESSION_RECORD_SELECT_COLUMNS} FROM sessions WHERE parent_session_id = ?
 			 ORDER BY started_at ASC LIMIT ?`,
 			[parentSessionId, limit],
-		);
-		const result: SessionRecord[] = [];
-		for (const row of rows) {
-			const item = this.get(asString(row.session_id));
-			if (item) {
-				result.push(item);
-			}
-		}
-		return result;
+		).map((row) => this.mapSessionRow(row));
 	}
 
 	delete(sessionId: string, cascade = false): boolean {

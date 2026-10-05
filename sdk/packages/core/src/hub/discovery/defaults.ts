@@ -44,8 +44,13 @@ export function resolveDefaultHubPort(
 	if (!raw) {
 		return fallbackHubPort(options);
 	}
-	const port = Number.parseInt(raw, 10);
-	if (!Number.isInteger(port) || port < 1 || port > 65_535) {
+	const port = Number(raw);
+	if (
+		!/^\d+$/.test(raw) ||
+		!Number.isInteger(port) ||
+		port < 1 ||
+		port > 65_535
+	) {
 		return fallbackHubPort(options);
 	}
 	return port;

@@ -4,7 +4,10 @@ import type {
 	HubCommandEnvelope,
 	HubReplyEnvelope,
 } from "@kerberosec/shared";
-import { parseHookEventPayload } from "../../../hooks";
+import {
+	HookEventPayloadSchema,
+	parseHookEventPayload,
+} from "../../../hooks";
 import {
 	isSessionNotFoundError,
 	SESSION_NOT_FOUND_ERROR_CODE,
@@ -398,8 +401,31 @@ export async function handleSessionHook(
 	ctx: HubTransportContext,
 	envelope: HubCommandEnvelope,
 ): Promise<HubReplyEnvelope> {
-	const parsed = parseHookEventPayload(envelope.payload?.payload);
+	const rawPayload = envelope.payload?.payload;
+	const parsed = parseHookEventPayload(rawPayload);
 	if (!parsed) {
+		const validation = HookEventPayloadSchema.safeParse(rawPayload);
+		const hookPayloadKeys =
+			rawPayload && typeof rawPayload === "object" && !Array.isArray(rawPayload)
+				? Object.keys(rawPayload)
+				: [];
+		logHubMessage("warn", "session.hook.invalid_payload", {
+			requestId: envelope.requestId,
+			envelopePayloadKeys: Object.keys(envelope.payload ?? {}),
+			hookPayloadType:
+				rawPayload === null
+					? "null"
+					: Array.isArray(rawPayload)
+						? "array"
+						: typeof rawPayload,
+			hookPayloadKeys,
+			validationIssues: validation.success
+				? []
+				: validation.error.issues.map((issue) => ({
+						path: issue.path.map(String),
+						code: issue.code,
+					})),
+		});
 		return errorReply(
 			envelope,
 			"invalid_hook_payload",

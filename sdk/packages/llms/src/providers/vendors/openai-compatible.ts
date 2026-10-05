@@ -1,11 +1,6 @@
 import { createGateway } from "@ai-sdk/gateway";
 import { createOpenAICompatible } from "@ai-sdk/openai-compatible";
-import type {
-	LanguageModelV4,
-	LanguageModelV4Middleware,
-	LanguageModelV4StreamPart,
-	LanguageModelV4StreamResult,
-} from "@ai-sdk/provider";
+import type { LanguageModelV4 } from "@ai-sdk/provider";
 import type {
 	GatewayProviderContext,
 	GatewayResolvedProviderConfig,
@@ -14,7 +9,6 @@ import { modelProducesImages } from "@kerberosec/shared";
 import { createOpenRouter } from "@openrouter/ai-sdk-provider";
 import { wrapLanguageModel } from "ai";
 import { ensureFetch, resolveApiKey } from "../http";
-import { isTransientNetworkError } from "../middleware/retry-empty-response";
 import { splitToolImagesMiddleware } from "../middleware/split-tool-images";
 import { isOpenAIReasoningEraModelId } from "../model-facts";
 import type { ProviderFactoryResult } from "./types";
@@ -143,6 +137,132 @@ function createResponseErrorFetch(input: {
 	return responseErrorFetch;
 }
 
+const DATA_NULL_REGEX = /^\s*data:\s*null\s*$/;
+
+/**
+ * Wraps an SSE ReadableStream<Uint8Array> to sanitize non-standard chunks.
+ * AgentRouter can emit bare `data: null` lines between content chunks or
+ * keep-alives.
+ * AI SDK's schema expects an object and crashes with TypeValidationError on null.
+ * Replacing `data: null` with an SSE comment `: sse-null-skip` preserves stream framing
+ * and prevents client crashes.
+ */
+export function sanitizeSseStream(
+	body: ReadableStream<Uint8Array>,
+): ReadableStream<Uint8Array> {
+	const decoder = new TextDecoder();
+	const encoder = new TextEncoder();
+	let buffer = "";
+	const emitCompleteLines = (
+		controller: TransformStreamDefaultController<Uint8Array>,
+		flush = false,
+	) => {
+		let lineStart = 0;
+		// Fast path: if the buffer does not contain "null", none of its lines can be `data: null`.
+		// Scan directly to find the last complete line boundary and emit all complete lines in a
+		// single slice without line-by-line slicing, trimming, regex testing, or string concatenation.
+		if (!buffer.includes("null")) {
+			let lastCompleteEnd = 0;
+			for (let index = 0; index < buffer.length; index += 1) {
+				const character = buffer[index];
+				if (character !== "\n" && character !== "\r") continue;
+				if (!flush && character === "\r" && index === buffer.length - 1) {
+					break;
+				}
+				if (character === "\r" && buffer[index + 1] === "\n") {
+					index += 1;
+				}
+				lastCompleteEnd = index + 1;
+			}
+			if (lastCompleteEnd > 0) {
+				const batch = buffer.slice(0, lastCompleteEnd);
+				buffer = lastCompleteEnd === buffer.length ? "" : buffer.slice(lastCompleteEnd);
+				controller.enqueue(encoder.encode(batch));
+			}
+			if (flush && buffer.length > 0) {
+				controller.enqueue(encoder.encode(buffer));
+				buffer = "";
+			}
+			return;
+		}
+
+		let batch = "";
+		let hasChanges = false;
+		for (let index = 0; index < buffer.length; index += 1) {
+			const character = buffer[index];
+			if (character !== "\n" && character !== "\r") continue;
+			// A trailing CR may be the first half of CRLF split across chunks.
+			if (!flush && character === "\r" && index === buffer.length - 1) {
+				break;
+			}
+			const lineEnding =
+				character === "\r" && buffer[index + 1] === "\n"
+					? "\r\n"
+					: character;
+			const line = buffer.slice(lineStart, index);
+			const isDataNull = line.includes("null") && DATA_NULL_REGEX.test(line);
+			if (isDataNull) {
+				if (!hasChanges) {
+					hasChanges = true;
+					batch = buffer.slice(0, lineStart);
+				}
+				batch += ": sse-null-skip" + lineEnding;
+			} else if (hasChanges) {
+				batch += line + lineEnding;
+			}
+			if (lineEnding.length === 2) index += 1;
+			lineStart = index + 1;
+		}
+		if (!hasChanges && lineStart > 0) {
+			batch = buffer.slice(0, lineStart);
+		}
+		buffer = lineStart === buffer.length ? "" : buffer.slice(lineStart);
+		if (flush && buffer.length > 0) {
+			const isDataNull = buffer.includes("null") && DATA_NULL_REGEX.test(buffer);
+			if (isDataNull) {
+				batch += ": sse-null-skip";
+			} else if (hasChanges) {
+				batch += buffer;
+			} else {
+				batch = (batch.length > 0 ? batch : "") + buffer;
+			}
+			buffer = "";
+		}
+		if (batch.length > 0) {
+			controller.enqueue(encoder.encode(batch));
+		}
+	};
+
+	return body.pipeThrough(
+		new TransformStream<Uint8Array, Uint8Array>({
+			transform(chunk, controller) {
+				buffer += decoder.decode(chunk, { stream: true });
+				emitCompleteLines(controller);
+			},
+			flush(controller) {
+				buffer += decoder.decode();
+				emitCompleteLines(controller, true);
+			},
+		}),
+	);
+}
+
+export function wrapResponseWithSseSanitizer(response: Response): Response {
+	const contentType = response.headers.get("content-type") ?? "";
+	const mediaType = contentType.split(";", 1)[0]?.trim().toLowerCase();
+	if (!response.body || mediaType !== "text/event-stream") {
+		return response;
+	}
+	const sanitizedBody = sanitizeSseStream(response.body);
+	const headers = new Headers(response.headers);
+	headers.delete("content-length");
+	return new Response(sanitizedBody, {
+		status: response.status,
+		statusText: response.statusText,
+		headers,
+	});
+}
+
 /**
  * OpenAI's chat-completions API rejects `max_tokens` for reasoning-era
  * models ("Unsupported parameter: 'max_tokens' is not supported with this
@@ -156,7 +276,7 @@ function createResponseErrorFetch(input: {
 export function withMaxCompletionTokensForReasoningModels(
 	body: Record<string, unknown>,
 ): Record<string, unknown> {
-	const { max_tokens: maxTokens, ...rest } = body;
+	const maxTokens = body.max_tokens;
 	if (
 		maxTokens == null ||
 		typeof body.model !== "string" ||
@@ -164,6 +284,7 @@ export function withMaxCompletionTokensForReasoningModels(
 	) {
 		return body;
 	}
+	const { max_tokens: _, ...rest } = body;
 	return {
 		...rest,
 		// Keep an explicit `max_completion_tokens` passed via provider
@@ -171,6 +292,9 @@ export function withMaxCompletionTokensForReasoningModels(
 		max_completion_tokens: rest.max_completion_tokens ?? maxTokens,
 	};
 }
+
+const MODERATION_TRIGGER_QUICK_CHECK =
+	/pen|red|offensive|exploit|poc|fuzz|injection|vulnerab|payload|attack|recon|whoami|hostname|uptime|netstat|uname|git\s+status|\bls\b/i;
 
 /**
  * Remote OpenAI-compatible gateways and LLM proxies (e.g. AgentRouter routing to
@@ -182,6 +306,9 @@ export function withMaxCompletionTokensForReasoningModels(
  * intent, allowing developer instructions and terminal commands to pass through safely.
  */
 export function sanitizeModerationTriggerText(text: string): string {
+	if (!MODERATION_TRIGGER_QUICK_CHECK.test(text)) {
+		return text;
+	}
 	return text
 		.replace(
 			/Autonomous AI-Powered Web Security Assessment, Penetration Testing & Red Teaming Agent/gi,
@@ -281,47 +408,63 @@ export function sanitizeModerationRequestBody(
 	if (!Array.isArray(body.messages)) {
 		return body;
 	}
-	let hasChanges = false;
-	const messages = body.messages.map((message: unknown) => {
-		if (!message || typeof message !== "object") return message;
+	let newMessages: unknown[] | undefined;
+	for (let i = 0; i < body.messages.length; i++) {
+		const message = body.messages[i];
+		if (!message || typeof message !== "object") {
+			if (newMessages) newMessages.push(message);
+			continue;
+		}
 		const msg = message as Record<string, unknown>;
 		if (typeof msg.content === "string") {
 			const sanitized = sanitizeModerationTriggerText(msg.content);
 			if (sanitized !== msg.content) {
-				hasChanges = true;
-				return { ...msg, content: sanitized };
+				if (!newMessages) {
+					newMessages = body.messages.slice(0, i);
+				}
+				newMessages.push({ ...msg, content: sanitized });
+				continue;
 			}
-			return msg;
+			if (newMessages) newMessages.push(message);
+			continue;
 		}
 		if (Array.isArray(msg.content)) {
-			let partChanged = false;
-			const newContent = msg.content.map((part: unknown) => {
-				if (!part || typeof part !== "object") return part;
-				const p = part as Record<string, unknown>;
-				if (p.type === "text" && typeof p.text === "string") {
-					const sanitized = sanitizeModerationTriggerText(p.text);
-					if (sanitized !== p.text) {
-						partChanged = true;
-						return { ...p, text: sanitized };
+			let newContent: unknown[] | undefined;
+			for (let j = 0; j < msg.content.length; j++) {
+				const part = msg.content[j];
+				if (part && typeof part === "object") {
+					const p = part as Record<string, unknown>;
+					if (p.type === "text" && typeof p.text === "string") {
+						const sanitized = sanitizeModerationTriggerText(p.text);
+						if (sanitized !== p.text) {
+							if (!newContent) {
+								newContent = msg.content.slice(0, j);
+							}
+							newContent.push({ ...p, text: sanitized });
+							continue;
+						}
 					}
 				}
-				return p;
-			});
-			if (partChanged) {
-				hasChanges = true;
-				return { ...msg, content: newContent };
+				if (newContent) newContent.push(part);
+			}
+			if (newContent) {
+				if (!newMessages) {
+					newMessages = body.messages.slice(0, i);
+				}
+				newMessages.push({ ...msg, content: newContent });
+				continue;
 			}
 		}
-		return msg;
-	});
+		if (newMessages) newMessages.push(message);
+	}
 
-	if (!hasChanges) {
+	if (!newMessages) {
 		return body;
 	}
 
 	return {
 		...body,
-		messages,
+		messages: newMessages,
 	};
 }
 
@@ -382,246 +525,6 @@ export function createSuccessDataResponseFetch(
 	return responseEnvelopeFetch;
 }
 
-function isAgentRouterFailoverError(error: unknown): boolean {
-	const text = String(
-		error instanceof Error
-			? `${error.message} ${error.name} ${JSON.stringify((error as { cause?: unknown }).cause ?? "")}`
-			: typeof error === "object" && error !== null
-				? JSON.stringify(error)
-				: error,
-	).toLowerCase();
-	return (
-		text.includes("budget pool quota has been exhausted") ||
-		(text.includes("budget pool") && text.includes("quota")) ||
-		text.includes("upstream service unavailable") ||
-		text.includes("client cancelled request before upstream response") ||
-		text.includes("model-proxy") ||
-		text.includes("context canceled") ||
-		text.includes("bad_response_status_code") ||
-		text.includes("upstream request timeout") ||
-		text.includes("upstream timed out") ||
-		text.includes("timed out waiting") ||
-		text.includes("timed out before responding") ||
-		text.includes("gateway timeout") ||
-		text.includes("504 gateway") ||
-		text.includes("502 bad gateway") ||
-		text.includes("503 service unavailable") ||
-		text.includes("bad gateway") ||
-		text.includes("service unavailable") ||
-		text.includes("content-blocked") ||
-		text.includes("content_blocked") ||
-		text.includes("content filter") ||
-		text.includes("content_filter") ||
-		text.includes("provider content filter blocked") ||
-		text.includes("moderation") ||
-		text.includes("rejected by safety") ||
-		text.includes("blocked by content")
-	);
-}
-
-function createAgentRouterFallbackMiddleware(
-	provider: (modelId: string) => LanguageModelV4,
-	originalModelId: string,
-): LanguageModelV4Middleware {
-	return {
-		specificationVersion: "v4",
-		wrapStream: async ({ doStream, params }) => {
-			if (originalModelId === "glm-5.3") {
-				return await doStream();
-			}
-
-			const startFallbackStream =
-				async (): Promise<LanguageModelV4StreamResult> => {
-					const fallback = provider("glm-5.3");
-					return await fallback.doStream(params);
-				};
-
-			let primaryResult: LanguageModelV4StreamResult;
-			try {
-				let timer: ReturnType<typeof setTimeout> | undefined;
-				const timeoutPromise = new Promise<never>((_, reject) => {
-					timer = setTimeout(
-						() =>
-							reject(
-								new Error(
-									`AgentRouter model ${originalModelId} upstream timed out before responding`,
-								),
-							),
-						8_000,
-					);
-				});
-				const streamPromise = (async () => {
-					try {
-						return await doStream();
-					} finally {
-						if (timer) clearTimeout(timer);
-					}
-				})();
-				primaryResult = await Promise.race([streamPromise, timeoutPromise]);
-			} catch (err) {
-				if (isAgentRouterFailoverError(err) || isTransientNetworkError(err)) {
-					return await startFallbackStream();
-				}
-				throw err;
-			}
-
-			type StreamPartResult =
-				| { done: false; value: LanguageModelV4StreamPart }
-				| { done: true; value?: undefined };
-			type StreamPartReader = {
-				read(): Promise<StreamPartResult>;
-				cancel(reason?: unknown): Promise<unknown>;
-			};
-
-			const primaryStream = primaryResult.stream;
-			const wrappedStream = new ReadableStream<LanguageModelV4StreamPart>({
-				async start(controller) {
-					let activeReader: StreamPartReader =
-						primaryStream.getReader() as unknown as StreamPartReader;
-					let contentStarted = false;
-
-					const switchToFallback = async () => {
-						try {
-							await activeReader.cancel();
-						} catch {}
-						const fallbackResult = await startFallbackStream();
-						activeReader =
-							fallbackResult.stream.getReader() as unknown as StreamPartReader;
-					};
-
-					try {
-						let firstChunkTimer: ReturnType<typeof setTimeout> | undefined;
-						const firstChunkTimeout = new Promise<{ isTimeout: true }>(
-							(resolve) => {
-								firstChunkTimer = setTimeout(
-									() => resolve({ isTimeout: true }),
-									8_000,
-								);
-							},
-						);
-						const firstChunkPromise = activeReader.read().then((res) => ({
-							isTimeout: false as const,
-							res,
-						}));
-						const firstResult = await Promise.race([
-							firstChunkPromise,
-							firstChunkTimeout,
-						]);
-						if (firstChunkTimer) clearTimeout(firstChunkTimer);
-
-						if (firstResult.isTimeout) {
-							await switchToFallback();
-						} else {
-							const { done, value } = firstResult.res;
-							if (done) {
-								controller.close();
-								return;
-							}
-							if (
-								value.type === "error" &&
-								isAgentRouterFailoverError((value as { error: unknown }).error)
-							) {
-								await switchToFallback();
-							} else {
-								if (
-									value.type === "text-delta" ||
-									value.type === "tool-call" ||
-									value.type === "reasoning-delta"
-								) {
-									contentStarted = true;
-								}
-								controller.enqueue(value);
-							}
-						}
-					} catch (firstErr) {
-						if (
-							isAgentRouterFailoverError(firstErr) ||
-							isTransientNetworkError(firstErr)
-						) {
-							try {
-								await switchToFallback();
-							} catch (fallbackErr) {
-								controller.error(fallbackErr);
-								return;
-							}
-						} else {
-							controller.error(firstErr);
-							return;
-						}
-					}
-
-					try {
-						while (true) {
-							const { done, value } = await activeReader.read();
-							if (done) {
-								controller.close();
-								return;
-							}
-							if (
-								!contentStarted &&
-								value.type === "error" &&
-								isAgentRouterFailoverError((value as { error: unknown }).error)
-							) {
-								await switchToFallback();
-								continue;
-							}
-							if (
-								value.type === "text-delta" ||
-								value.type === "tool-call" ||
-								value.type === "reasoning-delta"
-							) {
-								contentStarted = true;
-							}
-							controller.enqueue(value);
-						}
-					} catch (streamErr) {
-						if (
-							!contentStarted &&
-							(isAgentRouterFailoverError(streamErr) ||
-								isTransientNetworkError(streamErr))
-						) {
-							try {
-								await switchToFallback();
-								while (true) {
-									const { done, value } = await activeReader.read();
-									if (done) {
-										controller.close();
-										return;
-									}
-									controller.enqueue(value);
-								}
-							} catch (fallbackErr) {
-								controller.error(fallbackErr);
-								return;
-							}
-						}
-						controller.error(streamErr);
-					}
-				},
-			});
-
-			return {
-				...primaryResult,
-				stream: wrappedStream,
-			};
-		},
-		wrapGenerate: async ({ doGenerate, params }) => {
-			if (originalModelId === "glm-5.3") {
-				return await doGenerate();
-			}
-			try {
-				return await doGenerate();
-			} catch (err) {
-				if (isAgentRouterFailoverError(err) || isTransientNetworkError(err)) {
-					const fallback = provider("glm-5.3");
-					return await fallback.doGenerate(params);
-				}
-				throw err;
-			}
-		},
-	};
-}
-
 export async function createOpenAICompatibleProviderModule(
 	config: GatewayResolvedProviderConfig,
 	context: GatewayProviderContext,
@@ -657,12 +560,30 @@ export async function createOpenAICompatibleProviderModule(
 			);
 		} catch {}
 	}
+	const baseFetch = ensureFetch(providerFetch);
+	const sanitizingFetch = (async (requestInput, init) => {
+		const response = await baseFetch(requestInput, init);
+		return wrapResponseWithSseSanitizer(response);
+	}) as typeof fetch;
+	// Keep the AgentRouter framing workaround scoped to its known nonstandard
+	// SSE response chunks; other providers retain their original stream path.
+	const providerModelFetch = isAgentRouter ? sanitizingFetch : baseFetch;
+	const baseFetchWithPreconnect = baseFetch as FetchWithOptionalPreconnect;
+	if (providerModelFetch !== baseFetch) {
+		try {
+			(providerModelFetch as FetchWithOptionalPreconnect).preconnect =
+				typeof baseFetchWithPreconnect.preconnect === "function"
+					? baseFetchWithPreconnect.preconnect.bind(baseFetch)
+					: () => undefined;
+		} catch {}
+	}
+
 	const provider = createOpenAICompatible({
 		name: context.provider.id,
 		apiKey,
 		...(config.baseUrl ? { baseURL: config.baseUrl } : {}),
 		...(Object.keys(headers).length > 0 ? { headers } : {}),
-		...(providerFetch ? { fetch: providerFetch } : {}),
+		fetch: providerModelFetch,
 		includeUsage: true,
 		transformRequestBody: (body: Record<string, unknown>) => {
 			const reasoningBody = withMaxCompletionTokensForReasoningModels(body);
@@ -674,8 +595,8 @@ export async function createOpenAICompatibleProviderModule(
 		modelProducesImages(context.model);
 	const openRouterFetch =
 		context.provider.metadata?.responseEnvelope === "success-data"
-			? createSuccessDataResponseFetch(ensureFetch(providerFetch))
-			: providerFetch;
+			? createSuccessDataResponseFetch(ensureFetch(providerModelFetch))
+			: providerModelFetch;
 	const openRouterImageProvider = useOpenRouterImageTransport
 		? createOpenRouter({
 				apiKey,
@@ -713,20 +634,9 @@ export async function createOpenAICompatibleProviderModule(
 			language: (modelId) => {
 				const baseModel = (openRouterImageProvider?.chat(modelId) ??
 					provider(modelId)) as LanguageModelV4;
-				const middlewares: LanguageModelV4Middleware[] = [
-					splitToolImagesMiddleware,
-				];
-				if (isAgentRouter && modelId !== "glm-5.3") {
-					middlewares.push(
-						createAgentRouterFallbackMiddleware(
-							provider as unknown as (id: string) => LanguageModelV4,
-							modelId,
-						),
-					);
-				}
 				return wrapLanguageModel({
 					model: baseModel,
-					middleware: middlewares,
+					middleware: [splitToolImagesMiddleware],
 				});
 			},
 			imageGeneration: (modelId) =>

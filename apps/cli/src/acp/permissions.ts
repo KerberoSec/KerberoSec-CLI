@@ -9,6 +9,7 @@ import type {
 	ToolApprovalRequest,
 	ToolApprovalResult,
 } from "@kerberosec/shared";
+import { sendAcpSessionUpdate } from "./session-updates";
 import { buildToolTitle, mapToolKind } from "./tool-utils";
 
 // ---------------------------------------------------------------------------
@@ -105,12 +106,9 @@ export async function requestAcpToolApproval(
 	);
 
 	// Emit a tool_call update with "pending" status before requesting permission
-	void conn.sessionUpdate({
-		sessionId,
-		update: {
-			...permissionRequest.toolCall,
-			sessionUpdate: "tool_call_update",
-		},
+	sendAcpSessionUpdate(conn, sessionId, {
+		...permissionRequest.toolCall,
+		sessionUpdate: "tool_call_update",
 	});
 
 	let response: Awaited<ReturnType<AgentSideConnection["requestPermission"]>>;
@@ -123,13 +121,10 @@ export async function requestAcpToolApproval(
 	const result = handlePermissionResponse(response.outcome);
 
 	// Emit a tool_call_update reflecting the decision
-	void conn.sessionUpdate({
-		sessionId,
-		update: {
-			sessionUpdate: "tool_call_update",
-			toolCallId: request.toolCallId,
-			status: result.approved ? "in_progress" : "failed",
-		},
+	sendAcpSessionUpdate(conn, sessionId, {
+		sessionUpdate: "tool_call_update",
+		toolCallId: request.toolCallId,
+		status: result.approved ? "in_progress" : "failed",
 	});
 
 	return result;

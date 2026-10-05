@@ -194,7 +194,8 @@ interface InvalidToolCall {
 
 function safeJsonSize(value: unknown): number {
 	try {
-		return JSON.stringify(value).length;
+		const serialized = JSON.stringify(value);
+		return serialized === undefined ? String(value).length : serialized.length;
 	} catch {
 		return String(value).length;
 	}
@@ -245,12 +246,6 @@ function summarizeModelRequest(
 		messageCount: request.messages.length,
 		toolSchemaCount: request.tools.length,
 		systemPromptChars: request.systemPrompt?.length ?? 0,
-		requestJsonChars: safeJsonSize({
-			systemPrompt: request.systemPrompt,
-			messages: request.messages,
-			tools: request.tools,
-			options: request.options,
-		}),
 		visibleTextChars: textChars,
 		estimatedTextTokens: estimateTokens(textChars),
 		toolResultCount,

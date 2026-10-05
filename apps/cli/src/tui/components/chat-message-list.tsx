@@ -11,7 +11,7 @@ import {
 import type { TranscriptCommand } from "../hooks/transcript-keybinds";
 import { useTheme } from "../hooks/use-theme";
 import { getThemeModeAccent } from "../themes";
-import type { ChatEntry } from "../types";
+import type { StableChatEntry } from "../types";
 import {
 	configureFastAutoScroll,
 	fastScrollAccel,
@@ -23,7 +23,7 @@ export interface TranscriptScrollHandle {
 }
 
 interface ChatMessageListProps {
-	entries: ChatEntry[];
+	entries: StableChatEntry[];
 	isStreaming?: boolean;
 	loadIndividualSubscriptionPlans?: () => Promise<KerberoSecSubscriptionPlan[]>;
 	uiMode?: AgentMode;
@@ -38,7 +38,7 @@ export const ChatMessageList = forwardRef<
 	const theme = useTheme();
 	const accent = getThemeModeAccent(theme, props.uiMode ?? "act");
 	const userSubmissionScrollKey =
-		lastEntry?.kind === "user_submitted" ? props.entries.length : 0;
+		lastEntry?.kind === "user_submitted" ? lastEntry : null;
 
 	const runTranscriptCommand = useCallback((command: TranscriptCommand) => {
 		const scrollbox = scrollboxRef.current;
@@ -106,14 +106,13 @@ export const ChatMessageList = forwardRef<
 			scrollAcceleration={fastScrollAccel}
 		>
 			<box flexDirection="column" paddingX={1} paddingY={1} gap={1}>
-				{props.entries.map((entry, i) => {
-					const key = `${i}:${entry.kind}`;
+				{props.entries.map((entry) => {
 					// Single source of truth for the entry's mode: the glyph accent
 					// and the markdown accent must never diverge.
 					const entryMode = entry.mode ?? props.uiMode ?? "act";
 					return (
 						<ChatEntryView
-							key={key}
+							key={entry.entryId}
 							entry={entry}
 							accent={getThemeModeAccent(theme, entryMode)}
 							mode={entryMode === "plan" ? "plan" : "act"}

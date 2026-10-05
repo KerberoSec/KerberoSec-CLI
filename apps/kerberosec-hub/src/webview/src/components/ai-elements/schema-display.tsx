@@ -98,19 +98,26 @@ export const SchemaDisplayPath = ({
 	const { path } = useContext(SchemaDisplayContext);
 
 	// Highlight path parameters
-	const highlightedPath = path.replaceAll(
-		/\{([^}]+)\}/g,
-		'<span class="text-blue-600 dark:text-blue-400">{$1}</span>',
-	);
+	let pathOffset = 0;
+	const highlightedPath = path.split(/(\{[^}]+\})/g).map((segment) => {
+		const segmentOffset = pathOffset;
+		pathOffset += segment.length;
+		return /^\{[^}]+\}$/.test(segment) ? (
+			<span
+				className="text-blue-600 dark:text-blue-400"
+				key={`${segmentOffset}:${segment}`}
+			>
+				{segment}
+			</span>
+		) : (
+			segment
+		);
+	});
 
 	return (
-		<span
-			className={cn("font-mono text-sm", className)}
-			// oxlint-disable-next-line eslint-plugin-react(no-danger)
-			// biome-ignore lint/security/noDangerouslySetInnerHtml: content is sanitized highlighted syntax
-			dangerouslySetInnerHTML={{ __html: children ?? highlightedPath }}
-			{...props}
-		/>
+		<span className={cn("font-mono text-sm", className)} {...props}>
+			{children ?? highlightedPath}
+		</span>
 	);
 };
 

@@ -25,13 +25,17 @@ import { broadcastHubState } from "./state-payloads";
 import type { SessionContext } from "./types";
 import { asString, basename, isActiveSession, isVisibleClient } from "./utils";
 
+const HUB_HEALTH_TIMEOUT_MS = 3_000;
+
 export async function syncHubHealth(ctx: HubContext): Promise<void> {
 	if (!ctx.hubUrl) {
 		ctx.hubHealthy = false;
 		return;
 	}
 	try {
-		const response = await fetch(toHubHealthUrl(ctx.hubUrl));
+		const response = await fetch(toHubHealthUrl(ctx.hubUrl), {
+			signal: AbortSignal.timeout(HUB_HEALTH_TIMEOUT_MS),
+		});
 		if (!response.ok) {
 			ctx.hubHealthy = false;
 			return;

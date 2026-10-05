@@ -166,7 +166,7 @@ describe("kerberosec-pass-errors", () => {
 
 		const formatted = formatCliErrorMessage(new Error(raw));
 		expect(formatted).toContain("Agent Router Budget Pool Quota Exhausted");
-		expect(formatted).toContain("GLM 5.3");
+		expect(formatted).toContain("active route for your AgentRouter account");
 		expect(formatted).toContain("agentrouter.org");
 	});
 
@@ -181,6 +181,6 @@ describe("kerberosec-pass-errors", () => {
 
 		const formatted = formatCliErrorMessage(new Error(rawCluster));
 		expect(formatted).toContain("Agent Router Upstream Service Unavailable");
-		expect(formatted).toContain("GLM 5.3");
+		expect(formatted).toContain("active route for your AgentRouter account");
 	});
 });

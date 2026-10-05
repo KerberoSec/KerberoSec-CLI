@@ -336,7 +336,8 @@ export class AcpAgent implements Agent {
 		}
 
 		const promptText = extractTextFromContentBlocks(params.prompt);
-		if (!promptText) {
+		const promptImages = extractImagesFromContentBlocks(params.prompt);
+		if (!promptText && promptImages.length === 0) {
 			return { stopReason: "end_turn" };
 		}
 
@@ -379,6 +380,7 @@ export class AcpAgent implements Agent {
 			const result = await sessionManager.send({
 				sessionId: activeSessionId,
 				prompt: promptText,
+				...(promptImages.length > 0 ? { userImages: promptImages } : {}),
 			});
 
 			if (result) {
@@ -464,7 +466,7 @@ export class AcpAgent implements Agent {
 			throw new Error(`unknown session: ${params.sessionId}`);
 		}
 
-		const value = params.value as string;
+		const value = params.value;
 
 		switch (params.configId) {
 			case "provider": {
@@ -474,7 +476,7 @@ export class AcpAgent implements Agent {
 						"Cannot change provider: KERBEROSEC_PROVIDER environment variable is set",
 					);
 				}
-				if (!isAcpAuthMethodId(value)) {
+				if (typeof value !== "string" || !isAcpAuthMethodId(value)) {
 					throw RequestError.invalidParams(
 						undefined,
 						`Unknown provider: ${value}`,
@@ -504,6 +506,12 @@ export class AcpAgent implements Agent {
 			}
 
 			case ORGANIZATION_CONFIG_ID: {
+				if (typeof value !== "string") {
+					throw RequestError.invalidParams(
+						undefined,
+						"Invalid account value: expected a string organization id",
+					);
+				}
 				try {
 					await switchKerberoSecOrganization({
 						apiKey: this.accountApiKey,
@@ -525,6 +533,12 @@ export class AcpAgent implements Agent {
 			}
 
 			case "model": {
+				if (typeof value !== "string" || !value.trim()) {
+					throw RequestError.invalidParams(
+						undefined,
+						"Invalid model value: expected a non-empty model id",
+					);
+				}
 				session.currentModelId = value;
 				if (session.sessionManager && session.activeSessionId) {
 					await session.sessionManager.updateSessionModel?.(
@@ -730,10 +744,9 @@ export class AcpAgent implements Agent {
 			}
 		} else {
 			initialMessages = session.pendingInitialMessages;
-			session.pendingInitialMessages = undefined;
 		}
 
-		session.unsubscribe = subscribeToAgentEvents(
+		const unsubscribe = subscribeToAgentEvents(
 			sessionManager,
 			(event: AgentEvent) => {
 				// Remember unrecoverable failures so prompt() can fail the turn.
@@ -747,21 +760,32 @@ export class AcpAgent implements Agent {
 			},
 		);
 
-		const started = await sessionManager.start({
-			source: SessionSource.CLI,
-			// Persist the core session under the ACP session id so that
-			// session/load can find the conversation by the id the client holds.
-			config: {
-				...config,
-				modelId: session.currentModelId,
-				sessionId: acpSessionId,
-			},
-			interactive: true,
-			initialMessages,
-		});
+		let started: Awaited<ReturnType<typeof sessionManager.start>>;
+		try {
+			started = await sessionManager.start({
+				source: SessionSource.CLI,
+				// Persist the core session under the ACP session id so that
+				// session/load can find the conversation by the id the client holds.
+				config: {
+					...config,
+					modelId: session.currentModelId,
+					sessionId: acpSessionId,
+				},
+				interactive: true,
+				initialMessages,
+			});
+		} catch (error) {
+			unsubscribe();
+			await sessionManager.dispose("acp_start_failed").catch(() => {});
+			throw error;
+		}
 
+		session.unsubscribe = unsubscribe;
 		session.sessionManager = sessionManager;
 		session.activeSessionId = started.sessionId;
+		if (!options?.resume) {
+			session.pendingInitialMessages = undefined;
+		}
 		return initialMessages;
 	}
 
@@ -948,6 +972,12 @@ function extractTextFromContentBlocks(blocks: ContentBlock[]): string {
 		.filter((b): b is ContentBlock & { type: "text" } => b.type === "text")
 		.map((b) => b.text)
 		.join("\n");
+}
+
+function extractImagesFromContentBlocks(blocks: ContentBlock[]): string[] {
+	return blocks
+		.filter((b): b is ContentBlock & { type: "image" } => b.type === "image")
+		.map((block) => `data:${block.mimeType};base64,${block.data}`);
 }
 
 function mapFinishReason(reason: string): StopReason {

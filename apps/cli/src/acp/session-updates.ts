@@ -19,7 +19,22 @@ export function forwardAgentEvent(
 ): void {
 	const updates = translateEvent(event);
 	for (const update of updates) {
-		void conn.sessionUpdate({ sessionId, update });
+		sendAcpSessionUpdate(conn, sessionId, update);
+	}
+}
+
+export function sendAcpSessionUpdate(
+	conn: AgentSideConnection,
+	sessionId: string,
+	update: SessionUpdate,
+): void {
+	// Agent event listeners are synchronous. A closed client can reject a
+	// notification after this listener returns, so consume that rejection
+	// instead of letting it become an unhandled process-level error.
+	try {
+		void conn.sessionUpdate({ sessionId, update }).catch(() => {});
+	} catch {
+		// Also tolerate a synchronous failure while the transport is closing.
 	}
 }
 
@@ -159,9 +174,9 @@ export function sendCurrentModeUpdate(
 	sessionId: string,
 	modeId: string,
 ): void {
-	void conn.sessionUpdate({
-		sessionId,
-		update: { sessionUpdate: "current_mode_update", currentModeId: modeId },
+	sendAcpSessionUpdate(conn, sessionId, {
+		sessionUpdate: "current_mode_update",
+		currentModeId: modeId,
 	});
 }
 
@@ -173,9 +188,9 @@ export function sendConfigOptionUpdate(
 	sessionId: string,
 	configOptions: Array<SessionConfigOption>,
 ): void {
-	void conn.sessionUpdate({
-		sessionId,
-		update: { sessionUpdate: "config_option_update", configOptions },
+	sendAcpSessionUpdate(conn, sessionId, {
+		sessionUpdate: "config_option_update",
+		configOptions,
 	});
 }
 
@@ -187,8 +202,8 @@ export function sendSessionInfoUpdate(
 	sessionId: string,
 	info: { title?: string | null; updatedAt?: string | null },
 ): void {
-	void conn.sessionUpdate({
-		sessionId,
-		update: { sessionUpdate: "session_info_update", ...info },
+	sendAcpSessionUpdate(conn, sessionId, {
+		sessionUpdate: "session_info_update",
+		...info,
 	});
 }

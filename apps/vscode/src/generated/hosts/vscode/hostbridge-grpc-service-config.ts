@@ -3,6 +3,17 @@
 import { createServiceRegistry } from "@hosts/vscode/hostbridge-grpc-service"
 import { HostServiceHandlerConfig } from "@hosts/vscode/hostbridge-grpc-handler"
 
+import { getWorkspacePaths } from "@/hosts/vscode/hostbridge/workspace/getWorkspacePaths"
+import { saveOpenDocumentIfDirty } from "@/hosts/vscode/hostbridge/workspace/saveOpenDocumentIfDirty"
+import { getDiagnostics } from "@/hosts/vscode/hostbridge/workspace/getDiagnostics"
+import { openProblemsPanel } from "@/hosts/vscode/hostbridge/workspace/openProblemsPanel"
+import { openInFileExplorerPanel } from "@/hosts/vscode/hostbridge/workspace/openInFileExplorerPanel"
+import { openKerberoSecSidebarPanel } from "@/hosts/vscode/hostbridge/workspace/openKerberoSecSidebarPanel"
+import { openTerminalPanel } from "@/hosts/vscode/hostbridge/workspace/openTerminalPanel"
+import { executeCommandInTerminal } from "@/hosts/vscode/hostbridge/workspace/executeCommandInTerminal"
+import { openFolder } from "@/hosts/vscode/hostbridge/workspace/openFolder"
+import { searchWorkspaceItems } from "@/hosts/vscode/hostbridge/workspace/searchWorkspaceItems"
+
 import { openDiff } from "@/hosts/vscode/hostbridge/diff/openDiff"
 import { getDocumentText } from "@/hosts/vscode/hostbridge/diff/getDocumentText"
 import { replaceText } from "@/hosts/vscode/hostbridge/diff/replaceText"
@@ -11,16 +22,6 @@ import { truncateDocument } from "@/hosts/vscode/hostbridge/diff/truncateDocumen
 import { saveDocument } from "@/hosts/vscode/hostbridge/diff/saveDocument"
 import { closeAllDiffs } from "@/hosts/vscode/hostbridge/diff/closeAllDiffs"
 import { openMultiFileDiff } from "@/hosts/vscode/hostbridge/diff/openMultiFileDiff"
-
-import { clipboardWriteText } from "@/hosts/vscode/hostbridge/env/clipboardWriteText"
-import { clipboardReadText } from "@/hosts/vscode/hostbridge/env/clipboardReadText"
-import { getHostVersion } from "@/hosts/vscode/hostbridge/env/getHostVersion"
-import { getIdeRedirectUri } from "@/hosts/vscode/hostbridge/env/getIdeRedirectUri"
-import { getTelemetrySettings } from "@/hosts/vscode/hostbridge/env/getTelemetrySettings"
-import { subscribeToTelemetrySettings } from "@/hosts/vscode/hostbridge/env/subscribeToTelemetrySettings"
-import { shutdown } from "@/hosts/vscode/hostbridge/env/shutdown"
-import { debugLog } from "@/hosts/vscode/hostbridge/env/debugLog"
-import { openExternal } from "@/hosts/vscode/hostbridge/env/openExternal"
 
 import { getWebviewHtml } from "@/hosts/vscode/hostbridge/testing/getWebviewHtml"
 
@@ -35,16 +36,28 @@ import { getOpenTabs } from "@/hosts/vscode/hostbridge/window/getOpenTabs"
 import { getVisibleTabs } from "@/hosts/vscode/hostbridge/window/getVisibleTabs"
 import { getActiveEditor } from "@/hosts/vscode/hostbridge/window/getActiveEditor"
 
-import { getWorkspacePaths } from "@/hosts/vscode/hostbridge/workspace/getWorkspacePaths"
-import { saveOpenDocumentIfDirty } from "@/hosts/vscode/hostbridge/workspace/saveOpenDocumentIfDirty"
-import { getDiagnostics } from "@/hosts/vscode/hostbridge/workspace/getDiagnostics"
-import { openProblemsPanel } from "@/hosts/vscode/hostbridge/workspace/openProblemsPanel"
-import { openInFileExplorerPanel } from "@/hosts/vscode/hostbridge/workspace/openInFileExplorerPanel"
-import { openKerberoSecSidebarPanel } from "@/hosts/vscode/hostbridge/workspace/openKerberoSecSidebarPanel"
-import { openTerminalPanel } from "@/hosts/vscode/hostbridge/workspace/openTerminalPanel"
-import { executeCommandInTerminal } from "@/hosts/vscode/hostbridge/workspace/executeCommandInTerminal"
-import { openFolder } from "@/hosts/vscode/hostbridge/workspace/openFolder"
-import { searchWorkspaceItems } from "@/hosts/vscode/hostbridge/workspace/searchWorkspaceItems"
+import { clipboardWriteText } from "@/hosts/vscode/hostbridge/env/clipboardWriteText"
+import { clipboardReadText } from "@/hosts/vscode/hostbridge/env/clipboardReadText"
+import { getHostVersion } from "@/hosts/vscode/hostbridge/env/getHostVersion"
+import { getIdeRedirectUri } from "@/hosts/vscode/hostbridge/env/getIdeRedirectUri"
+import { getTelemetrySettings } from "@/hosts/vscode/hostbridge/env/getTelemetrySettings"
+import { subscribeToTelemetrySettings } from "@/hosts/vscode/hostbridge/env/subscribeToTelemetrySettings"
+import { shutdown } from "@/hosts/vscode/hostbridge/env/shutdown"
+import { debugLog } from "@/hosts/vscode/hostbridge/env/debugLog"
+import { openExternal } from "@/hosts/vscode/hostbridge/env/openExternal"
+
+// Setup workspace service registry
+const workspaceServiceRegistry = createServiceRegistry("workspace")
+workspaceServiceRegistry.registerMethod("getWorkspacePaths", getWorkspacePaths)
+workspaceServiceRegistry.registerMethod("saveOpenDocumentIfDirty", saveOpenDocumentIfDirty)
+workspaceServiceRegistry.registerMethod("getDiagnostics", getDiagnostics)
+workspaceServiceRegistry.registerMethod("openProblemsPanel", openProblemsPanel)
+workspaceServiceRegistry.registerMethod("openInFileExplorerPanel", openInFileExplorerPanel)
+workspaceServiceRegistry.registerMethod("openKerberoSecSidebarPanel", openKerberoSecSidebarPanel)
+workspaceServiceRegistry.registerMethod("openTerminalPanel", openTerminalPanel)
+workspaceServiceRegistry.registerMethod("executeCommandInTerminal", executeCommandInTerminal)
+workspaceServiceRegistry.registerMethod("openFolder", openFolder)
+workspaceServiceRegistry.registerMethod("searchWorkspaceItems", searchWorkspaceItems)
 
 // Setup diff service registry
 const diffServiceRegistry = createServiceRegistry("diff")
@@ -56,18 +69,6 @@ diffServiceRegistry.registerMethod("truncateDocument", truncateDocument)
 diffServiceRegistry.registerMethod("saveDocument", saveDocument)
 diffServiceRegistry.registerMethod("closeAllDiffs", closeAllDiffs)
 diffServiceRegistry.registerMethod("openMultiFileDiff", openMultiFileDiff)
-
-// Setup env service registry
-const envServiceRegistry = createServiceRegistry("env")
-envServiceRegistry.registerMethod("clipboardWriteText", clipboardWriteText)
-envServiceRegistry.registerMethod("clipboardReadText", clipboardReadText)
-envServiceRegistry.registerMethod("getHostVersion", getHostVersion)
-envServiceRegistry.registerMethod("getIdeRedirectUri", getIdeRedirectUri)
-envServiceRegistry.registerMethod("getTelemetrySettings", getTelemetrySettings)
-envServiceRegistry.registerMethod("subscribeToTelemetrySettings", subscribeToTelemetrySettings, { isStreaming: true })
-envServiceRegistry.registerMethod("shutdown", shutdown)
-envServiceRegistry.registerMethod("debugLog", debugLog)
-envServiceRegistry.registerMethod("openExternal", openExternal)
 
 // Setup testing service registry
 const testingServiceRegistry = createServiceRegistry("testing")
@@ -86,30 +87,29 @@ windowServiceRegistry.registerMethod("getOpenTabs", getOpenTabs)
 windowServiceRegistry.registerMethod("getVisibleTabs", getVisibleTabs)
 windowServiceRegistry.registerMethod("getActiveEditor", getActiveEditor)
 
-// Setup workspace service registry
-const workspaceServiceRegistry = createServiceRegistry("workspace")
-workspaceServiceRegistry.registerMethod("getWorkspacePaths", getWorkspacePaths)
-workspaceServiceRegistry.registerMethod("saveOpenDocumentIfDirty", saveOpenDocumentIfDirty)
-workspaceServiceRegistry.registerMethod("getDiagnostics", getDiagnostics)
-workspaceServiceRegistry.registerMethod("openProblemsPanel", openProblemsPanel)
-workspaceServiceRegistry.registerMethod("openInFileExplorerPanel", openInFileExplorerPanel)
-workspaceServiceRegistry.registerMethod("openKerberoSecSidebarPanel", openKerberoSecSidebarPanel)
-workspaceServiceRegistry.registerMethod("openTerminalPanel", openTerminalPanel)
-workspaceServiceRegistry.registerMethod("executeCommandInTerminal", executeCommandInTerminal)
-workspaceServiceRegistry.registerMethod("openFolder", openFolder)
-workspaceServiceRegistry.registerMethod("searchWorkspaceItems", searchWorkspaceItems)
+// Setup env service registry
+const envServiceRegistry = createServiceRegistry("env")
+envServiceRegistry.registerMethod("clipboardWriteText", clipboardWriteText)
+envServiceRegistry.registerMethod("clipboardReadText", clipboardReadText)
+envServiceRegistry.registerMethod("getHostVersion", getHostVersion)
+envServiceRegistry.registerMethod("getIdeRedirectUri", getIdeRedirectUri)
+envServiceRegistry.registerMethod("getTelemetrySettings", getTelemetrySettings)
+envServiceRegistry.registerMethod("subscribeToTelemetrySettings", subscribeToTelemetrySettings, { isStreaming: true })
+envServiceRegistry.registerMethod("shutdown", shutdown)
+envServiceRegistry.registerMethod("debugLog", debugLog)
+envServiceRegistry.registerMethod("openExternal", openExternal)
 
 /**
  * Map of host service names to their handler configurations
  */
 export const hostServiceHandlers: Record<string, HostServiceHandlerConfig> = {
+	"host.WorkspaceService": {
+		requestHandler: workspaceServiceRegistry.handleRequest,
+		streamingHandler: workspaceServiceRegistry.handleStreamingRequest,
+	},
 	"host.DiffService": {
 		requestHandler: diffServiceRegistry.handleRequest,
 		streamingHandler: diffServiceRegistry.handleStreamingRequest,
-	},
-	"host.EnvService": {
-		requestHandler: envServiceRegistry.handleRequest,
-		streamingHandler: envServiceRegistry.handleStreamingRequest,
 	},
 	"host.TestingService": {
 		requestHandler: testingServiceRegistry.handleRequest,
@@ -119,8 +119,8 @@ export const hostServiceHandlers: Record<string, HostServiceHandlerConfig> = {
 		requestHandler: windowServiceRegistry.handleRequest,
 		streamingHandler: windowServiceRegistry.handleStreamingRequest,
 	},
-	"host.WorkspaceService": {
-		requestHandler: workspaceServiceRegistry.handleRequest,
-		streamingHandler: workspaceServiceRegistry.handleStreamingRequest,
+	"host.EnvService": {
+		requestHandler: envServiceRegistry.handleRequest,
+		streamingHandler: envServiceRegistry.handleStreamingRequest,
 	},
 }

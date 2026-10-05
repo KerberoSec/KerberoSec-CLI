@@ -11,7 +11,6 @@ import {
 	commanderToParsedArgs,
 	createProgram,
 } from "./commands/program";
-import { getPreferredKanbanInstaller } from "./commands/update";
 import { CLI_DEFAULT_CHECKPOINT_CONFIG } from "./runtime/defaults";
 import type { TuiStartupTarget } from "./tui/types";
 import { filterChatModels } from "./utils/chat-models";
@@ -55,9 +54,6 @@ import {
 	identifyTelemetryAccount,
 } from "./utils/telemetry";
 import type { Config } from "./utils/types";
-import { runConnectWizard } from "./wizards/connect";
-import { runMcpWizard } from "./wizards/mcp";
-import { runScheduleWizard } from "./wizards/schedule";
 
 export function stdinHasPipedInput(): boolean {
 	if (process.stdin.isTTY) return false;
@@ -278,7 +274,13 @@ export async function runCli(): Promise<void> {
 		.passThroughOptions()
 		.action(async (_opts: unknown, cmd: Command) => {
 			const realCmd = await createConfigRuntimeCommand();
-			await realCmd.parseAsync(cmd.args, { from: "user" });
+			const forwardedArgs = [...cmd.args];
+			// This dispatcher consumes --json before the real config command is
+			// created. Forward it so config subcommands can select JSON output.
+			if (cmd.opts<{ json?: boolean }>().json) {
+				forwardedArgs.unshift("--json");
+			}
+			await realCmd.parseAsync(forwardedArgs, { from: "user" });
 		});
 
 	program
@@ -473,6 +475,7 @@ export async function runCli(): Promise<void> {
 					io,
 				);
 			} else if (isFullTTY) {
+				const { runConnectWizard } = await import("./wizards/connect");
 				ctx.exitCode = await runConnectWizard();
 			} else {
 				writeln(`\nAdapters:\n${formatAdapterList()}`);
@@ -485,6 +488,7 @@ export async function runCli(): Promise<void> {
 		.description("Manage MCP servers")
 		.action(async () => {
 			if (isFullTTY) {
+				const { runMcpWizard } = await import("./wizards/mcp");
 				ctx.exitCode = await runMcpWizard();
 			} else {
 				writeln(
@@ -610,6 +614,7 @@ export async function runCli(): Promise<void> {
 		.passThroughOptions()
 		.action(async (_opts: unknown, cmd: Command) => {
 			if (cmd.args.length === 0 && isFullTTY) {
+				const { runScheduleWizard } = await import("./wizards/schedule");
 				ctx.exitCode = await runScheduleWizard();
 				return;
 			}
@@ -693,7 +698,11 @@ export async function runCli(): Promise<void> {
 		.command("kanban")
 		.description("Run the kanban app")
 		.action(async () => {
-			const { launchKanban } = await import("./commands/kanban");
+			const [{ launchKanban }, { getPreferredKanbanInstaller }] =
+				await Promise.all([
+					import("./commands/kanban"),
+					import("./commands/update"),
+				]);
 			ctx.exitCode = await launchKanban({
 				preferredInstaller: getPreferredKanbanInstaller(),
 			});
@@ -764,7 +773,11 @@ export async function runCli(): Promise<void> {
 			process.exitCode = 1;
 			return;
 		}
-		const { launchKanban } = await import("./commands/kanban");
+		const [{ launchKanban }, { getPreferredKanbanInstaller }] =
+			await Promise.all([
+				import("./commands/kanban"),
+				import("./commands/update"),
+			]);
 		process.exitCode = await launchKanban({
 			preferredInstaller: getPreferredKanbanInstaller(),
 		});

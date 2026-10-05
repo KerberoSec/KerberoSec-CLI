@@ -398,8 +398,8 @@ describe("plugin-sandbox", () => {
 				join(dir, "plugin-create-tool.ts"),
 			],
 			// CI environments are significantly slower for jiti transpilation;
-			// the default 4 000 ms is too tight for 7 plugins.
-			importTimeoutMs: 30_000,
+			// the default 4 000 ms is too tight for 12 plugins.
+			importTimeoutMs: 60_000,
 			telemetryAvailable: true,
 			onEvent: (event) => {
 				forwardedEvents.push(event);
@@ -411,7 +411,7 @@ describe("plugin-sandbox", () => {
 				extension,
 			]),
 		);
-	}, 60_000);
+	}, 90_000);
 
 	beforeEach(() => {
 		forwardedEvents.length = 0;

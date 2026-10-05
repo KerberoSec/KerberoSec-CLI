@@ -4,7 +4,7 @@ import {
 } from "@kerberosec/core";
 import { useTerminalDimensions } from "@opentui/react";
 import type React from "react";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import "opentui-spinner/react";
 import {
 	getCliSubscriptionUrl,
@@ -751,7 +751,7 @@ function ContentBlockedErrorView(props: {
 	);
 }
 
-export function ChatEntryView(props: {
+export const ChatEntryView = memo(function ChatEntryView(props: {
 	entry: ChatEntry;
 	accent?: string;
 	/** Mode the entry was produced in (resolved with the current-mode fallback). */
@@ -984,4 +984,4 @@ export function ChatEntryView(props: {
 			return <text fg="gray" content={parts.join(" | ")} />;
 		}
 	}
-}
+});

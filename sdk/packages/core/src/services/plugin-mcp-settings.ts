@@ -245,6 +245,7 @@ async function collectPluginMcpServers(
 		workspaceInfo: options.workspacePath
 			? { rootPath: options.workspacePath }
 			: undefined,
+		importTimeoutMs: 15_000,
 	});
 	try {
 		const plugins: Array<{

@@ -5,7 +5,7 @@ import {
 	readFileSync,
 	writeFileSync,
 } from "node:fs";
-import { readFile, rm } from "node:fs/promises";
+import { readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import type * as LlmsProviders from "@kerberosec/llms";
 import type { BasicLogger } from "@kerberosec/shared";
@@ -233,11 +233,7 @@ export class SessionManifestStore {
 	}
 
 	private resolveCompactionPath(sessionId: string): string {
-		const { manifest } = this.readManifestFile(sessionId);
-		return (
-			manifest?.compaction_path?.trim() ||
-			this.artifacts.sessionCompactionPath(sessionId)
-		);
+		return this.artifacts.sessionCompactionPath(sessionId);
 	}
 
 	private updateCompactionPath(
@@ -291,7 +287,7 @@ export class SessionManifestStore {
 	}
 
 	async deleteSessionCompactionState(sessionId: string): Promise<void> {
-		await rm(this.resolveCompactionPath(sessionId), { force: true });
+		this.artifacts.removeCompactionFile(sessionId);
 		this.updateCompactionPath(sessionId, undefined);
 	}
 

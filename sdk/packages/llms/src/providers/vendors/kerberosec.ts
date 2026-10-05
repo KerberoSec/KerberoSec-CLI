@@ -23,6 +23,7 @@ import {
 	createSuccessDataResponseFetch,
 	sanitizeModerationRequestBody,
 	withMaxCompletionTokensForReasoningModels,
+	wrapResponseWithSseSanitizer,
 } from "./openai-compatible";
 import type { ProviderFactoryResult } from "./types";
 
@@ -102,7 +103,7 @@ function createKerberoSecFetch(
 	return (async (input, init) => {
 		const response = await baseFetch(input, init);
 		await options.onResponseError?.(response);
-		return response;
+		return wrapResponseWithSseSanitizer(response);
 	}) as typeof fetch;
 }
 

@@ -414,7 +414,6 @@ export function useAgentEventHandlers(deps: AgentEventDeps) {
 			appendEntry,
 			updateLastEntry,
 			updateEntry,
-			closeInlineStream,
 			activeInlineStreamRef,
 			setIsRunning,
 			setIsStreaming,

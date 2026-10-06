@@ -4,10 +4,7 @@ import type {
 	HubCommandEnvelope,
 	HubReplyEnvelope,
 } from "@kerberosec/shared";
-import {
-	HookEventPayloadSchema,
-	parseHookEventPayload,
-} from "../../../hooks";
+import { HookEventPayloadSchema, parseHookEventPayload } from "../../../hooks";
 import {
 	isSessionNotFoundError,
 	SESSION_NOT_FOUND_ERROR_CODE,

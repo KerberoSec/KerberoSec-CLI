@@ -176,7 +176,10 @@ export function sanitizeSseStream(
 			}
 			if (lastCompleteEnd > 0) {
 				const batch = buffer.slice(0, lastCompleteEnd);
-				buffer = lastCompleteEnd === buffer.length ? "" : buffer.slice(lastCompleteEnd);
+				buffer =
+					lastCompleteEnd === buffer.length
+						? ""
+						: buffer.slice(lastCompleteEnd);
 				controller.enqueue(encoder.encode(batch));
 			}
 			if (flush && buffer.length > 0) {
@@ -196,9 +199,7 @@ export function sanitizeSseStream(
 				break;
 			}
 			const lineEnding =
-				character === "\r" && buffer[index + 1] === "\n"
-					? "\r\n"
-					: character;
+				character === "\r" && buffer[index + 1] === "\n" ? "\r\n" : character;
 			const line = buffer.slice(lineStart, index);
 			const isDataNull = line.includes("null") && DATA_NULL_REGEX.test(line);
 			if (isDataNull) {
@@ -218,7 +219,8 @@ export function sanitizeSseStream(
 		}
 		buffer = lineStart === buffer.length ? "" : buffer.slice(lineStart);
 		if (flush && buffer.length > 0) {
-			const isDataNull = buffer.includes("null") && DATA_NULL_REGEX.test(buffer);
+			const isDataNull =
+				buffer.includes("null") && DATA_NULL_REGEX.test(buffer);
 			if (isDataNull) {
 				batch += ": sse-null-skip";
 			} else if (hasChanges) {

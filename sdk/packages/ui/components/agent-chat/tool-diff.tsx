@@ -11,8 +11,9 @@
  */
 
 import { parseDiffFromFile } from "@pierre/diffs";
-import { FileDiff, type FileDiffProps } from "@pierre/diffs/react";
+import { FileDiff } from "@pierre/diffs/react";
 import {
+	type ComponentProps,
 	type CSSProperties,
 	useEffect,
 	useMemo,
@@ -20,7 +21,7 @@ import {
 	useState,
 } from "react";
 
-type DiffOptions = NonNullable<FileDiffProps<undefined>["options"]>;
+type DiffOptions = NonNullable<ComponentProps<typeof FileDiff>["options"]>;
 
 export type ToolFileDiffProps = {
 	/** File path; used for the header-less language inference. */

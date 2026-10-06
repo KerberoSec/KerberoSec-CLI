@@ -145,23 +145,43 @@ export function createProgram(options?: CreateProgramOptions): Command {
 	addRootOptions(program);
 
 	if (options?.withSubcommands) {
-		program.command("auth [provider]").description("Authenticate a provider and configure what model is used");
-		program.command("config").description("View and update persistent configuration");
-		program.command("connect").description("Connect this terminal to an external chat platform");
-		program.command("dashboard").description("Open the web dashboard in your browser");
-		program.command("doctor").description("Check health of local hub daemon, connectors, and background processes");
+		program
+			.command("auth [provider]")
+			.description("Authenticate a provider and configure what model is used");
+		program
+			.command("config")
+			.description("View and update persistent configuration");
+		program
+			.command("connect")
+			.description("Connect this terminal to an external chat platform");
+		program
+			.command("dashboard")
+			.description("Open the web dashboard in your browser");
+		program
+			.command("doctor")
+			.description(
+				"Check health of local hub daemon, connectors, and background processes",
+			);
 		program.command("history").description("Browse and resume past sessions");
 		program.command("hook").description("Manage runtime hooks");
 		program.command("hub").description("Manage the background hub daemon");
 		program.command("kanban").description("Launch the kanban board");
-		program.command("logout").description("Clear stored credentials for a provider");
+		program
+			.command("logout")
+			.description("Clear stored credentials for a provider");
 		program.command("mcp").description("Manage MCP servers");
-		program.command("ollama").description("Manage local Ollama installation and models");
+		program
+			.command("ollama")
+			.description("Manage local Ollama installation and models");
 		program.command("plugin").description("Manage plugins");
 		program.command("schedule").description("Manage scheduled tasks");
 		program.command("skill").description("Manage custom skills");
-		program.command("update").description("Check for updates and install if available");
-		program.command("version").description("Print detailed version information");
+		program
+			.command("update")
+			.description("Check for updates and install if available");
+		program
+			.command("version")
+			.description("Print detailed version information");
 	}
 
 	return program;

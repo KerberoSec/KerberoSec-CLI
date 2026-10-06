@@ -96,7 +96,8 @@ function bufferJsonLength(value: object): number | undefined {
 	).Buffer;
 	if (
 		!bufferConstructor?.isBuffer?.(value) ||
-		(value as { toJSON?: unknown }).toJSON !== bufferConstructor.prototype?.toJSON
+		(value as { toJSON?: unknown }).toJSON !==
+			bufferConstructor.prototype?.toJSON
 	) {
 		return undefined;
 	}
@@ -195,7 +196,10 @@ function jsonValueLength(
 }
 
 function serializedJsonLength(value: unknown): number {
-	return jsonValueLength(value, "", { stack: new WeakSet(), convertBigInt: false }) as number;
+	return jsonValueLength(value, "", {
+		stack: new WeakSet(),
+		convertBigInt: false,
+	}) as number;
 }
 
 function fallbackSerializedLength(value: unknown): number {

@@ -2,7 +2,7 @@
 export {};
 
 type BuildMode = "package" | "bundle" | "dev";
-const rawMode = Bun.env.BUILD_MODE ?? "bundle";
+const rawMode = Bun.env.BUILD_MODE ?? "package";
 const buildMode: BuildMode =
 	rawMode === "bundle" || rawMode === "dev" ? rawMode : "package";
 

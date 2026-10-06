@@ -45,14 +45,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: e2e (${{ matrix.os-name }})
     steps:
+      - name: Disable NTFS protection in Git
+        if: runner.os == 'Windows'
+        run: git config --global core.protectNTFS false || true
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            apps
-            sdk
-            patches
-            .github
+            /*
+            !/CTF/
+          sparse-checkout-cone-mode: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

@@ -343,6 +343,10 @@ describe("sdk-gateway", () => {
 		codexExecSpy.mockReset();
 		claudeCodeFactorySpy.mockReset();
 		claudeCodeSpy.mockReset();
+		nativeWebSearchSpy.mockImplementation((options?: unknown) => ({
+			type: "provider-tool",
+			options,
+		}));
 		googleSpy.mockImplementation((modelId: string) => ({
 			modelId,
 			family: "google",

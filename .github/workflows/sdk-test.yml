@@ -27,10 +27,9 @@ jobs:
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            apps
-            sdk
-            patches
-            .github
+            /*
+            !/CTF/
+          sparse-checkout-cone-mode: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -68,14 +67,17 @@ jobs:
     runs-on: ${{ matrix.os }}
     name: Test (${{ matrix.os }}, Node ${{ matrix.node-version }})
     steps:
+      - name: Disable NTFS protection in Git
+        if: runner.os == 'Windows'
+        run: git config --global core.protectNTFS false || true
+
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           sparse-checkout: |
-            apps
-            sdk
-            patches
-            .github
+            /*
+            !/CTF/
+          sparse-checkout-cone-mode: false
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -99,4 +101,4 @@ jobs:
         run: bun -F @kerberosec/cli build
 
       - name: Run Tests
-        run: bun -F @kerberosec/llms test src/providers/gateway.test.ts -t "does not pass extra tools"
+        run: bun --cwd sdk/packages/llms vitest run src/providers/gateway.test.ts -t "does not pass extra tools"

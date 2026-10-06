@@ -4505,6 +4505,7 @@ describe("sdk-gateway", () => {
 		);
 
 		const streamTextOptions = streamTextSpy.mock.calls.at(-1)?.[0];
+		expect(streamTextOptions).toBeDefined();
 		expect(streamTextOptions).not.toHaveProperty("tools");
 	});
 
@@ -4535,6 +4536,7 @@ describe("sdk-gateway", () => {
 		);
 
 		const streamTextOptions = streamTextSpy.mock.calls.at(-1)?.[0];
+		expect(streamTextOptions).toBeDefined();
 		expect(streamTextOptions).not.toHaveProperty("tools");
 	});
 

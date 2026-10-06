@@ -61,9 +61,9 @@ jobs:
       matrix:
         include:
           - os: ubuntu-latest
-            node-version: 22
+            node-version: "24.x"
           - os: windows-latest
-            node-version: 22
+            node-version: "24.x"
     runs-on: ${{ matrix.os }}
     name: Test (${{ matrix.os }}, Node ${{ matrix.node-version }})
     steps:

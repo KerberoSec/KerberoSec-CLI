@@ -19,13 +19,23 @@ export default defineConfig({
 	},
 	server: {
 		deps: {
-			inline: ["zod"],
+			inline: [
+				"zod",
+				"ai",
+				"ai-sdk-provider-claude-code",
+				"ai-sdk-provider-codex-cli",
+			],
 		},
 	},
 	test: {
 		server: {
 			deps: {
-				inline: ["zod"],
+				inline: [
+					"zod",
+					"ai",
+					"ai-sdk-provider-claude-code",
+					"ai-sdk-provider-codex-cli",
+				],
 			},
 		},
 		environment: "node",

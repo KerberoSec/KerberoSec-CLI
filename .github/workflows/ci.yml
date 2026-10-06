@@ -20,6 +20,12 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            apps
+            sdk
+            patches
+            .github
 
       - name: Setup Node.js
         uses: actions/setup-node@v4

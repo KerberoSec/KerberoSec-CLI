@@ -6081,6 +6081,12 @@ describe("LocalRuntimeHost", () => {
 					},
 				]),
 				deleteSession: vi.fn().mockResolvedValue({ deleted: true }),
+				getSession: vi.fn().mockResolvedValue({
+					sessionId,
+					messagesPath,
+					manifest,
+				}),
+				readSessionManifest: vi.fn().mockResolvedValue(manifest),
 			};
 			const createAgent = vi.fn().mockReturnValue({
 				run: vi.fn().mockResolvedValue(createResult()),

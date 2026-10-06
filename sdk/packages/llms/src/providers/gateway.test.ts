@@ -341,6 +341,8 @@ describe("sdk-gateway", () => {
 		nativeWebSearchSpy.mockReset();
 		codexExecFactorySpy.mockReset();
 		codexExecSpy.mockReset();
+		claudeCodeFactorySpy.mockReset();
+		claudeCodeSpy.mockReset();
 		googleSpy.mockImplementation((modelId: string) => ({
 			modelId,
 			family: "google",
@@ -381,6 +383,10 @@ describe("sdk-gateway", () => {
 		codexExecSpy.mockImplementation((modelId: string) => ({
 			modelId,
 			family: "openai-codex",
+		}));
+		claudeCodeSpy.mockImplementation((modelId: string) => ({
+			modelId,
+			family: "claude-code",
 		}));
 		if (originalOpenRouterApiKey === undefined) {
 			delete process.env.OPENROUTER_API_KEY;

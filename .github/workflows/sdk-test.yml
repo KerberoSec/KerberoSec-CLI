@@ -101,4 +101,4 @@ jobs:
         run: bun -F @kerberosec/cli build
 
       - name: Run Tests
-        run: bun --cwd sdk/packages/llms vitest run src/providers/gateway.test.ts -t "does not pass extra tools"
+        run: bun test sdk/packages/llms/src/providers/gateway.test.ts -t "does not pass extra tools"

@@ -17,6 +17,14 @@ export default defineConfig({
 			},
 		],
 	},
+	ssr: {
+		noExternal: [
+			"zod",
+			"ai",
+			"ai-sdk-provider-claude-code",
+			"ai-sdk-provider-codex-cli",
+		],
+	},
 	server: {
 		deps: {
 			inline: [

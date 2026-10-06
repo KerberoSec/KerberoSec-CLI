@@ -20,6 +20,8 @@ import {
 	resetSdkErrorRateLimiterForTests,
 } from "@kerberosec/shared";
 import { beforeEach, describe, expect, it, vi } from "vitest";
+import "ai-sdk-provider-claude-code";
+import "ai-sdk-provider-codex-cli";
 import { normalizeModelsDevProviderModels } from "../catalog/catalog-live";
 import { createOpenAICompatibleProvider } from "./ai-sdk";
 import {

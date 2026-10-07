@@ -152,7 +152,8 @@ KerberoSec CLI strongly recommends using **Local Offline Models (via Ollama)** a
 22. [Environment Variables and Configuration](#environment-variables-and-configuration)
 23. [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)
 24. [Troubleshooting and Common Solutions](#troubleshooting-and-common-solutions)
-25. [Author and License](#author-and-license)
+25. [Authors and Connect](#36-authors-and-connect)
+26. [License](#license)
 
 ---
 
@@ -2330,13 +2331,34 @@ Use the `/mcp` slash command in chat or create a `.kerberosec/mcp_settings.json`
 
 ---
 
-## Author and License
+## 36. Authors and Connect
 
-**Arun Kumar**
-- LinkedIn: [arunkumar31072006](https://www.linkedin.com/in/arunkumar31072006/)
-- GitHub: [@KerberoSec](https://github.com/KerberoSec)
-- X (Twitter): [@ArunKumar310706](https://x.com/ArunKumar310706)
-- Instagram: [@so_far_from_your_heart](https://www.instagram.com/so_far_from_your_heart/)
+Developed and maintained by **Arun Kumar**.
+
+### Custom Development and Consulting
+We design and build institutional grade security intelligence platforms, custom agentic coding runtimes, private offline artificial intelligence infrastructure, and automated vulnerability assessment tooling tailored to your specific requirements.
+
+* **Autonomous Security Agents and Terminal Runtimes**. Terminal native agentic systems, reactive text interfaces, dual planning and execution engines, shadow snapshot rollback systems, and automated command line assessment workflows.
+* **Private Offline Artificial Intelligence Infrastructure**. Air gapped inference architectures using local open models, automated daemon orchestration, custom quantized model deployment, and zero egress enterprise setups ensuring complete data privacy.
+* **Agentic Security Auditing and Red Team Tooling**. Automated static analysis pipelines, autonomous red team workflows, smart contract and web vulnerability assessment suites, and continuous security verification routines.
+* **Model Context Protocol Integration and Tool Engineering**. Custom Model Context Protocol server development, multi agent message passing architectures, secure sandboxed execution runners, and specialized tool integrations.
+* **Enterprise Security and Privacy Architectures**. Tailored confidential development networks for organizations requiring total data sovereignty, zero external telemetry, on premise governance, and enterprise grade compliance.
+
+If you need a custom agentic runtime, proprietary security auditing pipeline, or privacy focused artificial intelligence infrastructure built according to your needs, feel free to reach out and connect.
+
+### Connect
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Arun%20Kumar-0A66C2?style=flat&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/arunkumar31072006/)
+[![GitHub](https://img.shields.io/badge/GitHub-KerberoSec-181717?style=flat&logo=github&logoColor=white)](https://github.com/KerberoSec)
+[![Instagram](https://img.shields.io/badge/Instagram-so__far__from__your__heart-E4405F?style=flat&logo=instagram&logoColor=white)](https://www.instagram.com/so_far_from_your_heart/)
+[![X](https://img.shields.io/badge/X-@ArunKumar310706-000000?style=flat&logo=x&logoColor=white)](https://x.com/ArunKumar310706)
+
+| Platform | Profile Link | Handle |
+| :--- | :--- | :--- |
+| **LinkedIn** | [linkedin.com/in/arunkumar31072006](https://www.linkedin.com/in/arunkumar31072006/) | [Arun Kumar](https://www.linkedin.com/in/arunkumar31072006/) |
+| **GitHub** | [github.com/KerberoSec](https://github.com/KerberoSec) | [@KerberoSec](https://github.com/KerberoSec) |
+| **Instagram** | [instagram.com/so_far_from_your_heart](https://www.instagram.com/so_far_from_your_heart/) | [@so_far_from_your_heart](https://www.instagram.com/so_far_from_your_heart/) |
+| **X / Twitter** | [x.com/ArunKumar310706](https://x.com/ArunKumar310706) | [@ArunKumar310706](https://x.com/ArunKumar310706) |
 
 ---
 
